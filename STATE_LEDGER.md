@@ -8,7 +8,7 @@
 - **Próximo passo:** Derrota Falsa de Montségur (transição para o Ato III) e Ato III. Sprint 4 (arte/áudio) aguarda assets.
 - **Adendo tático do Ato I aplicado** (aprovado pelo usuário): Cike, Catafractário, Conselheiro Yuefu → Junshi; Daoshi é promoção do Fangshi; Xian exige o Elixir de Pengming — `ACT1_ADENDO_PASS`.
 - **Engine:** Godot 4.7.2 · GDScript puro · `gl_compatibility` · resolução lógica 640×360 (janela 1280×720, Nearest).
-- **Validação:** `tests/run_tests.sh` → **165 TEST_PASS**, 0 falhas, sem `SCRIPT ERROR`/`ERROR:` (janela real Xvfb + opengl3 e headless).
+- **Validação:** `tests/run_tests.sh` → **169 TEST_PASS**, 0 falhas, sem `SCRIPT ERROR`/`ERROR:` (janela real Xvfb + opengl3 e headless).
 - **CI:** `.github/workflows/godot-ci.yml` (suíte + boot `--quit-after 60`).
 - **Branch de trabalho:** `ccr-9fc24095-lrv5hy` (nunca fazer push em `main` sem autorização).
 
@@ -34,17 +34,17 @@
 - **Astrônomo Cego (Zhuo):** proteger grava `EssenceState.decisions.act1_blind_astronomer_protected = true` (+10 alinhamento, +8 apoio); entregar grava `false` (+300 ouro, −10 alinhamento).
 - **Facção inimiga:** Regência do Selo de Ferro (Chanceler Gao Shen).
 - **Esquadrões:** Guarda dos Canais (jogador) · Guarnição da Regência (forte) · Cobradores do Selo de Ferro (patrulha fixa, `moral_escort`) · Piratas Fluviais do Delta (`bandit_loot`, dia) · Milícia Camponesa Desesperada (`low_level_trap`).
-- **Classes (árvore):** Fubing → Youxia (Nv4, ALI ≥ 65) / Buqu (Nv4, ALI ≤ 35) · Alabardeiro Ji → Catafractário (Nv10, ALI ≥ 60, cavalaria) · Besteiro Nubing → Assassino Cike (Nv9, ALI ≤ 35, veneno no líder) · Fangshi → Daoshi (tier 2, Nv10, ALI ≥ 60) / Xamã Wu Sombrio (consome 1 `talisma_cinabrio`) / Xian (mítica, consome 1 `elixir_pengming`) · Conselheiro Yuefu → Estrategista Junshi (Nv11, ALI ≥ 60, ação extra). Ge Xuan (Guarda dos Canais) já começa como Daoshi.
+- **Classes (árvore alinhada ao ledger de lore v2):** Fubing → Youxia / Buqu · Alabardeiro Ji → Catafractário / Saqueador das Estepes · Besteiro Nubing → Arqueiro Montado / Assassino Cike · Fangshi → Daoshi / Alquimista Sombrio (consome 1 `talisma_cinabrio`) + Xian (mítica, consome 1 `elixir_pengming`) · Médico Imperial → Monge Taoísta / Xamã Wu Sombrio (Nv9, ALI ≤ 40) · Conselheiro Yuefu → Estrategista Junshi / Intrigante Legalista. Míticas: Xian, Jiangshi, Huli Jing. Ge Xuan (Guarda dos Canais) já começa como Daoshi.
 - **Míticas:** Jiangshi (undead, imune a moral, recebe 20% físico / 150% SPIRITUAL·PURIFY·FIRE, lento de dia e +50% à noite) · Xamã Wu Sombrio (Sino dos Mortos: +20% ataque a undead) · Huli Jing (CONFUSE em alvo mais lento) · Xian (voa, imune a status e a drenos de moral; Espada de Jade SPIRITUAL; Harmonia em área).
 - **Encontros míticos:** Cortejo de Jiangshi (só região `hanmen` e só à noite; +5 apoio; sem penalidade de nível; 25% Talismã de Cinábrio) · Guardiões do Observatório dos Nove Céus (chefe em arquipelago_pengming, até ser vencido; Moral → `pengming_xian_ally` + classe Xian; Aniquilação → Bússola dos Nove Céus: +20% marcha e revela encontros noturnos).
-- **Itens:** `talisma_cinabrio` (Xamã Wu; drop do Cortejo) · `elixir_pengming` (Xian; **ainda sem fonte no mapa** — Pengming não existe na fatia) · Bússola dos Nove Céus (única).
+- **Itens:** `talisma_cinabrio` (Alquimista Sombrio; drop 25% do Cortejo em Hanmen à noite) · `elixir_pengming` (Xian; **sem fonte jogável** até Pengming existir — a Gruta dos Elixires de Jade é a fonte natural) · Bússola dos Nove Céus (única; chefe de Pengming).
 
 ## Nomes canônicos — Ato II (Occitânia · Cidadela de Carcassonne)
 - **Nós:** Castelo de Cabaret (base, montagne_noire) · Burgo de São Vicente (ocupado) · Pontes do Rio Aude (água) · Cité de Carcassonne (fortaleza cruzada em (320,165); água = Pontes) · Toulouse · Abadia da Montagne Noire (inimiga; Guarda da Abadia — vitória por Moral dá o Pergaminho do Consolamentum) · Ruínas de Béziers (Ecos de Béziers à noite) · Pântanos de Tarascon (opcional; Tarasca surge após a libertação) · Castrum de Montségur.
 - **Dilemas 2–6 (decisões em EssenceState.decisions):** `act2_toulouse_pact` · `act2_abbey_mercy` · `act2_beziers_rebuilt` · `act2_tarascon_codex` (rito de paz = `tarasque_calm_rite`) · `act2_montsegur_stand`. Vitória do ato: Cité e Abadia (nós obrigatórios inimigos).
 - **Regra da água:** quem guarda a fortaleza sem controlar sua água perde 8% HP (sem morrer) e 15 Moral por dia.
 - **Esquadrões:** Companhia de Cabaret (jogador) · Sentinelas do Burgo · Guarnição de Montclair · Escolta da Inquisição (patrulha, moral_escort) · Bando de Routiers · Desertores Famintos.
-- **Classes (19, Specs_Classes_Ato2 + Adendo mesclados; Adendo vence nos nomes/faixas):** Sergent d'Armes → Faydit (DOC ≥ +20, CHA 55) / Cavaleiro Hospitalário (DOC ≤ −10) / Routier · Lanceiro-Escudeiro → Chevalier de Languedoc (cavalaria) / Quebra-Muralhas (SIEGE) · Arbalétrier → Batedor dos Pireneus (mira o mais fraco) / Sicário Inquisitorial · Erudito-Boticário → Alquimista Hermético (LIGHT) / Engenheiro de Fogo · Irmão de Caridade → Parfait Cátaro (não letal, DOC ≤ −20; recusa após `act2_aude_poisoned`) / Inquisidor Dominicano · Trovador Occitano → Menestrel da Resistência (ação extra) / Arauto da Cruzada. Elites exigem Nv 9–12; XP do Ato II: 90/vitória, +20 por nível de diferença.
+- **Classes (22; ramo sombrio do Erudito = Ocultista; a mítica de 2 slots chama-se Domador da Tarasca; trovador da Companhia = Peire):** Sergent d'Armes → Faydit (DOC ≥ +20, CHA 55) / Cavaleiro Hospitalário (DOC ≤ −10) / Routier · Lanceiro-Escudeiro → Chevalier de Languedoc (cavalaria) / Quebra-Muralhas (SIEGE) · Arbalétrier → Batedor dos Pireneus (mira o mais fraco) / Sicário Inquisitorial · Erudito-Boticário → Alquimista Hermético (LIGHT) / Engenheiro de Fogo · Irmão de Caridade → Parfait Cátaro (não letal, DOC ≤ −20; recusa após `act2_aude_poisoned`) / Inquisidor Dominicano · Trovador Occitano → Menestrel da Resistência (ação extra) / Arauto da Cruzada. Elites exigem Nv 9–12; XP do Ato II: 90/vitória, +20 por nível de diferença.
 - **Dilema 1 — A Água de Carcassonne** (ao tomar as Pontes): poupar cisternas (pregação, 2 surtidas, rendição intacta, +30% ouro) · assalto noturno (água corre, cavalaria pesada reforça a Cité, +10 Carisma) · cortar a água (sede, guarnição a 50% HP, Parfaits recusam). Estado em `WorldState.siege`.
 - **Reservados no atlas:** Barão Guy de Montclair, Abade Arnaut, Irmão Guillaume, Pierre-Roger de Rochefort, Diaconisa Esclarmonde, Capitão Loup-Noir.
 - **Ordens:** Focar Líder · Focar Fraco · Poupar/Render.
@@ -57,6 +57,10 @@
 - **Decisões (EssenceState.decisions):** `act3_winter_truce_honored` · `act3_brevilles_civilians_warned` · `act3_eisenwerk_viaduct_spared` · `act3_chemical_depot_sealed` · `act3_final_radio_truth_aired`.
 - **Anomalias (aeon_resistance_flags):** `pengming_fixed_stars` (I) · `montsegur_archon_codex` (II) · `station_x_balanced_war_cipher` (III). **Derrotas falsas (planejado `EssenceState.false_defeats`):** `act1_tiandu_eclipse` · `act2_montsegur_pyre` · `act3_stahlstadt_classified_armistice`.
 - **Motor previsto (nomes reservados em SCHEMA_CANON §8):** `enable_supply_lines`, `enable_fog_of_intel`, `era_meters` (supply/intel/artillery/radio), `SupplyGraphSystem`, `OffmapStrikeManager`, status `SUPPRESSED`.
+
+## Roteiro Mestre (linhas gerais, NÃO definitivo — `docs/Lore_Aeons_Verdade/Roteiro_Mestre_5_Atos.md`)
+- **Protagonistas (nomes reservados):** I Shen Yue · II Guilhem de Razès · III Tenente Arthur Vance · IV Lucas Vermeer · V Sujeito-0.
+- **Conflitos em aberto (decidir antes de escrever cenas):** Ato I cena 1 tem Mestre Shen em Linhai (no jogo: velha Qiu) · Astrônomo Cego = Arquivista Xu em Pengming (no jogo: Zhuo no Templo do Bambu) · antagonista do Ato IV "Nexus Aeterna" (roteiro) × "Consórcio Meridian" (atlas).
 
 ## Ato IV — Nova Vespera · Tecnocracia Nascente (catálogo canônico; AINDA NÃO IMPLEMENTADO)
 - **Slug:** `eras/act_04_modern/` · `reality_layer = "RESOURCE_NETWORK"` · `interlude_style = "clandestine_physical"` (batalhas por sinal/recursos; interlúdios físicos reais: lanchonete sob chuva, esconderijo, metrô de madrugada).

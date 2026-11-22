@@ -1,7 +1,7 @@
 O Capitólio de Toulouse está cheio de capitouls, burgueses e trovadores. Ninguém se senta.
 Um emissário de Barcelona espera ao lado da janela: "A Coroa de Aragão protegerá Toulouse. Mas os nobres do norte que se renderem serão poupados, e a guerra será travada sob a nossa bandeira."
 Do outro lado, um cavaleiro Faydit bate a luva na mesa: "Poupados? Eles queimaram Béziers. Dai-nos a palavra e os feudos do oeste arderão antes da colheita."
-Guilhem afina o alaúde em silêncio. O conselho olha para vós.
+Peire afina o alaúde em silêncio. O conselho olha para vós.
 - Marchar sob a bandeira de Aragão e poupar os rendidos
 	[signal arg="effect|alignment=+8|popular_support=+6|doctrine=-12|charisma=+3|flag=aragon_envoy_pleased|echo=act2_toulouse_truce|decision=act2_toulouse_pact:true"]
 	O emissário inclina a cabeça. Naquela noite, os trovadores compõem um sirventes sobre a paz armada de Toulouse.

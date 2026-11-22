@@ -36,6 +36,12 @@
 [ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/conselheiro_yuefu.tres" id="6_conselheiro_yuefu"]
 [ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/junshi.tres" id="6_junshi"]
 [ext_resource type="Resource" path="res://eras/act_01_tianxu/items/elixir_pengming.tres" id="9_elixir"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/saqueador_estepes.tres" id="6_saqueador_estepes"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/arqueiro_montado.tres" id="6_arqueiro_montado"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/alquimista_sombrio.tres" id="6_alquimista_sombrio"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/medico_imperial.tres" id="6_medico_imperial"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/monge_taoista.tres" id="6_monge_taoista"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/intrigante_legalista.tres" id="6_intrigante_legalista"]
 
 [resource]
 script = ExtResource("1_era")
@@ -59,7 +65,7 @@ color_neutral = Color(0.55, 0.58, 0.52, 1)
 color_background = Color(0.07, 0.1, 0.09, 1)
 color_road = Color(0.42, 0.38, 0.28, 1)
 map_nodes = Array[ExtResource("3_nodescript")]([ExtResource("5_linhai"), ExtResource("5_aldeia_terracos"), ExtResource("5_templo_bambu"), ExtResource("5_forte_regencia"), ExtResource("5_hanmen_pass"), ExtResource("5_hanmen_gate")])
-unit_classes = Array[ExtResource("3_classscript")]([ExtResource("6_fubing"), ExtResource("6_ji_halberdier"), ExtResource("6_nubing_crossbow"), ExtResource("6_daoshi_healer"), ExtResource("6_youxia"), ExtResource("6_buqu"), ExtResource("6_jiangshi"), ExtResource("6_wu_sombrio"), ExtResource("6_huli_jing"), ExtResource("6_xian"), ExtResource("6_fangshi"), ExtResource("6_cike"), ExtResource("6_catafractario"), ExtResource("6_conselheiro_yuefu"), ExtResource("6_junshi")])
+unit_classes = Array[ExtResource("3_classscript")]([ExtResource("6_fubing"), ExtResource("6_ji_halberdier"), ExtResource("6_nubing_crossbow"), ExtResource("6_daoshi_healer"), ExtResource("6_youxia"), ExtResource("6_buqu"), ExtResource("6_jiangshi"), ExtResource("6_wu_sombrio"), ExtResource("6_huli_jing"), ExtResource("6_xian"), ExtResource("6_fangshi"), ExtResource("6_cike"), ExtResource("6_catafractario"), ExtResource("6_conselheiro_yuefu"), ExtResource("6_junshi"), ExtResource("6_saqueador_estepes"), ExtResource("6_arqueiro_montado"), ExtResource("6_alquimista_sombrio"), ExtResource("6_medico_imperial"), ExtResource("6_monge_taoista"), ExtResource("6_intrigante_legalista")])
 starting_squads = Array[ExtResource("3_squadscript")]([ExtResource("4_squad")])
 enemy_patrols = Array[ExtResource("3_squadscript")]([ExtResource("7_patrol")])
 encounter_tables = Array[Resource]([ExtResource("8_encounters"), ExtResource("8_hanmen"), ExtResource("8_pengming")])

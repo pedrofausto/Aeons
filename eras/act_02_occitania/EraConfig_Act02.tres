@@ -25,7 +25,7 @@
 [ext_resource type="Resource" path="res://eras/act_02_occitania/classes/sicario_inquisitorial.tres" id="6_sicario_inquisitorial"]
 [ext_resource type="Resource" path="res://eras/act_02_occitania/classes/erudito_boticario.tres" id="6_erudito_boticario"]
 [ext_resource type="Resource" path="res://eras/act_02_occitania/classes/alquimista_hermetico.tres" id="6_alquimista_hermetico"]
-[ext_resource type="Resource" path="res://eras/act_02_occitania/classes/engenheiro_fogo.tres" id="6_engenheiro_fogo"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/classes/ocultista.tres" id="6_ocultista"]
 [ext_resource type="Resource" path="res://eras/act_02_occitania/classes/irmao_caridade.tres" id="6_irmao_caridade"]
 [ext_resource type="Resource" path="res://eras/act_02_occitania/classes/parfait.tres" id="6_parfait"]
 [ext_resource type="Resource" path="res://eras/act_02_occitania/classes/inquisidor.tres" id="6_inquisidor"]
@@ -69,7 +69,7 @@ color_background = Color(0.08, 0.08, 0.11, 1)
 color_road = Color(0.5, 0.45, 0.38, 1)
 enable_siege_water_rule = true
 map_nodes = Array[ExtResource("3_nodescript")]([ExtResource("5_castelo_cabaret"), ExtResource("5_burgo_sao_vicente"), ExtResource("5_pontes_aude"), ExtResource("5_cite_carcassonne"), ExtResource("5_toulouse"), ExtResource("5_montagne_noire"), ExtResource("5_beziers"), ExtResource("5_tarascon"), ExtResource("5_montsegur")])
-unit_classes = Array[ExtResource("3_classscript")]([ExtResource("6_sergent_darmes"), ExtResource("6_faydit"), ExtResource("6_cavaleiro_hospitalario"), ExtResource("6_routier"), ExtResource("6_lanceiro_escudeiro"), ExtResource("6_chevalier_languedoc"), ExtResource("6_quebra_muralhas"), ExtResource("6_arbaletrier"), ExtResource("6_batedor_pireneus"), ExtResource("6_sicario_inquisitorial"), ExtResource("6_erudito_boticario"), ExtResource("6_alquimista_hermetico"), ExtResource("6_engenheiro_fogo"), ExtResource("6_irmao_caridade"), ExtResource("6_parfait"), ExtResource("6_inquisidor"), ExtResource("6_trovador"), ExtResource("6_menestrel_resistencia"), ExtResource("6_arauto_cruzada"), ExtResource("6_portador_consolamentum"), ExtResource("6_tarasca"), ExtResource("6_eco_beziers")])
+unit_classes = Array[ExtResource("3_classscript")]([ExtResource("6_sergent_darmes"), ExtResource("6_faydit"), ExtResource("6_cavaleiro_hospitalario"), ExtResource("6_routier"), ExtResource("6_lanceiro_escudeiro"), ExtResource("6_chevalier_languedoc"), ExtResource("6_quebra_muralhas"), ExtResource("6_arbaletrier"), ExtResource("6_batedor_pireneus"), ExtResource("6_sicario_inquisitorial"), ExtResource("6_erudito_boticario"), ExtResource("6_alquimista_hermetico"), ExtResource("6_ocultista"), ExtResource("6_irmao_caridade"), ExtResource("6_parfait"), ExtResource("6_inquisidor"), ExtResource("6_trovador"), ExtResource("6_menestrel_resistencia"), ExtResource("6_arauto_cruzada"), ExtResource("6_portador_consolamentum"), ExtResource("6_tarasca"), ExtResource("6_eco_beziers")])
 starting_squads = Array[ExtResource("3_squadscript")]([ExtResource("4_squad")])
 enemy_patrols = Array[ExtResource("3_squadscript")]([ExtResource("7_patrol")])
 encounter_tables = Array[Resource]([ExtResource("8_encounters"), ExtResource("8_beziers"), ExtResource("8_tarascon")])

@@ -229,7 +229,7 @@ func _march(t: Node, map: OverworldMap, ally: SquadToken, target: String, battle
 
 const TREE: Dictionary = {
 	"sergent_darmes": ["faydit", "routier", "cavaleiro_hospitalario"], "lanceiro_escudeiro": ["chevalier_languedoc", "quebra_muralhas"],
-	"arbaletrier": ["batedor_pireneus", "sicario_inquisitorial"], "erudito_boticario": ["alquimista_hermetico", "engenheiro_fogo"],
+	"arbaletrier": ["batedor_pireneus", "sicario_inquisitorial"], "erudito_boticario": ["alquimista_hermetico", "ocultista"],
 	"irmao_caridade": ["parfait", "inquisidor"], "trovador": ["menestrel_resistencia", "arauto_cruzada"],
 }
 

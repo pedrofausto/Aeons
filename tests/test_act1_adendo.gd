@@ -66,9 +66,46 @@ func run(t: Node) -> void:
 		and PromotionRules.promote(seeker, xian) and WorldState.count_item("elixir_pengming") == 0
 		and WorldState.count_item("talisma_cinabrio") == 1)
 
+	_test_ledger_tree(t)
 	EssenceState.reset_all()
 	WorldState.reset_visible(1)
 	WorldState.load_era(ACT01)
 	await t.get_tree().process_frame
 	if t.failed == failed_before:
 		print("ACT1_ADENDO_PASS")
+
+
+## Árvores do Ato I alinhadas ao STATE_LEDGER de lore v2:
+## Fubing -> Youxia/Buqu · Alabardeiro -> Catafractário/Saqueador · Nubing -> Arqueiro Montado/Cike ·
+## Fangshi -> Daoshi/Alquimista Sombrio · Médico -> Monge/Xamã Wu · Conselheiro -> Junshi/Legalista.
+const LEDGER_TREE: Dictionary = {
+	"fubing": ["youxia", "buqu"], "ji_halberdier": ["catafractario", "saqueador_estepes"],
+	"nubing_crossbow": ["arqueiro_montado", "cike"], "fangshi": ["daoshi_healer", "alquimista_sombrio"],
+	"medico_imperial": ["monge_taoista", "wu_sombrio"], "conselheiro_yuefu": ["junshi", "intrigante_legalista"],
+}
+
+
+func _test_ledger_tree(t: Node) -> void:
+	var ok: bool = true
+	var detail: Array[String] = []
+	for base: String in LEDGER_TREE:
+		var cls := _cls(base)
+		var pair: Array = [cls.promotion_good.class_id if cls.promotion_good else "", cls.promotion_evil.class_id if cls.promotion_evil else ""]
+		if pair != LEDGER_TREE[base]:
+			ok = false
+			detail.append("%s=%s" % [base, pair])
+	t.check("ledger_tree_act1", ok, str(detail))
+	var wu := _cls("wu_sombrio")
+	var alchemist := _cls("alquimista_sombrio")
+	t.check("ledger_items_moved", alchemist.required_item_id == &"talisma_cinabrio" and wu.required_item_id == &""
+		and wu.min_level == 9 and wu.max_alignment == 40 and _cls("xian").required_item_id == &"elixir_pengming")
+	var era := load(ACT01) as EraConfig
+	var ids: Array = era.unit_classes.map(func(c: UnitClassData) -> String: return c.class_id)
+	var all_registered: bool = true
+	for base: String in LEDGER_TREE:
+		all_registered = all_registered and base in ids and LEDGER_TREE[base].all(func(id: String) -> bool: return id in ids)
+	t.check("ledger_tree_registered", all_registered)
+	var a2_tarasca := load("res://eras/act_02_occitania/classes/tarasca.tres") as UnitClassData
+	var a2_erudito := load("res://eras/act_02_occitania/classes/erudito_boticario.tres") as UnitClassData
+	t.check("ledger_tree_act2", a2_erudito.promotion_evil.class_id == "ocultista" and a2_tarasca.display_name == "Domador da Tarasca"
+		and a2_tarasca.grid_slots == 2)

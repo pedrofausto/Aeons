@@ -1,0 +1,48 @@
+[gd_resource type="Resource" script_class="UnitClassData" format=3]
+
+[ext_resource type="Script" path="res://core/data/UnitClassData.gd" id="1_class"]
+[ext_resource type="Script" path="res://core/data/ActionSkillData.gd" id="2_skill"]
+
+[sub_resource type="Resource" id="front"]
+script = ExtResource("2_skill")
+skill_id = "incendiary_lance"
+display_name = "Lança Incendiária"
+effect = 0
+targeting = 0
+power = 45
+hits = 3
+element = "FIRE"
+resources_on_hit = 8
+
+[sub_resource type="Resource" id="back"]
+script = ExtResource("2_skill")
+skill_id = "iron_arrow"
+display_name = "Flecha de Ferro"
+effect = 0
+targeting = 0
+power = 55
+hits = 2
+element = "PIERCE"
+
+[resource]
+script = ExtResource("1_class")
+class_id = "saqueador_estepes"
+display_name = "Saqueador das Estepes"
+era_id = 1
+archetype = 1
+grid_slots = 1
+tier = 2
+liberation_reputation_bonus = -4
+max_hp = 98
+attack = 23
+defense = 6
+intellect = 4
+agility = 14
+max_morale = 95
+front_action = SubResource("front")
+back_action = SubResource("back")
+movement = "cavalry"
+preferred_doctrine = "revolutionary"
+min_level = 10
+min_alignment = 0
+max_alignment = 40

@@ -5,42 +5,43 @@
 
 [sub_resource type="Resource" id="front"]
 script = ExtResource("2_skill")
-skill_id = "naphtha_torch"
-display_name = "Tocha de Nafta"
+skill_id = "toxic_vapor"
+display_name = "Vapor Tóxico"
 effect = 1
 targeting = 0
-power = 70
-element = "FIRE"
+power = 50
+element = "SHADOW"
+inflicts_status = "POISON"
 
 [sub_resource type="Resource" id="back"]
 script = ExtResource("2_skill")
-skill_id = "greek_fire"
-display_name = "Fogo Grego"
+skill_id = "explosive_elixir"
+display_name = "Elixir Explosivo"
 effect = 1
 targeting = 2
-power = 35
+power = 40
 hits = 2
 element = "FIRE"
-morale_power = 4
+morale_power = 8
 
 [resource]
 script = ExtResource("1_class")
-class_id = "engenheiro_fogo"
-display_name = "Engenheiro de Fogo"
-era_id = 2
+class_id = "alquimista_sombrio"
+display_name = "Alquimista Sombrio"
+era_id = 1
 archetype = 3
 grid_slots = 1
 tier = 2
-liberation_reputation_bonus = -5
-max_hp = 100
-max_morale = 95
-attack = 14
-defense = 14
-intellect = 38
-agility = 17
+max_hp = 56
+attack = 5
+defense = 3
+intellect = 22
+agility = 8
+max_morale = 90
 front_action = SubResource("front")
 back_action = SubResource("back")
 preferred_doctrine = "revolutionary"
 min_level = 10
 min_alignment = 0
-max_alignment = 40
+max_alignment = 35
+required_item_id = &"talisma_cinabrio"

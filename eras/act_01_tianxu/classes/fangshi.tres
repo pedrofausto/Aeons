@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://core/data/ActionSkillData.gd" id="2_skill"]
 [ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/xian.tres" id="3_xian"]
 [ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/daoshi_healer.tres" id="5_daoshi"]
-[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/wu_sombrio.tres" id="4_wu"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/alquimista_sombrio.tres" id="4_alq"]
 
 [sub_resource type="Resource" id="front"]
 script = ExtResource("2_skill")
@@ -42,7 +42,7 @@ front_action = SubResource("front")
 back_action = SubResource("back")
 promotion_good = ExtResource("5_daoshi")
 promotes_to = Array[Resource]([ExtResource("3_xian")])
-promotion_evil = ExtResource("4_wu")
+promotion_evil = ExtResource("4_alq")
 min_alignment = 0
 max_alignment = 100
 march_speed_pct = 100

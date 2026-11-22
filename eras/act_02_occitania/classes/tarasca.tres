@@ -28,7 +28,7 @@ inflicts_status = "POISON"
 [resource]
 script = ExtResource("1_class")
 class_id = "tarasca"
-display_name = "Tarasca do Rhône"
+display_name = "Domador da Tarasca"
 era_id = 2
 archetype = 6
 grid_slots = 2

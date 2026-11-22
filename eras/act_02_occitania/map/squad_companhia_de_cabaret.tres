@@ -51,7 +51,7 @@ is_leader = false
 [sub_resource type="Resource" id="unit_4"]
 script = ExtResource("1_unit")
 class_data = ExtResource("5_trovador")
-unit_name = "Guilhem"
+unit_name = "Peire"
 charisma = 72
 level = 2
 alignment = 60
