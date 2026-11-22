@@ -7,6 +7,8 @@
 ## 1. STATE LEDGER (Atualizar no topo a cada sessão)
 
 > O livro-razão detalhado vive em **[`STATE_LEDGER.md`](STATE_LEDGER.md)** (raiz, < 120 linhas), conforme `ARCHITECTURE_DIFF.md` §6.
+> **Nomes e tipos de schema:** **[`SCHEMA_CANON.md`](SCHEMA_CANON.md)** é a referência obrigatória; nomes divergentes em documentos de design são traduzidos pela tabela de aliases dele.
+> Diffs: [`ARCHITECTURE_DIFF.md`](ARCHITECTURE_DIFF.md) · [`ARCHITECTURE_DIFF_ATO3.md`](ARCHITECTURE_DIFF_ATO3.md) (extensões planejadas do Ato III).
 > As expansões aprovadas depois deste documento estão em **[`ARCHITECTURE_DIFF.md`](ARCHITECTURE_DIFF.md)**.
 
 ```yaml

@@ -1,89 +1,80 @@
 > Convertido do documento original de world building (HTML) para Markdown. Imagens omitidas.
 
-Atlas do Ato III — A Frente de Cinza e Ferro (Grandes Guerras)
+Atlas do Ato III — A Frente de Cinza e Aço (Era das Grandes Guerras)
 
-# A Frente de Cinza e Ferro: o atlas industrial da terceira camada
+# A Frente de Cinza e Aço: Atlas Tático e Dilemas do Ato III
 
-Inspirado na brutalidade mecânica da Primeira e da Segunda Guerras Mundiais, o Ato III substitui muralhas de pedra por trincheiras, ferrovias blindadas, propaganda de rádio e sabotagem atrás das linhas — onde a máquina começa a engolir o ser humano.
+A terceira camada do simulacro funde o impasse brutal das trincheiras da Primeira Guerra Mundial à guerra mecanizada, resistência clandestina e criptografia da Segunda Guerra — introduzindo linhas de suprimento, artilharia fora de tela e o choque moral da guerra total industrial.
 
-*[Imagem: Mapa-múndi tático em pixel art 32-bit de um teatro de guerra industrial mostrando fábricas fumegantes ao norte, trincheiras lamacentas ao centro, porto com bunkers a oeste, montanhas partisans ao sul e ponte ferroviária nevada com aeródromo secreto a nordeste]*
+*[Imagem: Mapa-múndi tático em pixel art 32-bit de um teatro das Guerras Mundiais mostrando canal marítimo com bunkers costeiros a oeste, rede de trincheiras no centro, cidade ferroviária industrial a leste, florestas de partisans ao sul, passos alpinos nevados ao norte e cidadela de aço a nordeste]*
 
-  Ferrovias, siderúrgicas, bunkers costeiros e trincheiras criam um mapa movido por logística e linhas de suprimento Conceito cartográfico do Ato III · Norte (Bacia Siderúrgica), Centro (Linha de Cinza), Oeste (Porto Nordhaven), Sul (Montanhas Partisans) e Nordeste (Ponte & Aeródromo)
+  Seis frentes conectadas por ferrovias, canais e bunkers transformam a logística no verdadeiro campo de batalha Conceito cartográfico do Ato III · Oeste (Estreito Naval), Centro (Terra de Ninguém), Leste (Polo Ferroviário), Sul (Bosques do Maquis), Norte (Passos Alpinos) e Nordeste (Bastião de Aço)
 
-Nos Atos I e II o poder ainda tinha rosto de imperador ou abade. No Ato III, o inimigo vira uma burocracia industrial sem rosto.
+Na guerra industrial, a espada cede lugar à ferrovia, ao rádio criptografado e à lama que engole impérios inteiros.
 
-Depois da “derrota falsa” nas chamas de Montségur, o jogador desperta acreditando estar em uma nova história: um tenente júnior de infantaria ou operador de comunicações preso em uma guerra continental interminável. A cultura desta terceira camada mistura o desespero lamacento das trincheiras da I Guerra (táticas de infiltração dos Stoßtruppen e Arditi) com a guerra de inteligência, resistência civil e sabotagem da II Guerra (SOE e Signal Corps).
+Ao abrir o Ato III — acreditando que a crônica medieval de Montségur terminou em tragédia —, o jogador assume o papel de um jovem tenente de infantaria em uma guerra continental interminável entre o **Diretório de Aço** e uma coalizão exausta. Pela primeira vez, o poder que oprime a humanidade não se esconde atrás do Mandato do Céu (Ato I) nem da Inquisição (Ato II), mas atrás da **máquina burocrática da guerra total**: alistamento em massa, propaganda de rádio, censura e linhas de montagem de munição.
 
-O **Apoio Popular** aqui ganha um novo peso: cidades inteiras vivem sob racionamento, blecaute e censura de rádio. Vencer apenas esmagando trincheiras alimenta a máquina de guerra; conquistar o coração da população exige proteger civis, expor mentiras da propaganda oficial e decidir se você lidera uma **insurgência de sabotagem (Revolucionária)** ou uma **rede de resgate, rádio livre e motins de paz (Pacifista)**.
+Mecanicamente, o Ato III introduz duas evoluções cruciais sobre o motor de Ogre Battle: **Linhas de Suprimento** (pelotões cortados das ferrovias ou portos perdem munição e moral rapidamente) e **Suporte Fora de Tela** (observadores de artilharia e estações de rádio disparam barragens em área ou interceptam ordens inimigas à distância).
 
-### Logística de Trilhos e Suprimentos
+## Os seis setores do teatro de operações e suas regras táticas
 
-Pela primeira vez no jogo, os nós do mapa são ligados por **ferrovias**. Capturar uma estação ou explodir uma ponte corta o suprimento de munição e combustível dos blindados inimigos na frente central.
+Cada setor do mapa exige uma composição distinta de pelotões e oferece oportunidades opostas para a **Doutrina Pacifista** (tréguas, resgates, rádios clandestinas) e a **Doutrina Revolucionária** (sabotagem ferroviária, assaltos de choque e bombardeios).
 
-### Guerra de Rádio e Censura
-
-As transmissões de ondas curtas substituem os trovadores do Ato II: controlar torres de rádio permite derrubar a **Moral** de batalhões inimigos com notícias reais da frente ou interceptar ordens de artilharia.
-
-### Interlúdios de Trincheira
-
-Entre as batalhas, as cenas de presença acontecem em abrigos subterrâneos sob chuva, vagões-hospital, porões de rádio clandestina e cafeterias sob blecaute — reforçando a humanidade frágil no meio do ferro.
-
-## As seis zonas do teatro de guerra: terreno, logística e objetivos
-
-Cada setor do mapa exige uma doutrina distinta — combinando infantaria, sapadores, artilharia fora de tela, sabotadores e aviação noturna.
-
-| Setor (Posição) | Pontos-Chave no Mapa | Terreno & Regra Tática | Interlúdios de Presença | Papel na Campanha |
+| Setor (Posição) | Pontos-Chave no Mapa | Terreno & Nova Mecânica | Interlúdios de Presença | Papel na Campanha |
 |---|---|---|---|---|
-| Linha de Cinza — Centro · Terra de Ninguém | **Trincheira Zero**, Crateras de Verdun-Leste, Casamata 14 | Lama, arame farpado e fogo de supressão: desacelera marchas e exige sapadores, médicos e ataques em área. | Abrigo de sacos de areia, posto de triagem sob chuva. | Frente inicial brutal onde o protagonista testemunha o descarte de soldados pelo Alto Comando. |
-| Bacia de Eisenmark — Norte · Indústria & Clímax | **Complexo Siderúrgico**, Pátio de Locomotivas, Quartel do Diretório | Pátios industriais e trilhos blindados; cada fábrica controlada pelo inimigo gera reforços mecanizados constantes. | Fábrica ocupada por operários, sala de mapas do Estado-Maior. | Coração industrial do antagonista e palco do clímax militar do Ato III. |
-| Porto de Nordhaven — Oeste · Bloqueio Naval | **Bunkers Costeiros**, Docas de Submarinos, Farol Apagado | Fortificações de concreto e neblina marítima; controla o fluxo de combustível, remédios e recursos externos. | Armazém portuário em blecaute, doca de contrabandistas. | Objetivo econômico vital: liberar o porto alivia a fome civil e financia o exército. |
-| Montanhas de Valmont — Sul · Rede Partisan | **Túneis de Valmont**, Torre de Rádio Clandestina, Vila de Pinheiros | Florestas densas e desfiladeiros; blindados não passam — terreno perfeito para franco-atiradores e sabotadores. | Porão da rádio livre, acampamento partisan sob pinheiros. | Base secreta onde o jogador recruta sabotadores (Revolucionário) ou médicos/jornalistas (Pacifista). |
-| Ponte de Ostbrück — Leste · Gargalo de Inverno | **Viaduto Ferroviário**, Estação Nevada, Depósito de Artilharia | Neve intensa e travessia estreita sobre o rio congelado; explodir ou tomar o viaduto decide o ritmo da ofensiva. | Estação de trem abandonada, vagão-correio. | Grande dilema tático: destruir a ponte isola o inimigo, mas também corta alimentos para civis a leste. |
-| Aeródromo de Krovna — Nordeste · Secreto | **Pista Camuflada**, Estação de Escuta 9 (Rádio Anômalo) | Floresta nevada oculta na névoa; acessível por infiltração ou reconhecimento aéreo. | Hangar de madeira dos biplanos, sala de válvulas de rádio. | Recrutamento das lendárias Bruxas da Noite e descoberta do sinal de rádio dos Aeons. |
+| Terra de Ninguém — Centro · Início | **Trincheira Setor 7**, Ponte Quebrada do Rio Cinza, Posto Médico Avançado | Lama, crateras e arame farpado: reduz velocidade de blindados; favorece sapadores, Stoßtruppen e médicos. | Abrigos de madeira sob chuva, enfermaria de campanha e vigília noturna. | Área inicial onde o protagonista questiona ordens suicidas e forma seu batalhão independente. |
+| Estreito Cinzento — Oeste · Costa & Portos | **Porto de Brevilles**, Muralha de Concreto, Bateria Costeira | Bunkers pesados e docas navais; controlar os portos garante suprimento contínuo de munição e peças. | Docas sob neblina, farol de sinais e porões de contrabandistas. | Zona de desembarque e logística marítima; alvo de bombardeio naval e bloqueios. |
+| Bosques do Maquis — Sul · Resistência | **Planalto de Verneuil** (inspirado em Vercors), Acampamento Clandestino, Antena da Floresta | Florestas fechadas e montanhas: ocultam pelotões da artilharia inimiga e dão bônus a Maquisards e franco-atiradores. | Fogueiras na mata, rádio clandestina e oficinas de sabotagem. | Sede da resistência civil; aqui o jogador recruta sabotadores e comunicadores de rádio. |
+| Polo de Eisenwerk — Leste · Indústria | **Entroncamento Ferroviário**, Fundição Central, Depósito Químico | Ruas fabris, trilhos e holofotes: cortar a ferrovia paralisa o abastecimento de toda a frente inimiga. | Fábrica abandonada, estação de trem bombardeada e sindicato oculto. | Coração econômico da guerra; palco dos dilemas mais duros envolvendo trabalhadores civis. |
+| Passagem Alpina — Norte · Secreto & Cifra | **Estação X** (inspirada em Bletchley Park), Túnel Nevado, Aeródromo Oculto | Neve profunda e túneis de trem: exige unidades alpinas ou aéreas; abriga decifradores e pistas dos Aeons. | Sala de máquinas eletromecânicas, hangares escuros de biplanos. | Base secreta de criptografia (Ultra) e pista para recrutar as Bruxas da Noite. |
+| Bastião de Stahlstadt — Nordeste · Clímax | **Cidadela de Concreto**, Torre de Transmissão Nacional, Quartel-General do Diretório | Fortificações em anéis concêntricos com baterias antiaéreas e blindados pesados. | Subsolo do QG, sala de mapas onde a guerra parece um relógio mecânico. | Clímax do Ato III: queda do Alto Comando e disparo da “derrota falsa” industrial. |
 
-  Holofotes sobre o viaduto destruído e biplanos silenciosos definem a atmosfera noturna do Ato III
+  Chuva, holofotes varrendo a névoa e trilhos partidos definem a estética de 32 bits do Ato III
 
-*[Imagem: Trincheiras lamacentas e ponte ferroviária de pedra destruída sob chuva noturna, cortadas por feixes de holofotes brancos, lanternas âmbar de bunkers e dois biplanos planando sob a lua]*
+*[Imagem: Cena noturna em pixel art 32-bit de trincheiras lamacentas sob chuva ao lado de uma ponte ferroviária destruída, iluminadas por holofotes brancos, bunkers em brasa e clarões de artilharia ao fundo]*
 
- Referência de cena noturna para o Ato III · Contraste entre os feixes frios de holofotes, lanternas quentes nas trincheiras e o voo silencioso das Nachthexen.
+ Referência de cena de combate e interlúdio · Holofotes dinâmicos (`PointLight2D` cônicos), shader de chuva e clarões distantes sobre o mesmo motor Compatibility do Godot 4.
 
-## Divisão política e facções: generais, censores, partisans e o esquadrão noturno
+## Facções, patrulhas de frente e o mito das Bruxas da Noite
 
-O conflito do Ato III não opõe apenas dois países, mas a **máquina estatal de guerra total** contra redes de resistência que lutam de maneiras opostas.
+O teatro de guerra combina seis forças políticas e encontros dinâmicos no mapa — incluindo unidades aéreas baseadas em lendas reais da Segunda Guerra.
 
-| Facção | Papel e Objetivo | Liderança & Base | Perfil Militar | Relação com o Jogador |
-|---|---|---|---|---|
-| Diretório de Ferro — Antagonista Militar | Alto Comando industrial que prolonga a guerra para manter poder absoluto e controle fabril. | **Marechal Von Kessel** Bacia de Eisenmark | Blindados pesados, baterias de artilharia, lança-chamas e Stoßtruppen. | Inimigo principal. Trata baixas humanas como números em planilhas — espelho da frieza dos Aeons. |
-| Comissariado de Censura — Antagonista Ideológico | Controla a imprensa, persegue desertores e fabrica notícias falsas para sustentar o fervor bélico. | **Diretor Moreau** Torres de Rádio & Nordhaven | Comissários políticos (debuffs de medo), polícia militar e espiões infiltrados. | Derruba o **Apoio Popular** sempre que mantém torres de transmissão ativas. |
-| Rede Partisan de Valmont — Aliado Revolucionário | Sabotadores irregulares inspirados na SOE: explodem trilhos, fábricas e depósitos inimigos. | **Comandante Claire Vasseur** Túneis de Valmont | Sabotadores, franco-atiradores e demolidores de alta mobilidade. | Seus melhores aliados na **Linha Revolucionária**; exigem ações ousadas e imediatas. |
-| Corpo Médico & Rádio Livre — Aliado Pacifista | Médicos, capelães e operadores de rádio que salvam feridos de ambos os lados e organizam tréguas. | **Dr. Emil Lindner** Hospitais de Campanha | Médicos de combate, fotógrafos do Signal Corps e transmissores que zeram a Moral inimiga. | Pilar da **Linha Pacifista**: induzem pelotões inimigos exaustos a deporem armas sem derramamento de sangue. |
-| Esquadrão Nachthexen — Aliado Secreto / Mítico | Aviadoras noturnas baseadas no 588º Regimento Soviético que desligam motores para bombardear em silêncio. | **Major Nadia Morozova** Aeródromo de Krovna | Unidades aéreas noturnas imunes a terreno e trincheiras, devastadoras sob escuridão. | Desbloqueadas ao encontrar o aeródromo oculto e provar respeito pela vida dos civis. |
-| Sindicato de Nordhaven — Neutro / Contrabando | Operadores portuários e contrabandistas que lucram movendo combustível, remédios e armas. | **Mercador Henrik** Docas de Nordhaven | Mercenários armados e barcos de suprimento rápido. | Negociam tanto penicilina (Bem) quanto armas químicas proibidas (Mal). |
-
-## Inimigos aleatórios, comboios e encontros especiais na frente
-
-O mapa do Ato III alterna patrulhas mecanizadas, comboios ferroviários com tempo limitado para interceptação e dilemas humanos cruéis no meio da neblina.
-
-| Encontro | Onde Ocorre | Composição | Dinâmica Tática e Moral |
+| Facção / Encontro | Papel & Alinhamento | Composição Tática | Interação no Mapa |
 |---|---|---|---|
-| **Patrulha de Stoßtruppen** — Frequente · Noite/Névoa | Linha de Cinza e arredores de bunkers | 2 Tropas de Choque + 1 Sapador + 1 Lança-Chamas | Ataque inicial fulminante em curta distância; exige linha frontal resistente ou supressão à distância. |
-| **Trem Blindado de Suprimentos** — Evento Móvel · Trilhos | Ferrovia entre Eisenmark e Ostbrück | Locomotiva blindada + 2 Metralhadoras + 1 Oficial | Cruza o mapa em tempo real; interceptá-lo rende recursos massivos e enfraquece guarnições vizinhas. |
-| **Escolta da Polícia Militar** — Estradas · Dia | Rotas entre Nordhaven e a frente | 2 Guardas + 1 Comissário Político + 1 Atirador | Transportam desertores para fuzilamento; libertá-los eleva o Apoio Popular e pode recrutar novos soldados. |
-| **Pelotão Perdido na Lama** — Ocasional · Crateras | Terra de Ninguém sob chuva | 3 Fuzileiros exaustos (nível inferior) + 1 Enfermeiro | **Dilema clássico:** eliminá-los derruba Alinhamento; quebrar a Moral ou oferecer trégua rende bônus pacifista. |
-| **Bateria Química Experimental** — Raro · Norte | Perímetro de Eisenmark | 2 Químicos de Guerra + 2 Guardas com Máscara | Aplica dano em área tóxico; capturar seus documentos expõe crimes do Diretório no rádio livre. |
-| **Transmissão Fantasma** — Secreto · Estação 9 | Nordeste (neblina noturna) | Espectros estáticos / anomalias de sinal que distorcem a UI | Encontro quase sobrenatural: armas comuns falham; criptógrafos e médicos/capelães estabilizam o campo e coletam um eco oculto dos Aeons. |
+| Diretório de Aço — Antagonista Militar | Alto Comando industrial que prolonga a guerra para manter controle absoluto. | Blindados pesados, baterias de artilharia e tropas de assalto. | Envia trens blindados e barragens programadas contra qualquer setor rebelde. |
+| Comissariado & Censura — Antagonista Ideológico | Polícia política que caça desertores, suprime tréguas e fabrica propaganda. | Comissários políticos (debuff de medo), espiões e esquadrões punitivos. | Derrubam o **Apoio Popular** nas cidades ocupadas e fuzilam soldados que fraternizam. |
+| Maquisards & Sabotadores — Aliado Revolucionário | Guerrilheiros rurais e agentes clandestinos inspirados no SOE e nos Maquis. | Sabotadores com explosivos, franco-atiradores e células de emboscada. | Apoiam fortemente a **Linha Revolucionária**; explodem pontes e trens de munição. |
+| Corpo Médico & Rádio Livre — Aliado Pacifista | Médicos de frente, capelães e locutores clandestinos que salvam ambos os lados. | Médicos de combate, fotógrafos do Signal Corps e operadores de rádio. | Pilar da **Linha Pacifista**: transmitem provas de atrocidades e induzem motins/rendições sem sangue. |
+| Criptógrafos da Estação X — Aliado Técnico | Matemáticos e analistas que decifram o tráfego de rádio inimigo nos Alpes. | Criptógrafos (revelam o mapa inteiro e anulam emboscadas inimigas). | Desbloqueiam a pista oculta sobre o padrão artificial dos Aeons nas cifras da guerra. |
+| **Bruxas da Noite** (Nachthexen) — Encontro Mítico / Secreto | Esquadrão feminino de biplanos silenciosos inspirado no 588º Regimento Soviético. | Unidade aérea furtiva que desliga o motor para planar sobre o mapa ignorando trincheiras. | Recrutável à noite no Aeródromo Oculto do Norte se o jogador proteger civis sem usar armas químicas. |
 
-“Na frequência 4.77 MHz da Estação 9, os criptógrafos gravaram um pulso geométrico perfeito — exatamente a mesma proporção matemática que um astrônomo chinês riscou em bronze milênios atrás.”
+## Cinco dilemas de guerra que testam honra, doutrina e a própria humanidade
 
-**O fio filosófico na 3ª camada:** sem mencionar simulações, o Ato III planta a dúvida moderna — a guerra não parece ter vencedores porque ambos os lados respondem à mesma engrenagem oculta que lucra com o medo e o controle das massas.
+No Ato III, as decisões deixam de ser individuais e passam a afetar milhares de civis e soldados anônimos — preparando a transição psicológica para o controle tecnocrático do Ato IV.
 
-**A “Derrota Falsa” ao final de Eisenmark:** quando o protagonista finalmente derruba o Diretório de Ferro (seja estilhaçando o quartel pela via revolucionária ou deflagrando um motim de paz pelas rádios na via pacifista), um sinal de interferência corta todas as transmissões simultaneamente. Uma barragem de artilharia “sem origem registrada” varre a praça central sob fumaça branca, e os relatórios oficiais declaram o pelotão extinto. O jogador sente mais uma vitória arrancada no último segundo — e a tela se abre na chuva silenciosa, cheia de telas e câmeras, do **Ato IV (Era Moderna)**.
+| Dilema / Setor | Via Pacifista / Honrada | Via Revolucionária / Pragmática | Impacto Sistêmico |
+|---|---|---|---|
+| **1. A Trégua de Inverno** (Terra de Ninguém) | Inspirada na Trégua de Natal de 1914: ordenar cessar-fogo para recolher feridos com o inimigo. | Aproveitar a distração noturna para lançar um assalto relâmpago e capturar o bunker central. | Trégua sobe muito o Apoio Popular e faz soldados inimigos desertarem; o assalto ganha o setor rápido, mas derruba Alinhamento. |
+| **2. O Segredo da Estação X** (Passagem Alpina) | Evacuar a cidade costeira de Brevilles ao decifrar o bombardeio — mesmo revelando que a cifra foi quebrada. | Silenciar o alerta (como no dilema real da inteligência Ultra) para manter a vantagem estratégica secreta. | Salvar civis preserva Alinhamento e desbloqueia aliados médicos; silenciar dá bônus militar pesado, mas marca EssenceState.gd. |
+| **3. O Viaduto de Eisenwerk** (Polo Industrial) | Infiltrar engenheiros para desativar apenas as locomotivas militares, poupando o bairro operário. | Explodir todo o entroncamento com o Maquis durante o turno da fábrica para cortar 100% da produção. | Infiltração exige esquadrão ágil; a explosão enfraquece drasticamente o chefe final, mas gera trauma civil. |
+| **4. O Depósito Químico** (Leste / Frente) | Inundar e selar os cilindros de gás para que nenhum dos lados volte a usá-los. | Apreender o arsenal para desbloquear a classe Químico de Guerra (dano em área extremo). | Selo garante acesso às Bruxas da Noite; uso do gás derruba Alinhamento e Apoio Popular drasticamente. |
+| **5. A Transmissão Final** (Bastião de Stahlstadt) | Tomar a Torre de Rádio para transmitir a verdade a todas as frentes e encerrar a guerra por motim geral. | Executar o Alto Comando em transmissão aberta e assumir o controle militar das ferrovias. | Define o eco oculto de Doutrina levado pelos Aeons para o despertar no Ato IV (Era Moderna). |
+
+“Os matemáticos da Estação X quebraram a cifra do Diretório e encontraram algo absurdo: sempre que um dos lados chega perto de vencer a guerra, ordens anônimas sabotam a própria logística para manter o conflito em equilíbrio perpétuo.”
+
+**A pista dos Aeons no Ato III:** sem mencionar nada sobrenatural, a criptografia mecânica revela que a guerra inteira funciona como um **sistema fechado de desgaste** — uma engrenagem desenhada para consumir a energia humana antes que ela se organize contra seus governantes.
+
+**A “Derrota Falsa” ao final de Stahlstadt:** quando o protagonista finalmente derruba o Diretório de Aço (seja pelo motim pacifista no rádio ou pelo assalto final), um “Armistício de Emergência” assinado nos bastidores por potências acima dos generais declara o seu batalhão traidor, ou uma barragem final de clarão branco engole o QG. A crônica fecha com uma página de jornal censurada e carimbada como ARQUIVO CLASSIFICADO — OPERAÇÃO FRACASSADA. O jogador sente mais uma perda histórica amarga — e acorda diante de uma tela luminosa sob chuva no **Ato IV (Alvorecer da Tecnocracia)**.
 
 ## Referências Históricas
 
-- Wikipedia — Stormtroopers / Stoßtruppen (táticas de infiltração e assalto na I Guerra Mundial)
-- Wikipedia — Arditi (tropas de assalto italianas na I Guerra Mundial)
-- Wikipedia — Special Operations Executive (sabotagem e resistência atrás das linhas na II Guerra)
-- U.S. Army — Signal Corps in World War II (inteligência de sinais e comunicações)
-- Holocaust Encyclopedia — The United States Army Signal Corps (documentação fotográfica e verdade de guerra)
-- The National WWII Museum — Night Witches (588º Regimento de Bombardeio Noturno soviético)
+- Wikipedia — Christmas truce (tréguas espontâneas de dezembro de 1914 na Frente Ocidental)
+- Wikipedia — Stormtroopers / Stoßtruppen (táticas de infiltração em trincheiras na I Guerra)
+- Wikipedia — Arditi (tropas especiais de assalto italianas na I Guerra)
+- Wikipedia — Maquis (guerrilha rural da Resistência Francesa na II Guerra)
+- Wikipedia — Battle of Vercors (planalto de resistência maquisard em 1944)
+- Wikipedia — Special Operations Executive (espionagem e sabotagem atrás das linhas)
+- Wikipedia — Bletchley Park (centro de criptoanálise e desenvolvimento do Colossus)
+- Wikipedia — Ultra (inteligência de sinais obtida pela quebra das cifras Enigma e Lorenz)
+- U.S. Army — Signal Corps in World War II (comunicações e inteligência de sinais)
+- The National WWII Museum — Night Witches (588º Regimento de Bombardeio Noturno)

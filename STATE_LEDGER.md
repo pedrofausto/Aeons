@@ -1,6 +1,7 @@
 # STATE_LEDGER.md — Livro-Razão de Estado (ler no início de cada sessão de IA)
 
-> Atualizar após **cada** tarefa do agente. Máximo de 120 linhas. Fonte técnica: `ARCHITECTURE.md` + `ARCHITECTURE_DIFF.md`.
+> Atualizar após **cada** tarefa do agente. Máximo de 120 linhas.
+> **Ordem de leitura:** este arquivo → **`SCHEMA_CANON.md`** (nomes/tipos canônicos e tabela de aliases — obrigatório antes de mexer em schema) → `ARCHITECTURE.md` + `ARCHITECTURE_DIFF.md` + `ARCHITECTURE_DIFF_ATO3.md`.
 
 ## Situação
 - **Fase:** Ato I completo (Nanlu + Hanmen). Ato II: Cidadela de Carcassonne com árvore completa de 19 classes e o dilema 1 "A Água de Carcassonne" (3 ramos jogáveis) — `ACT2_CARCASSONNE_PASS`.
@@ -48,8 +49,16 @@
 - **Dilema:** Os Celeiros de Linhai (guardiã: velha Qiu) — distribuir (+alinhamento, +apoio, −doutrina, eco `shared_linhai_rice`) ou confiscar (+recursos, −apoio, +doutrina, eco `seized_linhai_granaries`).
 - **Reservados no atlas (não usar com outro papel):** Mestre Shen (Liga dos Youxia), Mestra Lin (Lótus de Cinza), General Wei Bo, Arquivista Xu.
 
+## Ato III — A Frente de Cinza e Aço (catálogo canônico; AINDA NÃO IMPLEMENTADO)
+- **Slug:** `eras/act_03_ash_and_steel/`. **Regiões (region_id):** `no_mans_land` (Trincheira Setor 7, Ponte do Rio Cinza) · `grey_strait` (Porto de Brevilles) · `maquis_woods` (Planalto de Verneuil) · `eisenwerk_hub` (Entroncamento, Depósito Químico) · `alpine_pass` (Estação X) · `stahlstadt_hq` (Bastião de Aço).
+- **Facções (dados, não motor):** Diretório de Aço · Comissariado & Censura · Maquisards · Corpo Médico & Rádio Livre · Criptógrafos da Estação X · Bruxas da Noite (mítica; exige `act3_chemical_depot_sealed`).
+- **Decisões (EssenceState.decisions):** `act3_winter_truce_honored` · `act3_brevilles_civilians_warned` · `act3_eisenwerk_viaduct_spared` · `act3_chemical_depot_sealed` · `act3_final_radio_truth_aired`.
+- **Anomalias (aeon_resistance_flags):** `pengming_fixed_stars` (I) · `montsegur_archon_codex` (II) · `station_x_balanced_war_cipher` (III). **Derrotas falsas (planejado `EssenceState.false_defeats`):** `act1_tiandu_eclipse` · `act2_montsegur_pyre` · `act3_stahlstadt_classified_armistice`.
+- **Motor previsto (nomes reservados em SCHEMA_CANON §8):** `enable_supply_lines`, `enable_fog_of_intel`, `era_meters` (supply/intel/artillery/radio), `SupplyGraphSystem`, `OffmapStrikeManager`, status `SUPPRESSED`.
+
 ## Regra de sigilo narrativo (inviolável)
 - **PROIBIDO** mencionar "Aeons", "simulação", "simulacro" ou "mesma alma" em diálogos, UI ou textos visíveis dos Atos I–IV.
+- **Ato III, adicional:** proibido "matriz", "vida passada", "China", "Carcassonne" (nomes de outros atos); teste `EXTRA_FORBIDDEN` em `tests/test_interlude.gd`.
 - Diálogos dos Atos I–IV: usar **apenas** `docs/Lore_Simulacros/`. `docs/Lore_Aeons_Verdade/` só para `EssenceState` e Ato V.
 - Guarda automático: teste `lore_secrecy_acts_1_to_4` (varre eras/, core/ e docs/Lore_Simulacros/).
 - Nenhum LLM em tempo real no jogo: diálogos são estáticos no Dialogic 2.

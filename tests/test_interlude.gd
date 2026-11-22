@@ -6,6 +6,10 @@ const MAP_SCENE := "res://core/overworld/OverworldMap.tscn"
 const TIMELINE := "res://eras/act_01_tianxu/dialogues/celeiros_de_linhai.dtl"
 const ACT01 := "res://eras/act_01_tianxu/EraConfig_Act01.tres"
 const FORBIDDEN: Array[String] = ["aeon", "simulação", "simulacao", "simulacro", "mesma alma"]
+## Termos extras proibidos por ato (além de FORBIDDEN). Pastas ausentes são ignoradas.
+const EXTRA_FORBIDDEN: Dictionary = {
+	"res://eras/act_03_ash_and_steel": ["matriz", "vida passada", "china", "carcassonne", "tianxu", "occitânia", "occitania"],
+}
 const SECRET_SCOPES: Array[String] = ["res://eras/act_01_tianxu", "res://eras/act_02_occitania",
 	"res://eras/act_03_great_wars", "res://eras/act_04_modern", "res://core/overworld",
 	"res://core/combat", "res://core/interlude", "res://docs/Lore_Simulacros"]
@@ -131,19 +135,23 @@ func _drive_dialogic(t: Node, room: Node, choice: int) -> int:
 func _scan_forbidden() -> Array[String]:
 	var hits: Array[String] = []
 	for scope: String in SECRET_SCOPES:
-		_scan_dir(scope, hits)
+		_scan_dir(scope, hits, FORBIDDEN)
+	for scope: String in EXTRA_FORBIDDEN:
+		var words: Array[String] = []
+		words.assign(EXTRA_FORBIDDEN[scope])
+		_scan_dir(scope, hits, words)
 	return hits
 
 
-func _scan_dir(path: String, hits: Array[String]) -> void:
+func _scan_dir(path: String, hits: Array[String], forbidden: Array[String]) -> void:
 	var dir := DirAccess.open(path)
 	if dir == null:
 		return
 	for sub: String in dir.get_directories():
-		_scan_dir(path.path_join(sub), hits)
+		_scan_dir(path.path_join(sub), hits, forbidden)
 	for file: String in dir.get_files():
 		if file.get_extension() in ["dtl", "tres", "tscn", "gd", "json", "md"]:
 			var text: String = FileAccess.get_file_as_string(path.path_join(file)).to_lower()
-			for word: String in FORBIDDEN:
+			for word: String in forbidden:
 				if word in text:
 					hits.append("%s:%s" % [file, word])
