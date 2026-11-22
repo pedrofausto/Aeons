@@ -98,7 +98,7 @@ func _campaign(t: Node) -> void:
 		and WATER in WorldState.completed_interludes, str(battles))
 	t.check("water_poison_halves_garrison", garrison != null and WorldState.has_flag("act2_aude_poisoned")
 		and garrison.units.all(func(u: UnitInstance) -> bool: return u.hp <= u.get_max_hp() / 2 + 1)
-		and WorldState.alignment < 35 and WorldState.doctrine == 15, "al=%d dt=%d" % [WorldState.alignment, WorldState.doctrine])
+		and WorldState.alignment < 45 and WorldState.doctrine == 15 - 15, "al=%d dt=%d" % [WorldState.alignment, WorldState.doctrine])
 	var fresh: float = garrison.vitality_ratio()
 	await _idle(t, map, 4, battles, 3)
 	t.check("act2_siege_wears_down_cite", garrison.vitality_ratio() < fresh)
@@ -143,16 +143,16 @@ func _campaign(t: Node) -> void:
 	battles = []
 	map = await _to_the_bridges(t, 2, battles)
 	garrison = _squad_on(map, "guarnicao_de_montclair")
-	var bertran: UnitInstance = null
+	var aimeric: UnitInstance = null
 	for unit: UnitInstance in map.selected_token.squad.units:
-		if unit.unit_name == "Bertran":
-			bertran = unit
+		if unit.unit_name == "Aimeric":
+			aimeric = unit
 	var vitality: float = garrison.vitality_ratio()
 	await _idle(t, map, 3, battles, 2)
 	t.check("water_assault_reinforced_no_thirst", garrison.units.size() == 6
 		and garrison.units.any(func(u: UnitInstance) -> bool: return u.class_data.class_id == "chevalier_languedoc")
-		and is_equal_approx(garrison.vitality_ratio(), vitality) and bertran != null and bertran.charisma == 75
-		and WorldState.doctrine == 20 and WorldState.has_flag("act2_night_assault"))
+		and is_equal_approx(garrison.vitality_ratio(), vitality) and aimeric != null and aimeric.charisma == 75
+		and WorldState.doctrine == 20 - 15 and WorldState.has_flag("act2_night_assault"))  # cena 2.1, opção B
 	map.queue_free()
 	await t.get_tree().process_frame
 
@@ -257,7 +257,7 @@ func _test_class_tree(t: Node) -> void:
 		tree_ok = tree_ok and _cls(base).tier == 1 and targets == TREE[base]
 		for elite: String in TREE[base]:
 			tree_ok = tree_ok and _cls(elite).tier == 2 and _cls(elite).era_id == 2 and _cls(elite).min_level >= 9
-	t.check("act2_class_tree_19", tree_ok and WorldState.era_config.unit_classes.size() == 22)
+	t.check("act2_class_tree_19", tree_ok and WorldState.era_config.unit_classes.size() == 24)  # 22 + 2 feras
 
 	# Doutrina decide entre Faydit (Revolucionária) e Hospitalário (Pacifista); Carisma barra.
 	var veteran := _unit("sergent_darmes", 10, 80, 65)
@@ -344,9 +344,14 @@ func _drive(t: Node, room: Node, choice: int) -> void:
 	for i: int in 300:
 		if not is_instance_valid(room) or not room.is_inside_tree():
 			return
-		var button := dialogic.get("Choices").call("get_choice_button", choice) as Control
-		if button != null and button.is_visible_in_tree():
-			dialogic.get("Choices").call("select_choice", choice)
+		var picked: int = 0
+		for c: int in range(choice, 0, -1):  # Cena com menos opções: a maior disponível.
+			var button := dialogic.get("Choices").call("get_choice_button", c) as Control
+			if button != null and button.is_visible_in_tree():
+				picked = c
+				break
+		if picked > 0:
+			dialogic.get("Choices").call("select_choice", picked)
 		else:
 			dialogic.get("Inputs").call("handle_input")
 		await t.get_tree().create_timer(0.12).timeout
@@ -355,7 +360,7 @@ func _drive(t: Node, room: Node, choice: int) -> void:
 
 const SPEC_NODES: Dictionary = {  # Spec_Pendencias §1.1
 	"toulouse": ["toulouse", 0, "plains", Vector2(135, 190), 35, true, "dilema_02_toulouse"],
-	"montagne_noire": ["montagne_noire", 1, "forest", Vector2(240, 82), 20, true, "dilema_03_montagne_noire"],
+	"montagne_noire": ["albi", 1, "forest", Vector2(240, 82), 20, true, "dilema_03_montagne_noire"],
 	"beziers": ["beziers", 0, "urban", Vector2(445, 238), 30, true, "dilema_04_beziers"],
 	"tarascon": ["tarascon", 2, "river", Vector2(548, 178), 25, false, "dilema_05_tarascon"],
 	"montsegur": ["montsegur", 1, "mountain", Vector2(255, 298), 15, true, "dilema_06_montsegur"],
@@ -374,7 +379,7 @@ func _test_pendencias(t: Node) -> void:
 	for id: String in SPEC_NODES:
 		var spec: Array = SPEC_NODES[id]
 		var d: MapNodeData = by_id.get(id)
-		nodes_ok = nodes_ok and d != null and d.region_id == spec[0] and int(d.node_type) == spec[1] and d.terrain == spec[2] \
+		nodes_ok = nodes_ok and d != null and d.region_id == "act2_" + spec[0] and int(d.node_type) == spec[1] and d.terrain == spec[2] \
 			and d.map_position == spec[3] and d.gold_per_tick == spec[4] and d.required_for_victory == spec[5] \
 			and d.liberation_timeline == "res://eras/act_02_occitania/dialogues/%s.dtl" % spec[6]
 		nodes_ok = nodes_ok and not MapGraph.find_path(graph, "castelo_cabaret", id).is_empty()
@@ -430,10 +435,10 @@ func _test_pendencias(t: Node) -> void:
 	var tarascon_table := load("res://eras/act_02_occitania/encounters/tarascon_encounters.tres") as EncounterTable
 	var beziers_table := load("res://eras/act_02_occitania/encounters/beziers_encounters.tres") as EncounterTable
 	var rng := RandomNumberGenerator.new()
-	var hidden_boss: bool = tarascon_table.pick(rng, "day", 5.0, "tarascon") == null
+	var hidden_boss: bool = tarascon_table.pick(rng, "day", 5.0, "act2_tarascon") == null
 	WorldState.set_flag("liberated_tarascon")
-	t.check("act2_encounter_gating", hidden_boss and tarascon_table.pick(rng, "day", 5.0, "tarascon") != null
-		and beziers_table.pick(rng, "night", 3.0, "beziers") != null and beziers_table.pick(rng, "day", 3.0, "beziers") == null)
+	t.check("act2_encounter_gating", hidden_boss and tarascon_table.pick(rng, "day", 5.0, "act2_tarascon") != null
+		and beziers_table.pick(rng, "night", 3.0, "act2_beziers") != null and beziers_table.pick(rng, "day", 3.0, "act2_beziers") == null)
 
 	# Dilema 2 jogado pelo fluxo normal (Dialogic real): Toulouse, opção A.
 	EssenceState.reset_all()
@@ -444,16 +449,16 @@ func _test_pendencias(t: Node) -> void:
 	map.auto_tick = false
 	t.get_tree().root.add_child(map)
 	await t.get_tree().process_frame
-	var bertran_cha: int = 65
+	var aimeric_cha: int = 65
 	var battles: Array[String] = []
 	await _march(t, map, map.selected_token, "toulouse", battles, 1)
-	var bertran: UnitInstance = null
+	var aimeric: UnitInstance = null
 	for unit: UnitInstance in map.selected_token.squad.units:
-		if unit.unit_name == "Bertran":
-			bertran = unit
+		if unit.unit_name == "Aimeric":
+			aimeric = unit
 	t.check("act2_toulouse_dilemma_played", WorldState.get_node_faction("toulouse") == "player"
 		and EssenceState.decisions.get("act2_toulouse_pact") == true and WorldState.has_flag("aragon_envoy_pleased")
-		and bertran.charisma == bertran_cha + 3 and WorldState.doctrine == -12, str(battles))
+		and aimeric.charisma == aimeric_cha + 3 and WorldState.doctrine == -12, str(battles))
 	map.queue_free()
 	await t.get_tree().process_frame
 	EssenceState.reset_all()

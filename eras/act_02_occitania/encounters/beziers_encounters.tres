@@ -9,11 +9,11 @@ script = ExtResource("2_entry")
 squad = ExtResource("3_0")
 weight = 1
 time_of_day = "night"
-required_region = "beziers"
+required_region = "act2_beziers"
 
 [resource]
 script = ExtResource("1_table")
-region_id = "beziers"
+region_id = "act2_beziers"
 spawn_nodes = Array[String](["beziers"])
 spawn_chance = 50
 entries = Array[ExtResource("2_entry")]([SubResource("entry_0")])

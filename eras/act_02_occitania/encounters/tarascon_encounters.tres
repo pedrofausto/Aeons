@@ -13,7 +13,7 @@ required_flag = "liberated_tarascon"
 
 [resource]
 script = ExtResource("1_table")
-region_id = "tarascon"
+region_id = "act2_tarascon"
 spawn_nodes = Array[String](["tarascon"])
 spawn_chance = 100
 entries = Array[ExtResource("2_entry")]([SubResource("entry_0")])

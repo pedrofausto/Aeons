@@ -117,6 +117,9 @@ func apply_signal_argument(argument: String) -> void:
 		var parts: PackedStringArray = String(effects["decision"]).split(":")
 		if not EssenceState.record_decision(parts[0], parts.size() > 1 and parts[1] == "true"):
 			return
+	if effects.has("essence_echo"):  # "essence_echo=chave:valor" (ex.: act2_philosophy:awaken_within)
+		var echo: PackedStringArray = String(effects["essence_echo"]).split(":", true, 1)
+		EssenceState.record_echo(echo[0], echo[1] if echo.size() > 1 else "")
 	if effects.has("resistance"):
 		EssenceState.add_resistance_flag(String(effects["resistance"]))
 	WorldState.apply_effects(effects)

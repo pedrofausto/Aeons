@@ -21,7 +21,7 @@ is_leader = false
 [sub_resource type="Resource" id="unit_1"]
 script = ExtResource("1_unit")
 class_data = ExtResource("3_sergent_darmes")
-unit_name = "Bertran"
+unit_name = "Aimeric"
 charisma = 65
 level = 3
 alignment = 60
@@ -51,7 +51,7 @@ is_leader = false
 [sub_resource type="Resource" id="unit_4"]
 script = ExtResource("1_unit")
 class_data = ExtResource("5_trovador")
-unit_name = "Peire"
+unit_name = "Guillem"
 charisma = 72
 level = 2
 alignment = 60

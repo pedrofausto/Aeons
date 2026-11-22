@@ -20,4 +20,5 @@ enum NodeType { CITY, FORTRESS, RESOURCE, SERVER, PASS }
 @export var garrison: SquadData              # Esquadrão estacionado no início (opcional)
 @export_file("*.dtl") var liberation_timeline: String = ""  # Interlúdio na 1ª vez sob controle aliado
 @export var liberation_title: String = ""    # Título exibido na sala do interlúdio
+@export_file("*.dtl") var visit_timeline: String = ""  # Interlúdio na 1ª chegada de um esquadrão aliado
 @export_enum("below", "above") var label_side: String = "below"  # Evita sobrepor rótulos vizinhos

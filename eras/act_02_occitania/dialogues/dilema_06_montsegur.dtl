@@ -1,7 +1,7 @@
 O rochedo de Montségur está cercado. Lá embaixo, as fogueiras do acampamento real cobrem o vale inteiro.
 Na última noite, a Diaconisa Esclarmonde reúne quatro Bons Homens junto à muralha leste. Levam pouco: alguns livros, uma caixa de madeira, nenhuma arma.
 "Eles descerão pelo abismo antes do amanhecer", diz ela. "Alguém precisa segurar a brecha — ou alguém precisa dar ao vale uma razão para olhar para outro lado."
-Bertran aponta os trabucos no vale: "Uma carga agora, e talvez os queimemos antes que derrubem a muralha."
+Pierre-Roger aponta os trabucos no vale: "Uma carga agora, e talvez os queimemos antes que derrubem a muralha."
 - Cobrir a fuga silenciosa dos quatro Bons Homens
 	[signal arg="effect|alignment=+12|popular_support=+10|doctrine=-15|flag=montsegur_four_escaped|echo=act2_montsegur_light|resistance=act2_four_messengers|decision=act2_montsegur_stand:true"]
 	A Companhia segura a brecha em silêncio. Quando a névoa sobe, as cordas estão vazias. Quatro sombras desapareceram na montanha.

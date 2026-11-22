@@ -18,7 +18,7 @@ min_party_level = 1.0
 
 [resource]
 script = ExtResource("1_table")
-region_id = "carcassonne"
+region_id = "act2_carcassonne"
 spawn_nodes = Array[String](["pontes_aude", "burgo_sao_vicente"])
 spawn_chance = 40
 entries = Array[ExtResource("2_entry")]([SubResource("entry_0"), SubResource("entry_1")])

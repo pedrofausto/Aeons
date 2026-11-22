@@ -34,6 +34,9 @@ directories/dch_directory={}
 directories/dtl_directory={
 "a_agua_de_carcassonne": "res://eras/act_02_occitania/dialogues/a_agua_de_carcassonne.dtl",
 "celeiros_de_linhai": "res://eras/act_01_tianxu/dialogues/celeiros_de_linhai.dtl",
+"cena_2_1_muralhas": "res://eras/act_02_occitania/dialogues/cena_2_1_muralhas.dtl",
+"cena_2_2_vigilia": "res://eras/act_02_occitania/dialogues/cena_2_2_vigilia.dtl",
+"cena_2_3_queda": "res://eras/act_02_occitania/dialogues/cena_2_3_queda.dtl",
 "dilema_02_toulouse": "res://eras/act_02_occitania/dialogues/dilema_02_toulouse.dtl",
 "dilema_03_montagne_noire": "res://eras/act_02_occitania/dialogues/dilema_03_montagne_noire.dtl",
 "dilema_04_beziers": "res://eras/act_02_occitania/dialogues/dilema_04_beziers.dtl",

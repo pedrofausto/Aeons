@@ -62,6 +62,13 @@ var interlude_style: String = "camp"
 @export var xp_per_defeat: int = 15
 @export var xp_per_level_gap: int = 0      # Bônus por nível médio do inimigo acima do jogador
 @export var victory_text: String = ""
+
+@export_group("Clímax e Derrota Falsa")
+@export var protagonist_name: String = ""                   # Registrado em EssenceState.act_records
+@export_file("*.dtl") var climax_timelines: Array[String] = []  # Tocadas em ordem ao vencer o ato
+@export var false_defeat_id: String = ""                    # Ex.: "act2_montsegur_pyre"
+@export_multiline var chronicle_end_text: String = ""        # Tela final quando ainda não há próximo ato
+@export var act_record_fields: Dictionary = {}               # campo -> "echo:<chave>" | "flag:<flag>"
 @export var recruit_message: String = "%s se junta à %s."        # (recrutado, esquadrão)
 @export var item_message: String = "Obtido: %s"
 @export var promotion_title: String = "Promoções"

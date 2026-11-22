@@ -1,0 +1,41 @@
+[gd_resource type="Resource" script_class="UnitClassData" format=3]
+
+[ext_resource type="Script" path="res://core/data/UnitClassData.gd" id="1_class"]
+[ext_resource type="Script" path="res://core/data/ActionSkillData.gd" id="2_skill"]
+
+[sub_resource type="Resource" id="front"]
+script = ExtResource("2_skill")
+skill_id = "pack_bite"
+display_name = "Mordida da Matilha"
+effect = 0
+targeting = 3
+power = 50
+hits = 2
+
+[sub_resource type="Resource" id="back"]
+script = ExtResource("2_skill")
+skill_id = "flank_lunge"
+display_name = "Bote pelo Flanco"
+effect = 0
+targeting = 6
+power = 55
+hits = 1
+
+[resource]
+script = ExtResource("1_class")
+class_id = "lobo_gigante"
+display_name = "Lobo Gigante"
+era_id = 2
+archetype = 1
+grid_slots = 1
+tier = 1
+traits = PackedStringArray("beast")
+max_hp = 95
+max_morale = 70
+attack = 24
+defense = 10
+intellect = 4
+agility = 28
+front_action = SubResource("front")
+back_action = SubResource("back")
+movement = "mountain"

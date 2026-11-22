@@ -29,6 +29,7 @@ var unlocked_classes: Array[String] = []     # class_id liberados para recrutame
 ## Cerco por nó: { node_id: { "mode": "thirst"|"preaching"|"assault"|"poisoned",
 ##   "sorties": int, "income_bonus": int, "garrison_hp_pct": int } }
 var siege: Dictionary = {}
+var faction_trust: Dictionary = {}           # fac_id -> int (confiança de facções narrativas; dados da era)
 
 
 func _ready() -> void:
@@ -71,6 +72,7 @@ func reset_visible(next_act: int) -> void:
 	inventory.clear()
 	unlocked_classes.clear()
 	siege.clear()
+	faction_trust.clear()
 	_notify()
 
 
@@ -165,6 +167,9 @@ func apply_effects(effects: Dictionary) -> void:
 		for squad: SquadData in player_squads:
 			for unit: UnitInstance in squad.units:
 				unit.charisma = clampi(unit.charisma + int(effects["charisma"]), 0, 100)
+	if effects.has("trust"):  # Formato "fac_id:+N"
+		var trust: PackedStringArray = String(effects["trust"]).split(":")
+		faction_trust[trust[0]] = int(faction_trust.get(trust[0], 0)) + int(trust[1])
 	for key: String in ["siege_mode", "sorties", "income_bonus", "garrison_hp_pct"]:
 		if effects.has(key):  # Formato "node_id:valor"
 			var parts: PackedStringArray = String(effects[key]).split(":")

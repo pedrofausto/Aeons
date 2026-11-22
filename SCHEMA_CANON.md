@@ -84,6 +84,7 @@ res://
 | `inventory` | Array[ItemData] | uma entrada por unidade de item |
 | `unlocked_classes` | Array[String] | `class_id` liberados |
 | `siege` | Dictionary | `node_id → {mode, sorties, income_bonus, garrison_hp_pct}` |
+| `faction_trust` | Dictionary | `fac_id → int` (confiança das facções narrativas; ids `fac_*` vêm da era; zera a cada ato) |
 
 **Mutação só pelas funções** (`change_alignment/support/doctrine/resources`, `capture_node`, `set_flag`, `add_echo`,
 `apply_effects`, `set_siege`, `add_item/consume_item`, `unlock_class`, `set_time_of_day`, `advance_day`) — elas
@@ -99,8 +100,13 @@ fazem *clamp* e emitem `world_state_changed`.
 | `aeon_resistance_flags` | Array[String] | anomalias/rupturas descobertas |
 | `ephemeral_meetings_seen` | Array[String] | encontros únicos do Ato V |
 | `decisions` | Dictionary | `chave → bool`, **gravada uma única vez** (`record_decision`) |
+| `echo_values` | Dictionary | ecos com valor, `chave → String`, **primeiro registro vale** (`record_echo`/`get_echo`) |
+| `act_records` | Dictionary | `act_id → {protagonist, final_alignment, final_popular_support, final_doctrine, flags, faction_trust, false_defeat, + EraConfig.act_record_fields}` (`record_act_completion` mescla) |
+| `false_defeats` | Array[String] | ids das derrotas falsas vividas (`act2_montsegur_pyre`) |
 
-Transição de ato: **`EssenceState.archive_act_and_reset_visible(act_id)`** (não existe `EraManager`).
+Transição de ato: **`EssenceState.archive_act_and_reset_visible(act_id)`** = `record_act(act_id)` + reset do visível +
+próxima era (não existe `EraManager`). Sem próximo ato configurado, a Derrota Falsa chama só `record_act` e mostra
+`EraConfig.chronicle_end_text` (flag `chronicle_closed`). Módulo: `core/overworld/FalseDefeat.gd`.
 
 ### 3.4 Extensão planejada (ainda não implementada): medidores de era
 Medidores próprios de uma era (Ato III: suprimento, decifração, cargas de artilharia, alcance de rádio; Ato IV:
@@ -155,7 +161,9 @@ Moral" se modela com `honor_rule` (ex.: o rito de paz da Tarasca). Em runtime (n
 `region_id` · `terrain` (§6.1) · `required_for_victory = true` · `gold_per_tick` · `map_position` (pixels lógicos
 640×360) · `neighbors: Array[String]` (grafo; sem NavigationRegion2D) · `garrison: SquadData` · `liberation_timeline`
 (`.dtl`, dispara na 1ª vez sob controle aliado) · `liberation_title` · cerco: `water_source_node` · `sortie_squad` ·
-`siege_reinforcements` · `label_side: String = "below"` (`"above"` quando o rótulo colidiria com o de um vizinho).
+`siege_reinforcements` · `label_side: String = "below"` (`"above"` quando o rótulo colidiria com o de um vizinho) ·
+`visit_timeline` (`.dtl`, dispara na 1ª chegada de um esquadrão do jogador; flag `visited_<nó>`).
+Interlúdios nunca se sobrepõem: pedidos durante outro interlúdio/batalha entram na fila do `EncounterDirector`.
 
 ### 4.6 `EraConfig`
 Identidade (`act_number`, `era_title`, `window_title`, `ui_theme`, `palette_shader`, `reality_layer`, `interlude_style`) ·
@@ -164,7 +172,9 @@ vocabulário (`resource_label`, `hp_label`, `morale_label`, `alignment_label`, `
 paleta (`color_*`) · interlúdio (`interlude_backdrop`, `dialogue_*`, `dissolve_interlude_shader`) · regras
 (`enable_siege_water_rule`, `enable_offmap_artillery`, `enable_network_hack`) · conteúdo (`map_nodes`, `unit_classes`,
 `starting_squads`, `enemy_patrols`, `encounter_tables`, `item_catalog`, `max_roaming_squads`) · XP (`xp_per_victory`,
-`xp_per_defeat`, `xp_per_level_gap`) · `victory_text` · `next_era_config`.
+`xp_per_defeat`, `xp_per_level_gap`) · `victory_text` · clímax (`protagonist_name`, `climax_timelines` — tocadas em
+ordem ao vencer o ato, seguidas da Derrota Falsa —, `false_defeat_id`, `chronicle_end_text`, `act_record_fields`:
+`campo → "echo:<chave>" | "flag:<flag>"`) · `next_era_config`.
 **Todo texto visível ao jogador vem do EraConfig ou de `.dtl`, nunca de `.gd`.**
 
 ### 4.7 `ItemData` · `EncounterTable` · `EncounterEntry`
@@ -188,6 +198,11 @@ As timelines aplicam efeitos com `[signal arg="effect|chave=valor|chave=valor"]`
 | `siege_mode` | `node:thirst\|poisoned\|preaching\|assault` | modo do cerco |
 | `sorties` · `income_bonus` · `garrison_hp_pct` | `node:int` | surtidas pendentes · % extra de renda · HP da guarnição |
 | `reinforce` | `node_id` | adiciona `siege_reinforcements` à guarnição |
+| `trust` | `fac_id:int` | soma em `WorldState.faction_trust[fac_id]` (uma facção por sinal) |
+| `essence_echo` | `chave:valor` | `EssenceState.record_echo` (primeiro valor vale) |
+
+Recompensa de batalha (`SquadData.outcome_rewards[tipo]`) aceita `interlude` (`.dtl` aberto ao fim da batalha), além
+de `flag`, `item`, `requires_flag`, `requires_class`.
 
 Nova chave só com suporte em `WorldState.apply_effects`/`InterludeController` + teste + linha nesta tabela.
 
@@ -226,7 +241,12 @@ Nova chave só com suporte em `WorldState.apply_effects`/`InterludeController` +
 | `essence_alignment_history` / `essence_doctrine_history` (Array) | `EssenceState.alignment_history` / `doctrine_history` (Dictionary act→valor) |
 | `aeon_anomalies_discovered`, `philosophical_flags`, `essence_flag` | `EssenceState.aeon_resistance_flags` (anomalias) ou `philosophical_echoes` (ecos) |
 | `act3_dilemma_flags: {chave: bool}` e similares | `EssenceState.decisions` com chave `act3_<nome>` (via `decision=` no `.dtl`) |
-| `false_defeats_triggered` | ainda não existe → quando implementar: `EssenceState.false_defeats: Array[String]` |
+| `false_defeats_triggered` | `EssenceState.false_defeats: Array[String]` |
+| `fac_faydits.trust += 10`, `fac_*.trust` | `trust=fac_faydits:10` → `WorldState.faction_trust` |
+| `EssenceState.record_echo("act2_philosophy", "x")`, `get_echo` | `essence_echo=act2_philosophy:x` no `.dtl`; `EssenceState.echo_values` |
+| `EssenceState.record_act_completion(n, {...})` | automático em `record_act` (campos extras via `EraConfig.act_record_fields`) |
+| `WorldState.get_flag("x")` | `WorldState.has_flag("x")` |
+| `InterludeRoom_<Lugar>.tscn` (uma cena por interlúdio) | uma só `InterludeRoom.tscn`; o lugar vem do `.dtl` e do `interlude_backdrop` da era |
 | `base_hp / base_atk / base_def / base_agi / base_int` | `max_hp / attack / defense / agility / intellect` |
 | `base_cha` | `UnitInstance.charisma` (unidade) · requisito: `min_charisma` (classe) |
 | `front_action_name`, `front_hits`, `front_is_aoe`, `front_action_id`, `front_action_count` | `front_action: ActionSkillData` com `display_name`, `hits`, `targeting = ALL_ENEMIES` |
@@ -255,7 +275,7 @@ Nova chave só com suporte em `WorldState.apply_effects`/`InterludeController` +
 | `WorldState.act_id` | `WorldState.current_act` |
 | `EssenceState.act_summaries` | `alignment_history` + `doctrine_history` (+ `decisions` para escolhas-chave) |
 | `EssenceState.aeon_resistance_score: int` | `EssenceState.aeon_resistance_flags.size()` (não criar contador separado) |
-| `EssenceState.false_defeats_triggered: Array[int]` | reservado: `EssenceState.false_defeats: Array[String]` (ids como `act2_montsegur_pyre`) |
+| `EssenceState.false_defeats_triggered: Array[int]` | `EssenceState.false_defeats: Array[String]` (ids como `act2_montsegur_pyre`) |
 | `MapNodeData.node_type` como String ("PORT", "INFRASTRUCTURE", "NEURAL_NODE") | enum `NodeType` (inteiro); novos tipos só **no fim** do enum (ex.: `PORT`, `INFRASTRUCTURE`, `NEURAL_NODE` quando os Atos III–V precisarem) |
 | `node_id: StringName`, `connected_nodes: Array[StringName]` | `node_id: String`, `neighbors: Array[String]` |
 | `owner_faction`, `resource_per_tick` | `faction`, `gold_per_tick` |
@@ -271,7 +291,6 @@ Nova chave só com suporte em `WorldState.apply_effects`/`InterludeController` +
 - `WorldState`: `era_meters: Dictionary = {}` (reiniciado na Derrota Falsa).
 - `MapNodeData`: `is_supply_source: bool = false`, `rail_links: Array[String] = []`, `artillery_radius: float = 0.0`.
 - `SquadData`: `supply_level: int = 100` (0 reduz dano e Moral).
-- `EssenceState`: `false_defeats: Array[String] = []`.
 - Novos módulos (reaproveitados nos Atos IV–V): `core/overworld/SupplyGraphSystem.gd` (BFS de abastecimento),
   `core/overworld/OffmapStrikeManager.gd` (barragens/transmissões), gancho `pre_round_hook` no `CombatResolver` e o
   status `SUPPRESSED` (perde iniciativa), shaders `core/interlude/shaders/rain_overlay_2d.gdshader` e

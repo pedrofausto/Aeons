@@ -9,6 +9,9 @@
 [ext_resource type="Resource" path="res://eras/act_02_occitania/map/squad_companhia_de_cabaret.tres" id="4_squad"]
 [ext_resource type="Resource" path="res://eras/act_02_occitania/map/squad_escolta_da_inquisicao.tres" id="7_patrol"]
 [ext_resource type="Resource" path="res://eras/act_02_occitania/encounters/carcassonne_encounters.tres" id="8_encounters"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/encounters/montsegur_encounters.tres" id="8_montsegur"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/classes/lobo_gigante.tres" id="6_lobo_gigante"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/classes/urso_montanha.tres" id="6_urso_montanha"]
 [ext_resource type="Resource" path="res://eras/act_02_occitania/map/node_castelo_cabaret.tres" id="5_castelo_cabaret"]
 [ext_resource type="Resource" path="res://eras/act_02_occitania/map/node_burgo_sao_vicente.tres" id="5_burgo_sao_vicente"]
 [ext_resource type="Resource" path="res://eras/act_02_occitania/map/node_pontes_aude.tres" id="5_pontes_aude"]
@@ -69,14 +72,22 @@ color_background = Color(0.08, 0.08, 0.11, 1)
 color_road = Color(0.5, 0.45, 0.38, 1)
 enable_siege_water_rule = true
 map_nodes = Array[ExtResource("3_nodescript")]([ExtResource("5_castelo_cabaret"), ExtResource("5_burgo_sao_vicente"), ExtResource("5_pontes_aude"), ExtResource("5_cite_carcassonne"), ExtResource("5_toulouse"), ExtResource("5_montagne_noire"), ExtResource("5_beziers"), ExtResource("5_tarascon"), ExtResource("5_montsegur")])
-unit_classes = Array[ExtResource("3_classscript")]([ExtResource("6_sergent_darmes"), ExtResource("6_faydit"), ExtResource("6_cavaleiro_hospitalario"), ExtResource("6_routier"), ExtResource("6_lanceiro_escudeiro"), ExtResource("6_chevalier_languedoc"), ExtResource("6_quebra_muralhas"), ExtResource("6_arbaletrier"), ExtResource("6_batedor_pireneus"), ExtResource("6_sicario_inquisitorial"), ExtResource("6_erudito_boticario"), ExtResource("6_alquimista_hermetico"), ExtResource("6_ocultista"), ExtResource("6_irmao_caridade"), ExtResource("6_parfait"), ExtResource("6_inquisidor"), ExtResource("6_trovador"), ExtResource("6_menestrel_resistencia"), ExtResource("6_arauto_cruzada"), ExtResource("6_portador_consolamentum"), ExtResource("6_tarasca"), ExtResource("6_eco_beziers")])
+unit_classes = Array[ExtResource("3_classscript")]([ExtResource("6_sergent_darmes"), ExtResource("6_faydit"), ExtResource("6_cavaleiro_hospitalario"), ExtResource("6_routier"), ExtResource("6_lanceiro_escudeiro"), ExtResource("6_chevalier_languedoc"), ExtResource("6_quebra_muralhas"), ExtResource("6_arbaletrier"), ExtResource("6_batedor_pireneus"), ExtResource("6_sicario_inquisitorial"), ExtResource("6_erudito_boticario"), ExtResource("6_alquimista_hermetico"), ExtResource("6_ocultista"), ExtResource("6_irmao_caridade"), ExtResource("6_parfait"), ExtResource("6_inquisidor"), ExtResource("6_trovador"), ExtResource("6_menestrel_resistencia"), ExtResource("6_arauto_cruzada"), ExtResource("6_portador_consolamentum"), ExtResource("6_tarasca"), ExtResource("6_eco_beziers"), ExtResource("6_lobo_gigante"), ExtResource("6_urso_montanha")])
 starting_squads = Array[ExtResource("3_squadscript")]([ExtResource("4_squad")])
 enemy_patrols = Array[ExtResource("3_squadscript")]([ExtResource("7_patrol")])
-encounter_tables = Array[Resource]([ExtResource("8_encounters"), ExtResource("8_beziers"), ExtResource("8_tarascon")])
+encounter_tables = Array[Resource]([ExtResource("8_encounters"), ExtResource("8_beziers"), ExtResource("8_tarascon"), ExtResource("8_montsegur")])
 max_roaming_squads = 2
 item_catalog = Array[ExtResource("9_itemscript")]([ExtResource("9_pergaminho"), ExtResource("9_cinza")])
 xp_per_victory = 90
 xp_per_defeat = 25
 xp_per_level_gap = 20
 victory_text = "A Cité e a Abadia voltam às mãos do sul. Os sinos do Languedoc tocam sobre o Aude."
+protagonist_name = "Aimeric de Val-Clair"
+climax_timelines = Array[String](["res://eras/act_02_occitania/dialogues/cena_2_3_queda.dtl"])
+false_defeat_id = "act2_montsegur_pyre"
+chronicle_end_text = "FIM DA CRÔNICA II — A RESISTÊNCIA CAIU."
+act_record_fields = {
+"philosophy_echo": "echo:act2_philosophy",
+"tarasque_spared": "flag:tarasque_pacified"
+}
 siege_thirst_message = "Sede na %s: sem as águas do Aude, os defensores definham."

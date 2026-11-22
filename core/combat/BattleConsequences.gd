@@ -128,6 +128,8 @@ static func _apply_rewards(rewards: Dictionary, report: Dictionary) -> void:
 		WorldState.set_flag(String(rewards["flag"]))
 	if rewards.has("unlock_class"):
 		WorldState.unlock_class(String(rewards["unlock_class"]))
+	if rewards.has("interlude"):
+		report["interlude"] = String(rewards["interlude"])
 	if rewards.has("item"):
 		var item := load(String(rewards["item"])) as ItemData
 		if WorldState.add_item(item):

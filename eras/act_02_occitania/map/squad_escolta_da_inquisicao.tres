@@ -51,3 +51,13 @@ units = Array[ExtResource("1_unit")]([SubResource("unit_0"), SubResource("unit_1
 current_node_id = "cite_carcassonne"
 patrol_route = Array[String](["cite_carcassonne", "pontes_aude", "burgo_sao_vicente"])
 encounter_tag = "moral_escort"
+outcome_rewards = {
+"annihilation": {
+"flag": "act2_escort_freed",
+"interlude": "res://eras/act_02_occitania/dialogues/cena_2_2_vigilia.dtl"
+},
+"morale_break": {
+"flag": "act2_escort_freed",
+"interlude": "res://eras/act_02_occitania/dialogues/cena_2_2_vigilia.dtl"
+}
+}
