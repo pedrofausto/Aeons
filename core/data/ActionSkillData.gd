@@ -3,7 +3,7 @@ extends Resource
 ## Ação executada por uma unidade conforme a fileira em que está na grade 3x2.
 ## Campos opcionais (elemento, golpes, dreno, status, buffs) têm padrões neutros.
 
-enum Effect { PHYSICAL, MAGIC, MORALE_ONLY, HEAL }
+enum Effect { PHYSICAL, MAGIC, MORALE_ONLY, HEAL, BUFF }  # BUFF: só efeitos de apoio
 enum Targeting { FRONT_FIRST, BACK_FIRST, ALL_ENEMIES, LEADER, LOWEST_HP_ALLY, ALL_ALLIES, WEAKEST }
 
 @export var skill_id: String = ""
@@ -32,7 +32,7 @@ enum Targeting { FRONT_FIRST, BACK_FIRST, ALL_ENEMIES, LEADER, LOWEST_HP_ALLY, A
 
 
 func is_offensive() -> bool:
-	return effect != Effect.HEAL
+	return effect != Effect.HEAL and effect != Effect.BUFF
 
 
 func get_element() -> String:

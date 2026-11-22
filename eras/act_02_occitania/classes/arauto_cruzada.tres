@@ -1,0 +1,46 @@
+[gd_resource type="Resource" script_class="UnitClassData" format=3]
+
+[ext_resource type="Script" path="res://core/data/UnitClassData.gd" id="1_class"]
+[ext_resource type="Script" path="res://core/data/ActionSkillData.gd" id="2_skill"]
+
+[sub_resource type="Resource" id="front"]
+script = ExtResource("2_skill")
+skill_id = "sworn_blade"
+display_name = "Espada Jurada"
+effect = 0
+targeting = 0
+power = 55
+hits = 2
+
+[sub_resource type="Resource" id="back"]
+script = ExtResource("2_skill")
+skill_id = "war_sermon"
+display_name = "Pregação de Guerra"
+effect = 4
+targeting = 0
+power = 0
+ally_buff_trait = "*"
+ally_buff_attack_pct = 35
+
+[resource]
+script = ExtResource("1_class")
+class_id = "arauto_cruzada"
+display_name = "Arauto da Cruzada"
+era_id = 2
+archetype = 5
+grid_slots = 1
+tier = 2
+liberation_reputation_bonus = -4
+max_hp = 125
+max_morale = 110
+attack = 24
+defense = 18
+intellect = 24
+agility = 20
+front_action = SubResource("front")
+back_action = SubResource("back")
+preferred_doctrine = "revolutionary"
+min_level = 12
+min_alignment = 0
+max_alignment = 40
+min_charisma = 60

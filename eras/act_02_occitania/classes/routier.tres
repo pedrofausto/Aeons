@@ -5,21 +5,21 @@
 
 [sub_resource type="Resource" id="front"]
 script = ExtResource("2_skill")
-skill_id = "pillage_blade"
-display_name = "Lâmina do Saque"
+skill_id = "brutal_blow"
+display_name = "Golpe Brutal"
 effect = 0
 targeting = 0
-power = 125
-morale_power = 10
+power = 50
+hits = 3
+morale_power = 6
 
 [sub_resource type="Resource" id="back"]
 script = ExtResource("2_skill")
-skill_id = "torch_threat"
-display_name = "Ameaça da Tocha"
-effect = 2
+skill_id = "incendiary_plunder"
+display_name = "Saque Incendiário"
+effect = 0
 targeting = 0
-power = 60
-morale_power = 15
+power = 70
 element = "FIRE"
 
 [resource]
@@ -29,15 +29,17 @@ display_name = "Routier"
 era_id = 2
 archetype = 0
 grid_slots = 1
-max_hp = 125
+tier = 2
+liberation_reputation_bonus = -8
+max_hp = 150
 max_morale = 95
-attack = 23
-defense = 13
-intellect = 6
-agility = 10
+attack = 35
+defense = 22
+intellect = 10
+agility = 16
 front_action = SubResource("front")
 back_action = SubResource("back")
 preferred_doctrine = "revolutionary"
-min_level = 4
+min_level = 9
 min_alignment = 0
-max_alignment = 35
+max_alignment = 38

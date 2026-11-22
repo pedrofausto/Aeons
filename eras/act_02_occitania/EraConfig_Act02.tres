@@ -14,14 +14,23 @@
 [ext_resource type="Resource" path="res://eras/act_02_occitania/map/node_cite_carcassonne.tres" id="5_cite_carcassonne"]
 [ext_resource type="Resource" path="res://eras/act_02_occitania/classes/sergent_darmes.tres" id="6_sergent_darmes"]
 [ext_resource type="Resource" path="res://eras/act_02_occitania/classes/faydit.tres" id="6_faydit"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/classes/cavaleiro_hospitalario.tres" id="6_cavaleiro_hospitalario"]
 [ext_resource type="Resource" path="res://eras/act_02_occitania/classes/routier.tres" id="6_routier"]
 [ext_resource type="Resource" path="res://eras/act_02_occitania/classes/lanceiro_escudeiro.tres" id="6_lanceiro_escudeiro"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/classes/chevalier_languedoc.tres" id="6_chevalier_languedoc"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/classes/quebra_muralhas.tres" id="6_quebra_muralhas"]
 [ext_resource type="Resource" path="res://eras/act_02_occitania/classes/arbaletrier.tres" id="6_arbaletrier"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/classes/batedor_pireneus.tres" id="6_batedor_pireneus"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/classes/sicario_inquisitorial.tres" id="6_sicario_inquisitorial"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/classes/erudito_boticario.tres" id="6_erudito_boticario"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/classes/alquimista_hermetico.tres" id="6_alquimista_hermetico"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/classes/engenheiro_fogo.tres" id="6_engenheiro_fogo"]
 [ext_resource type="Resource" path="res://eras/act_02_occitania/classes/irmao_caridade.tres" id="6_irmao_caridade"]
 [ext_resource type="Resource" path="res://eras/act_02_occitania/classes/parfait.tres" id="6_parfait"]
 [ext_resource type="Resource" path="res://eras/act_02_occitania/classes/inquisidor.tres" id="6_inquisidor"]
 [ext_resource type="Resource" path="res://eras/act_02_occitania/classes/trovador.tres" id="6_trovador"]
-[ext_resource type="Resource" path="res://eras/act_02_occitania/classes/erudito_boticario.tres" id="6_erudito_boticario"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/classes/menestrel_resistencia.tres" id="6_menestrel_resistencia"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/classes/arauto_cruzada.tres" id="6_arauto_cruzada"]
 
 [resource]
 script = ExtResource("1_era")
@@ -45,10 +54,13 @@ color_background = Color(0.08, 0.08, 0.11, 1)
 color_road = Color(0.5, 0.45, 0.38, 1)
 enable_siege_water_rule = true
 map_nodes = Array[ExtResource("3_nodescript")]([ExtResource("5_castelo_cabaret"), ExtResource("5_burgo_sao_vicente"), ExtResource("5_pontes_aude"), ExtResource("5_cite_carcassonne")])
-unit_classes = Array[ExtResource("3_classscript")]([ExtResource("6_sergent_darmes"), ExtResource("6_faydit"), ExtResource("6_routier"), ExtResource("6_lanceiro_escudeiro"), ExtResource("6_arbaletrier"), ExtResource("6_irmao_caridade"), ExtResource("6_parfait"), ExtResource("6_inquisidor"), ExtResource("6_trovador"), ExtResource("6_erudito_boticario")])
+unit_classes = Array[ExtResource("3_classscript")]([ExtResource("6_sergent_darmes"), ExtResource("6_faydit"), ExtResource("6_cavaleiro_hospitalario"), ExtResource("6_routier"), ExtResource("6_lanceiro_escudeiro"), ExtResource("6_chevalier_languedoc"), ExtResource("6_quebra_muralhas"), ExtResource("6_arbaletrier"), ExtResource("6_batedor_pireneus"), ExtResource("6_sicario_inquisitorial"), ExtResource("6_erudito_boticario"), ExtResource("6_alquimista_hermetico"), ExtResource("6_engenheiro_fogo"), ExtResource("6_irmao_caridade"), ExtResource("6_parfait"), ExtResource("6_inquisidor"), ExtResource("6_trovador"), ExtResource("6_menestrel_resistencia"), ExtResource("6_arauto_cruzada")])
 starting_squads = Array[ExtResource("3_squadscript")]([ExtResource("4_squad")])
 enemy_patrols = Array[ExtResource("3_squadscript")]([ExtResource("7_patrol")])
 encounter_tables = Array[Resource]([ExtResource("8_encounters")])
 max_roaming_squads = 1
+xp_per_victory = 90
+xp_per_defeat = 25
+xp_per_level_gap = 20
 victory_text = "A Cité de Carcassonne volta às mãos do sul. Os sinos do Burgo tocam sobre o Aude."
 siege_thirst_message = "Sede na %s: sem as águas do Aude, os defensores definham."

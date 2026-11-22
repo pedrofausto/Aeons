@@ -5,39 +5,47 @@
 
 [sub_resource type="Resource" id="front"]
 script = ExtResource("2_skill")
-skill_id = "word_of_peace"
-display_name = "Palavra de Paz"
+skill_id = "shield_of_compassion"
+display_name = "Escudo de Compaixão"
 effect = 2
-targeting = 2
-power = 45
-morale_power = 10
+targeting = 0
+power = 60
 element = "PURIFY"
+target_attack_debuff_pct = 20
 
 [sub_resource type="Resource" id="back"]
 script = ExtResource("2_skill")
-skill_id = "consolamentum"
-display_name = "Consolamentum"
+skill_id = "peace_of_good_men"
+display_name = "Paz dos Bons Homens"
 effect = 3
 targeting = 5
-power = 60
-morale_power = 20
+power = 30
+hits = 2
+morale_power = 10
+enemy_morale_drain = 12
 
 [resource]
 script = ExtResource("1_class")
 class_id = "parfait"
-display_name = "Parfait"
+display_name = "Parfait Cátaro"
 era_id = 2
 archetype = 4
 grid_slots = 1
-max_hp = 80
-max_morale = 130
+tier = 2
+liberation_reputation_bonus = 12
+traits = PackedStringArray("non_lethal")
+max_hp = 115
+max_morale = 140
 attack = 6
-defense = 9
-intellect = 21
-agility = 10
+defense = 18
+intellect = 36
+agility = 16
 front_action = SubResource("front")
 back_action = SubResource("back")
 preferred_doctrine = "pacifist"
-min_level = 4
-min_alignment = 70
+min_level = 10
+min_alignment = 75
 max_alignment = 100
+min_doctrine = -100
+max_doctrine = -20
+forbidden_flag = "act2_aude_poisoned"

@@ -5,39 +5,42 @@
 
 [sub_resource type="Resource" id="front"]
 script = ExtResource("2_skill")
-skill_id = "accusation"
-display_name = "Acusação"
-effect = 2
-targeting = 3
-power = 85
-morale_power = 15
+skill_id = "iron_staff"
+display_name = "Bastão de Ferro"
+effect = 0
+targeting = 0
+power = 60
 
 [sub_resource type="Resource" id="back"]
 script = ExtResource("2_skill")
-skill_id = "fire_sermon"
-display_name = "Sermão de Fogo"
-effect = 2
-targeting = 2
+skill_id = "anathema"
+display_name = "Anátema"
+effect = 1
+targeting = 0
 power = 40
-morale_power = 8
-element = "FIRE"
+hits = 2
+element = "SHADOW"
+morale_power = 12
+inflicts_status = "CONFUSE"
 
 [resource]
 script = ExtResource("1_class")
 class_id = "inquisidor"
-display_name = "Inquisidor"
+display_name = "Inquisidor Dominicano"
 era_id = 2
 archetype = 4
 grid_slots = 1
-max_hp = 75
-max_morale = 100
-attack = 8
-defense = 8
-intellect = 20
-agility = 9
+tier = 2
+liberation_reputation_bonus = -8
+max_hp = 120
+max_morale = 110
+attack = 18
+defense = 20
+intellect = 34
+agility = 14
 front_action = SubResource("front")
 back_action = SubResource("back")
 preferred_doctrine = "revolutionary"
-min_level = 4
+min_level = 10
 min_alignment = 0
 max_alignment = 35

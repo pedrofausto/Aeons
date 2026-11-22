@@ -4,19 +4,21 @@
 [ext_resource type="Script" path="res://core/data/ActionSkillData.gd" id="2_skill"]
 [ext_resource type="Resource" path="res://eras/act_02_occitania/classes/faydit.tres" id="3_good"]
 [ext_resource type="Resource" path="res://eras/act_02_occitania/classes/routier.tres" id="3_evil"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/classes/cavaleiro_hospitalario.tres" id="3_x0"]
 
 [sub_resource type="Resource" id="front"]
 script = ExtResource("2_skill")
-skill_id = "mace_blow"
-display_name = "Golpe de Maça"
+skill_id = "sword_strike"
+display_name = "Golpe de Espada"
 effect = 0
 targeting = 0
-power = 100
+power = 55
+hits = 2
 
 [sub_resource type="Resource" id="back"]
 script = ExtResource("2_skill")
-skill_id = "javelin"
-display_name = "Dardo de Arremesso"
+skill_id = "thrust"
+display_name = "Estocada"
 effect = 0
 targeting = 0
 power = 60
@@ -28,13 +30,15 @@ display_name = "Sergent d'Armes"
 era_id = 2
 archetype = 0
 grid_slots = 1
-max_hp = 110
+tier = 1
+max_hp = 95
 max_morale = 90
-attack = 16
-defense = 14
-intellect = 6
-agility = 9
+attack = 18
+defense = 16
+intellect = 8
+agility = 12
 front_action = SubResource("front")
 back_action = SubResource("back")
 promotion_good = ExtResource("3_good")
 promotion_evil = ExtResource("3_evil")
+promotes_to = Array[Resource]([ExtResource("3_x0")])

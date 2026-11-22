@@ -67,6 +67,14 @@ static func _perform_action(actor: UnitInstance, actor_ref: Dictionary, own: Squ
 		return
 	if skill.effect == ActionSkillData.Effect.HEAL:
 		_heal(actor, actor_ref, skill, own, foes, state, log)
+		SkillMath.apply_ally_buff(skill, own, state)
+		return
+	if skill.effect == ActionSkillData.Effect.BUFF:
+		log.append({"type": "buff", "side": actor_ref["side"], "index": actor_ref["index"], "skill": skill.display_name})
+		SkillMath.apply_ally_buff(skill, own, state)
+		_drain_all(foes, skill.enemy_morale_drain, _other(actor_ref["side"]), log)
+		if skill.grants_extra_action and not actor_ref.get("extra", false):
+			_grant_extra_action(actor, actor_ref, own, foes, own_order, state, log)
 		return
 	for hit_index: int in skill.hits:
 		for target_index: int in CombatTargeting.pick_targets(skill, foes, own_order):
@@ -124,23 +132,21 @@ static func _heal(actor: UnitInstance, actor_ref: Dictionary, skill: ActionSkill
 	var side: String = actor_ref["side"]
 	var all_allies: bool = skill.targeting == ActionSkillData.Targeting.ALL_ALLIES
 	var healthy_before: bool = CombatTargeting.all_allies_healthy(own, HEALTHY_THRESHOLD_PCT)
-	var targets: Array[int] = CombatTargeting.living_indexes(own)
-	if not all_allies:
-		targets = [CombatTargeting.lowest_hp_ratio_ally(own)]
-	for ally_index: int in targets:
-		if ally_index < 0:
-			continue
-		var ally: UnitInstance = own.units[ally_index]
-		var amount: int = actor.get_intellect() * skill.power / 100
-		ally.hp = mini(ally.hp + amount, ally.get_max_hp())
-		ally.morale = mini(ally.morale + skill.morale_power, ally.get_max_morale())
-		log.append({"type": "action", "actor_side": side, "actor_index": actor_ref["index"],
-			"skill": skill.display_name, "target_side": side, "target_index": ally_index,
-			"damage": 0, "morale_damage": 0, "heal": amount, "target_hp": ally.hp, "target_morale": ally.morale})
-	for i: int in foes.units.size():  # Ex.: "Paz dos Bons Homens" — cura e induz rendição.
-		var drained: int = SkillMath.drain_morale(foes.units[i], skill.enemy_morale_drain)
-		if drained > 0 and foes.units[i].is_broken():
-			log.append({"type": "unit_broken", "side": _other(side), "index": i})
+	for hit_index: int in skill.hits:
+		var targets: Array[int] = CombatTargeting.living_indexes(own)
+		if not all_allies:
+			targets = [CombatTargeting.lowest_hp_ratio_ally(own)]
+		for ally_index: int in targets:
+			if ally_index < 0:
+				continue
+			var ally: UnitInstance = own.units[ally_index]
+			var amount: int = actor.get_intellect() * skill.power / 100
+			ally.hp = mini(ally.hp + amount, ally.get_max_hp())
+			ally.morale = mini(ally.morale + skill.morale_power, ally.get_max_morale())
+			log.append({"type": "action", "actor_side": side, "actor_index": actor_ref["index"],
+				"skill": skill.display_name, "target_side": side, "target_index": ally_index,
+				"damage": 0, "morale_damage": 0, "heal": amount, "target_hp": ally.hp, "target_morale": ally.morale})
+		_drain_all(foes, skill.enemy_morale_drain, _other(side), log)  # "Paz dos Bons Homens"
 	if skill.healthy_allies_bonus_power > 0 and healthy_before:
 		var bonus := ActionSkillData.new()
 		bonus.display_name = skill.display_name
@@ -150,6 +156,13 @@ static func _heal(actor: UnitInstance, actor_ref: Dictionary, skill: ActionSkill
 		bonus.element = skill.bonus_element
 		for target_index: int in CombatTargeting.pick_targets(bonus, foes, TacticalOrder.Order.NONE):
 			_strike(actor, actor_ref, bonus, own, foes, target_index, TacticalOrder.Order.NONE, state, log)
+
+
+## Dreno de Moral em todo o esquadrão inimigo (induz rendição/deserção, sem dano).
+static func _drain_all(foes: SquadData, amount: int, foe_side: String, log: Array[Dictionary]) -> void:
+	for i: int in foes.units.size():
+		if SkillMath.drain_morale(foes.units[i], amount) > 0 and foes.units[i].is_broken():
+			log.append({"type": "unit_broken", "side": foe_side, "index": i})
 
 
 static func _on_leader_fallen(squad: SquadData, side: String, log: Array[Dictionary]) -> void:

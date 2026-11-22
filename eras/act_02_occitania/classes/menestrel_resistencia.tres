@@ -1,0 +1,46 @@
+[gd_resource type="Resource" script_class="UnitClassData" format=3]
+
+[ext_resource type="Script" path="res://core/data/UnitClassData.gd" id="1_class"]
+[ext_resource type="Script" path="res://core/data/ActionSkillData.gd" id="2_skill"]
+
+[sub_resource type="Resource" id="front"]
+script = ExtResource("2_skill")
+skill_id = "agile_foil"
+display_name = "Florete Ágil"
+effect = 0
+targeting = 0
+power = 50
+hits = 2
+
+[sub_resource type="Resource" id="back"]
+script = ExtResource("2_skill")
+skill_id = "sirventes_of_liberty"
+display_name = "Sirventes da Liberdade"
+effect = 4
+targeting = 0
+power = 0
+grants_extra_action = true
+enemy_morale_drain = 8
+
+[resource]
+script = ExtResource("1_class")
+class_id = "menestrel_resistencia"
+display_name = "Menestrel da Resistência"
+era_id = 2
+archetype = 5
+grid_slots = 1
+tier = 2
+liberation_reputation_bonus = 10
+max_hp = 115
+max_morale = 125
+attack = 19
+defense = 16
+intellect = 30
+agility = 26
+front_action = SubResource("front")
+back_action = SubResource("back")
+preferred_doctrine = "pacifist"
+min_level = 12
+min_alignment = 65
+max_alignment = 100
+min_charisma = 70

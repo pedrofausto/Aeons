@@ -19,18 +19,8 @@ func run(t: Node) -> void:
 		and era.enable_siege_water_rule and era.map_nodes.size() == 4 and era.resource_label == "Prata")
 	_quiet()
 
-	var ok_classes: bool = true
-	for id: String in ["sergent_darmes", "faydit", "routier", "lanceiro_escudeiro", "arbaletrier", "irmao_caridade",
-			"parfait", "inquisidor", "trovador", "erudito_boticario"]:
-		var cls := load(CLS % id) as UnitClassData
-		ok_classes = ok_classes and cls != null and cls.era_id == 2 and cls.front_action != null and cls.back_action != null
-	t.check("act2_classes_load", ok_classes)
-	var sergent := load(CLS % "sergent_darmes") as UnitClassData
-	var brother := load(CLS % "irmao_caridade") as UnitClassData
-	t.check("act2_promotions_branch", UnitInstance.create(sergent, "a", 4, 0, false, 80).get_eligible_promotions() == [load(CLS % "faydit")]
-		and UnitInstance.create(sergent, "b", 4, 0, false, 10).get_eligible_promotions() == [load(CLS % "routier")]
-		and UnitInstance.create(brother, "c", 4, 5, false, 90).get_eligible_promotions() == [load(CLS % "parfait")]
-		and UnitInstance.create(brother, "d", 4, 5, false, 5).get_eligible_promotions() == [load(CLS % "inquisidor")])
+	await _test_class_tree(t)
+	_quiet()
 
 	var map := (load(MAP_SCENE) as PackedScene).instantiate() as OverworldMap
 	map.auto_tick = false
@@ -160,3 +150,115 @@ func _march(t: Node, map: OverworldMap, ally: SquadToken, target: String, battle
 			map.order_move(ally, target)
 		map.step(0.05)
 		elapsed += 0.05
+
+
+const TREE: Dictionary = {
+	"sergent_darmes": ["faydit", "routier", "cavaleiro_hospitalario"], "lanceiro_escudeiro": ["chevalier_languedoc", "quebra_muralhas"],
+	"arbaletrier": ["batedor_pireneus", "sicario_inquisitorial"], "erudito_boticario": ["alquimista_hermetico", "engenheiro_fogo"],
+	"irmao_caridade": ["parfait", "inquisidor"], "trovador": ["menestrel_resistencia", "arauto_cruzada"],
+}
+
+
+func _cls(id: String) -> UnitClassData:
+	return load(CLS % id) as UnitClassData
+
+
+func _unit(id: String, level: int, alignment: int, charisma: int = 50, slot: int = 0) -> UnitInstance:
+	return UnitInstance.create(_cls(id), id, level, slot, false, alignment, charisma)
+
+
+func _option(unit: UnitInstance, target_id: String) -> Dictionary:
+	for option: Dictionary in PromotionRules.options_for(unit):
+		if (option["target"] as UnitClassData).class_id == target_id:
+			return option
+	return {}
+
+
+## Árvore mesclada (Specs_Classes_Ato2 + Adendo) e os efeitos novos do motor.
+func _test_class_tree(t: Node) -> void:
+	var tree_ok: bool = true
+	for base: String in TREE:
+		var targets: Array = _cls(base).get_promotion_targets().map(func(c: UnitClassData) -> String: return c.class_id)
+		tree_ok = tree_ok and _cls(base).tier == 1 and targets == TREE[base]
+		for elite: String in TREE[base]:
+			tree_ok = tree_ok and _cls(elite).tier == 2 and _cls(elite).era_id == 2 and _cls(elite).min_level >= 9
+	t.check("act2_class_tree_19", tree_ok and WorldState.era_config.unit_classes.size() == 19)
+
+	# Doutrina decide entre Faydit (Revolucionária) e Hospitalário (Pacifista); Carisma barra.
+	var veteran := _unit("sergent_darmes", 10, 80, 65)
+	WorldState.doctrine = 30
+	var rev_faydit := _option(veteran, "faydit")
+	var rev_hosp := _option(veteran, "cavaleiro_hospitalario")
+	WorldState.doctrine = -30
+	var pac_faydit := _option(veteran, "faydit")
+	var pac_hosp := _option(veteran, "cavaleiro_hospitalario")
+	t.check("act2_doctrine_branches_sergent", rev_faydit.get("available") == true and rev_hosp.get("doctrine_ok") == false
+		and pac_faydit.get("doctrine_ok") == false and pac_hosp.get("available") == true)
+	t.check("act2_charisma_and_level_gate", _option(_unit("sergent_darmes", 10, 80, 40), "faydit").is_empty()
+		and _option(_unit("sergent_darmes", 9, 80, 65), "faydit").is_empty()
+		and _option(_unit("sergent_darmes", 9, 20), "routier").get("available") == true)
+	WorldState.doctrine = -40
+	var monk := _unit("irmao_caridade", 10, 90)
+	var parfait_open: bool = _option(monk, "parfait").get("available") == true
+	WorldState.set_flag("act2_aude_poisoned")
+	t.check("act2_parfait_refuses_after_poison", parfait_open and _option(monk, "parfait").get("forbidden") == true
+		and not PromotionRules.promote(monk, _cls("parfait")))
+	WorldState.doctrine = 0
+
+	# Efeitos de combate novos.
+	var state := SkillMath.new_state()
+	var knight := _unit("sergent_darmes", 5, 50)
+	var foe := _unit("sergent_darmes", 5, 50)
+	var plain_hit: int = SkillMath.hit(knight, foe, _cls("sergent_darmes").front_action, 100, state).x
+	var guard_squad := SquadData.new()
+	guard_squad.units.append(foe)
+	SkillMath.apply_ally_buff(_cls("cavaleiro_hospitalario").front_action, guard_squad, state)
+	t.check("act2_hospitaller_guard", SkillMath.hit(knight, foe, _cls("sergent_darmes").front_action, 100, state).x < plain_hit)
+	var war := SquadData.new()
+	war.units.append_array([_unit("faydit", 10, 70, 60, 0), _unit("arbaletrier", 3, 50, 50, 3)])
+	var cry_state := SkillMath.new_state()
+	SkillMath.apply_ally_buff(_cls("faydit").back_action, war, cry_state)
+	t.check("act2_faydit_cry_buffs_all", (cry_state["buff"] as Dictionary).size() == 2)
+
+	var pacifists := SquadData.new()
+	pacifists.units.append_array([_unit("parfait", 10, 90, 50, 0), _unit("parfait", 10, 90, 50, 3)])
+	var weak := SquadData.new()
+	weak.units.append_array([_unit("lanceiro_escudeiro", 1, 50, 50, 0), _unit("arbaletrier", 1, 50, 50, 3)])
+	var log_peace := CombatResolver.resolve(pacifists, weak)
+	t.check("act2_parfait_non_lethal_morale_win", weak.get_living_units().size() == 2
+		and CombatResolver.get_result(log_peace).get("victory_type") == "morale_break", str(CombatResolver.get_result(log_peace)))
+
+	var band := SquadData.new()
+	band.units.append_array([_unit("sergent_darmes", 6, 60, 50, 0), _unit("menestrel_resistencia", 12, 80, 75, 3)])
+	var log_bard := CombatResolver.resolve(band, _squad_of([["sergent_darmes", 6]]))
+	t.check("act2_minstrel_extra_action", log_bard.any(func(e: Dictionary) -> bool: return e["type"] == "extra_action"))
+	var scouts := SquadData.new()
+	scouts.units.append(_unit("batedor_pireneus", 10, 70, 50, 3))
+	var targets := _squad_of([["sergent_darmes", 6], ["arbaletrier", 1]])
+	targets.units[1].slot = 1
+	var first_hit: Dictionary = {}
+	for event: Dictionary in CombatResolver.resolve(scouts, targets):
+		if event["type"] == "action" and event["actor_side"] == "attacker":
+			first_hit = event
+			break
+	t.check("act2_scout_targets_weakest", int(first_hit.get("target_index", -1)) == 1, str(first_hit))
+
+	# Mapa: perfis de movimento, XP do Ato II e reputação ao libertar.
+	var riders := _squad_of([["chevalier_languedoc", 11]])
+	var climbers := _squad_of([["faydit", 10]])
+	t.check("act2_movement_profiles", is_equal_approx(riders.terrain_factor("plains"), 1.3)
+		and is_equal_approx(riders.terrain_factor("mountain"), 0.5) and is_equal_approx(climbers.terrain_factor("mountain"), 1.0)
+		and is_equal_approx(_squad_of([["sergent_darmes", 1]]).terrain_factor("mountain"), 0.7))
+	var win := {"type": "result", "winner": "attacker", "victory_type": "annihilation"}
+	var fx := BattleConsequences.compute(win, _squad_of([["sergent_darmes", 2]]), _squad_of([["sergent_darmes", 4]]), "attacker")
+	t.check("act2_xp_pacing", int(fx["xp"]) == 90 + 20 * 2, str(fx["xp"]))
+	t.check("act2_liberation_reputation", _squad_of([["parfait", 10], ["trovador", 2]]).liberation_bonus() == 15
+		and _squad_of([["routier", 9]]).liberation_bonus() == -8)
+	await t.get_tree().process_frame
+
+
+func _squad_of(specs: Array) -> SquadData:
+	var squad := SquadData.new()
+	for i: int in specs.size():
+		squad.units.append(UnitInstance.create(_cls(specs[i][0]), "%s_%d" % [specs[i][0], i], specs[i][1], i, i == 0))
+	return squad

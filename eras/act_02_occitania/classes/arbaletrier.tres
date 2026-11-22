@@ -2,22 +2,27 @@
 
 [ext_resource type="Script" path="res://core/data/UnitClassData.gd" id="1_class"]
 [ext_resource type="Script" path="res://core/data/ActionSkillData.gd" id="2_skill"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/classes/batedor_pireneus.tres" id="3_good"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/classes/sicario_inquisitorial.tres" id="3_evil"]
 
 [sub_resource type="Resource" id="front"]
 script = ExtResource("2_skill")
-skill_id = "close_quarrel"
-display_name = "Virote à Queima-Roupa"
+skill_id = "short_dagger"
+display_name = "Adaga Curta"
 effect = 0
 targeting = 0
-power = 70
+power = 60
 
 [sub_resource type="Resource" id="back"]
 script = ExtResource("2_skill")
-skill_id = "rampart_volley"
-display_name = "Saraivada da Muralha"
+skill_id = "crossbow_bolt"
+display_name = "Virote de Besta"
 effect = 0
 targeting = 1
-power = 110
+power = 60
+hits = 2
+element = "PIERCE"
+armor_pierce_pct = 25
 
 [resource]
 script = ExtResource("1_class")
@@ -26,11 +31,14 @@ display_name = "Arbalétrier"
 era_id = 2
 archetype = 2
 grid_slots = 1
+tier = 1
 max_hp = 75
 max_morale = 80
-attack = 17
-defense = 7
-intellect = 8
-agility = 13
+attack = 19
+defense = 11
+intellect = 10
+agility = 16
 front_action = SubResource("front")
 back_action = SubResource("back")
+promotion_good = ExtResource("3_good")
+promotion_evil = ExtResource("3_evil")

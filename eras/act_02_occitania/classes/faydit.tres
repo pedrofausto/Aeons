@@ -5,21 +5,23 @@
 
 [sub_resource type="Resource" id="front"]
 script = ExtResource("2_skill")
-skill_id = "dispossessed_charge"
-display_name = "Carga do Desapossado"
+skill_id = "guerrilla_cut"
+display_name = "Corte de Guerrilha"
 effect = 0
 targeting = 0
-power = 110
-morale_power = 5
+power = 45
+hits = 3
+armor_pierce_pct = 30
 
 [sub_resource type="Resource" id="back"]
 script = ExtResource("2_skill")
-skill_id = "oath_of_paratge"
-display_name = "Juramento de Paratge"
-effect = 3
-targeting = 4
-power = 45
-morale_power = 25
+skill_id = "cry_of_oc"
+display_name = "Grito d'Oc"
+effect = 4
+targeting = 0
+power = 0
+ally_buff_trait = "*"
+ally_buff_attack_pct = 20
 
 [resource]
 script = ExtResource("1_class")
@@ -28,15 +30,20 @@ display_name = "Faydit"
 era_id = 2
 archetype = 0
 grid_slots = 1
-max_hp = 120
+tier = 2
+max_hp = 145
 max_morale = 115
-attack = 20
-defense = 15
-intellect = 9
-agility = 12
+attack = 32
+defense = 24
+intellect = 14
+agility = 22
 front_action = SubResource("front")
 back_action = SubResource("back")
+movement = "mountain"
 preferred_doctrine = "revolutionary"
-min_level = 4
-min_alignment = 65
+min_level = 10
+min_alignment = 60
 max_alignment = 100
+min_charisma = 55
+min_doctrine = 20
+max_doctrine = 100

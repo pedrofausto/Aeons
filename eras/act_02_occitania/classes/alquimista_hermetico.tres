@@ -1,0 +1,44 @@
+[gd_resource type="Resource" script_class="UnitClassData" format=3]
+
+[ext_resource type="Script" path="res://core/data/UnitClassData.gd" id="1_class"]
+[ext_resource type="Script" path="res://core/data/ActionSkillData.gd" id="2_skill"]
+
+[sub_resource type="Resource" id="front"]
+script = ExtResource("2_skill")
+skill_id = "sigil_of_light"
+display_name = "Símbolo de Luz"
+effect = 1
+targeting = 0
+power = 80
+element = "LIGHT"
+target_attack_debuff_pct = 15
+
+[sub_resource type="Resource" id="back"]
+script = ExtResource("2_skill")
+skill_id = "solar_flame"
+display_name = "Chama Solar"
+effect = 1
+targeting = 2
+power = 35
+hits = 2
+element = "LIGHT"
+
+[resource]
+script = ExtResource("1_class")
+class_id = "alquimista_hermetico"
+display_name = "Alquimista Hermético"
+era_id = 2
+archetype = 3
+grid_slots = 1
+tier = 2
+max_hp = 105
+max_morale = 105
+attack = 12
+defense = 16
+intellect = 36
+agility = 18
+front_action = SubResource("front")
+back_action = SubResource("back")
+min_level = 11
+min_alignment = 60
+max_alignment = 100
