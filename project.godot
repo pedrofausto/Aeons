@@ -13,7 +13,7 @@ config_version=5
 config/name="Tianxu"
 config/description="RPG estratégico (Vertical Slice: Vales de Nanlu)."
 config/version="0.1.0"
-run/main_scene="res://core/combat/BattleArena.tscn"
+run/main_scene="res://core/overworld/OverworldMap.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 

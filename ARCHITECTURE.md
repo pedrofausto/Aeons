@@ -11,13 +11,13 @@ projeto: "Os Cinco Simulacros"
 engine: "Godot 4.7.2 (Standard / GDScript puro — sem C#)"
 renderizador_obrigatorio: "gl_compatibility (--rendering-driver opengl3)"
 alvo_exportacao: ["Desktop (macOS/Win/Linux)", "Web HTML5 (single-threaded)", "Android"]
-fase_atual: "Sprint 1 concluído — Núcleo de Dados e Combate 3x2 (placeholders)"
-cenas_validadas: ["core/combat/BattleArena.tscn"]
-testes: "tests/run_tests.sh -> 22 TEST_PASS, 0 falhas, sem ERROR no log"
+fase_atual: "Sprint 2 concluído — Mapa de Conquista com Pausa (Vales de Nanlu)"
+cenas_validadas: ["core/combat/BattleArena.tscn", "core/overworld/OverworldMap.tscn"]
+testes: "tests/run_tests.sh -> 37 TEST_PASS, 0 falhas, sem ERROR no log"
 sinais_eventbus: [pause_toggled, tick_advanced, node_captured, battle_requested, battle_ended,
   interlude_requested, interlude_choice_applied, interlude_finished, world_state_changed,
   era_loaded, era_transition]
-proximo_passo: "Sprint 2 — OverworldMap.tscn (Vales de Nanlu, 4 nós, pausa Space, colisão -> BattleArena)"
+proximo_passo: "Sprint 3 — Dialogic 2 + InterludeRoom.tscn + dilema Os Celeiros de Linhai"
 bloqueios_conhecidos:
   - "Hardware de dev: Mac mini Mid 2011 (OCLP non-Metal). Nunca usar Forward+ ou Mobile."
   - "UnitClassData.promotes_to é Array[Resource]: Array[UnitClassData] auto-referente vaza na saída (Godot 4.7)."
