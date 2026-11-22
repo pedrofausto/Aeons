@@ -33,6 +33,9 @@ func run(t: Node) -> void:
 		and WorldState.has_flag("act1_granaries_distributed") and "shared_linhai_rice" in WorldState.act_echoes,
 		"al=%d ap=%d dt=%d" % [WorldState.alignment, WorldState.popular_support, WorldState.doctrine])
 
+	t.check("interlude_marked_once_per_act", TIMELINE in WorldState.completed_interludes
+		and not InterludeManager.is_eligible(TIMELINE, WorldState.era_config))
+
 	await _play_choice(t, 2)
 	t.check("granaries_confiscate_effects", WorldState.resources == 750 and WorldState.popular_support == 40
 		and WorldState.doctrine == 15 and WorldState.alignment == 50 and WorldState.has_flag("act1_granaries_confiscated"),
@@ -61,7 +64,33 @@ func run(t: Node) -> void:
 	await t.get_tree().process_frame
 	_reset()
 
+	await _test_ephemeral(t)
 	t.check("lore_secrecy_acts_1_to_4", _scan_forbidden().is_empty(), str(_scan_forbidden()))
+
+
+## Encontro efêmero (Ato V): shader de dissolução + nunca se repete, nem após a Derrota Falsa.
+func _test_ephemeral(t: Node) -> void:
+	_reset()
+	var eph := WorldState.era_config.duplicate() as EraConfig
+	eph.interlude_style = "ephemeral_metaphysical"
+	eph.dissolve_interlude_shader = load("res://core/interlude/shaders/ephemeral_fade.gdshader")
+	WorldState.era_config = eph
+	t.check("ephemeral_overlay_material", InterludeManager.overlay_material(eph) != null
+		and InterludeManager.overlay_material(load(ACT01)) == null)
+	var room := (load(ROOM) as PackedScene).instantiate()
+	room.call("setup", TIMELINE, "", "")
+	t.get_tree().root.add_child(room)
+	for i: int in 20:
+		await t.get_tree().process_frame
+	var overlay: ColorRect = room.get_node("%EphemeralOverlay")
+	t.check("ephemeral_shader_renders", overlay.visible and float((overlay.material as ShaderMaterial).get_shader_parameter("dissolve")) > 0.0)
+	await _drive_dialogic(t, room, 1)
+	t.check("ephemeral_meeting_recorded", "celeiros_de_linhai" in EssenceState.ephemeral_meetings_seen)
+	WorldState.reset_visible(5)
+	WorldState.era_config = eph
+	t.check("ephemeral_never_repeats", not InterludeManager.is_eligible(TIMELINE, eph)
+		and InterludeManager.is_eligible(TIMELINE, load(ACT01)))
+	_reset()
 
 
 func _reset() -> void:

@@ -20,6 +20,7 @@ var _time: float = 0.0
 @onready var _title_label: Label = %Title
 @onready var _lantern: PointLight2D = %Lantern
 @onready var _ui_root: Control = %UIRoot
+@onready var _overlay: ColorRect = %EphemeralOverlay
 
 
 func setup(p_timeline_path: String, p_title: String = "", p_node_id: String = "") -> void:
@@ -32,6 +33,8 @@ func _ready() -> void:
 	var era: EraConfig = WorldState.era_config
 	if era:
 		_ui_root.theme = era.ui_theme
+	_overlay.material = InterludeManager.overlay_material(era)
+	_overlay.visible = _overlay.material != null
 	_title_label.text = title
 	var dialogic: Node = get_node_or_null("/root/Dialogic")
 	if dialogic == null or timeline_path.is_empty():
@@ -83,6 +86,8 @@ func _process(delta: float) -> void:
 	_time += delta
 	# Chama de lanterna determinística (sem RNG).
 	_lantern.energy = 1.15 + 0.12 * sin(_time * 7.0) + 0.06 * sin(_time * 17.0)
+	if _overlay.visible:  # Encontro efêmero: a cena se desfaz lentamente enquanto acontece.
+		(_overlay.material as ShaderMaterial).set_shader_parameter("dissolve", clampf(_time / 90.0, 0.0, 0.85))
 
 
 ## Converte "effect|alignment=10|flag=x" em { "alignment": 10, "flag": "x" }.
@@ -119,5 +124,6 @@ func _finish() -> void:
 	if dialogic and dialogic.is_connected("signal_event", _on_dialogic_signal):
 		dialogic.disconnect("signal_event", _on_dialogic_signal)
 		dialogic.disconnect("timeline_ended", _finish)
+	InterludeManager.mark_played(timeline_path, WorldState.era_config)
 	EventBus.interlude_finished.emit(timeline_path)
 	queue_free()

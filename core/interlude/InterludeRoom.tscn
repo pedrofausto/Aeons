@@ -81,6 +81,15 @@ texture_scale = 0.8
 color = Color(1, 0.75, 0.35, 1)
 polygon = PackedVector2Array(-4, -7, 4, -7, 5, 5, -5, 5)
 
+[node name="EphemeralLayer" type="CanvasLayer" parent="."]
+
+[node name="EphemeralOverlay" type="ColorRect" parent="EphemeralLayer"]
+unique_name_in_owner = true
+visible = false
+offset_right = 640.0
+offset_bottom = 360.0
+mouse_filter = 2
+
 [node name="TitleLayer" type="CanvasLayer" parent="."]
 
 [node name="UIRoot" type="Control" parent="TitleLayer"]

@@ -64,7 +64,8 @@ func _on_battle_closed(result: Dictionary) -> void:
 
 
 func open_interlude(timeline_path: String, node_id: String) -> void:
-	if not ResourceLoader.exists(INTERLUDE_SCENE_PATH):
+	if not ResourceLoader.exists(INTERLUDE_SCENE_PATH) \
+			or not InterludeManager.is_eligible(timeline_path, WorldState.era_config):
 		return
 	WorldState.set_paused(true)
 	var data: MapNodeData = (map.nodes[node_id] as MapNode).data if map.nodes.has(node_id) else null
