@@ -4,7 +4,7 @@ extends Node2D
 
 signal arrived(token: SquadToken, node_id: String)
 
-const HIT_RADIUS: float = 26.0
+const HIT_RADIUS: float = 13.0
 
 var squad: SquadData
 var path: Array[String] = []                 # Próximos nós a visitar
@@ -20,12 +20,12 @@ func setup(p_squad: SquadData, start_position: Vector2) -> void:
 	position = start_position + _offset()
 	_label = Label.new()
 	_label.text = squad.display_name
-	_label.size = Vector2(200, 22)
-	_label.position = Vector2(-100, -54)
+	_label.size = Vector2(160, 11)
+	_label.position = Vector2(-80, -27)
 	_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_label.add_theme_font_size_override("font_size", 14)
+	_label.add_theme_font_size_override("font_size", 7)
 	_label.add_theme_color_override("font_outline_color", Color.BLACK)
-	_label.add_theme_constant_override("outline_size", 5)
+	_label.add_theme_constant_override("outline_size", 3)
 	add_child(_label)
 
 
@@ -75,7 +75,7 @@ func get_anchor() -> Vector2:
 
 ## Tokens ficam na diagonal do nó para não cobrir o ícone; patrulhas, na diagonal oposta.
 func _offset() -> Vector2:
-	return Vector2(-40, 40) if squad != null and squad.is_patrol() else Vector2(40, -38)
+	return Vector2(-20, 20) if squad != null and squad.is_patrol() else Vector2(20, -19)
 
 
 func _draw() -> void:
@@ -84,8 +84,8 @@ func _draw() -> void:
 	var era: EraConfig = WorldState.era_config
 	var color: Color = era.color_for_faction(squad.faction) if era else Color.WHITE
 	if selected:
-		draw_arc(Vector2.ZERO, HIT_RADIUS, 0.0, TAU, 32, Color.WHITE, 3.0)
-	draw_line(Vector2(-10, 18), Vector2(-10, -30), Color(0.15, 0.1, 0.05), 4.0)
-	draw_colored_polygon(PackedVector2Array([Vector2(-8, -30), Vector2(18, -22), Vector2(-8, -12)]), color)
-	draw_circle(Vector2(0, 10), 12.0, color.darkened(0.3))
-	draw_arc(Vector2(0, 10), 12.0, 0.0, TAU, 24, Color.BLACK, 2.0)
+		draw_arc(Vector2.ZERO, HIT_RADIUS, 0.0, TAU, 24, Color.WHITE, 1.5)
+	draw_line(Vector2(-5, 9), Vector2(-5, -15), Color(0.15, 0.1, 0.05), 2.0)
+	draw_colored_polygon(PackedVector2Array([Vector2(-4, -15), Vector2(9, -11), Vector2(-4, -6)]), color)
+	draw_circle(Vector2(0, 5), 6.0, color.darkened(0.3))
+	draw_arc(Vector2(0, 5), 6.0, 0.0, TAU, 16, Color.BLACK, 1.0)

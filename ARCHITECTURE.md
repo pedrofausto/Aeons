@@ -12,7 +12,7 @@ engine: "Godot 4.7.2 (Standard / GDScript puro — sem C#)"
 renderizador_obrigatorio: "gl_compatibility (--rendering-driver opengl3)"
 alvo_exportacao: ["Desktop (macOS/Win/Linux)", "Web HTML5 (single-threaded)", "Android"]
 fase_atual: "Sprint 3 concluído — Dilema Os Celeiros de Linhai + Interlúdio (Dialogic 2)"
-absorvido_de_arch_v2_e_atlas: ["patrulha Cobradores do Selo de Ferro", "Youxia (promoção honrada do Fubing: Nv4, alinhamento >= 65)", "Templo do Bambu Cinzento"]
+absorvido_de_arch_v2_e_atlas: ["resolução lógica 640x360 (janela 1280x720, aspect keep, filtro Nearest)", "patrulha Cobradores do Selo de Ferro", "Youxia (promoção honrada do Fubing: Nv4, alinhamento >= 65)", "Templo do Bambu Cinzento"]
 cenas_validadas: ["core/combat/BattleArena.tscn", "core/overworld/OverworldMap.tscn", "core/interlude/InterludeRoom.tscn"]
 testes: "tests/run_tests.sh -> 53 TEST_PASS, 0 falhas, sem ERROR no log (inclui varredura de sigilo)"
 sinais_eventbus: [pause_toggled, tick_advanced, node_captured, battle_requested, battle_ended,

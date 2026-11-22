@@ -9,5 +9,5 @@ display_name = "Templo do Bambu Cinzento"
 node_type = 0
 faction = "neutral"
 gold_per_tick = 10
-map_position = Vector2(590, 580)
+map_position = Vector2(295, 290)
 neighbors = Array[String](["linhai", "aldeia_terracos", "forte_regencia"])

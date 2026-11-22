@@ -3,10 +3,10 @@ extends Node2D
 ## Mapa em tempo real com pausa tática (Space). Constrói nós e esquadrões a partir do
 ## EraConfig ativo, move tokens pelo grafo e abre a BattleArena ao colidirem.
 
-const COLLISION_DISTANCE: float = 30.0
+const COLLISION_DISTANCE: float = 15.0
 const REST_PERCENT_PER_DAY: int = 10
 
-@export var march_speed: float = 110.0          # px/s
+@export var march_speed: float = 55.0           # px/s (resolução lógica 640x360)
 @export var seconds_per_day: float = 6.0
 @export var auto_tick: bool = true              # false em testes (avança via step())
 
@@ -207,7 +207,7 @@ func _draw_roads() -> void:
 		var from: MapNode = nodes[node_id]
 		for next_id: String in from.data.neighbors:
 			if nodes.has(next_id) and node_id < next_id:
-				_roads.draw_line(from.position, (nodes[next_id] as MapNode).position, color, 6.0, true)
+				_roads.draw_line(from.position, (nodes[next_id] as MapNode).position, color, 3.0)
 
 
 func remove_token(token: SquadToken) -> void:

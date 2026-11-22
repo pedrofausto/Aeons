@@ -41,12 +41,35 @@ func _ready() -> void:
 	dialogic.connect("signal_event", _on_dialogic_signal)
 	dialogic.connect("timeline_ended", _finish)
 	var layout := dialogic.call("start", timeline_path) as Node
-	if layout and not type_sounds_enabled:
+	if layout:
 		if not layout.is_node_ready():
 			await layout.ready
-		_disable_type_sounds(layout)
+		_fit_layout(layout, era)
+		if not type_sounds_enabled:
+			_disable_type_sounds(layout)
 	if OS.is_debug_build():
 		print("TEST_PASS|interlude_boot|%s" % timeline_path.get_file())
+
+
+## Ajusta o layout padrão do Dialogic à resolução lógica e à estética da era.
+func _fit_layout(root: Node, era: EraConfig) -> void:
+	if era == null:
+		return
+	var overrides: Dictionary = {
+		"global_font_size": era.dialogue_font_size,
+		"box_size": era.dialogue_box_size,
+		"box_margin_bottom": era.dialogue_box_margin_bottom,
+		"boxes_v_separation": 4,
+	}
+	var touched: bool = false
+	for key: String in overrides:
+		if key in root:
+			root.set(key, overrides[key])
+			touched = true
+	if touched and root.has_method("_apply_export_overrides"):
+		root.call("_apply_export_overrides")
+	for child: Node in root.get_children():
+		_fit_layout(child, era)
 
 
 func _disable_type_sounds(root: Node) -> void:

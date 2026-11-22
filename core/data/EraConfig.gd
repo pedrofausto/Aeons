@@ -30,6 +30,11 @@ extends Resource
 @export var color_background: Color = Color(0.08, 0.09, 0.08)
 @export var color_road: Color = Color(0.45, 0.4, 0.3)
 
+@export_group("Interlúdio (Dialogic, resolução lógica 640x360)")
+@export var dialogue_font_size: int = 9
+@export var dialogue_box_size: Vector2 = Vector2(520, 70)
+@export var dialogue_box_margin_bottom: int = 8
+
 @export_group("Regras Extras")
 @export var enable_siege_water_rule: bool = false    # Ato II (Carcassonne)
 @export var enable_offmap_artillery: bool = false    # Ato III (Grandes Guerras)

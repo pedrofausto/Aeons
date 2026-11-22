@@ -10,6 +10,6 @@ display_name = "Forte da Regência"
 node_type = 1
 faction = "enemy"
 gold_per_tick = 40
-map_position = Vector2(1000, 400)
+map_position = Vector2(500, 200)
 neighbors = Array[String](["aldeia_terracos", "templo_bambu"])
 garrison = ExtResource("2_garrison")

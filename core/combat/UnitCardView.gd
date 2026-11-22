@@ -3,7 +3,7 @@ extends Node2D
 ## Placeholder visual de uma unidade na grade 3x2 (retângulo colorido + barras).
 ## Apenas reproduz números vindos do battle_log; nenhuma regra de combate aqui.
 
-const SIZE: Vector2 = Vector2(120, 92)
+const SIZE: Vector2 = Vector2(60, 46)
 const ARCHETYPE_COLORS: Array[Color] = [
 	Color(0.55, 0.42, 0.3), Color(0.7, 0.3, 0.25), Color(0.35, 0.5, 0.35),
 	Color(0.4, 0.35, 0.65), Color(0.85, 0.8, 0.6), Color(0.6, 0.45, 0.6), Color(0.9, 0.6, 0.2),
@@ -23,9 +23,9 @@ func setup(p_unit: UnitInstance, p_faction_color: Color) -> void:
 	_hp = unit.hp
 	_morale = unit.morale
 	_label = Label.new()
-	_label.position = Vector2(-SIZE.x / 2.0 + 4, -SIZE.y / 2.0 + 2)
-	_label.size = Vector2(SIZE.x - 8, 40)
-	_label.add_theme_font_size_override("font_size", 13)
+	_label.position = Vector2(-SIZE.x / 2.0 + 2, -SIZE.y / 2.0 + 1)
+	_label.size = Vector2(SIZE.x - 4, 20)
+	_label.add_theme_font_size_override("font_size", 6)
 	_label.add_theme_color_override("font_color", Color(0.05, 0.05, 0.05))
 	_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_label.text = "%s%s\n%s Nv%d" % ["★ " if unit.is_leader else "", unit.unit_name,
@@ -57,14 +57,14 @@ func _draw() -> void:
 	elif _morale <= 0:
 		base = base.lerp(Color(0.6, 0.6, 0.7), 0.6)
 	draw_rect(rect, base.lerp(Color.WHITE, _flash * 0.6))
-	draw_rect(rect, faction_color, false, 3.0)
-	var bar_w: float = SIZE.x - 12.0
+	draw_rect(rect, faction_color, false, 1.5)
+	var bar_w: float = SIZE.x - 6.0
 	var hp_ratio: float = clampf(float(_hp) / float(unit.get_max_hp()), 0.0, 1.0)
 	var mor_ratio: float = clampf(float(_morale) / float(unit.get_max_morale()), 0.0, 1.0)
-	var origin := Vector2(-SIZE.x / 2.0 + 6, SIZE.y / 2.0 - 24)
-	draw_rect(Rect2(origin, Vector2(bar_w, 7)), Color(0.15, 0.05, 0.05))
-	draw_rect(Rect2(origin, Vector2(bar_w * hp_ratio, 7)), Color(0.85, 0.2, 0.2))
-	draw_rect(Rect2(origin + Vector2(0, 11), Vector2(bar_w, 7)), Color(0.05, 0.05, 0.15))
-	draw_rect(Rect2(origin + Vector2(0, 11), Vector2(bar_w * mor_ratio, 7)), Color(0.3, 0.55, 0.95))
+	var origin := Vector2(-SIZE.x / 2.0 + 3, SIZE.y / 2.0 - 12)
+	draw_rect(Rect2(origin, Vector2(bar_w, 3)), Color(0.15, 0.05, 0.05))
+	draw_rect(Rect2(origin, Vector2(bar_w * hp_ratio, 3)), Color(0.85, 0.2, 0.2))
+	draw_rect(Rect2(origin + Vector2(0, 5), Vector2(bar_w, 3)), Color(0.05, 0.05, 0.15))
+	draw_rect(Rect2(origin + Vector2(0, 5), Vector2(bar_w * mor_ratio, 3)), Color(0.3, 0.55, 0.95))
 	if _hp <= 0:
-		draw_line(rect.position, rect.end, Color(0.1, 0.1, 0.1), 3.0)
+		draw_line(rect.position, rect.end, Color(0.1, 0.1, 0.1), 1.5)

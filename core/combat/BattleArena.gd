@@ -5,9 +5,9 @@ extends Node2D
 
 signal closed(result: Dictionary)
 
-const ALLY_ROW_X: Array[float] = [470.0, 320.0]     # frente, trás
-const ENEMY_ROW_X: Array[float] = [810.0, 960.0]
-const COLUMN_Y: Array[float] = [230.0, 350.0, 470.0]
+const ALLY_ROW_X: Array[float] = [235.0, 160.0]     # frente, trás (resolução lógica 640x360)
+const ENEMY_ROW_X: Array[float] = [405.0, 480.0]
+const COLUMN_Y: Array[float] = [115.0, 175.0, 235.0]
 
 @export var step_seconds: float = 0.25
 @export var autoplay_order: int = -1                 # >= 0: inicia sozinho (testes/demonstração)
@@ -144,7 +144,7 @@ func _build_order_buttons(era: EraConfig) -> void:
 	for order: int in [TacticalOrder.Order.FOCUS_LEADER, TacticalOrder.Order.FOCUS_WEAK, TacticalOrder.Order.SPARE]:
 		var button := Button.new()
 		button.text = era.get_order_label(order) if era else str(order)
-		button.custom_minimum_size = Vector2(180, 52)
+		button.custom_minimum_size = Vector2(90, 26)
 		button.pressed.connect(start_battle.bind(order))
 		_orders_box.add_child(button)
 
