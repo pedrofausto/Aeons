@@ -219,7 +219,9 @@ Nova chave só com suporte em `WorldState.apply_effects`/`InterludeController` +
 | `StrategicMap.tscn` / `SquadBattle.tscn` | `core/overworld/OverworldMap.tscn` / `core/combat/BattleArena.tscn` |
 | `battle_finished(result)` | `EventBus.battle_ended(result)` |
 | `NavigationRegion2D`, rotas ponderadas | grafo `MapNodeData.neighbors` + `MapGraph` (BFS) + `TERRAIN_FACTORS` |
-| `treasury`, `gold`, `gold_or_resource` | `WorldState.resources` (+ `EraConfig.resource_label`) |
+| `treasury`, `gold`, `gold_or_resource`, `gold_or_resources` | `WorldState.resources` (+ `EraConfig.resource_label`) |
+| `CombatScene`, `SquadBattle` | `core/combat/BattleArena.tscn` |
+| `Ink`, `GodotInk` | não usado; diálogos são Dialogic 2 (`.dtl`) |
 | `day_cycle: enum {DAY, NIGHT}` | `WorldState.time_of_day: "day"/"night"` |
 | `essence_alignment_history` / `essence_doctrine_history` (Array) | `EssenceState.alignment_history` / `doctrine_history` (Dictionary act→valor) |
 | `aeon_anomalies_discovered`, `philosophical_flags`, `essence_flag` | `EssenceState.aeon_resistance_flags` (anomalias) ou `philosophical_echoes` (ecos) |
@@ -290,8 +292,8 @@ Nova chave só com suporte em `WorldState.apply_effects`/`InterludeController` +
 
 ## 10. Sigilo narrativo (aplica-se a todo texto visível: `.dtl`, `.tres`, UI)
 
-- **Atos I–IV:** proibido "Aeons", "simulação", "simulacro", "mesma alma", "mesma consciência", "camadas concêntricas".
-- **Ato III (adicional):** proibido "matriz", "vida passada", "China", "Carcassonne" (e qualquer nome próprio de outro ato).
+- **Atos I–IV:** proibido "Aeons", "simulação", "simulacro", "matriz", "mesma alma", "mesma consciência", "camada(s) concêntrica(s)" e qualquer sugestão de que os 5 protagonistas são a mesma pessoa. ("matriz" e "camada concêntrica" são checados só no conteúdo jogável — `eras/` e `core/` — porque "Matriz de Classes" é título legítimo de documento.)
+- **Ato III (adicional):** proibido "vida passada", "China", "Carcassonne" (e qualquer nome próprio de outro ato).
   Linguagem permitida: "mão invisível nas cifras", "guerra desenhada para moer gerações", "burocracia acima dos generais".
 - O teste `lore_secrecy_acts_1_to_4` varre `eras/`, `core/` e `docs/Lore_Simulacros/`; ao criar o Ato III, acrescente a
   lista adicional dele em `tests/test_interlude.gd` (`EXTRA_FORBIDDEN`).

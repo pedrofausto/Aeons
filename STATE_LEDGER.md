@@ -58,9 +58,21 @@
 - **Anomalias (aeon_resistance_flags):** `pengming_fixed_stars` (I) · `montsegur_archon_codex` (II) · `station_x_balanced_war_cipher` (III). **Derrotas falsas (planejado `EssenceState.false_defeats`):** `act1_tiandu_eclipse` · `act2_montsegur_pyre` · `act3_stahlstadt_classified_armistice`.
 - **Motor previsto (nomes reservados em SCHEMA_CANON §8):** `enable_supply_lines`, `enable_fog_of_intel`, `era_meters` (supply/intel/artillery/radio), `SupplyGraphSystem`, `OffmapStrikeManager`, status `SUPPRESSED`.
 
+## Ato IV — Nova Vespera · Tecnocracia Nascente (catálogo canônico; AINDA NÃO IMPLEMENTADO)
+- **Slug:** `eras/act_04_modern/` · `reality_layer = "RESOURCE_NETWORK"` · `interlude_style = "clandestine_physical"` (batalhas por sinal/recursos; interlúdios físicos reais: lanchonete sob chuva, esconderijo, metrô de madrugada).
+- **Distritos (region_id):** Bairro de Santa Clara (NO, início) · Entroncamento Central (O, mobilidade) · Morro das Antenas (N, narrativa) · Porto & Subestação Leste (SE, energia) · Distrito Financeiro (Centro, clímax — Torre Meridian) · Subsolo de Fibra / Anel Zero (oculto, secreto).
+- **Facções (dados):** Consórcio Meridian (Helena Vance) · Rede Cívica Agora/OSINT (Clara Mendes) · Coletivo Ruptura-Zero ("Kaelen") · Aparato Estatal Legado (Comissário Rocha) · Correios Analógicos (Sr. Takahashi) · Anomalias de Sinal.
+- **Encontros/dilemas:** Vazamento do Hospital Sul · Enxame de Drones de Triagem · O Dossiê do Jornalista · Apagão do Porto Leste · O Sinal-Fantasma no Anel Zero (secreto).
+
+## Facções canônicas dos Atos I–II (nomes reservados; não reutilizar com outro papel)
+- **Ato I:** Regência do Selo de Ferro (Chanceler Gao Shen) · Feudo dos Três Rios (General Wei Bo) · Irmandade do Lótus de Cinza (Mestra Lin) · Liga dos Youxia e Moístas (Mestre Shen) · Clãs de Beisha (Khan Batu-Ordo) · Círculo Fangshi de Pengming (Arquivista Xu). Regiões: Nanlu, Dongwan, Hanmen, Beisha, Pengming, Zhonghe/Tiandu.
+- **Ato II:** Barões da Cruzada do Norte (Barão Guy de Montclair) · Legado Papal & Inquisição (Abade Arnaut) · Faydits (Pierre-Roger de Rochefort) · Bons Hommes (Diaconisa Esclarmonde) · Coroa de Aragão · Routiers (Capitão Loup-Noir).
+
 ## Regra de sigilo narrativo (inviolável)
-- **PROIBIDO** mencionar "Aeons", "simulação", "simulacro" ou "mesma alma" em diálogos, UI ou textos visíveis dos Atos I–IV.
-- **Ato III, adicional:** proibido "matriz", "vida passada", "China", "Carcassonne" (nomes de outros atos); teste `EXTRA_FORBIDDEN` em `tests/test_interlude.gd`.
+- **PROIBIDO** mencionar "Aeons", "simulação", "simulacro", "matriz", "camada concêntrica" ou "mesma alma" em diálogos, UI ou textos visíveis dos Atos I–IV, ou sugerir que os 5 protagonistas são a mesma pessoa.
+- **Fio filosófico permitido (vocabulário da época):** I — estrelas fixas sobre Tianxu, Huang-Lao × Legalismo · II — o mundo material como obra de um Arconte ciumento (dualismo cátaro) · III — "mão invisível nas cifras", "guerra desenhada para moer gerações" · IV — anomalias de registro civil e dados idênticos a arquivos antigos, tratados como "ruído de algoritmo" ou conspiração corporativa.
+- **Derrota Falsa:** ao vencer o poder central de cada ato (I–IV), uma cena de colapso/apagamento trágico encerra a crônica local antes do ato seguinte.
+- **Ato III, adicional:** proibido "vida passada", "China", "Carcassonne" (nomes de outros atos); teste `EXTRA_FORBIDDEN` em `tests/test_interlude.gd`. "matriz" é barrado em todo texto jogável (`eras/`, `core/`) pelo `PLAYER_FORBIDDEN`.
 - Diálogos dos Atos I–IV: usar **apenas** `docs/Lore_Simulacros/`. `docs/Lore_Aeons_Verdade/` só para `EssenceState` e Ato V.
 - Guarda automático: teste `lore_secrecy_acts_1_to_4` (varre eras/, core/ e docs/Lore_Simulacros/).
 - Nenhum LLM em tempo real no jogo: diálogos são estáticos no Dialogic 2. Uso offline permitido: rascunhos de vozes a partir de `docs/Lore_Simulacros/`, com este ledger no contexto.
