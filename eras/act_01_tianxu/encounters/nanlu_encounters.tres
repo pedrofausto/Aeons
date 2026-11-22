@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="EncounterTable" format=3]
+
+[ext_resource type="Script" path="res://core/overworld/EncounterTable.gd" id="1_table"]
+[ext_resource type="Script" path="res://core/overworld/EncounterEntry.gd" id="2_entry"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/encounters/squad_piratas_fluviais.tres" id="3_piratas"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/encounters/squad_milicia_camponesa.tres" id="4_milicia"]
+
+[sub_resource type="Resource" id="entry_piratas"]
+script = ExtResource("2_entry")
+squad = ExtResource("3_piratas")
+weight = 6
+time_of_day = "day"
+
+[sub_resource type="Resource" id="entry_milicia"]
+script = ExtResource("2_entry")
+squad = ExtResource("4_milicia")
+weight = 4
+min_party_level = 1.0
+
+[resource]
+script = ExtResource("1_table")
+region_id = "nanlu"
+spawn_nodes = Array[String](["templo_bambu", "aldeia_terracos"])
+spawn_chance = 45
+entries = Array[ExtResource("2_entry")]([SubResource("entry_piratas"), SubResource("entry_milicia")])

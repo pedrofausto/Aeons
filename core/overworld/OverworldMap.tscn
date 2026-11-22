@@ -3,6 +3,8 @@
 [ext_resource type="Script" path="res://core/overworld/OverworldMap.gd" id="1_map"]
 [ext_resource type="Script" path="res://core/overworld/OverworldHUD.gd" id="2_hud"]
 [ext_resource type="Script" path="res://core/overworld/EncounterDirector.gd" id="3_director"]
+[ext_resource type="Script" path="res://core/overworld/RoamingSquadSpawner.gd" id="4_spawner"]
+[ext_resource type="Script" path="res://core/overworld/DayNightTint.gd" id="5_tint"]
 
 [node name="OverworldMap" type="Node2D"]
 script = ExtResource("1_map")
@@ -33,6 +35,13 @@ unique_name_in_owner = true
 [node name="EncounterDirector" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("3_director")
+
+[node name="RoamingSquadSpawner" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("4_spawner")
+
+[node name="DayNightTint" type="CanvasModulate" parent="."]
+script = ExtResource("5_tint")
 
 [node name="HUDLayer" type="CanvasLayer" parent="."]
 unique_name_in_owner = true

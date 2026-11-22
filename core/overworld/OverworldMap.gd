@@ -20,6 +20,7 @@ var _day_timer: float = 0.0
 @onready var _tokens_root: Node2D = %Tokens
 @onready var _hud: OverworldHUD = %HUD
 @onready var _director: EncounterDirector = %EncounterDirector
+@onready var spawner: RoamingSquadSpawner = %RoamingSquadSpawner
 
 
 func _ready() -> void:
@@ -29,6 +30,7 @@ func _ready() -> void:
 	_hud.promote_pressed.connect(_on_promote)
 	_hud.debug_transition_pressed.connect(_on_debug_transition)
 	_director.setup(self)
+	spawner.setup(self)
 	_build_map(era)
 	_roads.draw.connect(_draw_roads)
 	_roads.queue_redraw()
@@ -52,22 +54,22 @@ func _build_map(era: EraConfig) -> void:
 		if data.garrison and WorldState.get_node_faction(data.node_id) == "enemy":
 			var garrison := data.garrison.clone()
 			garrison.current_node_id = data.node_id
-			_spawn_token(garrison)
+			spawn_token(garrison)
 	if fresh_act:
 		for patrol: SquadData in era.enemy_patrols:
-			_spawn_token(patrol.clone())
+			spawn_token(patrol.clone())
 		WorldState.player_squads.clear()
 		for template: SquadData in era.starting_squads:
 			WorldState.player_squads.append(template.clone())
 	for squad: SquadData in WorldState.player_squads:
-		_spawn_token(squad)
+		spawn_token(squad)
 	for token: SquadToken in tokens:
 		if token.is_player():
 			_select(token)
 			break
 
 
-func _spawn_token(squad: SquadData) -> SquadToken:
+func spawn_token(squad: SquadData) -> SquadToken:
 	var token := SquadToken.new()
 	_tokens_root.add_child(token)
 	token.setup(squad, nodes[squad.current_node_id].position)
@@ -145,6 +147,8 @@ func step(delta: float) -> void:
 			return
 	_check_collisions()
 	_day_timer += delta
+	if _day_timer >= seconds_per_day * 0.5:
+		WorldState.set_time_of_day("night")
 	if _day_timer >= seconds_per_day:
 		_day_timer -= seconds_per_day
 		_on_new_day()

@@ -104,7 +104,7 @@ func check_victory() -> void:
 	if WorldState.count_nodes_of("enemy") > 0:
 		return
 	for token: SquadToken in map.tokens:
-		if token.squad.faction == "enemy":
+		if token.squad.faction == "enemy" and not token.squad.is_roaming:
 			return
 	WorldState.set_flag("act_victory")
 	map.show_banner(WorldState.era_config.victory_text)

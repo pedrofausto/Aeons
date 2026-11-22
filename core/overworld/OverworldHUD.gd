@@ -29,8 +29,8 @@ func refresh() -> void:
 	if era == null:
 		return
 	theme = era.ui_theme
-	_stats.text = "%s — %s %d   |   %s: %d   |   %s: %d   |   %s: %d   |   %s: %+d" % [
-		era.era_title, era.day_label, WorldState.day_count,
+	_stats.text = "%s — %s %d %s   |   %s: %d   |   %s: %d   |   %s: %d   |   %s: %+d" % [
+		era.era_title, era.day_label, WorldState.day_count, era.time_of_day_labels.get(WorldState.time_of_day, ""),
 		era.resource_label, WorldState.resources,
 		era.alignment_label, WorldState.alignment,
 		era.support_label, WorldState.popular_support,

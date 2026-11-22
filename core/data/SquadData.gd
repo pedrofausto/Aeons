@@ -16,6 +16,9 @@ const MAX_FATIGUE: int = 100
 ## Tag de encontro: bandit_loot | moral_escort | low_level_trap | natural_wildlife | mythic_boss
 @export var encounter_tag: String = ""
 
+var is_roaming: bool = false          # Gerado pelo RoamingSquadSpawner (não bloqueia a vitória)
+var roaming_until_day: bool = false   # Encontro noturno: some ao amanhecer
+
 
 ## Cópia profunda independente (o .tres original nunca é mutado em runtime).
 func clone() -> SquadData:
@@ -27,6 +30,8 @@ func clone() -> SquadData:
 	copy.fatigue = fatigue
 	copy.patrol_route = patrol_route.duplicate()
 	copy.encounter_tag = encounter_tag
+	copy.is_roaming = is_roaming
+	copy.roaming_until_day = roaming_until_day
 	for unit: UnitInstance in units:
 		var unit_copy := unit.duplicate() as UnitInstance
 		unit_copy.ensure_vitals()

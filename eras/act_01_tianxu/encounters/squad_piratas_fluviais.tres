@@ -1,0 +1,62 @@
+[gd_resource type="Resource" script_class="SquadData" format=3]
+
+[ext_resource type="Script" path="res://core/data/SquadData.gd" id="1_squad"]
+[ext_resource type="Script" path="res://core/data/UnitInstance.gd" id="1_unit"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/fubing.tres" id="2_fubing"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/ji_halberdier.tres" id="3_ji"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/nubing_crossbow.tres" id="4_nubing"]
+
+[sub_resource type="Resource" id="unit_0"]
+script = ExtResource("1_unit")
+class_data = ExtResource("2_fubing")
+unit_name = "Espadachim Leve Guo"
+level = 1
+alignment = 30
+slot = 0
+is_leader = false
+
+[sub_resource type="Resource" id="unit_1"]
+script = ExtResource("1_unit")
+class_data = ExtResource("2_fubing")
+unit_name = "Espadachim Leve Ren"
+level = 1
+alignment = 30
+slot = 1
+is_leader = true
+
+[sub_resource type="Resource" id="unit_2"]
+script = ExtResource("1_unit")
+class_data = ExtResource("2_fubing")
+unit_name = "Espadachim Leve Wu"
+level = 1
+alignment = 30
+slot = 2
+is_leader = false
+
+[sub_resource type="Resource" id="unit_3"]
+script = ExtResource("1_unit")
+class_data = ExtResource("4_nubing")
+unit_name = "Besteiro do Rio"
+level = 1
+alignment = 30
+slot = 3
+is_leader = false
+
+[sub_resource type="Resource" id="unit_4"]
+script = ExtResource("1_unit")
+class_data = ExtResource("3_ji")
+unit_name = "Saqueador Liu"
+level = 1
+alignment = 25
+slot = 4
+is_leader = false
+
+[resource]
+script = ExtResource("1_squad")
+squad_id = "piratas_fluviais"
+display_name = "Piratas Fluviais do Delta"
+faction = "enemy"
+units = Array[ExtResource("1_unit")]([SubResource("unit_0"), SubResource("unit_1"), SubResource("unit_2"), SubResource("unit_3"), SubResource("unit_4")])
+current_node_id = "templo_bambu"
+patrol_route = Array[String](["templo_bambu", "linhai"])
+encounter_tag = "bandit_loot"

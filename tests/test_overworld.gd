@@ -13,6 +13,8 @@ func run(t: Node) -> void:
 	WorldState.reset_visible(1)
 	WorldState.load_era(ACT01)
 	WorldState.set_flag("liberated_linhai")  # Interlúdio é coberto em test_interlude.gd
+	await _test_spawner(t)
+	_reset_quiet()
 
 	var graph := {"a": ["b"], "b": ["a", "c"], "c": ["b"]}
 	t.check("map_graph_bfs", MapGraph.find_path(graph, "a", "c") == ["b", "c"] and MapGraph.find_path(graph, "a", "a").is_empty())
@@ -118,3 +120,64 @@ func _total_xp(squad: SquadData) -> int:
 	for unit: UnitInstance in squad.units:
 		total += unit.level * UnitInstance.XP_PER_LEVEL + unit.experience
 	return total
+
+
+## Era do Ato I sem tabela de encontros (campanha focada e previsível).
+func _reset_quiet() -> void:
+	EssenceState.reset_all()
+	WorldState.reset_visible(1)
+	WorldState.load_era(ACT01)
+	var quiet := WorldState.era_config.duplicate() as EraConfig
+	quiet.encounter_tables = []
+	WorldState.era_config = quiet
+	WorldState.set_flag("liberated_linhai")
+
+
+## Diff §5: RoamingSquadSpawner + EncounterTable.
+func _test_spawner(t: Node) -> void:
+	var table := load("res://eras/act_01_tianxu/encounters/nanlu_encounters.tres") as EncounterTable
+	var rng_a := RandomNumberGenerator.new()
+	var rng_b := RandomNumberGenerator.new()
+	rng_a.seed = 42
+	rng_b.seed = 42
+	t.check("encounter_pick_deterministic", table.pick(rng_a, "day", 2.0) == table.pick(rng_b, "day", 2.0))
+	var night_only: Array = []
+	for seed: int in 30:
+		var rng := RandomNumberGenerator.new()
+		rng.seed = seed
+		night_only.append(table.pick(rng, "night", 2.0).squad.squad_id)
+	t.check("encounter_time_filter", "piratas_fluviais" not in night_only and "milicia_camponesa" in night_only)
+	var rng_low := RandomNumberGenerator.new()
+	t.check("encounter_level_filter", table.pick(rng_low, "night", 0.5) == null)
+
+	var map := (load(MAP_SCENE) as PackedScene).instantiate() as OverworldMap
+	map.auto_tick = false
+	t.get_tree().root.add_child(map)
+	await t.get_tree().process_frame
+	var spawned: Array[SquadData] = []
+	for day: int in 12:  # Alguma combinação (dia, período) há de passar no spawn_chance de 45%.
+		WorldState.day_count = 2 + day
+		spawned = map.spawner.try_spawn()
+		if not spawned.is_empty():
+			break
+	t.check("roaming_spawns", spawned.size() == 1 and spawned[0].is_roaming
+		and spawned[0].current_node_id in table.spawn_nodes, str(spawned))
+	t.check("roaming_respects_cap", map.spawner.try_spawn().is_empty() and map.spawner.roaming_count() == 1)
+	WorldState.day_count = 99
+	WorldState.time_of_day = "night"
+	var night_roamer := (load("res://eras/act_01_tianxu/encounters/squad_milicia_camponesa.tres") as SquadData).clone()
+	night_roamer.is_roaming = true
+	night_roamer.roaming_until_day = true
+	night_roamer.current_node_id = "templo_bambu"
+	map.spawn_token(night_roamer)
+	WorldState.advance_day()  # amanhecer
+	await t.get_tree().process_frame
+	t.check("night_roamers_vanish_at_dawn", not map.tokens.any(func(k: SquadToken) -> bool: return k.squad == night_roamer))
+	for token: SquadToken in map.tokens.duplicate():
+		if token.squad.faction == "enemy" and not token.squad.is_roaming:
+			map.remove_token(token)
+	WorldState.capture_node("forte_regencia", "player")
+	map.get_node("%EncounterDirector").call("check_victory")
+	t.check("roaming_does_not_block_victory", WorldState.has_flag("act_victory") and map.spawner.roaming_count() >= 1)
+	map.queue_free()
+	await t.get_tree().process_frame

@@ -17,6 +17,7 @@
 [ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/youxia.tres" id="6_youxia"]
 [ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/buqu.tres" id="6_buqu"]
 [ext_resource type="Resource" path="res://eras/act_01_tianxu/map/squad_cobradores_selo_de_ferro.tres" id="7_patrol"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/encounters/nanlu_encounters.tres" id="8_encounters"]
 
 [resource]
 script = ExtResource("1_era")
@@ -42,5 +43,7 @@ map_nodes = Array[ExtResource("3_nodescript")]([ExtResource("5_linhai"), ExtReso
 unit_classes = Array[ExtResource("3_classscript")]([ExtResource("6_fubing"), ExtResource("6_ji_halberdier"), ExtResource("6_nubing_crossbow"), ExtResource("6_daoshi_healer"), ExtResource("6_youxia"), ExtResource("6_buqu")])
 starting_squads = Array[ExtResource("3_squadscript")]([ExtResource("4_squad")])
 enemy_patrols = Array[ExtResource("3_squadscript")]([ExtResource("7_patrol")])
+encounter_tables = Array[Resource]([ExtResource("8_encounters")])
+max_roaming_squads = 1
 victory_text = "O Forte da Regência caiu. Os Vales de Nanlu respiram livres."
 next_era_config = "res://eras/act_02_occitania/EraConfig_Act02.tres"

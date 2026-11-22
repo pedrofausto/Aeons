@@ -55,3 +55,4 @@ faction = "enemy"
 units = Array[ExtResource("1_unit")]([SubResource("unit_0"), SubResource("unit_1"), SubResource("unit_2"), SubResource("unit_3"), SubResource("unit_4")])
 current_node_id = "forte_regencia"
 patrol_route = Array[String](["forte_regencia", "aldeia_terracos", "templo_bambu"])
+encounter_tag = "moral_escort"

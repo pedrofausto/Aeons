@@ -75,7 +75,7 @@ func get_anchor() -> Vector2:
 
 ## Tokens ficam na diagonal do nó para não cobrir o ícone; patrulhas, na diagonal oposta.
 func _offset() -> Vector2:
-	return Vector2(-20, 20) if squad != null and squad.is_patrol() else Vector2(20, -19)
+	return Vector2(-30, -4) if squad != null and squad.is_patrol() else Vector2(20, -19)
 
 
 func _draw() -> void:
