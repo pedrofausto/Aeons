@@ -41,8 +41,12 @@ func _on_battle_closed(result: Dictionary) -> void:
 	BattleConsequences.apply(effects, _ally_token.squad)
 	if bool(effects.get("player_won", false)):
 		var node_id: String = _foe_token.squad.current_node_id
+		var was_patrol: bool = _foe_token.squad.is_patrol()
 		map.remove_token(_foe_token)
-		map.capture(node_id)
+		if was_patrol:  # Patrulha batida na estrada: o esquadrão volta ao último nó visitado.
+			node_id = _ally_token.squad.current_node_id
+		else:
+			map.capture(node_id)
 		_ally_token.teleport_to(node_id, map.nodes[node_id].position)
 	else:
 		_foe_token.squad.restore_morale()
@@ -91,3 +95,26 @@ func _nearest_player_node(from_position: Vector2) -> String:
 			best = node_id
 			best_distance = distance
 	return best
+
+
+func check_victory() -> void:
+	if WorldState.count_nodes_of("enemy") > 0:
+		return
+	for token: SquadToken in map.tokens:
+		if token.squad.faction == "enemy":
+			return
+	WorldState.set_flag("act_victory")
+	map.show_banner(WorldState.era_config.victory_text)
+
+
+## Dispara o interlúdio de um nó na 1ª vez em que ele fica sob controle aliado.
+func check_liberations() -> void:
+	for node_id: String in map.nodes:
+		var data: MapNodeData = (map.nodes[node_id] as MapNode).data
+		var flag: String = "liberated_%s" % node_id
+		if data.liberation_timeline.is_empty() or WorldState.has_flag(flag):
+			continue
+		if WorldState.get_node_faction(node_id) == "player":
+			WorldState.set_flag(flag)
+			EventBus.interlude_requested.emit(data.liberation_timeline, node_id)
+			return

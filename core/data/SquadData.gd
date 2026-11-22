@@ -12,6 +12,7 @@ const MAX_FATIGUE: int = 100
 @export var units: Array[UnitInstance] = []
 @export var current_node_id: String = ""
 @export_range(0, 100) var fatigue: int = 0   # Reduz ataque em até 30%
+@export var patrol_route: Array[String] = []  # Nós percorridos em laço por patrulhas inimigas
 
 
 ## Cópia profunda independente (o .tres original nunca é mutado em runtime).
@@ -22,11 +23,34 @@ func clone() -> SquadData:
 	copy.faction = faction
 	copy.current_node_id = current_node_id
 	copy.fatigue = fatigue
+	copy.patrol_route = patrol_route.duplicate()
 	for unit: UnitInstance in units:
 		var unit_copy := unit.duplicate() as UnitInstance
 		unit_copy.ensure_vitals()
 		copy.units.append(unit_copy)
 	return copy
+
+
+func is_patrol() -> bool:
+	return not patrol_route.is_empty()
+
+
+## Promove cada unidade elegível para a 1ª classe disponível (estilo Ogre Battle).
+## Retorna "Nome → Classe" de cada promoção feita.
+func promote_eligible() -> Array[String]:
+	var done: Array[String] = []
+	for unit: UnitInstance in units:
+		var options := unit.get_eligible_promotions()
+		if unit.is_alive() and not options.is_empty() and unit.promote(options[0]):
+			done.append("%s → %s" % [unit.unit_name, options[0].display_name])
+	return done
+
+
+func has_eligible_promotion() -> bool:
+	for unit: UnitInstance in units:
+		if unit.is_alive() and not unit.get_eligible_promotions().is_empty():
+			return true
+	return false
 
 
 func get_unit_at(slot: int) -> UnitInstance:

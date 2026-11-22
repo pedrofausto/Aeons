@@ -18,6 +18,19 @@ func run(t: Node) -> void:
 		and nubing.archetype == UnitClassData.Archetype.RANGED_STEALTH
 		and daoshi.archetype == UnitClassData.Archetype.HEALER_MORAL)
 
+	# Promoção honrada: Fubing -> Youxia exige nível 4 e alinhamento >= 65
+	var youxia := load("res://eras/act_01_tianxu/classes/youxia.tres") as UnitClassData
+	var low := UnitInstance.create(fubing, "Baixo", 4, 0, false, 50)
+	var high := UnitInstance.create(fubing, "Alto", 4, 1, false, 70)
+	var young := UnitInstance.create(fubing, "Novo", 2, 2, false, 90)
+	var promo_squad := SquadData.new()
+	promo_squad.units.append_array([low, high, young])
+	t.check("promotion_requirements", low.get_eligible_promotions().is_empty() and young.get_eligible_promotions().is_empty()
+		and high.get_eligible_promotions() == [youxia])
+	var promoted := promo_squad.promote_eligible()
+	t.check("promotion_fubing_to_youxia", promoted.size() == 1 and high.class_data == youxia
+		and high.hp == high.get_max_hp() and low.class_data == fubing, str(promoted))
+
 	var probe := UnitInstance.create(fubing, "Sonda", 1, 4)
 	t.check("grid_slot_rows", probe.get_row() == 1 and probe.get_column() == 1 and probe.get_action() == fubing.back_action)
 

@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" path="res://core/data/UnitClassData.gd" id="1_class"]
 [ext_resource type="Script" path="res://core/data/ActionSkillData.gd" id="2_skill"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/youxia.tres" id="3_youxia"]
 
 [sub_resource type="Resource" id="front"]
 script = ExtResource("2_skill")
@@ -36,3 +37,4 @@ intellect = 6
 agility = 9
 front_action = SubResource("front")
 back_action = SubResource("back")
+promotes_to = Array[Resource]([ExtResource("3_youxia")])

@@ -1,4 +1,4 @@
-> Versão SEM SPOILERS para gerar diálogos dos Atos I–IV. 4 linha(s) que revelavam o segredo foram removidas;
+> Versão SEM SPOILERS para gerar diálogos dos Atos I–IV. 4 linha(s)/célula(s) que revelavam o segredo foram omitidas;
 > a íntegra está na pasta restrita de verdade em docs/ (proibido usá-la ao escrever diálogos dos Atos I–IV).
 
 Atlas do Ato I — O Império de Tianxu (Atualizado)
@@ -38,6 +38,7 @@ Cada província combina um desafio tático de movimentação com locais específ
 | Delta de Dongwan — Sudeste · Economia | **Baía das Lanternas**, Farol de Pedra Negra, Salina Imperial | Pontes, canais e costa; controlar os portos gera receita diária de ouro para sustentar e promover tropas. | Docas sob lanternas vermelhas, casa da guilda do sal e estaleiro. | Centro mercantil disputado por magistrados corruptos e piratas fluviais. |
 | Desfiladeiro de Hanmen — Oeste · Gargalo | **Portão de Hanmen**, Passagem da Neve, Mina de Bronze | Gargalo montanhoso inspirado no Passo de Hangu: neutraliza cavalaria e valoriza alabardeiros Ji. | Muralha sob neblina, tenda de guerra e forja de bronze. | Bastião do General Wei Bo; exige cerco duro, pacto sombrio ou quebra de moral. |
 | Estepes de Beisha — Norte · Fronteira | **Torre do Vento Seco**, Acampamento de Ordo, Oásis da Cinza | Planícies áridas além da muralha: velocidade máxima para cavalaria pesada e arqueiros montados. | Yurt do Khan, torre de vigia na muralha e fogueira sob o vento. | Zona estratégica para recrutar cavalaria de elite ou conter incursões. |
+| Arquipélago de Pengming — Leste · Secreto | **Observatório dos Nove Céus**, Cais da Neblina, Caverna dos Elixires | Ilhas envoltas em bruma (mito do Monte Penglai dos Fangshi); requer barcos ou unidades Xian. | Terraço de astrolábios de bronze e biblioteca de rolos de seda. |  [omitido] |
 | Planície de Zhonghe — Centro · Clímax | **Tiandu** (Capital de 3 muralhas), Ponte do Dragão, Celeiros Reais | Estradas pavimentadas (inspiradas em Chang'an) levando a um cerco urbano em três estágios. | Bairros externos sitiáveis, jardim proibido e Salão do Trono. | Queda do Chanceler Gao Shen e disparo da “derrota falsa” do Ato I. |
 
   O Portão de Hanmen vigiando os canais de Nanlu ilustra o contraste de luz e relevo do Ato I
@@ -52,6 +53,7 @@ Cada facção reage não apenas ao seu **Alinhamento**, mas também à sua escol
 
 | Facção / Feudo | Papel Político | Líder & Base | Força Militar | Afinidade de Doutrina & Alinhamento |
 |---|---|---|---|---|
+| Regência do Selo de Ferro — Antagonista Central | Corte legalista que mantém o Imperador-Menino refém sob leis draconianas. | **Chanceler Gao Shen** Capital Tiandu | Alabardeiros, catafractários, besteiros imperiais e assassinos Cike. |  [omitido] |
 | Feudo dos Três Rios — Rival / Volátil | Clã militar hereditário (Buqu) que fechou o oeste e cobra pedágios. | **General Wei Bo** Portão de Hanmen | Infantaria pesada de clã, máquinas de cerco e duelistas. | Inimigo na rota honrada; aceita pacto pragmático se você seguir **Revolucionária + Baixo Alinhamento**. |
 | Irmandade do Lótus de Cinza — Aliado Revolucionário | Revolta camponesa mística inspirada nos Turbantes Amarelos. | **Mestra Lin** Vales de Nanlu | Milícias camponesas, talismãs Daoshi e xamãs Wu. | Apoia forte a **Linha Revolucionária**; alas radicais saqueiam cidades se você não impuser disciplina. |
 | Liga dos Youxia & Moístas — Aliado Pacifista / Honrado | Rede de cavaleiros errantes, defensores de muralhas e estrategistas. | **Mestre Shen** Nanlu e Dongwan | Youxia de elite, estrategistas Junshi e engenheiros defensivos. | Recompensa **Alto Alinhamento** e vitórias por **Moral / Pacifismo** sem devastar aldeias. |

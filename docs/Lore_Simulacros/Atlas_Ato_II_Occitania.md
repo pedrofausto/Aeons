@@ -1,4 +1,4 @@
-> Versão SEM SPOILERS para gerar diálogos dos Atos I–IV. 2 linha(s) que revelavam o segredo foram removidas;
+> Versão SEM SPOILERS para gerar diálogos dos Atos I–IV. 2 linha(s)/célula(s) que revelavam o segredo foram omitidas;
 > a íntegra está na pasta restrita de verdade em docs/ (proibido usá-la ao escrever diálogos dos Atos I–IV).
 
 Atlas do Ato II — Occitânia, Carcassonne e a Resistência Cátara (Atualizado)
@@ -55,6 +55,7 @@ Mesmo entre os defensores do sul, nobres católicos, guerrilheiros Faydits e asc
 | Facção | Objetivo Político | Liderança Inspirada | Força Militar | Afinidade de Doutrina & Alinhamento |
 |---|---|---|---|---|
 | Barões da Cruzada do Norte — Antagonista Militar | Conquistar feudos no sul sob bênção papal e anexá-los à coroa do norte. | **Barão Guy de Montclair** (inspirado em Simon de Montfort) | Cavalaria pesada, lanceiros de choque e trébuchets. | Inimigo principal; perde fôlego quando o serviço feudal de 40 dias expira e recorre a mercenários. |
+| Legado Papal & Inquisição — Antagonista Ideológico | Erradicar a heresia cátara por tribunais, delação e fogueiras. | **Abade Arnaut & Irmão Guillaume** (Ordem dos Pregadores) | Inquisidores (debuffs de medo/heresia) e espiões. |  [omitido] |
 | Irmandade dos Faydits — Aliado Revolucionário | Nobres desapossados que juraram retomar seus castelos por guerrilha (Faydits). | **Pierre-Roger de Rochefort** (Pireneus e Cabaret) | Cavaleiros leves, besteiros de montanha e emboscadores. | Entram com força na **Linha Revolucionária**; criticam tréguas e rendições. |
 | Igreja dos Bons Hommes — Aliado Pacifista | Proteger civis, preservar os textos sagrados e resistir sem matar. | **Diaconisa Esclarmonde** (Montségur e vilas ocultas) | Parfaits curandeiros e auras de Moral que induzem deserção. | Elevam drasticamente o Apoio Popular na **Linha Pacifista**; recusam saques. |
 | Coroa de Aragão — Poder Externo Volátil | Proteger seus vassalos occitanos sem romper com Roma (Muret, 1213). | **Emissário de Barcelona** (Narbonne / Sul) | Infantaria leve ágil e cavalaria real aragonesa. | Só envia reforços se você provar legitimidade política e Alto Alinhamento. |

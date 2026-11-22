@@ -68,9 +68,14 @@ func contains_point(world_point: Vector2) -> bool:
 	return world_point.distance_to(position) <= HIT_RADIUS
 
 
-## Tokens ficam na diagonal do nó para não cobrir o ícone de tipo.
+## Posição lógica no grafo (sem o deslocamento visual) — usada nas colisões.
+func get_anchor() -> Vector2:
+	return position - _offset()
+
+
+## Tokens ficam na diagonal do nó para não cobrir o ícone; patrulhas, na diagonal oposta.
 func _offset() -> Vector2:
-	return Vector2(40, -38)
+	return Vector2(-40, 40) if squad != null and squad.is_patrol() else Vector2(40, -38)
 
 
 func _draw() -> void:

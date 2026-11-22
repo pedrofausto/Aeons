@@ -26,6 +26,7 @@ func _ready() -> void:
 	var era: EraConfig = WorldState.era_config
 	(%Background as ColorRect).color = era.color_background
 	_hud.pause_pressed.connect(toggle_pause)
+	_hud.promote_pressed.connect(_on_promote)
 	_hud.debug_transition_pressed.connect(_on_debug_transition)
 	_director.setup(self)
 	_build_map(era)
@@ -34,7 +35,7 @@ func _ready() -> void:
 	_hud.show_banner("" if not era.map_nodes.is_empty() else era.era_title)
 	WorldState.set_paused(true)
 	_hud.refresh()
-	_check_liberations.call_deferred()
+	_director.check_liberations.call_deferred()
 	if OS.is_debug_build():
 		print("TEST_PASS|overworld_boot|nodes=%d|tokens=%d" % [nodes.size(), tokens.size()])
 
@@ -53,6 +54,8 @@ func _build_map(era: EraConfig) -> void:
 			garrison.current_node_id = data.node_id
 			_spawn_token(garrison)
 	if fresh_act:
+		for patrol: SquadData in era.enemy_patrols:
+			_spawn_token(patrol.clone())
 		WorldState.player_squads.clear()
 		for template: SquadData in era.starting_squads:
 			WorldState.player_squads.append(template.clone())
@@ -135,7 +138,9 @@ func step(delta: float) -> void:
 	for node_id: String in nodes:
 		positions[node_id] = (nodes[node_id] as MapNode).position
 	for token: SquadToken in tokens.duplicate():
-		token.advance(delta, march_speed, positions)
+		if token.squad.is_patrol() and not token.is_moving():
+			token.set_path(PatrolAI.next_leg(token.squad, _graph()))
+		token.advance(delta, march_speed * (PatrolAI.SPEED_FACTOR if token.squad.is_patrol() else 1.0), positions)
 		if _is_busy():
 			return
 	_check_collisions()
@@ -164,7 +169,7 @@ func _check_collisions() -> void:
 		if not ally.is_player():
 			continue
 		for foe: SquadToken in tokens:
-			if foe.squad.faction == "enemy" and ally.position.distance_to(foe.position) <= COLLISION_DISTANCE:
+			if foe.squad.faction == "enemy" and ally.get_anchor().distance_to(foe.get_anchor()) <= COLLISION_DISTANCE:
 				_director.start_battle(ally, foe)
 				return
 
@@ -181,31 +186,8 @@ func _on_token_arrived(token: SquadToken, node_id: String) -> void:
 func capture(node_id: String) -> void:
 	WorldState.capture_node(node_id, "player")
 	(nodes[node_id] as MapNode).set_faction("player")
-	_check_liberations()
-	_check_victory()
-
-
-func _check_victory() -> void:
-	if WorldState.count_nodes_of("enemy") > 0:
-		return
-	for token: SquadToken in tokens:
-		if token.squad.faction == "enemy":
-			return
-	WorldState.set_flag("act_victory")
-	_hud.show_banner(WorldState.era_config.victory_text)
-
-
-## Dispara o interlúdio de um nó na 1ª vez em que ele fica sob controle aliado.
-func _check_liberations() -> void:
-	for node_id: String in nodes:
-		var data: MapNodeData = (nodes[node_id] as MapNode).data
-		var flag: String = "liberated_%s" % node_id
-		if data.liberation_timeline.is_empty() or WorldState.has_flag(flag):
-			continue
-		if WorldState.get_node_faction(node_id) == "player":
-			WorldState.set_flag(flag)
-			EventBus.interlude_requested.emit(data.liberation_timeline, node_id)
-			return
+	_director.check_liberations()
+	_director.check_victory()
 
 
 func _graph() -> Dictionary:
@@ -237,7 +219,19 @@ func remove_token(token: SquadToken) -> void:
 
 ## Chamado pelo EncounterDirector depois que a BattleArena fecha.
 func on_encounter_resolved() -> void:
-	_check_victory()
+	_director.check_victory()
+	_hud.refresh()
+
+
+func show_banner(text: String) -> void:
+	_hud.show_banner(text)
+
+
+func _on_promote() -> void:
+	var done: Array[String] = []
+	for squad: SquadData in WorldState.player_squads:
+		done.append_array(squad.promote_eligible())
+	_hud.show_banner("\n".join(done))
 	_hud.refresh()
 
 

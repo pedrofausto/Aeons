@@ -40,6 +40,7 @@ extends Resource
 @export var map_nodes: Array[MapNodeData] = []
 @export var unit_classes: Array[UnitClassData] = []
 @export var starting_squads: Array[SquadData] = []
+@export var enemy_patrols: Array[SquadData] = []       # Esquadrões com patrol_route
 @export var victory_text: String = ""
 @export_file("*.tres") var next_era_config: String = ""
 

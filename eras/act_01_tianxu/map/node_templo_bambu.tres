@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_node")
 node_id = "templo_bambu"
-display_name = "Templo do Bambu"
+display_name = "Templo do Bambu Cinzento"
 node_type = 0
 faction = "neutral"
 gold_per_tick = 10

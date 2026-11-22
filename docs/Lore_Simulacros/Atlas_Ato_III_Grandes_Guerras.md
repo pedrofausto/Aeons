@@ -1,4 +1,4 @@
-> Versão SEM SPOILERS para gerar diálogos dos Atos I–IV. 3 linha(s) que revelavam o segredo foram removidas;
+> Versão SEM SPOILERS para gerar diálogos dos Atos I–IV. 3 linha(s)/célula(s) que revelavam o segredo foram omitidas;
 > a íntegra está na pasta restrita de verdade em docs/ (proibido usá-la ao escrever diálogos dos Atos I–IV).
 
 Atlas do Ato III — A Frente de Cinza e Ferro (Grandes Guerras)
@@ -40,6 +40,7 @@ Cada setor do mapa exige uma doutrina distinta — combinando infantaria, sapado
 | Porto de Nordhaven — Oeste · Bloqueio Naval | **Bunkers Costeiros**, Docas de Submarinos, Farol Apagado | Fortificações de concreto e neblina marítima; controla o fluxo de combustível, remédios e recursos externos. | Armazém portuário em blecaute, doca de contrabandistas. | Objetivo econômico vital: liberar o porto alivia a fome civil e financia o exército. |
 | Montanhas de Valmont — Sul · Rede Partisan | **Túneis de Valmont**, Torre de Rádio Clandestina, Vila de Pinheiros | Florestas densas e desfiladeiros; blindados não passam — terreno perfeito para franco-atiradores e sabotadores. | Porão da rádio livre, acampamento partisan sob pinheiros. | Base secreta onde o jogador recruta sabotadores (Revolucionário) ou médicos/jornalistas (Pacifista). |
 | Ponte de Ostbrück — Leste · Gargalo de Inverno | **Viaduto Ferroviário**, Estação Nevada, Depósito de Artilharia | Neve intensa e travessia estreita sobre o rio congelado; explodir ou tomar o viaduto decide o ritmo da ofensiva. | Estação de trem abandonada, vagão-correio. | Grande dilema tático: destruir a ponte isola o inimigo, mas também corta alimentos para civis a leste. |
+| Aeródromo de Krovna — Nordeste · Secreto | **Pista Camuflada**, Estação de Escuta 9 (Rádio Anômalo) | Floresta nevada oculta na névoa; acessível por infiltração ou reconhecimento aéreo. | Hangar de madeira dos biplanos, sala de válvulas de rádio. |  [omitido] |
 
   Holofotes sobre o viaduto destruído e biplanos silenciosos definem a atmosfera noturna do Ato III
 
@@ -53,6 +54,7 @@ O conflito do Ato III não opõe apenas dois países, mas a **máquina estatal d
 
 | Facção | Papel e Objetivo | Liderança & Base | Perfil Militar | Relação com o Jogador |
 |---|---|---|---|---|
+| Diretório de Ferro — Antagonista Militar | Alto Comando industrial que prolonga a guerra para manter poder absoluto e controle fabril. | **Marechal Von Kessel** Bacia de Eisenmark | Blindados pesados, baterias de artilharia, lança-chamas e Stoßtruppen. |  [omitido] |
 | Comissariado de Censura — Antagonista Ideológico | Controla a imprensa, persegue desertores e fabrica notícias falsas para sustentar o fervor bélico. | **Diretor Moreau** Torres de Rádio & Nordhaven | Comissários políticos (debuffs de medo), polícia militar e espiões infiltrados. | Derruba o **Apoio Popular** sempre que mantém torres de transmissão ativas. |
 | Rede Partisan de Valmont — Aliado Revolucionário | Sabotadores irregulares inspirados na SOE: explodem trilhos, fábricas e depósitos inimigos. | **Comandante Claire Vasseur** Túneis de Valmont | Sabotadores, franco-atiradores e demolidores de alta mobilidade. | Seus melhores aliados na **Linha Revolucionária**; exigem ações ousadas e imediatas. |
 | Corpo Médico & Rádio Livre — Aliado Pacifista | Médicos, capelães e operadores de rádio que salvam feridos de ambos os lados e organizam tréguas. | **Dr. Emil Lindner** Hospitais de Campanha | Médicos de combate, fotógrafos do Signal Corps e transmissores que zeram a Moral inimiga. | Pilar da **Linha Pacifista**: induzem pelotões inimigos exaustos a deporem armas sem derramamento de sangue. |
@@ -70,6 +72,7 @@ O mapa do Ato III alterna patrulhas mecanizadas, comboios ferroviários com temp
 | **Escolta da Polícia Militar** — Estradas · Dia | Rotas entre Nordhaven e a frente | 2 Guardas + 1 Comissário Político + 1 Atirador | Transportam desertores para fuzilamento; libertá-los eleva o Apoio Popular e pode recrutar novos soldados. |
 | **Pelotão Perdido na Lama** — Ocasional · Crateras | Terra de Ninguém sob chuva | 3 Fuzileiros exaustos (nível inferior) + 1 Enfermeiro | **Dilema clássico:** eliminá-los derruba Alinhamento; quebrar a Moral ou oferecer trégua rende bônus pacifista. |
 | **Bateria Química Experimental** — Raro · Norte | Perímetro de Eisenmark | 2 Químicos de Guerra + 2 Guardas com Máscara | Aplica dano em área tóxico; capturar seus documentos expõe crimes do Diretório no rádio livre. |
+| **Transmissão Fantasma** — Secreto · Estação 9 | Nordeste (neblina noturna) | Espectros estáticos / anomalias de sinal que distorcem a UI |  [omitido] |
 
 “Na frequência 4.77 MHz da Estação 9, os criptógrafos gravaram um pulso geométrico perfeito — exatamente a mesma proporção matemática que um astrônomo chinês riscou em bronze milênios atrás.”
 
