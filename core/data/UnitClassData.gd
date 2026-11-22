@@ -73,3 +73,5 @@ func matches_doctrine(doctrine: int) -> bool:
 @export var min_alignment: int = 0           # 0..100
 @export var max_alignment: int = 100
 @export var min_charisma: int = 0
+## Item consumido (1 unidade) ao promover PARA esta classe. Vazio = sem item.
+@export var required_item_id: StringName = &""

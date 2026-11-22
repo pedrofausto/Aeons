@@ -171,6 +171,20 @@ func has_item(item_id: String) -> bool:
 	return inventory.any(func(item: ItemData) -> bool: return item.item_id == item_id)
 
 
+func count_item(item_id: String) -> int:
+	return inventory.filter(func(item: ItemData) -> bool: return item.item_id == item_id).size()
+
+
+## Remove 1 unidade do item; retorna false se não houver.
+func consume_item(item_id: String) -> bool:
+	for i: int in inventory.size():
+		if inventory[i].item_id == item_id:
+			inventory.remove_at(i)
+			_notify()
+			return true
+	return false
+
+
 func unlock_class(class_id: String) -> void:
 	if class_id not in unlocked_classes:
 		unlocked_classes.append(class_id)

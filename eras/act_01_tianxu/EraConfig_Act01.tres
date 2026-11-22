@@ -27,6 +27,9 @@
 [ext_resource type="Resource" path="res://eras/act_01_tianxu/encounters/nanlu_encounters.tres" id="8_encounters"]
 [ext_resource type="Resource" path="res://eras/act_01_tianxu/encounters/hanmen_encounters.tres" id="8_hanmen"]
 [ext_resource type="Resource" path="res://eras/act_01_tianxu/encounters/pengming_encounters.tres" id="8_pengming"]
+[ext_resource type="Script" path="res://core/data/ItemData.gd" id="9_itemscript"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/items/talisma_cinabrio.tres" id="9_talisma"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/items/bussola_dos_nove_ceus.tres" id="9_bussola"]
 
 [resource]
 script = ExtResource("1_era")
@@ -54,5 +57,6 @@ starting_squads = Array[ExtResource("3_squadscript")]([ExtResource("4_squad")])
 enemy_patrols = Array[ExtResource("3_squadscript")]([ExtResource("7_patrol")])
 encounter_tables = Array[Resource]([ExtResource("8_encounters"), ExtResource("8_hanmen"), ExtResource("8_pengming")])
 max_roaming_squads = 2
+item_catalog = Array[ExtResource("9_itemscript")]([ExtResource("9_talisma"), ExtResource("9_bussola")])
 victory_text = "O Forte da Regência caiu. Os Vales de Nanlu respiram livres."
 next_era_config = "res://eras/act_02_occitania/EraConfig_Act02.tres"

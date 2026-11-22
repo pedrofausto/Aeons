@@ -6,6 +6,7 @@
 [ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/fubing.tres" id="3_fubing"]
 [ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/ji_halberdier.tres" id="4_ji"]
 [ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/nubing_crossbow.tres" id="5_nubing"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/fangshi.tres" id="6_fangshi"]
 
 [sub_resource type="Resource" id="unit_0"]
 script = ExtResource("1_unit")
@@ -52,10 +53,19 @@ alignment = 65
 slot = 5
 is_leader = false
 
+[sub_resource type="Resource" id="unit_5"]
+script = ExtResource("1_unit")
+class_data = ExtResource("6_fangshi")
+unit_name = "Yan Shu"
+level = 3
+alignment = 60
+slot = 4
+is_leader = false
+
 [resource]
 script = ExtResource("1_squad")
 squad_id = "guarda_dos_canais"
 display_name = "Guarda dos Canais"
 faction = "player"
-units = Array[ExtResource("1_unit")]([SubResource("unit_0"), SubResource("unit_1"), SubResource("unit_2"), SubResource("unit_3"), SubResource("unit_4")])
+units = Array[ExtResource("1_unit")]([SubResource("unit_0"), SubResource("unit_1"), SubResource("unit_2"), SubResource("unit_3"), SubResource("unit_4"), SubResource("unit_5")])
 current_node_id = "linhai"

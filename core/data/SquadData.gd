@@ -59,20 +59,23 @@ func is_patrol() -> bool:
 	return not patrol_route.is_empty()
 
 
-## Promove cada unidade elegível para a 1ª classe disponível (estilo Ogre Battle).
-## Retorna "Nome → Classe" de cada promoção feita.
+## Promove cada unidade para a 1ª classe disponível (estilo Ogre Battle), pulando as
+## bloqueadas por falta de item. Retorna "Nome → Classe" de cada promoção feita.
 func promote_eligible() -> Array[String]:
 	var done: Array[String] = []
 	for unit: UnitInstance in units:
-		var options := unit.get_eligible_promotions()
-		if unit.is_alive() and not options.is_empty() and unit.promote(options[0]):
-			done.append("%s → %s" % [unit.unit_name, options[0].display_name])
+		for option: Dictionary in PromotionRules.options_for(unit):
+			var target: UnitClassData = option["target"]
+			if option["has_item"] and PromotionRules.promote(unit, target):
+				done.append("%s → %s" % [unit.unit_name, target.display_name])
+				break
 	return done
 
 
+## Há promoção cumprida em atributos (mesmo que bloqueada por item: a UI mostra o requisito).
 func has_eligible_promotion() -> bool:
 	for unit: UnitInstance in units:
-		if unit.is_alive() and not unit.get_eligible_promotions().is_empty():
+		if not PromotionRules.options_for(unit).is_empty():
 			return true
 	return false
 

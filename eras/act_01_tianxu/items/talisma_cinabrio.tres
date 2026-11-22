@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_item")
-item_id = "talisma_de_cinabrio"
+item_id = "talisma_cinabrio"
 display_name = "Talismã de Cinábrio"
 description = "Selo de cinábrio arrancado do sino de um xamã. Mestres taoistas o usam para consagrar novos discípulos."
 promotion_seal = true

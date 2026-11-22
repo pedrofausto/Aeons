@@ -12,6 +12,7 @@ signal promote_pressed
 @onready var _pause_button: Button = %PauseButton
 @onready var _debug_button: Button = %DebugTransitionButton
 @onready var _promote_button: Button = %PromoteButton
+@onready var promotion_panel: PromotionPanel = %PromotionPanel
 
 
 func _ready() -> void:
@@ -20,6 +21,7 @@ func _ready() -> void:
 	_promote_button.pressed.connect(_on_promote)
 	_debug_button.visible = OS.is_debug_build()
 	EventBus.world_state_changed.connect(refresh)
+	promotion_panel.promoted.connect(func(_u: UnitInstance, _c: UnitClassData) -> void: refresh())
 	EventBus.pause_toggled.connect(func(_p: bool) -> void: refresh())
 	refresh()
 
@@ -44,11 +46,8 @@ func refresh() -> void:
 ## `seconds` > 0: o aviso some sozinho (só se não tiver sido trocado por outro).
 func _on_promote() -> void:
 	promote_pressed.emit()
-	var done: Array[String] = []
-	for squad: SquadData in WorldState.player_squads:
-		done.append_array(squad.promote_eligible())
-	show_banner("\n".join(done), 4.0)
-	refresh()
+	promotion_panel.theme = theme
+	promotion_panel.open()
 
 
 func show_banner(text: String, seconds: float = 0.0) -> void:

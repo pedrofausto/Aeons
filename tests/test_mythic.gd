@@ -90,7 +90,9 @@ func run(t: Node) -> void:
 	# 6. Chefe mítico de Pengming: Moral -> aliança + classe; Aniquilação -> bússola; rota de honra.
 	var boss := (load(ENC % "squad_guardiao_xian_pengming") as SquadData).clone()
 	var win_mor := {"type": "result", "winner": "attacker", "victory_type": "morale_break"}
-	var report := BattleConsequences.apply(BattleConsequences.compute(win_mor, guard, boss, "attacker"), guard, boss)
+	var with_room := (WorldState.era_config.starting_squads[0] as SquadData).clone()
+	with_room.units.pop_back()  # 1 slot livre na grade para o rendido
+	var report := BattleConsequences.apply(BattleConsequences.compute(win_mor, with_room, boss, "attacker"), with_room, boss)
 	t.check("boss_morale_unlocks_xian", WorldState.has_flag("pengming_xian_ally") and "xian" in WorldState.unlocked_classes
 		and report["recruited"] == "Xian do Orvalho", str(report))
 	_reset()

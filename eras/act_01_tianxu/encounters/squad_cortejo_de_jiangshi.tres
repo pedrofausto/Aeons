@@ -5,7 +5,7 @@
 [ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/jiangshi.tres" id="2_jiangshi"]
 [ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/wu_sombrio.tres" id="3_wu_sombrio"]
 [ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/huli_jing.tres" id="4_huli_jing"]
-[ext_resource type="Resource" path="res://eras/act_01_tianxu/items/talisma_de_cinabrio.tres" id="9_talisma"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/items/talisma_cinabrio.tres" id="9_talisma"]
 
 [sub_resource type="Resource" id="unit_0"]
 script = ExtResource("1_unit")

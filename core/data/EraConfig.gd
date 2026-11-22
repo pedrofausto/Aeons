@@ -53,11 +53,23 @@ var interlude_style: String = "camp"
 @export var starting_squads: Array[SquadData] = []
 @export var enemy_patrols: Array[SquadData] = []       # Esquadrões com patrol_route
 @export var encounter_tables: Array[Resource] = []     # EncounterTable por província/região
+@export var item_catalog: Array[ItemData] = []         # Itens da era (nomes para a UI)
 @export var max_roaming_squads: int = 2
 @export var victory_text: String = ""
 @export var recruit_message: String = "%s se junta à %s."        # (recrutado, esquadrão)
 @export var item_message: String = "Obtido: %s"
+@export var promotion_title: String = "Promoções"
+@export var promotion_requires: String = "requer %s (você tem %d)"
+@export var promotion_consumes: String = "consome 1 %s (você tem %d)"
+@export var close_label: String = "Fechar"
 @export_file("*.tres") var next_era_config: String = ""
+
+
+func get_item_name(item_id: String) -> String:
+	for item: ItemData in item_catalog:
+		if item.item_id == item_id:
+			return item.display_name
+	return item_id
 
 
 func get_order_label(order: int) -> String:

@@ -5,6 +5,7 @@
 [ext_resource type="Script" path="res://core/overworld/EncounterDirector.gd" id="3_director"]
 [ext_resource type="Script" path="res://core/overworld/RoamingSquadSpawner.gd" id="4_spawner"]
 [ext_resource type="Script" path="res://core/overworld/DayNightTint.gd" id="5_tint"]
+[ext_resource type="Script" path="res://core/overworld/PromotionPanel.gd" id="6_promo"]
 
 [node name="OverworldMap" type="Node2D"]
 script = ExtResource("1_map")
@@ -158,3 +159,8 @@ offset_bottom = -10
 grow_horizontal = 0
 grow_vertical = 0
 text = "★ Promover"
+
+[node name="PromotionPanel" type="PanelContainer" parent="HUDLayer/HUD"]
+unique_name_in_owner = true
+layout_mode = 1
+script = ExtResource("6_promo")

@@ -209,3 +209,66 @@ func _drive(t: Node, room: Node, choice: int) -> void:
 		else:
 			dialogic.get("Inputs").call("handle_input")
 		await t.get_tree().create_timer(0.12).timeout
+
+
+const TALISMAN := "res://eras/act_01_tianxu/items/talisma_cinabrio.tres"
+
+
+## (c) Promoção especial do Fangshi consome 1 talisma_cinabrio (lógica + UI).
+func _test_talisman_promotion(t: Node) -> void:
+	_reset()
+	_quiet()
+	var fangshi := load("res://eras/act_01_tianxu/classes/fangshi.tres") as UnitClassData
+	var xian := load("res://eras/act_01_tianxu/classes/xian.tres") as UnitClassData
+	var wu := load("res://eras/act_01_tianxu/classes/wu_sombrio.tres") as UnitClassData
+	t.check("talisman_item_id_and_requirement", (load(TALISMAN) as ItemData).item_id == "talisma_cinabrio"
+		and xian.required_item_id == &"talisma_cinabrio" and wu.required_item_id == &"talisma_cinabrio"
+		and fangshi.promotion_good == xian and fangshi.promotion_evil == wu
+		and (load("res://eras/act_01_tianxu/classes/youxia.tres") as UnitClassData).required_item_id == &"")
+	var dark := UnitInstance.create(fangshi, "Sombrio", 4, 3, false, 20)
+	t.check("fangshi_low_alignment_branch_wu", PromotionRules.options_for(dark).size() == 1
+		and PromotionRules.options_for(dark)[0]["target"] == wu)
+
+	var map: OverworldMap = await _open_map(t)
+	var squad: SquadData = map.selected_token.squad
+	var yan: UnitInstance = null
+	for unit: UnitInstance in squad.units:
+		if unit.class_data == fangshi:
+			yan = unit
+	t.check("guard_has_fangshi_in_play", yan != null)
+	yan.level = 4
+	yan.alignment = 80
+	t.check("promotion_blocked_without_item", not PromotionRules.promote(yan, xian) and yan.class_data == fangshi
+		and squad.promote_eligible().all(func(s: String) -> bool: return not s.begins_with(yan.unit_name)))
+	var hud: OverworldHUD = map.get_node("%HUD")
+	hud.refresh()
+	var promote_button: Button = map.get_node("%PromoteButton")
+	promote_button.pressed.emit()
+	var panel: PromotionPanel = hud.promotion_panel
+	await t.get_tree().process_frame
+	var button := _find_button(panel, "Promote_Yan Shu_xian")
+	t.check("promotion_ui_blocks_and_shows_requirement", panel.visible and promote_button.visible and button != null
+		and button.disabled and "Talismã de Cinábrio" in button.text and "(você tem 0)" in button.text,
+		button.text if button else "sem botão")
+
+	WorldState.add_item(load(TALISMAN))
+	WorldState.add_item(load(TALISMAN))
+	panel.rebuild()
+	await t.get_tree().process_frame
+	button = _find_button(panel, "Promote_Yan Shu_xian")
+	t.check("promotion_ui_unlocks_with_item", button != null and not button.disabled and "consome 1" in button.text)
+	button.pressed.emit()
+	await t.get_tree().process_frame
+	t.check("promotion_consumes_one_talisman", yan.class_data == xian and WorldState.count_item("talisma_cinabrio") == 1
+		and _find_button(panel, "Promote_Yan Shu_xian") == null, "talismãs=%d" % WorldState.count_item("talisma_cinabrio"))
+	var cortejo := load("res://eras/act_01_tianxu/encounters/squad_cortejo_de_jiangshi.tres") as SquadData
+	t.check("talisman_obtainable_from_cortejo", cortejo.rare_drop != null and cortejo.rare_drop.item_id == "talisma_cinabrio")
+	map.queue_free()
+	await t.get_tree().process_frame
+
+
+func _find_button(root: Node, button_name: String) -> Button:
+	for node: Node in root.find_children("*", "Button", true, false):
+		if node.name == button_name and not node.is_queued_for_deletion():
+			return node as Button
+	return null
