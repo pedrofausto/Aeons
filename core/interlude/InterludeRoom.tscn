@@ -1,0 +1,107 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://core/interlude/InterludeController.gd" id="1_ctrl"]
+
+[sub_resource type="Gradient" id="lantern_gradient"]
+colors = PackedColorArray(1, 0.82, 0.5, 1, 1, 0.6, 0.3, 0)
+
+[sub_resource type="GradientTexture2D" id="lantern_texture"]
+gradient = SubResource("lantern_gradient")
+width = 512
+height = 512
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[node name="InterludeRoom" type="Node2D"]
+script = ExtResource("1_ctrl")
+
+[node name="Sky" type="CanvasLayer" parent="."]
+layer = -2
+
+[node name="SkyColor" type="ColorRect" parent="Sky"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.09, 0.11, 0.2, 1)
+
+[node name="Night" type="CanvasModulate" parent="."]
+color = Color(0.42, 0.42, 0.55, 1)
+
+[node name="FarMountains" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.2, 1)
+repeat_size = Vector2(1280, 0)
+autoscroll = Vector2(-6, 0)
+repeat_times = 2
+
+[node name="Shape" type="Polygon2D" parent="FarMountains"]
+color = Color(0.2, 0.24, 0.3, 1)
+polygon = PackedVector2Array(0, 420, 160, 250, 300, 380, 470, 210, 640, 400, 820, 230, 980, 390, 1130, 260, 1280, 420, 1280, 720, 0, 720)
+
+[node name="Granary" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.6, 1)
+
+[node name="Roof" type="Polygon2D" parent="Granary"]
+color = Color(0.45, 0.2, 0.15, 1)
+polygon = PackedVector2Array(330, 330, 640, 250, 950, 330, 900, 345, 380, 345)
+
+[node name="Walls" type="Polygon2D" parent="Granary"]
+color = Color(0.55, 0.45, 0.32, 1)
+polygon = PackedVector2Array(400, 345, 880, 345, 880, 520, 400, 520)
+
+[node name="Door" type="Polygon2D" parent="Granary"]
+color = Color(0.2, 0.12, 0.08, 1)
+polygon = PackedVector2Array(600, 400, 680, 400, 680, 520, 600, 520)
+
+[node name="Canal" type="Parallax2D" parent="."]
+repeat_size = Vector2(1280, 0)
+autoscroll = Vector2(-18, 0)
+repeat_times = 2
+
+[node name="Water" type="Polygon2D" parent="Canal"]
+color = Color(0.12, 0.25, 0.32, 1)
+polygon = PackedVector2Array(0, 520, 1280, 520, 1280, 720, 0, 720)
+
+[node name="Ripple" type="Polygon2D" parent="Canal"]
+color = Color(0.25, 0.42, 0.5, 1)
+polygon = PackedVector2Array(80, 560, 260, 556, 260, 562, 80, 566, 520, 610, 700, 606, 700, 612, 520, 616)
+
+[node name="Lantern" type="PointLight2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(520, 470)
+color = Color(1, 0.8, 0.5, 1)
+energy = 1.2
+texture = SubResource("lantern_texture")
+texture_scale = 1.6
+
+[node name="LanternBody" type="Polygon2D" parent="Lantern"]
+color = Color(1, 0.75, 0.35, 1)
+polygon = PackedVector2Array(-8, -14, 8, -14, 10, 10, -10, 10)
+
+[node name="TitleLayer" type="CanvasLayer" parent="."]
+
+[node name="UIRoot" type="Control" parent="TitleLayer"]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Title" type="Label" parent="TitleLayer/UIRoot"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 28.0
+offset_bottom = 76.0
+grow_horizontal = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 32
+horizontal_alignment = 1

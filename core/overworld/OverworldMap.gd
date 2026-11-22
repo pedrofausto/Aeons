@@ -121,7 +121,7 @@ func order_move(token: SquadToken, target_id: String) -> bool:
 	return true
 
 
-# --- Simulação em tempo real -----------------------------------------------
+# --- Marcha em tempo real -----------------------------------------------
 
 func _process(delta: float) -> void:
 	if auto_tick:

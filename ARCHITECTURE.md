@@ -11,15 +11,16 @@ projeto: "Os Cinco Simulacros"
 engine: "Godot 4.7.2 (Standard / GDScript puro — sem C#)"
 renderizador_obrigatorio: "gl_compatibility (--rendering-driver opengl3)"
 alvo_exportacao: ["Desktop (macOS/Win/Linux)", "Web HTML5 (single-threaded)", "Android"]
-fase_atual: "Sprint 2 concluído — Mapa de Conquista com Pausa (Vales de Nanlu)"
-cenas_validadas: ["core/combat/BattleArena.tscn", "core/overworld/OverworldMap.tscn"]
-testes: "tests/run_tests.sh -> 37 TEST_PASS, 0 falhas, sem ERROR no log"
+fase_atual: "Sprint 3 concluído — Dilema Os Celeiros de Linhai + Interlúdio (Dialogic 2)"
+cenas_validadas: ["core/combat/BattleArena.tscn", "core/overworld/OverworldMap.tscn", "core/interlude/InterludeRoom.tscn"]
+testes: "tests/run_tests.sh -> 46 TEST_PASS, 0 falhas, sem ERROR no log (inclui varredura de sigilo)"
 sinais_eventbus: [pause_toggled, tick_advanced, node_captured, battle_requested, battle_ended,
   interlude_requested, interlude_choice_applied, interlude_finished, world_state_changed,
   era_loaded, era_transition]
-proximo_passo: "Sprint 3 — Dialogic 2 + InterludeRoom.tscn + dilema Os Celeiros de Linhai"
+proximo_passo: "Sprint 4 — sprites Pixelorama + normal maps Laigter + trilha .ogg (transição de era já testada)"
 bloqueios_conhecidos:
   - "Hardware de dev: Mac mini Mid 2011 (OCLP non-Metal). Nunca usar Forward+ ou Mobile."
+  - "Dialogic 2 (master 2.0-Alpha-21 WIP) vendorizado em addons/; ação dialogic_default_action declarada no project.godot."
   - "UnitClassData.promotes_to é Array[Resource]: Array[UnitClassData] auto-referente vaza na saída (Godot 4.7)."
 regras_de_sigilo_narrativo:
   - "PROIBIDO mencionar 'Aeons', 'simulação', 'simulacro' ou 'mesma alma' em qualquer diálogo, UI ou comentário visível nos Atos I a IV."

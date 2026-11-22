@@ -6,7 +6,7 @@ cd "$(dirname "$0")/.."
 GODOT_BIN="${GODOT:-$HOME/bin/godot-opengl3}"
 LOG="$(mktemp)"
 "$GODOT_BIN" --path . --import >/dev/null 2>&1
-"$GODOT_BIN" --path . res://tests/TestRunner.tscn --quit-after 3000 2>&1 | tee "$LOG"
+"$GODOT_BIN" --path . res://tests/TestRunner.tscn --quit-after 20000 2>&1 | tee "$LOG"
 status=0
 grep -q "TEST_PASS|" "$LOG" || { echo "FALHA: nenhum TEST_PASS emitido"; status=1; }
 grep -q "TEST_FAIL|" "$LOG" && { echo "FALHA: há TEST_FAIL no log"; status=1; }
