@@ -223,8 +223,8 @@ func on_encounter_resolved() -> void:
 	_hud.refresh()
 
 
-func show_banner(text: String) -> void:
-	_hud.show_banner(text)
+func show_banner(text: String, seconds: float = 0.0) -> void:
+	_hud.show_banner(text, seconds)
 
 
 func _on_promote() -> void:

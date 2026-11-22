@@ -94,6 +94,31 @@ func run(t: Node) -> void:
 	t.check("consequence_annihilation_revolutionary", int(fx_hp["doctrine"]) > 0 and int(fx_hp["alignment"]) < 0, str(fx_hp))
 	t.check("consequence_surrender_pacifist", int(fx_mor["doctrine"]) < 0 and int(fx_mor["popular_support"]) > 0, str(fx_mor))
 
+	# Tags de encontro (diff §5) e recrutamento na Rendição por Moral (diff §3)
+	var win_hp := {"type": "result", "winner": "attacker", "victory_type": "annihilation"}
+	var win_mor := {"type": "result", "winner": "attacker", "victory_type": "morale_break"}
+	var mid := _squad("player", [[fubing, 3, 0, true]])
+	var bandits := _squad("enemy", [[fubing, 3, 0, true]])
+	bandits.encounter_tag = "bandit_loot"
+	t.check("tag_bandit_loot", int(BattleConsequences.compute(win_hp, mid, bandits, "attacker")["resources"]) == 180)
+	var wolves := _squad("enemy", [[fubing, 3, 0, true]])
+	wolves.encounter_tag = "natural_wildlife"
+	var fx_wild := BattleConsequences.compute(win_hp, mid, wolves, "attacker")
+	t.check("tag_natural_wildlife_neutral", fx_wild["alignment"] == 0 and fx_wild["doctrine"] == 0 and not fx_wild["recruit"])
+	var trap := _squad("enemy", [[ji, 1, 0, false], [daoshi, 1, 4, true]])
+	trap.encounter_tag = "low_level_trap"
+	var veterans := _squad("player", [[fubing, 6, 0, true]])
+	t.check("tag_low_level_trap", int(BattleConsequences.compute(win_hp, veterans, trap, "attacker")["alignment"]) == -13
+		and int(BattleConsequences.compute(win_mor, veterans, trap, "attacker")["alignment"]) == 0)
+	var fx_rec := BattleConsequences.compute(win_mor, veterans, trap, "attacker")
+	var recruited := BattleConsequences.recruit_surrendered(veterans, trap)
+	t.check("morale_victory_recruits", fx_rec["recruit"] and recruited == "enemy_0" and veterans.units.size() == 2
+		and veterans.units[1].slot == 1 and trap.units.size() == 1, recruited)
+	var full := _squad("player", [[fubing, 3, 0, true], [fubing, 3, 1, false], [fubing, 3, 2, false],
+		[nubing, 3, 3, false], [nubing, 3, 4, false], [daoshi, 3, 5, false]])
+	t.check("morale_victory_frees_when_full", BattleConsequences.recruit_surrendered(full, _squad("enemy", [[ji, 1, 0, false]])) == ""
+		and full.units.size() == 6)
+
 	# Combate real do Ato I resolve sem erros
 	var era := load("res://eras/act_01_tianxu/EraConfig_Act01.tres") as EraConfig
 	var ally := era.starting_squads[0].clone()

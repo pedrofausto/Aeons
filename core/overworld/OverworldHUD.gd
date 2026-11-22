@@ -41,6 +41,11 @@ func refresh() -> void:
 		func(squad: SquadData) -> bool: return squad.has_eligible_promotion())
 
 
-func show_banner(text: String) -> void:
+## `seconds` > 0: o aviso some sozinho (só se não tiver sido trocado por outro).
+func show_banner(text: String, seconds: float = 0.0) -> void:
 	_banner.text = text
 	_banner.visible = not text.is_empty()
+	if seconds > 0.0 and is_inside_tree():
+		await get_tree().create_timer(seconds).timeout
+		if _banner.text == text:
+			_banner.visible = false

@@ -56,6 +56,14 @@ func has_eligible_promotion() -> bool:
 	return false
 
 
+## Primeiro slot livre da grade 3x2 (frente antes de trás); -1 se cheia.
+func first_free_slot() -> int:
+	for slot: int in SLOT_COUNT:
+		if get_unit_at(slot) == null:
+			return slot
+	return -1
+
+
 func get_unit_at(slot: int) -> UnitInstance:
 	for unit: UnitInstance in units:
 		if unit.slot == slot:

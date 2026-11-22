@@ -55,6 +55,7 @@ var interlude_style: String = "camp"
 @export var encounter_tables: Array[Resource] = []     # EncounterTable por província/região
 @export var max_roaming_squads: int = 2
 @export var victory_text: String = ""
+@export var recruit_message: String = "%s se junta à %s."        # (recrutado, esquadrão)
 @export_file("*.tres") var next_era_config: String = ""
 
 
