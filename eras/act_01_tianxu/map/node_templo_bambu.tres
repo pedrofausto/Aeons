@@ -12,3 +12,5 @@ region_id = "nanlu"
 gold_per_tick = 10
 map_position = Vector2(295, 290)
 neighbors = Array[String](["linhai", "aldeia_terracos", "forte_regencia"])
+liberation_timeline = "res://eras/act_01_tianxu/dialogues/o_astronomo_cego.dtl"
+liberation_title = "O Astrônomo Cego"

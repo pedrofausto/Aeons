@@ -87,3 +87,125 @@ func _test_hanmen(t: Node) -> void:
 	t.check("hanmen_gate_optional_for_victory", WorldState.has_flag("act_victory"))
 	map.queue_free()
 	await t.get_tree().process_frame
+
+
+const RICE := "res://eras/act_01_tianxu/dialogues/celeiros_de_linhai.dtl"
+const ASTRONOMER := "res://eras/act_01_tianxu/dialogues/o_astronomo_cego.dtl"
+const HONOR_FLAG := "act1_blind_astronomer_protected"
+
+
+## (b) Dilema do Astrônomo Cego pelo fluxo normal de jogo.
+func _test_astronomer(t: Node) -> void:
+	# Proteger: grava a decisão no EssenceState, sobe Alinhamento e Apoio.
+	_reset()
+	_quiet()
+	var map: OverworldMap = await _open_map(t)
+	var ally: SquadToken = map.selected_token
+	var director: EncounterDirector = map.get_node("%EncounterDirector")
+	var opened: String = await _march(t, map, ally, "templo_bambu", {ASTRONOMER: 1}, 40.0)
+	t.check("astronomer_event_on_first_visit", opened == ASTRONOMER and WorldState.get_node_faction("templo_bambu") == "player")
+	t.check("astronomer_protect_records_flag", EssenceState.decisions.get(HONOR_FLAG) == true
+		and WorldState.alignment == 60 and WorldState.popular_support == 58
+		and "protected_star_charts" in EssenceState.aeon_resistance_flags, "al=%d ap=%d" % [WorldState.alignment, WorldState.popular_support])
+	# Só uma vez: nem o registro direto nem um novo sinal da timeline alteram a decisão.
+	t.check("astronomer_flag_set_once", not EssenceState.record_decision(HONOR_FLAG, false)
+		and not InterludeManager.is_eligible(ASTRONOMER, WorldState.era_config))
+	var room := (load("res://core/interlude/InterludeRoom.tscn") as PackedScene).instantiate()
+	room.call("apply_signal_argument", "effect|decision=%s:false|resources=300|alignment=-10" % HONOR_FLAG)
+	room.free()
+	t.check("astronomer_replay_ignored", EssenceState.decisions[HONOR_FLAG] == true and WorldState.resources == 500
+		and WorldState.alignment == 60)
+	map.queue_free()
+	await t.get_tree().process_frame
+
+	# Entregar: grava false, dá ouro e reduz Alinhamento.
+	_reset()
+	_quiet()
+	map = await _open_map(t)
+	await _march(t, map, map.selected_token, "templo_bambu", {ASTRONOMER: 2}, 40.0)
+	t.check("astronomer_surrender_records_false", EssenceState.decisions.has(HONOR_FLAG)
+		and EssenceState.decisions[HONOR_FLAG] == false and WorldState.resources >= 800 and WorldState.alignment == 40,
+		"ouro=%d al=%d" % [WorldState.resources, WorldState.alignment])
+	map.queue_free()
+	await t.get_tree().process_frame
+
+	# Rota de honra alcançável jogando: arroz distribuído + Astrônomo protegido -> Portão de Hanmen.
+	EssenceState.reset_all()
+	WorldState.reset_visible(1)
+	WorldState.load_era(ACT01)
+	_quiet()
+	map = await _open_map(t)
+	ally = map.selected_token
+	await _march(t, map, ally, "templo_bambu", {RICE: 1, ASTRONOMER: 1}, 40.0)
+	var honor_alignment: float = ally.squad.average_alignment()
+	var won: bool = false
+	for attempt: int in 6:
+		await _march(t, map, ally, "hanmen_gate", {}, 40.0)
+		if WorldState.get_node_faction("hanmen_gate") == "player":
+			won = true
+			break
+		_rest(map, 5)
+	t.check("honor_route_reachable_in_play", won and honor_alignment >= 70.0
+		and WorldState.has_flag("hanmen_pact_of_honor"), "alinhamento=%.1f venceu=%s" % [honor_alignment, won])
+	map.queue_free()
+	await t.get_tree().process_frame
+
+
+func _quiet() -> void:
+	var quiet := WorldState.era_config.duplicate() as EraConfig
+	quiet.encounter_tables = []
+	WorldState.era_config = quiet
+
+
+func _rest(map: OverworldMap, days: int) -> void:
+	WorldState.set_paused(false)
+	for i: int in int(days * map.seconds_per_day / 0.05):
+		map.step(0.05)
+
+
+## Marcha até `target` jogando: resolve batalhas (Focar Fraco) e escolhe nos interlúdios.
+## Retorna o último interlúdio aberto. Para ao chegar, ao perder ou no tempo-limite.
+func _march(t: Node, map: OverworldMap, ally: SquadToken, target: String, choices: Dictionary, seconds: float) -> String:
+	var director: EncounterDirector = map.get_node("%EncounterDirector")
+	var opened: String = ""
+	var elapsed: float = 0.0
+	while elapsed < seconds:
+		if director.active_interlude:
+			opened = String(director.active_interlude.get("timeline_path"))
+			await _drive(t, director.active_interlude, int(choices.get(opened, 1)))
+			await t.get_tree().process_frame
+			continue
+		if director.active_battle:
+			var arena: BattleArena = director.active_battle
+			arena.step_seconds = 0.0
+			await arena.start_battle(TacticalOrder.Order.FOCUS_WEAK)
+			var lost: bool = not bool(arena.result["effects"]["player_won"])
+			arena.closed.emit(arena.result)
+			await t.get_tree().process_frame
+			if lost:
+				return opened
+			continue
+		if ally.squad.current_node_id == target and not ally.is_moving():
+			await t.get_tree().process_frame
+			if not director.is_busy():
+				return opened
+			continue
+		WorldState.set_paused(false)
+		if not ally.is_moving():
+			map.order_move(ally, target)
+		map.step(0.05)
+		elapsed += 0.05
+	return opened
+
+
+func _drive(t: Node, room: Node, choice: int) -> void:
+	var dialogic: Node = t.get_node("/root/Dialogic")
+	for i: int in 300:
+		if not is_instance_valid(room) or not room.is_inside_tree():
+			return
+		var button := dialogic.get("Choices").call("get_choice_button", choice) as Control
+		if button != null and button.is_visible_in_tree():
+			dialogic.get("Choices").call("select_choice", choice)
+		else:
+			dialogic.get("Inputs").call("handle_input")
+		await t.get_tree().create_timer(0.12).timeout

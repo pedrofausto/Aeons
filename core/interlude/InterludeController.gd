@@ -109,6 +109,13 @@ func apply_signal_argument(argument: String) -> void:
 	var effects := parse_effects(argument)
 	if effects.is_empty():
 		return
+	# "decision=chave:true|false" grava no estado persistente, uma única vez; repetir é ignorado.
+	if effects.has("decision"):
+		var parts: PackedStringArray = String(effects["decision"]).split(":")
+		if not EssenceState.record_decision(parts[0], parts.size() > 1 and parts[1] == "true"):
+			return
+	if effects.has("resistance"):
+		EssenceState.add_resistance_flag(String(effects["resistance"]))
 	WorldState.apply_effects(effects)
 	applied_effects.append(effects)
 	EventBus.interlude_choice_applied.emit(effects)

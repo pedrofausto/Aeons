@@ -69,7 +69,7 @@ func start_battle(order: TacticalOrder.Order) -> void:
 	result["order"] = order
 	result["context"] = context
 	result["effects"] = BattleConsequences.compute(result, ally_squad, enemy_squad, get_player_side(),
-		WorldState.active_flags)
+		WorldState.active_flags.merged(EssenceState.decisions))
 	_show_result()
 
 

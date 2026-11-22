@@ -1,0 +1,15 @@
+O incenso do Templo do Bambu Cinzento ainda queima quando a Guarda atravessa o portão.
+Entre os monges, um ancião de olhos velados aperta contra o peito um feixe de rolos de seda.
+"Chamam-me Zhuo. Medi o céu de Pengming por quarenta anos, até que a vista me deixou."
+"Estes mapas mostram o que nenhum decreto ousa admitir: as estrelas sobre Tianxu nunca se deslocam. Nem uma, em trezentos anos de registros."
+Um mensageiro da Regência chegou antes de vós. Oferece prata e pólvora alquímica em troca dos pergaminhos — e do silêncio do velho.
+"Os agentes do Selo de Ferro voltarão ao anoitecer, comandante. O que farás com um céu que não se move?"
+- Proteger o Astrônomo
+	[signal arg="effect|decision=act1_blind_astronomer_protected:true|alignment=10|popular_support=8|flag=act1_astronomer_sheltered|echo=protected_star_charts|resistance=protected_star_charts"]
+	A Guarda esconde Zhuo e os rolos sob o altar de bambu. Os monges passam a noite em vigília, e a notícia corre pelos terraços: alguém enfrentou o Selo de Ferro por um velho e seus mapas.
+	Zhuo toca o rosto do comandante como quem lê uma constelação. "Lembrarei de ti, mesmo que o céu esqueça."
+- Entregar os Pergaminhos
+	[signal arg="effect|decision=act1_blind_astronomer_protected:false|resources=300|alignment=-10|flag=act1_star_charts_surrendered|echo=surrendered_star_charts"]
+	O mensageiro conta a prata em silêncio e leva os rolos. Os carros de pólvora seguem para o acampamento.
+	Zhuo permanece sentado diante do altar vazio, voltado para um céu que já não pode ver.
+[end_timeline]
