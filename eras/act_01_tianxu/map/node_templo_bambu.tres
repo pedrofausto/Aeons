@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="MapNodeData" format=3]
+
+[ext_resource type="Script" path="res://core/data/MapNodeData.gd" id="1_node"]
+
+[resource]
+script = ExtResource("1_node")
+node_id = "templo_bambu"
+display_name = "Templo do Bambu"
+node_type = 0
+faction = "neutral"
+gold_per_tick = 10
+map_position = Vector2(590, 580)
+neighbors = Array[String](["linhai", "aldeia_terracos", "forte_regencia"])

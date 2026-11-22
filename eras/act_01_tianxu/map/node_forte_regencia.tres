@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="MapNodeData" format=3]
+
+[ext_resource type="Script" path="res://core/data/MapNodeData.gd" id="1_node"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/map/squad_guarnicao_da_regencia.tres" id="2_garrison"]
+
+[resource]
+script = ExtResource("1_node")
+node_id = "forte_regencia"
+display_name = "Forte da Regência"
+node_type = 1
+faction = "enemy"
+gold_per_tick = 40
+map_position = Vector2(1000, 400)
+neighbors = Array[String](["aldeia_terracos", "templo_bambu"])
+garrison = ExtResource("2_garrison")

@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="UnitClassData" format=3]
+
+[ext_resource type="Script" path="res://core/data/UnitClassData.gd" id="1_class"]
+[ext_resource type="Script" path="res://core/data/ActionSkillData.gd" id="2_skill"]
+
+[sub_resource type="Resource" id="front"]
+script = ExtResource("2_skill")
+skill_id = "exorcist_talisman"
+display_name = "Talismã de Serenidade"
+effect = 2
+targeting = 0
+power = 80
+morale_power = 10
+
+[sub_resource type="Resource" id="back"]
+script = ExtResource("2_skill")
+skill_id = "cinnabar_elixir"
+display_name = "Elixir de Cinábrio"
+effect = 3
+targeting = 4
+power = 120
+morale_power = 15
+
+[resource]
+script = ExtResource("1_class")
+class_id = "daoshi_healer"
+display_name = "Daoshi"
+era_id = 1
+archetype = 4
+grid_slots = 1
+max_hp = 70
+max_morale = 110
+attack = 6
+defense = 7
+intellect = 18
+agility = 8
+front_action = SubResource("front")
+back_action = SubResource("back")

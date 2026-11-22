@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="EraConfig" format=3]
+
+[ext_resource type="Script" path="res://core/data/EraConfig.gd" id="1_era"]
+[ext_resource type="Theme" path="res://eras/act_02_occitania/theme_act02.tres" id="2_theme"]
+
+[resource]
+script = ExtResource("1_era")
+act_number = 2
+era_title = "Occitânia"
+window_title = "Occitânia"
+ui_theme = ExtResource("2_theme")
+resource_label = "Prata"
+hp_label = "Vigor"
+morale_label = "Fé"
+alignment_label = "Honra"
+support_label = "Apoio do Languedoc"
+doctrine_label = "Doutrina"
+day_label = "Dia"
+color_player = Color(0.62, 0.7, 0.9, 1)
+color_enemy = Color(0.8, 0.3, 0.2, 1)
+color_background = Color(0.07, 0.07, 0.11, 1)
+enable_siege_water_rule = true
