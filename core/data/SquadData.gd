@@ -98,6 +98,14 @@ func all_flying() -> bool:
 	return not living.is_empty() and living.all(func(u: UnitInstance) -> bool: return u.class_data.movement == "flying")
 
 
+## Sede de cerco: perde % do HP máximo (sem morrer) e Moral (exceto imunes a moral).
+func suffer_thirst(hp_pct: int, morale_loss: int) -> void:
+	for unit: UnitInstance in get_living_units():
+		unit.hp = maxi(1, unit.hp - maxi(1, unit.get_max_hp() * hp_pct / 100))
+		if not unit.class_data.has_trait("morale_immune"):
+			unit.morale = maxi(0, unit.morale - morale_loss)
+
+
 ## Primeiro slot livre da grade 3x2 (frente antes de trás); -1 se cheia.
 func first_free_slot() -> int:
 	for slot: int in SLOT_COUNT:

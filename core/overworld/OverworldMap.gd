@@ -21,6 +21,7 @@ var _day_timer: float = 0.0
 @onready var _hud: OverworldHUD = %HUD
 @onready var _director: EncounterDirector = %EncounterDirector
 @onready var spawner: RoamingSquadSpawner = %RoamingSquadSpawner
+@onready var siege_rule: SiegeWaterRule = %SiegeWaterRule
 
 
 func _ready() -> void:
@@ -30,6 +31,7 @@ func _ready() -> void:
 	_hud.debug_transition_pressed.connect(_on_debug_transition)
 	_director.setup(self)
 	spawner.setup(self)
+	siege_rule.setup(self)
 	_build_map(era)
 	_roads.draw.connect(_draw_roads)
 	_roads.queue_redraw()

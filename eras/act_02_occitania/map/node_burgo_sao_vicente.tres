@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="MapNodeData" format=3]
+
+[ext_resource type="Script" path="res://core/data/MapNodeData.gd" id="1_node"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/map/squad_sentinelas_do_burgo.tres" id="2_garrison"]
+
+[resource]
+script = ExtResource("1_node")
+node_id = "burgo_sao_vicente"
+display_name = "Burgo de São Vicente"
+node_type = 0
+faction = "enemy"
+region_id = "carcassonne"
+terrain = "urban"
+gold_per_tick = 30
+map_position = Vector2(230, 215)
+neighbors = Array[String](["castelo_cabaret", "pontes_aude", "cite_carcassonne"])
+garrison = ExtResource("2_garrison")

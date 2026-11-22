@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://core/overworld/RoamingSquadSpawner.gd" id="4_spawner"]
 [ext_resource type="Script" path="res://core/overworld/DayNightTint.gd" id="5_tint"]
 [ext_resource type="Script" path="res://core/overworld/PromotionPanel.gd" id="6_promo"]
+[ext_resource type="Script" path="res://core/overworld/SiegeWaterRule.gd" id="7_siege"]
 
 [node name="OverworldMap" type="Node2D"]
 script = ExtResource("1_map")
@@ -40,6 +41,10 @@ script = ExtResource("3_director")
 [node name="RoamingSquadSpawner" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("4_spawner")
+
+[node name="SiegeWaterRule" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("7_siege")
 
 [node name="DayNightTint" type="CanvasModulate" parent="."]
 script = ExtResource("5_tint")

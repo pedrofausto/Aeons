@@ -1,0 +1,52 @@
+[gd_resource type="Resource" script_class="SquadData" format=3]
+
+[ext_resource type="Script" path="res://core/data/SquadData.gd" id="1_squad"]
+[ext_resource type="Script" path="res://core/data/UnitInstance.gd" id="1_unit"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/classes/lanceiro_escudeiro.tres" id="2_lanceiro_escudeiro"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/classes/arbaletrier.tres" id="3_arbaletrier"]
+
+[sub_resource type="Resource" id="unit_0"]
+script = ExtResource("1_unit")
+class_data = ExtResource("2_lanceiro_escudeiro")
+unit_name = "Lanceiro Desgastado"
+level = 1
+alignment = 50
+slot = 0
+is_leader = false
+
+[sub_resource type="Resource" id="unit_1"]
+script = ExtResource("1_unit")
+class_data = ExtResource("2_lanceiro_escudeiro")
+unit_name = "Lanceiro Desgastado"
+level = 1
+alignment = 50
+slot = 1
+is_leader = true
+
+[sub_resource type="Resource" id="unit_2"]
+script = ExtResource("1_unit")
+class_data = ExtResource("2_lanceiro_escudeiro")
+unit_name = "Lanceiro Desgastado"
+level = 1
+alignment = 50
+slot = 2
+is_leader = false
+
+[sub_resource type="Resource" id="unit_3"]
+script = ExtResource("1_unit")
+class_data = ExtResource("3_arbaletrier")
+unit_name = "Arqueiro Faminto"
+level = 1
+alignment = 50
+slot = 4
+is_leader = false
+
+[resource]
+script = ExtResource("1_squad")
+squad_id = "desertores_famintos"
+display_name = "Desertores Famintos"
+faction = "enemy"
+units = Array[ExtResource("1_unit")]([SubResource("unit_0"), SubResource("unit_1"), SubResource("unit_2"), SubResource("unit_3")])
+current_node_id = "burgo_sao_vicente"
+patrol_route = Array[String](["burgo_sao_vicente", "castelo_cabaret"])
+encounter_tag = "low_level_trap"

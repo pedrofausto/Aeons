@@ -1,0 +1,61 @@
+[gd_resource type="Resource" script_class="SquadData" format=3]
+
+[ext_resource type="Script" path="res://core/data/SquadData.gd" id="1_squad"]
+[ext_resource type="Script" path="res://core/data/UnitInstance.gd" id="1_unit"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/classes/lanceiro_escudeiro.tres" id="2_lanceiro_escudeiro"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/classes/sergent_darmes.tres" id="3_sergent_darmes"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/classes/arbaletrier.tres" id="4_arbaletrier"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/classes/inquisidor.tres" id="5_inquisidor"]
+
+[sub_resource type="Resource" id="unit_0"]
+script = ExtResource("1_unit")
+class_data = ExtResource("2_lanceiro_escudeiro")
+unit_name = "Cavaleiro Cruzado Hugues"
+level = 3
+alignment = 30
+slot = 0
+is_leader = false
+
+[sub_resource type="Resource" id="unit_1"]
+script = ExtResource("1_unit")
+class_data = ExtResource("3_sergent_darmes")
+unit_name = "Sargento Cruzado Thibaut"
+level = 4
+alignment = 25
+slot = 1
+is_leader = true
+
+[sub_resource type="Resource" id="unit_2"]
+script = ExtResource("1_unit")
+class_data = ExtResource("2_lanceiro_escudeiro")
+unit_name = "Cavaleiro Cruzado Renaud"
+level = 3
+alignment = 30
+slot = 2
+is_leader = false
+
+[sub_resource type="Resource" id="unit_3"]
+script = ExtResource("1_unit")
+class_data = ExtResource("4_arbaletrier")
+unit_name = "Besteiro da Muralha"
+level = 3
+alignment = 35
+slot = 3
+is_leader = false
+
+[sub_resource type="Resource" id="unit_4"]
+script = ExtResource("1_unit")
+class_data = ExtResource("5_inquisidor")
+unit_name = "Inquisidor Pregador"
+level = 3
+alignment = 20
+slot = 5
+is_leader = false
+
+[resource]
+script = ExtResource("1_squad")
+squad_id = "guarnicao_de_montclair"
+display_name = "Guarnição de Montclair"
+faction = "enemy"
+units = Array[ExtResource("1_unit")]([SubResource("unit_0"), SubResource("unit_1"), SubResource("unit_2"), SubResource("unit_3"), SubResource("unit_4")])
+current_node_id = "cite_carcassonne"

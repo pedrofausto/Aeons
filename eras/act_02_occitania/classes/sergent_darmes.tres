@@ -1,0 +1,40 @@
+[gd_resource type="Resource" script_class="UnitClassData" format=3]
+
+[ext_resource type="Script" path="res://core/data/UnitClassData.gd" id="1_class"]
+[ext_resource type="Script" path="res://core/data/ActionSkillData.gd" id="2_skill"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/classes/faydit.tres" id="3_good"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/classes/routier.tres" id="3_evil"]
+
+[sub_resource type="Resource" id="front"]
+script = ExtResource("2_skill")
+skill_id = "mace_blow"
+display_name = "Golpe de Maça"
+effect = 0
+targeting = 0
+power = 100
+
+[sub_resource type="Resource" id="back"]
+script = ExtResource("2_skill")
+skill_id = "javelin"
+display_name = "Dardo de Arremesso"
+effect = 0
+targeting = 0
+power = 60
+
+[resource]
+script = ExtResource("1_class")
+class_id = "sergent_darmes"
+display_name = "Sergent d'Armes"
+era_id = 2
+archetype = 0
+grid_slots = 1
+max_hp = 110
+max_morale = 90
+attack = 16
+defense = 14
+intellect = 6
+agility = 9
+front_action = SubResource("front")
+back_action = SubResource("back")
+promotion_good = ExtResource("3_good")
+promotion_evil = ExtResource("3_evil")

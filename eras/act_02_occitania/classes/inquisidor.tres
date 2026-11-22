@@ -1,0 +1,43 @@
+[gd_resource type="Resource" script_class="UnitClassData" format=3]
+
+[ext_resource type="Script" path="res://core/data/UnitClassData.gd" id="1_class"]
+[ext_resource type="Script" path="res://core/data/ActionSkillData.gd" id="2_skill"]
+
+[sub_resource type="Resource" id="front"]
+script = ExtResource("2_skill")
+skill_id = "accusation"
+display_name = "Acusação"
+effect = 2
+targeting = 3
+power = 85
+morale_power = 15
+
+[sub_resource type="Resource" id="back"]
+script = ExtResource("2_skill")
+skill_id = "fire_sermon"
+display_name = "Sermão de Fogo"
+effect = 2
+targeting = 2
+power = 40
+morale_power = 8
+element = "FIRE"
+
+[resource]
+script = ExtResource("1_class")
+class_id = "inquisidor"
+display_name = "Inquisidor"
+era_id = 2
+archetype = 4
+grid_slots = 1
+max_hp = 75
+max_morale = 100
+attack = 8
+defense = 8
+intellect = 20
+agility = 9
+front_action = SubResource("front")
+back_action = SubResource("back")
+preferred_doctrine = "revolutionary"
+min_level = 4
+min_alignment = 0
+max_alignment = 35

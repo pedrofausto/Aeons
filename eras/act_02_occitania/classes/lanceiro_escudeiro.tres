@@ -1,0 +1,36 @@
+[gd_resource type="Resource" script_class="UnitClassData" format=3]
+
+[ext_resource type="Script" path="res://core/data/UnitClassData.gd" id="1_class"]
+[ext_resource type="Script" path="res://core/data/ActionSkillData.gd" id="2_skill"]
+
+[sub_resource type="Resource" id="front"]
+script = ExtResource("2_skill")
+skill_id = "lance_sweep"
+display_name = "Varredura de Lança"
+effect = 0
+targeting = 2
+power = 55
+
+[sub_resource type="Resource" id="back"]
+script = ExtResource("2_skill")
+skill_id = "long_pike"
+display_name = "Pique Longo"
+effect = 0
+targeting = 1
+power = 70
+
+[resource]
+script = ExtResource("1_class")
+class_id = "lanceiro_escudeiro"
+display_name = "Lanceiro-Escudeiro"
+era_id = 2
+archetype = 1
+grid_slots = 1
+max_hp = 95
+max_morale = 85
+attack = 20
+defense = 10
+intellect = 6
+agility = 11
+front_action = SubResource("front")
+back_action = SubResource("back")

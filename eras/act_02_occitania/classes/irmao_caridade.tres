@@ -1,0 +1,44 @@
+[gd_resource type="Resource" script_class="UnitClassData" format=3]
+
+[ext_resource type="Script" path="res://core/data/UnitClassData.gd" id="1_class"]
+[ext_resource type="Script" path="res://core/data/ActionSkillData.gd" id="2_skill"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/classes/parfait.tres" id="3_good"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/classes/inquisidor.tres" id="3_evil"]
+
+[sub_resource type="Resource" id="front"]
+script = ExtResource("2_skill")
+skill_id = "gentle_word"
+display_name = "Palavra Mansa"
+effect = 2
+targeting = 0
+power = 75
+morale_power = 10
+element = "PURIFY"
+
+[sub_resource type="Resource" id="back"]
+script = ExtResource("2_skill")
+skill_id = "herbal_poultice"
+display_name = "Cataplasma de Ervas"
+effect = 3
+targeting = 4
+power = 115
+morale_power = 12
+
+[resource]
+script = ExtResource("1_class")
+class_id = "irmao_caridade"
+display_name = "Irmão de Caridade"
+era_id = 2
+archetype = 4
+grid_slots = 1
+max_hp = 70
+max_morale = 105
+attack = 6
+defense = 7
+intellect = 17
+agility = 8
+front_action = SubResource("front")
+back_action = SubResource("back")
+promotion_good = ExtResource("3_good")
+promotion_evil = ExtResource("3_evil")
+preferred_doctrine = "pacifist"

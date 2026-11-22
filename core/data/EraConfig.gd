@@ -62,6 +62,7 @@ var interlude_style: String = "camp"
 @export var promotion_requires: String = "requer %s (você tem %d)"
 @export var promotion_consumes: String = "consome 1 %s (você tem %d)"
 @export var close_label: String = "Fechar"
+@export var siege_thirst_message: String = "Sede em %s."
 @export_file("*.tres") var next_era_config: String = ""
 
 

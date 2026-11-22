@@ -38,6 +38,7 @@ func refresh() -> void:
 		era.support_label, WorldState.popular_support,
 		era.doctrine_label, WorldState.doctrine]
 	_pause_label.visible = WorldState.is_paused
+	_debug_button.visible = OS.is_debug_build() and not era.next_era_config.is_empty()
 	_pause_button.text = "▶" if WorldState.is_paused else "❚❚"
 	_promote_button.visible = WorldState.player_squads.any(
 		func(squad: SquadData) -> bool: return squad.has_eligible_promotion())

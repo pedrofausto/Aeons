@@ -2,12 +2,32 @@
 
 [ext_resource type="Script" path="res://core/data/EraConfig.gd" id="1_era"]
 [ext_resource type="Theme" path="res://eras/act_02_occitania/theme_act02.tres" id="2_theme"]
+[ext_resource type="Script" path="res://core/data/MapNodeData.gd" id="3_nodescript"]
+[ext_resource type="Script" path="res://core/data/UnitClassData.gd" id="3_classscript"]
+[ext_resource type="Script" path="res://core/data/SquadData.gd" id="3_squadscript"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/map/squad_companhia_de_cabaret.tres" id="4_squad"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/map/squad_escolta_da_inquisicao.tres" id="7_patrol"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/encounters/carcassonne_encounters.tres" id="8_encounters"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/map/node_castelo_cabaret.tres" id="5_castelo_cabaret"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/map/node_burgo_sao_vicente.tres" id="5_burgo_sao_vicente"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/map/node_pontes_aude.tres" id="5_pontes_aude"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/map/node_cite_carcassonne.tres" id="5_cite_carcassonne"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/classes/sergent_darmes.tres" id="6_sergent_darmes"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/classes/faydit.tres" id="6_faydit"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/classes/routier.tres" id="6_routier"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/classes/lanceiro_escudeiro.tres" id="6_lanceiro_escudeiro"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/classes/arbaletrier.tres" id="6_arbaletrier"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/classes/irmao_caridade.tres" id="6_irmao_caridade"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/classes/parfait.tres" id="6_parfait"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/classes/inquisidor.tres" id="6_inquisidor"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/classes/trovador.tres" id="6_trovador"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/classes/erudito_boticario.tres" id="6_erudito_boticario"]
 
 [resource]
 script = ExtResource("1_era")
 act_number = 2
-era_title = "Occitânia"
-window_title = "Occitânia"
+era_title = "Cidadela de Carcassonne"
+window_title = "Occitânia — Cidadela de Carcassonne"
 ui_theme = ExtResource("2_theme")
 reality_layer = "PHYSICAL_WAR"
 interlude_style = "camp"
@@ -20,5 +40,15 @@ doctrine_label = "Doutrina"
 day_label = "Dia"
 color_player = Color(0.62, 0.7, 0.9, 1)
 color_enemy = Color(0.8, 0.3, 0.2, 1)
-color_background = Color(0.07, 0.07, 0.11, 1)
+color_neutral = Color(0.6, 0.58, 0.5, 1)
+color_background = Color(0.08, 0.08, 0.11, 1)
+color_road = Color(0.5, 0.45, 0.38, 1)
 enable_siege_water_rule = true
+map_nodes = Array[ExtResource("3_nodescript")]([ExtResource("5_castelo_cabaret"), ExtResource("5_burgo_sao_vicente"), ExtResource("5_pontes_aude"), ExtResource("5_cite_carcassonne")])
+unit_classes = Array[ExtResource("3_classscript")]([ExtResource("6_sergent_darmes"), ExtResource("6_faydit"), ExtResource("6_routier"), ExtResource("6_lanceiro_escudeiro"), ExtResource("6_arbaletrier"), ExtResource("6_irmao_caridade"), ExtResource("6_parfait"), ExtResource("6_inquisidor"), ExtResource("6_trovador"), ExtResource("6_erudito_boticario")])
+starting_squads = Array[ExtResource("3_squadscript")]([ExtResource("4_squad")])
+enemy_patrols = Array[ExtResource("3_squadscript")]([ExtResource("7_patrol")])
+encounter_tables = Array[Resource]([ExtResource("8_encounters")])
+max_roaming_squads = 1
+victory_text = "A Cité de Carcassonne volta às mãos do sul. Os sinos do Burgo tocam sobre o Aude."
+siege_thirst_message = "Sede na %s: sem as águas do Aude, os defensores definham."

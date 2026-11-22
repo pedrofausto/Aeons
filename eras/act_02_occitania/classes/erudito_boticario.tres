@@ -1,0 +1,37 @@
+[gd_resource type="Resource" script_class="UnitClassData" format=3]
+
+[ext_resource type="Script" path="res://core/data/UnitClassData.gd" id="1_class"]
+[ext_resource type="Script" path="res://core/data/ActionSkillData.gd" id="2_skill"]
+
+[sub_resource type="Resource" id="front"]
+script = ExtResource("2_skill")
+skill_id = "apothecary_staff"
+display_name = "Bastão do Boticário"
+effect = 0
+targeting = 0
+power = 55
+
+[sub_resource type="Resource" id="back"]
+script = ExtResource("2_skill")
+skill_id = "greek_fire_flask"
+display_name = "Frasco de Fogo de Cerco"
+effect = 1
+targeting = 2
+power = 45
+element = "FIRE"
+
+[resource]
+script = ExtResource("1_class")
+class_id = "erudito_boticario"
+display_name = "Erudito-Boticário"
+era_id = 2
+archetype = 3
+grid_slots = 1
+max_hp = 65
+max_morale = 90
+attack = 6
+defense = 6
+intellect = 19
+agility = 9
+front_action = SubResource("front")
+back_action = SubResource("back")
