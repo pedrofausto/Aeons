@@ -5,7 +5,7 @@ extends Node2D
 signal arrived(token: SquadToken, node_id: String)
 
 const HIT_RADIUS: float = 13.0
-const MOUNTAIN_FACTOR: float = 0.7
+const MOUNTAIN_FACTOR: float = 0.7  # Infantaria em montanha (SquadData.TERRAIN_FACTORS)
 
 var squad: SquadData
 var path: Array[String] = []                 # Próximos nós a visitar
@@ -46,9 +46,7 @@ func set_path(new_path: Array[String]) -> void:
 ## Avança na direção do próximo nó. `positions` = { node_id: Vector2 }.
 ## Velocidade efetiva: base x terreno x patrulha x classes (noite) x itens do jogador.
 func march_speed(base: float, terrain: String = "plains") -> float:
-	var speed: float = base * squad.march_factor(WorldState.time_of_day)
-	if terrain == "mountain" and not squad.all_flying():
-		speed *= MOUNTAIN_FACTOR
+	var speed: float = base * squad.march_factor(WorldState.time_of_day) * squad.terrain_factor(terrain)
 	if squad.is_patrol():
 		speed *= PatrolAI.SPEED_FACTOR
 	if is_player():

@@ -13,7 +13,7 @@ static func pick_targets(skill: ActionSkillData, foes: SquadData, own_order: Tac
 		var leader_index: int = foes.units.find(foes.get_leader())
 		if leader_index in candidates:
 			return [leader_index]
-	if TacticalOrder.targets_weakest(own_order):
+	if TacticalOrder.targets_weakest(own_order) or skill.targeting == ActionSkillData.Targeting.WEAKEST:
 		return [lowest_hp(foes, candidates)]
 	var preferred_row: int = 1 if skill.targeting == ActionSkillData.Targeting.BACK_FIRST else 0
 	var in_row: Array[int] = []

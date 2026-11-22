@@ -160,7 +160,7 @@ func _on_new_day() -> void:
 	var income: int = 0
 	for node_id: String in nodes:
 		if WorldState.get_node_faction(node_id) == "player":
-			income += (nodes[node_id] as MapNode).data.gold_per_tick
+			income += (nodes[node_id] as MapNode).data.gold_per_tick * WorldState.income_pct(node_id) / 100
 	WorldState.change_resources(income)
 	for token: SquadToken in tokens:
 		if token.is_player() and not token.is_moving() \
@@ -185,10 +185,13 @@ func _on_token_arrived(token: SquadToken, node_id: String) -> void:
 	for other: SquadToken in tokens:
 		if other.squad.faction == "enemy" and other.squad.current_node_id == node_id:
 			return  # Ainda defendido: a colisão resolve.
-	capture(node_id)
+	capture(node_id, token.squad)
 
 
-func capture(node_id: String) -> void:
+## Liberta o nó; o esquadrão libertador soma o bônus de reputação das suas classes.
+func capture(node_id: String, liberator: SquadData = null) -> void:
+	if liberator and WorldState.get_node_faction(node_id) != "player":
+		WorldState.change_support(liberator.liberation_bonus())
 	WorldState.capture_node(node_id, "player")
 	(nodes[node_id] as MapNode).set_faction("player")
 	_director.check_liberations()

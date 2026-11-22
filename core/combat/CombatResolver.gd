@@ -72,6 +72,23 @@ static func _perform_action(actor: UnitInstance, actor_ref: Dictionary, own: Squ
 		for target_index: int in CombatTargeting.pick_targets(skill, foes, own_order):
 			_strike(actor, actor_ref, skill, own, foes, target_index, own_order, state, log)
 	SkillMath.apply_ally_buff(skill, own, state)
+	if skill.grants_extra_action and not actor_ref.get("extra", false):
+		_grant_extra_action(actor, actor_ref, own, foes, own_order, state, log)
+
+
+## Bardo (Princess de Ogre Battle): o aliado de maior ataque age outra vez, na hora.
+static func _grant_extra_action(actor: UnitInstance, actor_ref: Dictionary, own: SquadData, foes: SquadData,
+		own_order: TacticalOrder.Order, state: Dictionary, log: Array[Dictionary]) -> void:
+	var best: int = -1
+	for i: int in own.units.size():
+		var unit: UnitInstance = own.units[i]
+		if unit != actor and unit.can_act() and (best < 0 or unit.get_attack() > own.units[best].get_attack()):
+			best = i
+	if best < 0:
+		return
+	log.append({"type": "extra_action", "side": actor_ref["side"], "index": best})
+	var ref: Dictionary = {"side": actor_ref["side"], "index": best, "extra": true}
+	_perform_action(own.units[best], ref, own, foes, own_order, state, log)
 
 
 static func _strike(actor: UnitInstance, actor_ref: Dictionary, skill: ActionSkillData, own: SquadData,
@@ -82,7 +99,8 @@ static func _strike(actor: UnitInstance, actor_ref: Dictionary, skill: ActionSki
 	var raw := SkillMath.hit(actor, target, skill, own.fatigue_attack_pct(), state)
 	var final := TacticalOrder.modify(own_order, raw.x, raw.y)
 	var was_broken: bool = target.is_broken()
-	target.hp = maxi(target.hp - final.x, 0)
+	var floor_hp: int = 1 if actor.class_data.has_trait("non_lethal") else 0  # Nunca desfere golpe letal
+	target.hp = maxi(target.hp - final.x, mini(floor_hp, target.hp))
 	target.morale = maxi(target.morale - final.y, 0)
 	var drained: int = final.x * skill.lifesteal_pct / 100
 	actor.hp = mini(actor.hp + drained, actor.get_max_hp())
@@ -90,6 +108,7 @@ static func _strike(actor: UnitInstance, actor_ref: Dictionary, skill: ActionSki
 		"skill": skill.display_name, "target_side": _other(side), "target_index": target_index,
 		"damage": final.x, "morale_damage": final.y, "heal": 0, "drain": drained,
 		"element": skill.get_element(), "target_hp": target.hp, "target_morale": target.morale})
+	SkillMath.apply_target_debuff(skill, target, state)
 	if SkillMath.try_inflict(actor, target, skill, state):
 		log.append({"type": "status", "side": _other(side), "index": target_index, "status": skill.inflicts_status})
 	if not target.is_alive():
@@ -118,6 +137,10 @@ static func _heal(actor: UnitInstance, actor_ref: Dictionary, skill: ActionSkill
 		log.append({"type": "action", "actor_side": side, "actor_index": actor_ref["index"],
 			"skill": skill.display_name, "target_side": side, "target_index": ally_index,
 			"damage": 0, "morale_damage": 0, "heal": amount, "target_hp": ally.hp, "target_morale": ally.morale})
+	for i: int in foes.units.size():  # Ex.: "Paz dos Bons Homens" — cura e induz rendição.
+		var drained: int = SkillMath.drain_morale(foes.units[i], skill.enemy_morale_drain)
+		if drained > 0 and foes.units[i].is_broken():
+			log.append({"type": "unit_broken", "side": _other(side), "index": i})
 	if skill.healthy_allies_bonus_power > 0 and healthy_before:
 		var bonus := ActionSkillData.new()
 		bonus.display_name = skill.display_name

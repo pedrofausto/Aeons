@@ -5,6 +5,14 @@ extends Resource
 const SLOT_COUNT: int = 6
 const FATIGUE_PER_BATTLE: int = 20
 const MAX_FATIGUE: int = 100
+## Multiplicador de marcha por perfil de movimento e terreno (1.0 se ausente).
+const TERRAIN_FACTORS: Dictionary = {
+	"ground": {"mountain": 0.7, "swamp": 0.6},
+	"cavalry": {"plains": 1.3, "urban": 1.1, "forest": 0.8, "mountain": 0.5, "swamp": 0.5},
+	"mountain": {"swamp": 0.6, "forest": 1.1},
+	"swamp": {"mountain": 0.7},
+	"flying": {}, "ethereal": {},
+}
 
 @export var squad_id: String = ""
 @export var display_name: String = ""
@@ -66,7 +74,7 @@ func promote_eligible() -> Array[String]:
 	for unit: UnitInstance in units:
 		for option: Dictionary in PromotionRules.options_for(unit):
 			var target: UnitClassData = option["target"]
-			if option["has_item"] and PromotionRules.promote(unit, target):
+			if option["available"] and PromotionRules.promote(unit, target):
 				done.append("%s → %s" % [unit.unit_name, target.display_name])
 				break
 	return done
@@ -93,9 +101,24 @@ func march_factor(time_of_day: String) -> float:
 	return float(slowest) / 100.0
 
 
-func all_flying() -> bool:
-	var living := get_living_units()
-	return not living.is_empty() and living.all(func(u: UnitInstance) -> bool: return u.class_data.movement == "flying")
+## A unidade mais lenta no terreno dita o passo do esquadrão.
+func terrain_factor(terrain: String) -> float:
+	var factor: float = 1.0
+	var first: bool = true
+	for unit: UnitInstance in get_living_units():
+		var table: Dictionary = TERRAIN_FACTORS.get(unit.class_data.movement, {})
+		var value: float = float(table.get(terrain, 1.0))
+		factor = value if first else minf(factor, value)
+		first = false
+	return factor
+
+
+## Soma do bônus de reputação das classes vivas ao libertar um nó.
+func liberation_bonus() -> int:
+	var total: int = 0
+	for unit: UnitInstance in get_living_units():
+		total += unit.class_data.liberation_reputation_bonus
+	return total
 
 
 ## Sede de cerco: perde % do HP máximo (sem morrer) e Moral (exceto imunes a moral).

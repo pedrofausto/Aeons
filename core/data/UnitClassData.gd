@@ -8,6 +8,8 @@ enum Archetype { VANGUARD, SHOCK, RANGED_STEALTH, ARCANE_TECH, HEALER_MORAL, BAR
 @export var era_id: int = 1
 @export var archetype: Archetype = Archetype.VANGUARD
 @export var grid_slots: int = 1              # 1 = padrão | 2 = unidade colossal (ex.: Tarasque)
+@export_range(1, 3) var tier: int = 1        # 1 = Base | 2 = Elite/Sombria | 3 = Mítica/Secreta
+@export var liberation_reputation_bonus: int = 0  # Apoio Popular ao libertar nós (negativo: saqueadores)
 ## Subtipo livre (o enum de arquétipos é fixo): undead, celestial, trickster, evil_shaman,
 ## morale_immune (moral nunca cai), status_immune (CONFUSE/POISON), flying.
 @export var traits: PackedStringArray = []
@@ -18,7 +20,8 @@ enum Archetype { VANGUARD, SHOCK, RANGED_STEALTH, ARCANE_TECH, HEALER_MORAL, BAR
 @export var damage_taken_pct: Dictionary = {}
 
 @export_group("Movimento no Mapa")
-@export_enum("ground", "flying") var movement: String = "ground"
+## ground = Infantaria | cavalry | mountain | swamp | ethereal | flying (ver SquadData.TERRAIN_FACTORS)
+@export_enum("ground", "flying", "cavalry", "mountain", "swamp", "ethereal") var movement: String = "ground"
 @export var march_speed_pct: int = 100
 @export var night_march_bonus_pct: int = 0
 
@@ -73,5 +76,8 @@ func matches_doctrine(doctrine: int) -> bool:
 @export var min_alignment: int = 0           # 0..100
 @export var max_alignment: int = 100
 @export var min_charisma: int = 0
+@export var min_doctrine: int = -100         # Doutrina do ato (WorldState.doctrine) exigida
+@export var max_doctrine: int = 100
+@export var forbidden_flag: String = ""       # Promoção recusada enquanto esta flag estiver ativa
 ## Item consumido (1 unidade) ao promover PARA esta classe. Vazio = sem item.
 @export var required_item_id: StringName = &""

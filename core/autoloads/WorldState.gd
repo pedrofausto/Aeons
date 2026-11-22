@@ -26,6 +26,9 @@ var time_of_day: String = "day"              # "day" | "night" (afeta patrulhas 
 var completed_interludes: Array[String] = [] # Timelines de interlúdio já vividas neste ato
 var inventory: Array[ItemData] = []          # Itens do ato atual (drops, recompensas de chefes)
 var unlocked_classes: Array[String] = []     # class_id liberados para recrutamento
+## Cerco por nó: { node_id: { "mode": "thirst"|"preaching"|"assault"|"poisoned",
+##   "sorties": int, "income_bonus": int, "garrison_hp_pct": int } }
+var siege: Dictionary = {}
 
 
 func _ready() -> void:
@@ -67,6 +70,7 @@ func reset_visible(next_act: int) -> void:
 	completed_interludes.clear()
 	inventory.clear()
 	unlocked_classes.clear()
+	siege.clear()
 	_notify()
 
 
@@ -157,6 +161,30 @@ func apply_effects(effects: Dictionary) -> void:
 		set_flag(String(effects["flag"]))
 	if effects.has("echo"):
 		add_echo(String(effects["echo"]))
+	if effects.has("charisma"):
+		for squad: SquadData in player_squads:
+			for unit: UnitInstance in squad.units:
+				unit.charisma = clampi(unit.charisma + int(effects["charisma"]), 0, 100)
+	for key: String in ["siege_mode", "sorties", "income_bonus", "garrison_hp_pct"]:
+		if effects.has(key):  # Formato "node_id:valor"
+			var parts: PackedStringArray = String(effects[key]).split(":")
+			set_siege(parts[0], "mode" if key == "siege_mode" else key, parts[1] if key == "siege_mode" else int(parts[1]))
+
+
+func set_siege(node_id: String, key: String, value: Variant) -> void:
+	var entry: Dictionary = siege.get(node_id, {})
+	entry[key] = value
+	siege[node_id] = entry
+	_notify()
+
+
+func get_siege(node_id: String, key: String, default: Variant) -> Variant:
+	return (siege.get(node_id, {}) as Dictionary).get(key, default)
+
+
+## % de renda de um nó (100 = normal), ex.: cidade que se rendeu intacta.
+func income_pct(node_id: String) -> int:
+	return 100 + int(get_siege(node_id, "income_bonus", 0))
 
 
 func add_item(item: ItemData) -> bool:

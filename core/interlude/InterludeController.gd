@@ -5,7 +5,7 @@ extends Node2D
 ## interpreta e aplica os efeitos no WorldState. Nenhum texto de diálogo vive aqui.
 
 const EFFECT_PREFIX: String = "effect|"
-const INT_KEYS: Array[String] = ["alignment", "popular_support", "doctrine", "resources"]
+const INT_KEYS: Array[String] = ["alignment", "popular_support", "doctrine", "resources", "charisma"]
 
 ## Sons de digitação do layout de EXEMPLO do Dialogic: desligados até a trilha própria
 ## (Sprint 4). Ligados, vazam AudioStreamWAV quando o jogo fecha no meio de uma fala.

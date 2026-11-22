@@ -1,19 +1,21 @@
 class_name SkillMath
 extends RefCounted
 ## Matemática pura de um golpe: atributos, elemento, resistência, perfuração, buffs,
-## imunidades e status. `state` = { "buff": {iid: %}, "status": {iid: {nome: rodadas}} }.
+## imunidades e status. `state` = { "buff": {iid: %}, "debuff": {iid: %}, "guard": {iid: %},
+## "status": {iid: {nome: rodadas}} } — tudo vale só durante a batalha.
 
 const EXORCISM_ELEMENTS: Array[String] = ["PURIFY", "SPIRITUAL"]
 
 
 static func new_state() -> Dictionary:
-	return {"buff": {}, "status": {}}
+	return {"buff": {}, "debuff": {}, "guard": {}, "status": {}}
 
 
 ## Dano antes da resistência elemental do alvo: Vector2i(hp, moral_base).
 static func base_damage(actor: UnitInstance, target: UnitInstance, skill: ActionSkillData,
 		attack_pct: int, state: Dictionary) -> Vector2i:
-	var buff_pct: int = 100 + int((state["buff"] as Dictionary).get(actor.get_instance_id(), 0))
+	var buff_pct: int = 100 + int((state["buff"] as Dictionary).get(actor.get_instance_id(), 0)) \
+		- int((state.get("debuff", {}) as Dictionary).get(actor.get_instance_id(), 0))
 	var keep_armor: int = 100 - skill.armor_pierce_pct
 	match skill.effect:
 		ActionSkillData.Effect.PHYSICAL:
@@ -44,6 +46,9 @@ static func hit(actor: UnitInstance, target: UnitInstance, skill: ActionSkillDat
 		# Ignora drenos (morale_power e golpes só de moral); ainda sente o choque do golpe.
 		morale = 0 if skill.effect == ActionSkillData.Effect.MORALE_ONLY else base.x / 2
 	damage = apply_resistance(damage, target, element)
+	var guard: int = int((state.get("guard", {}) as Dictionary).get(target.get_instance_id(), 0))
+	if damage > 0 and guard > 0:
+		damage = maxi(1, damage * (100 - guard) / 100)
 	return Vector2i(damage, 0 if immune else morale)
 
 
@@ -79,10 +84,34 @@ static func consume_confusion(unit: UnitInstance, state: Dictionary) -> bool:
 	return true
 
 
+## Buff de ataque (por trait, "*" = todos) e guarda (redução de dano) para o esquadrão.
 static func apply_ally_buff(skill: ActionSkillData, own: SquadData, state: Dictionary) -> void:
-	if skill.ally_buff_trait.is_empty() or skill.ally_buff_attack_pct == 0:
-		return
-	var buffs: Dictionary = state["buff"]
 	for unit: UnitInstance in own.get_living_units():
-		if unit.class_data.has_trait(skill.ally_buff_trait):
-			buffs[unit.get_instance_id()] = maxi(int(buffs.get(unit.get_instance_id(), 0)), skill.ally_buff_attack_pct)
+		var id: int = unit.get_instance_id()
+		if skill.ally_guard_pct > 0:
+			_raise(state, "guard", id, skill.ally_guard_pct)
+		if skill.ally_buff_attack_pct > 0 and (skill.ally_buff_trait == "*" or unit.class_data.has_trait(skill.ally_buff_trait)):
+			_raise(state, "buff", id, skill.ally_buff_attack_pct)
+
+
+static func apply_target_debuff(skill: ActionSkillData, target: UnitInstance, state: Dictionary) -> void:
+	if skill.target_attack_debuff_pct > 0 and target.is_alive():
+		_raise(state, "debuff", target.get_instance_id(), skill.target_attack_debuff_pct)
+
+
+## Não acumula: vale o maior valor aplicado.
+static func _raise(state: Dictionary, key: String, id: int, value: int) -> void:
+	if not state.has(key):
+		state[key] = {}
+	var table: Dictionary = state[key]
+	table[id] = maxi(int(table.get(id, 0)), value)
+
+
+## Dreno de Moral sem dano (rendição): respeita imunidades.
+static func drain_morale(target: UnitInstance, amount: int) -> int:
+	if amount <= 0 or not target.is_alive() or is_morale_immune(target) \
+			or target.class_data.has_trait("morale_drain_immune"):
+		return 0
+	var before: int = target.morale
+	target.morale = maxi(0, target.morale - amount)
+	return before - target.morale

@@ -52,7 +52,11 @@ func _option_button(unit: UnitInstance, option: Dictionary, era: EraConfig) -> B
 	if not item_id.is_empty():
 		var template: String = era.promotion_consumes if option["has_item"] else era.promotion_requires
 		button.text += "\n" + template % [era.get_item_name(item_id), int(option["owned"])]
-	button.disabled = not bool(option["has_item"])
+	if not option["doctrine_ok"]:
+		button.text += "\n" + era.promotion_doctrine % [era.doctrine_label, target.min_doctrine, target.max_doctrine]
+	if option["forbidden"]:
+		button.text += "\n" + era.promotion_forbidden
+	button.disabled = not bool(option["available"])
 	button.pressed.connect(_confirm.bind(unit, target))
 	return button
 

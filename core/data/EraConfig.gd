@@ -55,12 +55,19 @@ var interlude_style: String = "camp"
 @export var encounter_tables: Array[Resource] = []     # EncounterTable por província/região
 @export var item_catalog: Array[ItemData] = []         # Itens da era (nomes para a UI)
 @export var max_roaming_squads: int = 2
+
+@export_group("Ritmo de XP")
+@export var xp_per_victory: int = 45
+@export var xp_per_defeat: int = 15
+@export var xp_per_level_gap: int = 0      # Bônus por nível médio do inimigo acima do jogador
 @export var victory_text: String = ""
 @export var recruit_message: String = "%s se junta à %s."        # (recrutado, esquadrão)
 @export var item_message: String = "Obtido: %s"
 @export var promotion_title: String = "Promoções"
 @export var promotion_requires: String = "requer %s (você tem %d)"
 @export var promotion_consumes: String = "consome 1 %s (você tem %d)"
+@export var promotion_doctrine: String = "requer %s entre %+d e %+d"
+@export var promotion_forbidden: String = "recusa a promoção nesta região"
 @export var close_label: String = "Fechar"
 @export var siege_thirst_message: String = "Sede em %s."
 @export_file("*.tres") var next_era_config: String = ""

@@ -55,7 +55,11 @@ static func compute(result: Dictionary, player_squad: SquadData, enemy_squad: Sq
 		for key: String in ["alignment", "popular_support", "doctrine"]:
 			effects[key] = 0
 	effects["player_won"] = player_won
-	effects["xp"] = XP_ON_VICTORY if player_won else XP_ON_DEFEAT
+	var era: EraConfig = WorldState.era_config
+	var win_xp: int = era.xp_per_victory if era else XP_ON_VICTORY
+	var loss_xp: int = era.xp_per_defeat if era else XP_ON_DEFEAT
+	var gap_xp: int = (era.xp_per_level_gap if era else 0) * maxi(0, roundi(level_gap))
+	effects["xp"] = (win_xp + gap_xp) if player_won else loss_xp
 	effects["recruit"] = player_won and victory_type == "morale_break" and tag != "natural_wildlife"
 	var reward_key: String = victory_type
 	if player_won and _honor_applies(enemy_squad.honor_rule, player_squad, flags):
