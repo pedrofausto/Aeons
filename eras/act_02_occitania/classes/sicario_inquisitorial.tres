@@ -21,6 +21,7 @@ targeting = 3
 power = 65
 hits = 2
 element = "PIERCE"
+inflicts_status = "POISON"
 
 [resource]
 script = ExtResource("1_class")

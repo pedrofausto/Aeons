@@ -29,6 +29,9 @@ enum Targeting { FRONT_FIRST, BACK_FIRST, ALL_ENEMIES, LEADER, LOWEST_HP_ALLY, A
 @export_range(0, 90) var target_attack_debuff_pct: int = 0  # Reduz o ataque do alvo (batalha)
 @export var enemy_morale_drain: int = 0       # Curas: drena Moral de todos os inimigos (rendição)
 @export var grants_extra_action: bool = false # Bardo: o aliado mais forte age de novo na hora
+@export var resources_on_hit: int = 0         # Moeda do ato ganha por acerto (saque); 0 = nenhum
+@export var bonus_terrain: String = ""        # Terreno canônico que dá bônus de poder; "" = desativado
+@export var bonus_terrain_power_pct: int = 0  # % somado ao power quando a batalha ocorre nesse terreno
 
 
 func is_offensive() -> bool:

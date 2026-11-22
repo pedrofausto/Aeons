@@ -10,6 +10,7 @@ const ARCHETYPE_COLORS: Array[Color] = [
 ]
 
 var unit: UnitInstance
+var size: Vector2 = SIZE                      # Colossais (grid_slots 2) ocupam frente + trás
 var faction_color: Color = Color.WHITE
 var _hp: int = 0
 var _morale: int = 0
@@ -19,12 +20,14 @@ var _label: Label
 
 func setup(p_unit: UnitInstance, p_faction_color: Color) -> void:
 	unit = p_unit
+	if unit.class_data.grid_slots >= 2:
+		size = Vector2(SIZE.x * 2.0 + 15.0, SIZE.y)
 	faction_color = p_faction_color
 	_hp = unit.hp
 	_morale = unit.morale
 	_label = Label.new()
-	_label.position = Vector2(-SIZE.x / 2.0 + 2, -SIZE.y / 2.0 + 1)
-	_label.size = Vector2(SIZE.x - 4, 20)
+	_label.position = Vector2(-size.x / 2.0 + 2, -size.y / 2.0 + 1)
+	_label.size = Vector2(size.x - 4, 20)
 	_label.add_theme_font_size_override("font_size", 6)
 	_label.add_theme_color_override("font_color", Color(0.05, 0.05, 0.05))
 	_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -50,7 +53,7 @@ func _process(delta: float) -> void:
 func _draw() -> void:
 	if unit == null:
 		return
-	var rect := Rect2(-SIZE / 2.0, SIZE)
+	var rect := Rect2(-size / 2.0, size)
 	var base: Color = ARCHETYPE_COLORS[unit.class_data.archetype]
 	if unit.class_data.placeholder_color.a > 0.0:
 		base = unit.class_data.placeholder_color
@@ -60,10 +63,10 @@ func _draw() -> void:
 		base = base.lerp(Color(0.6, 0.6, 0.7), 0.6)
 	draw_rect(rect, base.lerp(Color.WHITE, _flash * 0.6))
 	draw_rect(rect, faction_color, false, 1.5)
-	var bar_w: float = SIZE.x - 6.0
+	var bar_w: float = size.x - 6.0
 	var hp_ratio: float = clampf(float(_hp) / float(unit.get_max_hp()), 0.0, 1.0)
 	var mor_ratio: float = clampf(float(_morale) / float(unit.get_max_morale()), 0.0, 1.0)
-	var origin := Vector2(-SIZE.x / 2.0 + 3, SIZE.y / 2.0 - 12)
+	var origin := Vector2(-size.x / 2.0 + 3, size.y / 2.0 - 12)
 	draw_rect(Rect2(origin, Vector2(bar_w, 3)), Color(0.15, 0.05, 0.05))
 	draw_rect(Rect2(origin, Vector2(bar_w * hp_ratio, 3)), Color(0.85, 0.2, 0.2))
 	draw_rect(Rect2(origin + Vector2(0, 5), Vector2(bar_w, 3)), Color(0.05, 0.05, 0.15))

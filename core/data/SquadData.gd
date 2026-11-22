@@ -137,9 +137,10 @@ func first_free_slot() -> int:
 	return -1
 
 
+## Unidades colossais (grid_slots = 2) ocupam a coluna inteira: slot da frente + o de trás.
 func get_unit_at(slot: int) -> UnitInstance:
 	for unit: UnitInstance in units:
-		if unit.slot == slot:
+		if unit.slot == slot or (unit.class_data.grid_slots >= 2 and unit.slot + 3 == slot):
 			return unit
 	return null
 

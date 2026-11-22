@@ -1,0 +1,56 @@
+[gd_resource type="Resource" script_class="UnitClassData" format=3]
+
+[ext_resource type="Script" path="res://core/data/UnitClassData.gd" id="1_class"]
+[ext_resource type="Script" path="res://core/data/ActionSkillData.gd" id="2_skill"]
+
+[sub_resource type="Resource" id="front"]
+script = ExtResource("2_skill")
+skill_id = "lamina_de_cinza"
+display_name = "Lâmina de Cinza"
+effect = 0
+targeting = 0
+power = 55
+element = "SHADOW"
+hits = 2
+lifesteal_pct = 30
+
+[sub_resource type="Resource" id="back"]
+script = ExtResource("2_skill")
+skill_id = "lamento_de_beziers"
+display_name = "Lamento de Béziers"
+effect = 1
+targeting = 2
+power = 65
+morale_power = 26
+element = "SHADOW"
+target_attack_debuff_pct = 15
+
+[resource]
+script = ExtResource("1_class")
+class_id = "eco_beziers"
+display_name = "Eco de Béziers"
+era_id = 2
+archetype = 6
+grid_slots = 1
+tier = 3
+traits = PackedStringArray("undead", "morale_drain_immune")
+max_hp = 115
+max_morale = 100
+attack = 18
+defense = 12
+intellect = 21
+agility = 15
+front_action = SubResource("front")
+back_action = SubResource("back")
+damage_taken_pct = {
+"PHYSICAL": 25,
+"PIERCE": 25,
+"LIGHT": 180,
+"PURIFY": 200
+}
+movement = "ethereal"
+night_march_bonus_pct = 25
+min_level = 9
+min_alignment = 0
+max_alignment = 35
+required_item_id = &"cinza_de_madalena"

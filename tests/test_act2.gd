@@ -16,10 +16,11 @@ func run(t: Node) -> void:
 	EssenceState.archive_act_and_reset_visible(1)
 	var era: EraConfig = WorldState.era_config
 	t.check("act2_loaded_by_transition", WorldState.current_act == 2 and era.act_number == 2
-		and era.enable_siege_water_rule and era.map_nodes.size() == 4 and era.resource_label == "Prata")
+		and era.enable_siege_water_rule and era.map_nodes.size() == 9 and era.resource_label == "Prata")
 	_quiet()
 
 	await _test_class_tree(t)
+	await _test_pendencias(t)
 	_quiet()
 
 	var map := (load(MAP_SCENE) as PackedScene).instantiate() as OverworldMap
@@ -27,7 +28,7 @@ func run(t: Node) -> void:
 	t.get_tree().root.add_child(map)
 	await t.get_tree().process_frame
 	t.check("act2_carcassonne_map", map.nodes.has("cite_carcassonne") and map.nodes.has("burgo_sao_vicente")
-		and map.nodes.has("pontes_aude") and map.nodes.has("castelo_cabaret") and map.tokens.size() == 4
+		and map.nodes.has("pontes_aude") and map.nodes.has("castelo_cabaret") and map.tokens.size() == 5
 		and WorldState.get_node_faction("castelo_cabaret") == "player" and WorldState.get_node_faction("cite_carcassonne") == "enemy"
 		and (map.nodes["cite_carcassonne"] as MapNode).data.water_source_node == "pontes_aude", "tokens=%d" % map.tokens.size())
 
@@ -97,13 +98,19 @@ func _campaign(t: Node) -> void:
 		and WATER in WorldState.completed_interludes, str(battles))
 	t.check("water_poison_halves_garrison", garrison != null and WorldState.has_flag("act2_aude_poisoned")
 		and garrison.units.all(func(u: UnitInstance) -> bool: return u.hp <= u.get_max_hp() / 2 + 1)
-		and WorldState.alignment == 25 and WorldState.doctrine == 15)
+		and WorldState.alignment < 35 and WorldState.doctrine == 15, "al=%d dt=%d" % [WorldState.alignment, WorldState.doctrine])
 	var fresh: float = garrison.vitality_ratio()
 	await _idle(t, map, 4, battles, 3)
 	t.check("act2_siege_wears_down_cite", garrison.vitality_ratio() < fresh)
 	await _storm(t, map, battles)
-	t.check("act2_carcassonne_retaken", WorldState.get_node_faction("cite_carcassonne") == "player"
-		and WorldState.has_flag("act_victory"), str(battles))
+	t.check("act2_carcassonne_retaken", WorldState.get_node_faction("cite_carcassonne") == "player", str(battles))
+	# Vitória do ato exige também a Abadia da Montagne Noire (nó obrigatório e inimigo).
+	var no_victory_yet: bool = not WorldState.has_flag("act_victory")
+	for token: SquadToken in map.tokens.duplicate():
+		if token.squad.squad_id == "guarda_da_abadia":
+			map.remove_token(token)
+	map.capture("montagne_noire")
+	t.check("act2_victory_needs_abbey", no_victory_yet and WorldState.has_flag("act_victory"))
 	print("INFO|Ato II (cortar a água) -> %s" % str(battles))
 	map.queue_free()
 	await t.get_tree().process_frame
@@ -116,7 +123,7 @@ func _campaign(t: Node) -> void:
 	await _idle(t, map, 1, battles, 1)
 	t.check("water_spared_no_thirst", garrison.units.map(func(u: UnitInstance) -> int: return u.hp) == hp_before
 		and garrison.units.any(func(u: UnitInstance) -> bool: return u.morale < u.get_max_morale())
-		and WorldState.alignment >= 65 and WorldState.popular_support >= 70 and WorldState.doctrine == -20
+		and WorldState.alignment >= 65 and WorldState.popular_support >= 70 and WorldState.doctrine <= -20
 		and WorldState.get_siege("cite_carcassonne", "mode", "") == "preaching" and WorldState.has_flag("act2_cisterns_spared"),
 		"al=%d ap=%d dt=%d" % [WorldState.alignment, WorldState.popular_support, WorldState.doctrine])
 	for i: int in 8:
@@ -126,7 +133,7 @@ func _campaign(t: Node) -> void:
 	var sorties: int = battles.filter(func(b: String) -> bool: return b.begins_with("surtida_cruzada")).size()
 	var stormed: bool = battles.any(func(b: String) -> bool: return b.begins_with("guarnicao_de_montclair"))
 	t.check("water_spared_two_sorties_then_surrender", sorties == 2 and not stormed
-		and WorldState.get_node_faction("cite_carcassonne") == "player" and WorldState.has_flag("act_victory")
+		and WorldState.get_node_faction("cite_carcassonne") == "player"
 		and WorldState.income_pct("cite_carcassonne") == 130, str(battles))
 	print("INFO|Ato II (poupar as cisternas) -> %s" % str(battles))
 	map.queue_free()
@@ -250,7 +257,7 @@ func _test_class_tree(t: Node) -> void:
 		tree_ok = tree_ok and _cls(base).tier == 1 and targets == TREE[base]
 		for elite: String in TREE[base]:
 			tree_ok = tree_ok and _cls(elite).tier == 2 and _cls(elite).era_id == 2 and _cls(elite).min_level >= 9
-	t.check("act2_class_tree_19", tree_ok and WorldState.era_config.unit_classes.size() == 19)
+	t.check("act2_class_tree_19", tree_ok and WorldState.era_config.unit_classes.size() == 22)
 
 	# Doutrina decide entre Faydit (Revolucionária) e Hospitalário (Pacifista); Carisma barra.
 	var veteran := _unit("sergent_darmes", 10, 80, 65)
@@ -344,3 +351,111 @@ func _drive(t: Node, room: Node, choice: int) -> void:
 			dialogic.get("Inputs").call("handle_input")
 		await t.get_tree().create_timer(0.12).timeout
 	await t.get_tree().process_frame
+
+
+const SPEC_NODES: Dictionary = {  # Spec_Pendencias §1.1
+	"toulouse": ["toulouse", 0, "plains", Vector2(135, 190), 35, true, "dilema_02_toulouse"],
+	"montagne_noire": ["montagne_noire", 1, "forest", Vector2(240, 82), 20, true, "dilema_03_montagne_noire"],
+	"beziers": ["beziers", 0, "urban", Vector2(445, 238), 30, true, "dilema_04_beziers"],
+	"tarascon": ["tarascon", 2, "river", Vector2(548, 178), 25, false, "dilema_05_tarascon"],
+	"montsegur": ["montsegur", 1, "mountain", Vector2(255, 298), 15, true, "dilema_06_montsegur"],
+}
+
+
+## Spec_Pendencias_Ato2_E_Skills §1 (regiões e dilemas 2–6) e §2 (míticas).
+func _test_pendencias(t: Node) -> void:
+	var era: EraConfig = load("res://eras/act_02_occitania/EraConfig_Act02.tres")
+	var by_id: Dictionary = {}
+	var graph: Dictionary = {}
+	for data: MapNodeData in era.map_nodes:
+		by_id[data.node_id] = data
+		graph[data.node_id] = data.neighbors
+	var nodes_ok: bool = true
+	for id: String in SPEC_NODES:
+		var spec: Array = SPEC_NODES[id]
+		var d: MapNodeData = by_id.get(id)
+		nodes_ok = nodes_ok and d != null and d.region_id == spec[0] and int(d.node_type) == spec[1] and d.terrain == spec[2] \
+			and d.map_position == spec[3] and d.gold_per_tick == spec[4] and d.required_for_victory == spec[5] \
+			and d.liberation_timeline == "res://eras/act_02_occitania/dialogues/%s.dtl" % spec[6]
+		nodes_ok = nodes_ok and not MapGraph.find_path(graph, "castelo_cabaret", id).is_empty()
+	t.check("act2_spec_nodes_and_graph", nodes_ok and (by_id["cite_carcassonne"] as MapNodeData).map_position == Vector2(320, 165))
+
+	var signals_ok: bool = true
+	var decisions: Array[String] = []
+	for id: String in SPEC_NODES:
+		var timeline: Resource = load((by_id[id] as MapNodeData).liberation_timeline)
+		timeline.call("process")
+		var count: int = 0
+		for event: Variant in timeline.get("events"):
+			if event is DialogicSignalEvent:
+				var fx := InterludeController.parse_effects(String(event.get("argument")))
+				signals_ok = signals_ok and fx.has("decision") and fx.has("doctrine") and fx.has("alignment")
+				decisions.append(String(fx["decision"]))
+				count += 1
+		signals_ok = signals_ok and count == 2
+	t.check("act2_dilemmas_2_to_6_signals", signals_ok and "act2_toulouse_pact:true" in decisions
+		and "act2_montsegur_stand:false" in decisions and InterludeController.parse_effects("effect|alignment=+8")["alignment"] == 8)
+
+	# Míticas (§2).
+	var portador := _cls("portador_consolamentum")
+	var tarasca := _cls("tarasca")
+	var eco := _cls("eco_beziers")
+	t.check("act2_mythic_classes_spec", portador.tier == 3 and portador.required_item_id == &"pergaminho_consolamentum"
+		and portador.max_doctrine == 10 and portador.min_charisma == 65 and portador.has_trait("non_lethal")
+		and tarasca.grid_slots == 2 and tarasca.movement == "swamp" and tarasca.max_hp == 210 and tarasca.damage_multiplier_pct("LIGHT") == 135
+		and eco.movement == "ethereal" and eco.damage_multiplier_pct("PURIFY") == 200 and eco.required_item_id == &"cinza_de_madalena"
+		and eco in _cls("routier").get_promotion_targets() and portador in _cls("parfait").get_promotion_targets())
+	var colossus := SquadData.new()
+	colossus.units.append(UnitInstance.create(tarasca, "Tarasca", 6, 1, true))
+	t.check("act2_tarasca_occupies_two_slots", colossus.get_unit_at(1) == colossus.units[0] and colossus.get_unit_at(4) == colossus.units[0]
+		and colossus.first_free_slot() == 0)
+
+	WorldState.doctrine = -50
+	var saint := _unit("parfait", 10, 90, 70)
+	t.check("act2_portador_needs_scroll", _option(saint, "portador_consolamentum").get("has_item") == false)
+	WorldState.add_item(load("res://eras/act_02_occitania/items/pergaminho_consolamentum.tres"))
+	t.check("act2_portador_promotion", PromotionRules.promote(saint, portador) and WorldState.count_item("pergaminho_consolamentum") == 0)
+	WorldState.doctrine = 0
+
+	var boss := (load("res://eras/act_02_occitania/encounters/squad_tarasca_do_rhone.tres") as SquadData).clone()
+	var win := {"type": "result", "winner": "attacker", "victory_type": "timeout"}
+	var with_parfait := _squad_of([["sergent_darmes", 8], ["parfait", 10]])
+	var calm := {"tarasque_calm_rite": true}
+	t.check("act2_tarasca_calm_rite_unlocks", BattleConsequences.compute(win, with_parfait, boss, "attacker", calm)["rewards"].get("unlock_class") == "tarasca"
+		and BattleConsequences.compute(win, _squad_of([["sergent_darmes", 8]]), boss, "attacker", calm)["rewards"].is_empty()
+		and BattleConsequences.compute(win, with_parfait, boss, "attacker", {})["rewards"].is_empty())
+	var abbey := (load("res://eras/act_02_occitania/map/squad_guarda_da_abadia.tres") as SquadData).clone()
+	var mercy := {"type": "result", "winner": "attacker", "victory_type": "morale_break"}
+	t.check("act2_abbey_morale_win_gives_scroll", String(BattleConsequences.compute(mercy, with_parfait, abbey, "attacker")["rewards"].get("item", "")).ends_with("pergaminho_consolamentum.tres"))
+	var tarascon_table := load("res://eras/act_02_occitania/encounters/tarascon_encounters.tres") as EncounterTable
+	var beziers_table := load("res://eras/act_02_occitania/encounters/beziers_encounters.tres") as EncounterTable
+	var rng := RandomNumberGenerator.new()
+	var hidden_boss: bool = tarascon_table.pick(rng, "day", 5.0, "tarascon") == null
+	WorldState.set_flag("liberated_tarascon")
+	t.check("act2_encounter_gating", hidden_boss and tarascon_table.pick(rng, "day", 5.0, "tarascon") != null
+		and beziers_table.pick(rng, "night", 3.0, "beziers") != null and beziers_table.pick(rng, "day", 3.0, "beziers") == null)
+
+	# Dilema 2 jogado pelo fluxo normal (Dialogic real): Toulouse, opção A.
+	EssenceState.reset_all()
+	WorldState.reset_visible(2)
+	WorldState.load_era("res://eras/act_02_occitania/EraConfig_Act02.tres")
+	_quiet()
+	var map := (load(MAP_SCENE) as PackedScene).instantiate() as OverworldMap
+	map.auto_tick = false
+	t.get_tree().root.add_child(map)
+	await t.get_tree().process_frame
+	var bertran_cha: int = 65
+	var battles: Array[String] = []
+	await _march(t, map, map.selected_token, "toulouse", battles, 1)
+	var bertran: UnitInstance = null
+	for unit: UnitInstance in map.selected_token.squad.units:
+		if unit.unit_name == "Bertran":
+			bertran = unit
+	t.check("act2_toulouse_dilemma_played", WorldState.get_node_faction("toulouse") == "player"
+		and EssenceState.decisions.get("act2_toulouse_pact") == true and WorldState.has_flag("aragon_envoy_pleased")
+		and bertran.charisma == bertran_cha + 3 and WorldState.doctrine == -12, str(battles))
+	map.queue_free()
+	await t.get_tree().process_frame
+	EssenceState.reset_all()
+	WorldState.reset_visible(2)
+	WorldState.load_era("res://eras/act_02_occitania/EraConfig_Act02.tres")

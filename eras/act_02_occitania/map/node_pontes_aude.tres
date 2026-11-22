@@ -12,6 +12,6 @@ region_id = "carcassonne"
 terrain = "river"
 gold_per_tick = 15
 map_position = Vector2(330, 300)
-neighbors = Array[String](["burgo_sao_vicente", "cite_carcassonne"])
+neighbors = Array[String](["burgo_sao_vicente", "cite_carcassonne", "montsegur", "beziers"])
 liberation_timeline = "res://eras/act_02_occitania/dialogues/a_agua_de_carcassonne.dtl"
 liberation_title = "A Água de Carcassonne"

@@ -22,7 +22,7 @@ func setup(p_squad: SquadData, start_position: Vector2) -> void:
 	_label = Label.new()
 	_label.text = squad.display_name
 	_label.size = Vector2(160, 11)
-	_label.position = Vector2(-80, -27)
+	_label.position = Vector2(-80, -27) if position.y > 75.0 else Vector2(-80, 9)  # Perto do HUD: rótulo embaixo
 	_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_label.add_theme_font_size_override("font_size", 7)
 	_label.add_theme_color_override("font_outline_color", Color.BLACK)

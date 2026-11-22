@@ -32,6 +32,19 @@
 [ext_resource type="Resource" path="res://eras/act_02_occitania/classes/trovador.tres" id="6_trovador"]
 [ext_resource type="Resource" path="res://eras/act_02_occitania/classes/menestrel_resistencia.tres" id="6_menestrel_resistencia"]
 [ext_resource type="Resource" path="res://eras/act_02_occitania/classes/arauto_cruzada.tres" id="6_arauto_cruzada"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/map/node_toulouse.tres" id="5_toulouse"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/map/node_montagne_noire.tres" id="5_montagne_noire"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/map/node_beziers.tres" id="5_beziers"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/map/node_tarascon.tres" id="5_tarascon"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/map/node_montsegur.tres" id="5_montsegur"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/classes/portador_consolamentum.tres" id="6_portador_consolamentum"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/classes/tarasca.tres" id="6_tarasca"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/classes/eco_beziers.tres" id="6_eco_beziers"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/encounters/beziers_encounters.tres" id="8_beziers"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/encounters/tarascon_encounters.tres" id="8_tarascon"]
+[ext_resource type="Script" path="res://core/data/ItemData.gd" id="9_itemscript"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/items/pergaminho_consolamentum.tres" id="9_pergaminho"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/items/cinza_de_madalena.tres" id="9_cinza"]
 
 [resource]
 script = ExtResource("1_era")
@@ -55,14 +68,15 @@ color_neutral = Color(0.6, 0.58, 0.5, 1)
 color_background = Color(0.08, 0.08, 0.11, 1)
 color_road = Color(0.5, 0.45, 0.38, 1)
 enable_siege_water_rule = true
-map_nodes = Array[ExtResource("3_nodescript")]([ExtResource("5_castelo_cabaret"), ExtResource("5_burgo_sao_vicente"), ExtResource("5_pontes_aude"), ExtResource("5_cite_carcassonne")])
-unit_classes = Array[ExtResource("3_classscript")]([ExtResource("6_sergent_darmes"), ExtResource("6_faydit"), ExtResource("6_cavaleiro_hospitalario"), ExtResource("6_routier"), ExtResource("6_lanceiro_escudeiro"), ExtResource("6_chevalier_languedoc"), ExtResource("6_quebra_muralhas"), ExtResource("6_arbaletrier"), ExtResource("6_batedor_pireneus"), ExtResource("6_sicario_inquisitorial"), ExtResource("6_erudito_boticario"), ExtResource("6_alquimista_hermetico"), ExtResource("6_engenheiro_fogo"), ExtResource("6_irmao_caridade"), ExtResource("6_parfait"), ExtResource("6_inquisidor"), ExtResource("6_trovador"), ExtResource("6_menestrel_resistencia"), ExtResource("6_arauto_cruzada")])
+map_nodes = Array[ExtResource("3_nodescript")]([ExtResource("5_castelo_cabaret"), ExtResource("5_burgo_sao_vicente"), ExtResource("5_pontes_aude"), ExtResource("5_cite_carcassonne"), ExtResource("5_toulouse"), ExtResource("5_montagne_noire"), ExtResource("5_beziers"), ExtResource("5_tarascon"), ExtResource("5_montsegur")])
+unit_classes = Array[ExtResource("3_classscript")]([ExtResource("6_sergent_darmes"), ExtResource("6_faydit"), ExtResource("6_cavaleiro_hospitalario"), ExtResource("6_routier"), ExtResource("6_lanceiro_escudeiro"), ExtResource("6_chevalier_languedoc"), ExtResource("6_quebra_muralhas"), ExtResource("6_arbaletrier"), ExtResource("6_batedor_pireneus"), ExtResource("6_sicario_inquisitorial"), ExtResource("6_erudito_boticario"), ExtResource("6_alquimista_hermetico"), ExtResource("6_engenheiro_fogo"), ExtResource("6_irmao_caridade"), ExtResource("6_parfait"), ExtResource("6_inquisidor"), ExtResource("6_trovador"), ExtResource("6_menestrel_resistencia"), ExtResource("6_arauto_cruzada"), ExtResource("6_portador_consolamentum"), ExtResource("6_tarasca"), ExtResource("6_eco_beziers")])
 starting_squads = Array[ExtResource("3_squadscript")]([ExtResource("4_squad")])
 enemy_patrols = Array[ExtResource("3_squadscript")]([ExtResource("7_patrol")])
-encounter_tables = Array[Resource]([ExtResource("8_encounters")])
-max_roaming_squads = 1
+encounter_tables = Array[Resource]([ExtResource("8_encounters"), ExtResource("8_beziers"), ExtResource("8_tarascon")])
+max_roaming_squads = 2
+item_catalog = Array[ExtResource("9_itemscript")]([ExtResource("9_pergaminho"), ExtResource("9_cinza")])
 xp_per_victory = 90
 xp_per_defeat = 25
 xp_per_level_gap = 20
-victory_text = "A Cité de Carcassonne volta às mãos do sul. Os sinos do Burgo tocam sobre o Aude."
+victory_text = "A Cité e a Abadia voltam às mãos do sul. Os sinos do Languedoc tocam sobre o Aude."
 siege_thirst_message = "Sede na %s: sem as águas do Aude, os defensores definham."

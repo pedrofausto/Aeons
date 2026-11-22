@@ -114,7 +114,7 @@ energia/banda…) entram como **`WorldState.era_meters: Dictionary`** (`meter_id
 ### 4.1 `UnitClassData`
 | Grupo | Campos (tipo = padrão) |
 |---|---|
-| Identidade | `class_id: String` (único no projeto, `snake_case`, **sem prefixo de ato**; se colidir, prefixe `actN_`) · `display_name: String` · `era_id: int` (número do ato) · `archetype: Archetype` (enum int: VANGUARD, SHOCK, RANGED_STEALTH, ARCANE_TECH, HEALER_MORAL, BARD_INFLUENCE, MYTHIC) · `tier: int = 1` (1 base · 2 elite/sombria · 3 mítica) · `grid_slots: int = 1` |
+| Identidade | `class_id: String` (único no projeto, `snake_case`, **sem prefixo de ato**; se colidir, prefixe `actN_`) · `display_name: String` · `era_id: int` (número do ato) · `archetype: Archetype` (enum int: VANGUARD, SHOCK, RANGED_STEALTH, ARCANE_TECH, HEALER_MORAL, BARD_INFLUENCE, MYTHIC) · `tier: int = 1` (1 base · 2 elite/sombria · 3 mítica) · `grid_slots: int = 1` (**2 = colossal: ocupa a coluna inteira, `slot` da frente + `slot + 3`; posicione-a sempre num slot 0..2**) |
 | Subtipo | `traits: PackedStringArray` (§6.4) · `placeholder_color: Color` (alfa 0 = cor do arquétipo) · `liberation_reputation_bonus: int = 0` |
 | Resistências | `damage_taken_pct: Dictionary` (`elemento → % recebido`, 100 = normal) |
 | Movimento | `movement: String = "ground"` (§6.2) · `march_speed_pct: int = 100` · `night_march_bonus_pct: int = 0` |
@@ -129,7 +129,11 @@ energia/banda…) entram como **`WorldState.era_meters: Dictionary`** (`meter_id
 atributo, **por golpe**) · `morale_power: int = 0` · `element: String = ""` (§6.3) · `hits: int = 1` · `lifesteal_pct` ·
 `armor_pierce_pct` · `inflicts_status` (§6.5) · `ally_buff_trait` (`"*"` = todos) · `ally_buff_attack_pct` ·
 `ally_guard_pct` · `target_attack_debuff_pct` · `enemy_morale_drain` · `grants_extra_action: bool` ·
-`healthy_allies_bonus_power` · `bonus_element`.
+`healthy_allies_bonus_power` · `bonus_element` · `resources_on_hit: int = 0` (saque por acerto com dano > 0) ·
+`bonus_terrain: String = ""` + `bonus_terrain_power_pct: int = 0` (poder extra quando a batalha ocorre nesse terreno).
+> `CombatResolver.resolve(attacker, defender, attacker_order, defender_order, context = {})`: `context.terrain` vem do nó
+> da batalha (EncounterDirector). O evento final (`type = "result"`) traz `bonus_resources = {"attacker": n, "defender": m}`,
+> que `BattleConsequences` soma aos recursos do lado do jogador.
 > **Enums só crescem no fim** (valores são salvos como inteiros nos `.tres`): nunca reordene nem insira no meio.
 
 ### 4.3 `UnitInstance`
@@ -140,7 +144,10 @@ atributo, **por golpe**) · `morale_power: int = 0` · `element: String = ""` (�
 `squad_id` · `display_name` · `faction` · `units: Array[UnitInstance]` · `current_node_id` · `fatigue (0..100)` ·
 `patrol_route: Array[String]` · `encounter_tag` (§6.6) · pós-batalha: `supernatural` · `victory_effects: Dictionary` ·
 `rare_drop: ItemData` · `rare_drop_chance` · `outcome_rewards: Dictionary` (`victory_type → {flag, unlock_class, item}`) ·
-`honor_rule: Dictionary` (`{min_alignment, flag, counts_as}`). Em runtime (não exportados): `is_roaming`, `roaming_until_day`.
+`honor_rule: Dictionary` (`{min_alignment, flag, counts_as}`) — `flag` é procurada em `WorldState.active_flags` **e**
+`EssenceState.decisions`. Uma recompensa de `outcome_rewards` pode ter condições: `requires_flag` (flag/decisão ativa) e
+`requires_class` (Array de `class_id`; algum vivo no esquadrão do jogador). Contra inimigos `morale_immune`, "vencer por
+Moral" se modela com `honor_rule` (ex.: o rito de paz da Tarasca). Em runtime (não exportados): `is_roaming`, `roaming_until_day`.
 **Sempre `clone()` antes de usar um `.tres` em jogo**; o recurso original nunca é mutado.
 
 ### 4.5 `MapNodeData`
@@ -148,7 +155,7 @@ atributo, **por golpe**) · `morale_power: int = 0` · `element: String = ""` (�
 `region_id` · `terrain` (§6.1) · `required_for_victory = true` · `gold_per_tick` · `map_position` (pixels lógicos
 640×360) · `neighbors: Array[String]` (grafo; sem NavigationRegion2D) · `garrison: SquadData` · `liberation_timeline`
 (`.dtl`, dispara na 1ª vez sob controle aliado) · `liberation_title` · cerco: `water_source_node` · `sortie_squad` ·
-`siege_reinforcements`.
+`siege_reinforcements` · `label_side: String = "below"` (`"above"` quando o rótulo colidiria com o de um vizinho).
 
 ### 4.6 `EraConfig`
 Identidade (`act_number`, `era_title`, `window_title`, `ui_theme`, `palette_shader`, `reality_layer`, `interlude_style`) ·
@@ -163,7 +170,7 @@ paleta (`color_*`) · interlúdio (`interlude_backdrop`, `dialogue_*`, `dissolve
 ### 4.7 `ItemData` · `EncounterTable` · `EncounterEntry`
 - `ItemData`: `item_id` · `display_name` · `description` · `unique` · `march_speed_bonus_pct` · `reveals_night_encounters` · `promotion_seal`.
 - `EncounterTable`: `region_id` · `spawn_nodes` · `spawn_chance` · `entries: Array[EncounterEntry]`.
-- `EncounterEntry`: `squad` · `weight` · `time_of_day` (any/day/night) · `min_party_level` · `max_party_level` · `until_defeated` · `required_region`.
+- `EncounterEntry`: `squad` · `weight` · `time_of_day` (any/day/night) · `min_party_level` · `max_party_level` · `until_defeated` · `required_region` · `required_flag` (só surge com a flag ativa, ex.: `liberated_<nó>`).
 
 ---
 
@@ -192,7 +199,10 @@ Nova chave só com suporte em `WorldState.apply_effects`/`InterludeController` +
 2. **Movimento** (`UnitClassData.movement`): `ground` (infantaria) · `cavalry` · `mountain` · `swamp` · `ethereal` · `flying`.
 3. **Elementos** (`ActionSkillData.element`): `PHYSICAL` · `PIERCE` · `SIEGE` · `FIRE` · `LIGHT` · `SPIRITUAL` · `PURIFY` · `SHADOW` · `ARCANE`.
 4. **Traits**: `undead` · `celestial` · `trickster` · `evil_shaman` · `morale_immune` · `morale_drain_immune` · `status_immune` · `non_lethal` · `flying`.
-5. **Status**: `CONFUSE` (perde a próxima ação).
+5. **Status** (`inflicts_status`, determinísticos):
+   - `CONFUSE` — pega se o alvo for mais lento; perde a próxima ação.
+   - `POISON` — pega se o alvo não for mais rápido **ou** estiver abaixo de 80% do HP; 2 rodadas; no fim de cada rodada perde `max(1, 10% do HP máx.)` (não mata se o atacante for `non_lethal`).
+   - `status_immune` bloqueia ambos.
 6. **Tags de encontro**: `bandit_loot` · `moral_escort` · `low_level_trap` · `natural_wildlife` · `mythic_boss` · `night_encounter` · `siege_sortie`.
 7. **Facções**: `player` · `enemy` · `neutral` (facções narrativas ficam nos nomes/dados, não no motor).
 8. **Período**: `day` · `night`. **Camada de realidade**: `PHYSICAL_WAR` · `RESOURCE_NETWORK` · `VIRTUAL_COGNITIVE`. **Interlúdio**: `camp` · `clandestine_physical` · `ephemeral_metaphysical`.
@@ -236,6 +246,20 @@ Nova chave só com suporte em `WorldState.apply_effects`/`InterludeController` +
 | `has_artillery_battery`, `artillery_radius_px` | `MapNodeData.artillery_radius` (0 = sem bateria; pixels lógicos) (§8) |
 | `SquadData.is_stealth_air` | trait `stealth_air` na classe + `movement = "flying"` |
 | Escalas 1–10, ★1–5, notas S/A/B/C/D | converter para números do schema (ver §9) |
+| `core/state/WorldState.gd`, `core/state/EssenceState.gd` | `core/autoloads/` |
+| `CombatArena.tscn`, `MapNode.tscn`, `SquadToken.tscn` | `BattleArena.tscn`; `MapNode` e `SquadToken` são scripts instanciados pelo `OverworldMap` |
+| `tests/smoke_test.gd`, `SMOKE_TEST_PASS` | `tests/TestRunner.tscn` + `tests/run_tests.sh` (`TEST_PASS\|nome` e marcadores por ato) |
+| `AGENT_SETUP_AND_TEST.md`, "Sprint 0" | ambiente já validado: wrapper `~/bin/godot-opengl3`, CI em `.github/workflows/godot-ci.yml` |
+| `WorldState.act_id` | `WorldState.current_act` |
+| `EssenceState.act_summaries` | `alignment_history` + `doctrine_history` (+ `decisions` para escolhas-chave) |
+| `EssenceState.aeon_resistance_score: int` | `EssenceState.aeon_resistance_flags.size()` (não criar contador separado) |
+| `EssenceState.false_defeats_triggered: Array[int]` | reservado: `EssenceState.false_defeats: Array[String]` (ids como `act2_montsegur_pyre`) |
+| `MapNodeData.node_type` como String ("PORT", "INFRASTRUCTURE", "NEURAL_NODE") | enum `NodeType` (inteiro); novos tipos só **no fim** do enum (ex.: `PORT`, `INFRASTRUCTURE`, `NEURAL_NODE` quando os Atos III–V precisarem) |
+| `node_id: StringName`, `connected_nodes: Array[StringName]` | `node_id: String`, `neighbors: Array[String]` |
+| `owner_faction`, `resource_per_tick` | `faction`, `gold_per_tick` |
+| `local_support` (por nó) | não existe; Apoio é global (`WorldState.popular_support`) + `liberation_reputation_bonus` |
+| `archetype` como String, `front_action_id`/`back_action_id` | enum `Archetype`; `front_action`/`back_action: ActionSkillData` |
+| `GodotInk` | não usado; diálogos são Dialogic 2 (`.dtl`) |
 
 ---
 

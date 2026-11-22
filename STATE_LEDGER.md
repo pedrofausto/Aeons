@@ -4,10 +4,10 @@
 > **Ordem de leitura:** este arquivo → **`SCHEMA_CANON.md`** (nomes/tipos canônicos e tabela de aliases — obrigatório antes de mexer em schema) → `ARCHITECTURE.md` + `ARCHITECTURE_DIFF.md` + `ARCHITECTURE_DIFF_ATO3.md`.
 
 ## Situação
-- **Fase:** Ato I completo (Nanlu + Hanmen). Ato II: Cidadela de Carcassonne com árvore completa de 19 classes e o dilema 1 "A Água de Carcassonne" (3 ramos jogáveis) — `ACT2_CARCASSONNE_PASS`.
-- **Próximo passo:** Ato II — regiões Toulouse, Montagne Noire, Béziers, Tarascon e Montségur com os dilemas 2–6 e as classes míticas (Portador do Consolamentum, Tarasca 2 slots, Eco de Béziers). Adendo tático do Ato I (Cike, Catafractário, Junshi...) ainda não aplicado. Sprint 4 (arte/áudio) aguarda assets.
+- **Fase:** Ato I completo (Nanlu + Hanmen). Ato II com as 6 regiões (Spec_Pendencias §1), dilemas 1–6, 22 classes (inclui míticas Portador do Consolamentum, Tarasca de 2 slots e Eco de Béziers) e skills pendentes (saque, veneno, bônus de terreno) — `ACT2_CARCASSONNE_PASS`.
+- **Próximo passo:** Derrota Falsa de Montségur (transição para o Ato III) e Ato III. **Bloqueado aguardando o usuário:** Spec_Pendencias §4 (adendo tático do Ato I — Cike, Catafractário, Junshi; conflitos Daoshi/Xian). Sprint 4 (arte/áudio) aguarda assets.
 - **Engine:** Godot 4.7.2 · GDScript puro · `gl_compatibility` · resolução lógica 640×360 (janela 1280×720, Nearest).
-- **Validação:** `tests/run_tests.sh` → **140 TEST_PASS**, 0 falhas, sem `SCRIPT ERROR`/`ERROR:` (janela real Xvfb + opengl3 e headless).
+- **Validação:** `tests/run_tests.sh` → **157 TEST_PASS**, 0 falhas, sem `SCRIPT ERROR`/`ERROR:` (janela real Xvfb + opengl3 e headless).
 - **CI:** `.github/workflows/godot-ci.yml` (suíte + boot `--quit-after 60`).
 - **Branch de trabalho:** `ccr-9fc24095-lrv5hy` (nunca fazer push em `main` sem autorização).
 
@@ -39,7 +39,8 @@
 - **Itens:** `talisma_cinabrio` (consumido na promoção do Fangshi) · Bússola dos Nove Céus (única).
 
 ## Nomes canônicos — Ato II (Occitânia · Cidadela de Carcassonne)
-- **Nós:** Castelo de Cabaret (base, montagne_noire) · Burgo de São Vicente (ocupado) · Pontes do Rio Aude (água) · Cité de Carcassonne (fortaleza cruzada; água = Pontes).
+- **Nós:** Castelo de Cabaret (base, montagne_noire) · Burgo de São Vicente (ocupado) · Pontes do Rio Aude (água) · Cité de Carcassonne (fortaleza cruzada em (320,165); água = Pontes) · Toulouse · Abadia da Montagne Noire (inimiga; Guarda da Abadia — vitória por Moral dá o Pergaminho do Consolamentum) · Ruínas de Béziers (Ecos de Béziers à noite) · Pântanos de Tarascon (opcional; Tarasca surge após a libertação) · Castrum de Montségur.
+- **Dilemas 2–6 (decisões em EssenceState.decisions):** `act2_toulouse_pact` · `act2_abbey_mercy` · `act2_beziers_rebuilt` · `act2_tarascon_codex` (rito de paz = `tarasque_calm_rite`) · `act2_montsegur_stand`. Vitória do ato: Cité e Abadia (nós obrigatórios inimigos).
 - **Regra da água:** quem guarda a fortaleza sem controlar sua água perde 8% HP (sem morrer) e 15 Moral por dia.
 - **Esquadrões:** Companhia de Cabaret (jogador) · Sentinelas do Burgo · Guarnição de Montclair · Escolta da Inquisição (patrulha, moral_escort) · Bando de Routiers · Desertores Famintos.
 - **Classes (19, Specs_Classes_Ato2 + Adendo mesclados; Adendo vence nos nomes/faixas):** Sergent d'Armes → Faydit (DOC ≥ +20, CHA 55) / Cavaleiro Hospitalário (DOC ≤ −10) / Routier · Lanceiro-Escudeiro → Chevalier de Languedoc (cavalaria) / Quebra-Muralhas (SIEGE) · Arbalétrier → Batedor dos Pireneus (mira o mais fraco) / Sicário Inquisitorial · Erudito-Boticário → Alquimista Hermético (LIGHT) / Engenheiro de Fogo · Irmão de Caridade → Parfait Cátaro (não letal, DOC ≤ −20; recusa após `act2_aude_poisoned`) / Inquisidor Dominicano · Trovador Occitano → Menestrel da Resistência (ação extra) / Arauto da Cruzada. Elites exigem Nv 9–12; XP do Ato II: 90/vitória, +20 por nível de diferença.
@@ -61,7 +62,7 @@
 - **Ato III, adicional:** proibido "matriz", "vida passada", "China", "Carcassonne" (nomes de outros atos); teste `EXTRA_FORBIDDEN` em `tests/test_interlude.gd`.
 - Diálogos dos Atos I–IV: usar **apenas** `docs/Lore_Simulacros/`. `docs/Lore_Aeons_Verdade/` só para `EssenceState` e Ato V.
 - Guarda automático: teste `lore_secrecy_acts_1_to_4` (varre eras/, core/ e docs/Lore_Simulacros/).
-- Nenhum LLM em tempo real no jogo: diálogos são estáticos no Dialogic 2.
+- Nenhum LLM em tempo real no jogo: diálogos são estáticos no Dialogic 2. Uso offline permitido: rascunhos de vozes a partir de `docs/Lore_Simulacros/`, com este ledger no contexto.
 
 ## Decisões e bloqueios conhecidos
 - Diff × implementação: `archetype` segue enum inteiro e ações seguem `ActionSkillData` (não StringName); `philosophical_echoes` segue `Array[String]` (contrato do ARCHITECTURE §5).

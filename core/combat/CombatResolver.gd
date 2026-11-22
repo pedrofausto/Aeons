@@ -12,10 +12,10 @@ const SIDES: Array[String] = ["attacker", "defender"]
 
 static func resolve(attacker: SquadData, defender: SquadData,
 		attacker_order: TacticalOrder.Order = TacticalOrder.Order.NONE,
-		defender_order: TacticalOrder.Order = TacticalOrder.Order.NONE) -> Array[Dictionary]:
+		defender_order: TacticalOrder.Order = TacticalOrder.Order.NONE, context: Dictionary = {}) -> Array[Dictionary]:
 	var squads: Dictionary = {"attacker": attacker, "defender": defender}
 	var orders: Dictionary = {"attacker": attacker_order, "defender": defender_order}
-	var state: Dictionary = SkillMath.new_state()
+	var state: Dictionary = SkillMath.new_state(String(context.get("terrain", "")))
 	var log: Array[Dictionary] = []
 	for squad: SquadData in [attacker, defender]:
 		for unit: UnitInstance in squad.units:
@@ -34,10 +34,30 @@ static func resolve(attacker: SquadData, defender: SquadData,
 			_perform_action(actor, actor_ref, squads[side], squads[_other(side)], orders[side], state, log)
 			var ending := _check_end(attacker, defender, round_index)
 			if not ending.is_empty():
-				log.append(ending)
-				return log
-	log.append(_timeout_result(attacker, defender))
+				return _finish(log, ending, state)
+		_tick_poison(squads, state, log)
+		var after_poison := _check_end(attacker, defender, round_index)
+		if not after_poison.is_empty():
+			return _finish(log, after_poison, state)
+	return _finish(log, _timeout_result(attacker, defender), state)
+
+
+## Fecha o log; `bonus_resources` = saque acumulado por lado ({"attacker": n, "defender": m}).
+static func _finish(log: Array[Dictionary], ending: Dictionary, state: Dictionary) -> Array[Dictionary]:
+	ending["bonus_resources"] = (state["loot"] as Dictionary).duplicate()
+	log.append(ending)
 	return log
+
+
+static func _tick_poison(squads: Dictionary, state: Dictionary, log: Array[Dictionary]) -> void:
+	for side: String in SIDES:
+		var squad: SquadData = squads[side]
+		for i: int in squad.units.size():
+			var lost: int = SkillMath.tick_poison(squad.units[i], state)
+			if lost > 0:
+				log.append({"type": "poison", "side": side, "index": i, "damage": lost, "target_hp": squad.units[i].hp})
+				if not squad.units[i].is_alive():
+					log.append({"type": "unit_fallen", "side": side, "index": i})
 
 
 ## Último evento do log (tipo "result").
@@ -110,6 +130,9 @@ static func _strike(actor: UnitInstance, actor_ref: Dictionary, skill: ActionSki
 	var floor_hp: int = 1 if actor.class_data.has_trait("non_lethal") else 0  # Nunca desfere golpe letal
 	target.hp = maxi(target.hp - final.x, mini(floor_hp, target.hp))
 	target.morale = maxi(target.morale - final.y, 0)
+	if final.x > 0 and skill.resources_on_hit > 0:
+		var loot: Dictionary = state["loot"]
+		loot[side] = int(loot[side]) + skill.resources_on_hit
 	var drained: int = final.x * skill.lifesteal_pct / 100
 	actor.hp = mini(actor.hp + drained, actor.get_max_hp())
 	log.append({"type": "action", "actor_side": side, "actor_index": actor_ref["index"],

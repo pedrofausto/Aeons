@@ -119,6 +119,8 @@ func run(t: Node) -> void:
 	t.check("morale_victory_frees_when_full", BattleConsequences.recruit_surrendered(full, _squad("enemy", [[ji, 1, 0, false]])) == ""
 		and full.units.size() == 6)
 
+	_test_pending_skills(t)
+
 	# Combate real do Ato I resolve sem erros
 	var era := load("res://eras/act_01_tianxu/EraConfig_Act01.tres") as EraConfig
 	var ally := era.starting_squads[0].clone()
@@ -149,3 +151,66 @@ func _first_of(log: Array[Dictionary], type: String, side: String = "") -> Dicti
 
 func _has_event(log: Array[Dictionary], type: String) -> bool:
 	return not _first_of(log, type).is_empty()
+
+
+const A2 := "res://eras/act_02_occitania/classes/%s.tres"
+
+
+## Spec_Pendencias §3: saque por acerto, veneno contínuo e bônus de terreno.
+func _test_pending_skills(t: Node) -> void:
+	var routier := load(A2 % "routier") as UnitClassData
+	var sergent := load(A2 % "sergent_darmes") as UnitClassData
+	var raiders := SquadData.new()
+	raiders.units.append(UnitInstance.create(routier, "Saqueador", 9, 3, true))
+	var plain := SquadData.new()
+	plain.units.append(UnitInstance.create(sergent, "Soldado", 9, 3, true))
+	var dummy := func() -> SquadData:
+		var s := SquadData.new()
+		s.units.append(UnitInstance.create(sergent, "Alvo", 9, 0, true))
+		return s
+	var log_loot := CombatResolver.resolve(raiders, dummy.call())
+	var hits: int = log_loot.filter(func(e: Dictionary) -> bool:
+		return e["type"] == "action" and e["actor_side"] == "attacker" and int(e["damage"]) > 0).size()
+	var loot: int = int(CombatResolver.get_result(log_loot)["bonus_resources"]["attacker"])
+	var log_none := CombatResolver.resolve(plain, dummy.call())
+	t.check("skill_resources_on_hit", routier.back_action.resources_on_hit == 12 and hits > 0 and loot == 12 * hits
+		and int(CombatResolver.get_result(log_none)["bonus_resources"]["attacker"]) == 0, "saque=%d acertos=%d" % [loot, hits])
+	var win := CombatResolver.get_result(log_loot).duplicate()
+	win["winner"] = "attacker"
+	win["victory_type"] = "annihilation"
+	var fx := BattleConsequences.compute(win, raiders, dummy.call(), "attacker")
+	t.check("skill_loot_reaches_resources", int(fx["resources"]) == BattleConsequences.LOOT_ON_VICTORY + loot)
+
+	var sicario := load(A2 % "sicario_inquisitorial") as UnitClassData
+	var assassin := UnitInstance.create(sicario, "Sicário", 10, 3, true)
+	var bolt: ActionSkillData = sicario.back_action
+	var state := SkillMath.new_state()
+	var slow := UnitInstance.create(sergent, "Lento", 5, 0)
+	var fast := UnitInstance.create(sicario, "Rápido", 12, 0)
+	var beast := UnitInstance.create(load(A2 % "tarasca"), "Fera", 6, 1)
+	var applied: bool = SkillMath.try_inflict(assassin, slow, bolt, state)
+	var max_hp: int = slow.get_max_hp()
+	var hp0: int = slow.hp
+	var tick1: int = SkillMath.tick_poison(slow, state)
+	var tick2: int = SkillMath.tick_poison(slow, state)
+	var tick3: int = SkillMath.tick_poison(slow, state)
+	t.check("skill_poison_two_rounds_10pct", applied and tick1 == max_hp / 10 and tick2 == max_hp / 10 and tick3 == 0
+		and slow.hp == hp0 - 2 * (max_hp / 10))
+	var fast_full: bool = SkillMath.try_inflict(assassin, fast, bolt, state)
+	fast.hp = fast.get_max_hp() / 2
+	t.check("skill_poison_rule_and_immunity", not fast_full and SkillMath.try_inflict(assassin, fast, bolt, state)
+		and not SkillMath.try_inflict(assassin, beast, bolt, state))
+	var poisoned := SquadData.new()
+	poisoned.units.append(assassin)
+	var log_poison := CombatResolver.resolve(poisoned, dummy.call())
+	t.check("skill_poison_ticks_in_battle", log_poison.any(func(e: Dictionary) -> bool: return e["type"] == "poison"))
+
+	var faydit := load(A2 % "faydit") as UnitClassData
+	var knight := UnitInstance.create(faydit, "Faydit", 10, 0, true, 70)
+	var foe := UnitInstance.create(sergent, "Alvo", 10, 0)
+	var cut: ActionSkillData = faydit.front_action
+	var on_plains: int = SkillMath.base_damage(knight, foe, cut, 100, SkillMath.new_state("plains")).x
+	var on_mountain: int = SkillMath.base_damage(knight, foe, cut, 100, SkillMath.new_state("mountain")).x
+	var expected: int = knight.get_attack() * (cut.power * 125 / 100) / 100 - foe.get_defense() * (100 - cut.armor_pierce_pct) / 200
+	t.check("skill_faydit_mountain_bonus", cut.bonus_terrain == "mountain" and cut.bonus_terrain_power_pct == 25
+		and on_mountain > on_plains and on_mountain == expected, "%d vs %d" % [on_plains, on_mountain])

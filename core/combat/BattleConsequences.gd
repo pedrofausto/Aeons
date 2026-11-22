@@ -64,9 +64,23 @@ static func compute(result: Dictionary, player_squad: SquadData, enemy_squad: Sq
 	var reward_key: String = victory_type
 	if player_won and _honor_applies(enemy_squad.honor_rule, player_squad, flags):
 		reward_key = String(enemy_squad.honor_rule.get("counts_as", victory_type))
-	effects["rewards"] = (enemy_squad.outcome_rewards.get(reward_key, {}) as Dictionary) if player_won else {}
+	var rewards: Dictionary = (enemy_squad.outcome_rewards.get(reward_key, {}) as Dictionary) if player_won else {}
+	effects["rewards"] = rewards if _rewards_allowed(rewards, player_squad, flags) else {}
+	var loot: Dictionary = result.get("bonus_resources", {})
+	effects["resources"] = int(effects["resources"]) + int(loot.get(player_side, 0))
 	effects["drop_chance"] = enemy_squad.rare_drop_chance if player_won else 0
 	return effects
+
+
+## Condições opcionais de uma recompensa: "requires_flag" (flag/decisão ativa) e
+## "requires_class" (algum class_id vivo no esquadrão do jogador).
+static func _rewards_allowed(rewards: Dictionary, player_squad: SquadData, flags: Dictionary) -> bool:
+	if rewards.has("requires_flag") and not bool(flags.get(String(rewards["requires_flag"]), false)):
+		return false
+	if rewards.has("requires_class"):
+		var wanted: Array = rewards["requires_class"]
+		return player_squad.get_living_units().any(func(u: UnitInstance) -> bool: return u.class_data.class_id in wanted)
+	return true
 
 
 static func _honor_applies(rule: Dictionary, player_squad: SquadData, flags: Dictionary) -> bool:

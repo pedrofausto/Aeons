@@ -63,7 +63,7 @@ func start_battle(order: TacticalOrder.Order) -> void:
 	var defender: SquadData = enemy_squad if attacker == ally_squad else ally_squad
 	var attacker_order := order if attacker == ally_squad else TacticalOrder.Order.NONE
 	var defender_order := order if defender == ally_squad else TacticalOrder.Order.NONE
-	battle_log = CombatResolver.resolve(attacker, defender, attacker_order, defender_order)
+	battle_log = CombatResolver.resolve(attacker, defender, attacker_order, defender_order, context)
 	await _play_log()
 	result = CombatResolver.get_result(battle_log).duplicate()
 	result["order"] = order
@@ -135,7 +135,8 @@ func _build_cards() -> void:
 			var unit: UnitInstance = squad.units[i]
 			unit.ensure_vitals()
 			var card := UnitCardView.new()
-			card.position = Vector2(rows[unit.get_row()], COLUMN_Y[unit.get_column()])
+			var x: float = (rows[0] + rows[1]) / 2.0 if unit.class_data.grid_slots >= 2 else rows[unit.get_row()]
+			card.position = Vector2(x, COLUMN_Y[unit.get_column()])
 			_units_root.add_child(card)
 			card.setup(unit, color)
 			_cards["%s:%d" % [side, i]] = card

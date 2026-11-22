@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="EncounterTable" format=3]
+
+[ext_resource type="Script" path="res://core/overworld/EncounterTable.gd" id="1_table"]
+[ext_resource type="Script" path="res://core/overworld/EncounterEntry.gd" id="2_entry"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/encounters/squad_ecos_de_beziers.tres" id="3_0"]
+
+[sub_resource type="Resource" id="entry_0"]
+script = ExtResource("2_entry")
+squad = ExtResource("3_0")
+weight = 1
+time_of_day = "night"
+required_region = "beziers"
+
+[resource]
+script = ExtResource("1_table")
+region_id = "beziers"
+spawn_nodes = Array[String](["beziers"])
+spawn_chance = 50
+entries = Array[ExtResource("2_entry")]([SubResource("entry_0")])

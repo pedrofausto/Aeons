@@ -13,5 +13,5 @@ region_id = "carcassonne"
 terrain = "urban"
 gold_per_tick = 30
 map_position = Vector2(230, 215)
-neighbors = Array[String](["castelo_cabaret", "pontes_aude", "cite_carcassonne"])
+neighbors = Array[String](["castelo_cabaret", "pontes_aude", "cite_carcassonne", "toulouse"])
 garrison = ExtResource("2_garrison")

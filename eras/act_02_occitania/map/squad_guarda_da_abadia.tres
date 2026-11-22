@@ -1,0 +1,56 @@
+[gd_resource type="Resource" script_class="SquadData" format=3]
+
+[ext_resource type="Script" path="res://core/data/SquadData.gd" id="1_squad"]
+[ext_resource type="Script" path="res://core/data/UnitInstance.gd" id="1_unit"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/classes/sergent_darmes.tres" id="2_sergent_darmes"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/classes/arbaletrier.tres" id="3_arbaletrier"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/classes/inquisidor.tres" id="4_inquisidor"]
+
+[sub_resource type="Resource" id="unit_0"]
+script = ExtResource("1_unit")
+class_data = ExtResource("2_sergent_darmes")
+unit_name = "Guarda Cruzado da Abadia"
+level = 4
+alignment = 30
+slot = 0
+is_leader = false
+
+[sub_resource type="Resource" id="unit_1"]
+script = ExtResource("1_unit")
+class_data = ExtResource("2_sergent_darmes")
+unit_name = "Guarda Cruzado da Abadia"
+level = 4
+alignment = 30
+slot = 1
+is_leader = false
+
+[sub_resource type="Resource" id="unit_2"]
+script = ExtResource("1_unit")
+class_data = ExtResource("3_arbaletrier")
+unit_name = "Besteiro do Claustro"
+level = 4
+alignment = 30
+slot = 3
+is_leader = false
+
+[sub_resource type="Resource" id="unit_3"]
+script = ExtResource("1_unit")
+class_data = ExtResource("4_inquisidor")
+unit_name = "Frade Inquisidor"
+level = 5
+alignment = 15
+slot = 4
+is_leader = true
+
+[resource]
+script = ExtResource("1_squad")
+squad_id = "guarda_da_abadia"
+display_name = "Guarda da Abadia"
+faction = "enemy"
+units = Array[ExtResource("1_unit")]([SubResource("unit_0"), SubResource("unit_1"), SubResource("unit_2"), SubResource("unit_3")])
+current_node_id = "montagne_noire"
+outcome_rewards = {
+"morale_break": {
+"item": "res://eras/act_02_occitania/items/pergaminho_consolamentum.tres"
+}
+}

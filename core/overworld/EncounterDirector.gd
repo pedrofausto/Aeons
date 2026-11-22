@@ -27,7 +27,9 @@ func start_battle(ally: SquadToken, foe: SquadToken) -> void:
 	_foe_token = foe
 	ally.path.clear()
 	WorldState.set_paused(true)
-	var context: Dictionary = {"node_id": foe.squad.current_node_id, "player_side": "attacker"}
+	var foe_node: MapNode = map.nodes.get(foe.squad.current_node_id)
+	var context: Dictionary = {"node_id": foe.squad.current_node_id, "player_side": "attacker",
+		"terrain": foe_node.data.terrain if foe_node else "plains"}
 	EventBus.battle_requested.emit(ally.squad, foe.squad, context)
 	active_battle = BATTLE_SCENE.instantiate() as BattleArena
 	active_battle.setup(ally.squad, foe.squad, context)

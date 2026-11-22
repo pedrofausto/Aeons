@@ -1,0 +1,40 @@
+[gd_resource type="Resource" script_class="SquadData" format=3]
+
+[ext_resource type="Script" path="res://core/data/SquadData.gd" id="1_squad"]
+[ext_resource type="Script" path="res://core/data/UnitInstance.gd" id="1_unit"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/classes/tarasca.tres" id="2_tarasca"]
+
+[sub_resource type="Resource" id="unit_0"]
+script = ExtResource("1_unit")
+class_data = ExtResource("2_tarasca")
+unit_name = "Tarasca do Rhône"
+level = 6
+alignment = 40
+slot = 1
+is_leader = true
+
+[resource]
+script = ExtResource("1_squad")
+squad_id = "tarasca_do_rhone"
+display_name = "A Tarasca do Rhône"
+faction = "enemy"
+units = Array[ExtResource("1_unit")]([SubResource("unit_0")])
+current_node_id = "tarascon"
+encounter_tag = "mythic_boss"
+supernatural = true
+outcome_rewards = {
+"annihilation": {
+"flag": "tarasque_slain"
+},
+"morale_break": {
+"flag": "tarasque_pacified",
+"requires_class": ["parfait", "portador_consolamentum"],
+"requires_flag": "tarasque_calm_rite",
+"unlock_class": "tarasca"
+}
+}
+honor_rule = {
+"counts_as": "morale_break",
+"flag": "tarasque_calm_rite",
+"min_alignment": 0
+}

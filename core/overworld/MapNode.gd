@@ -16,7 +16,7 @@ func setup(p_data: MapNodeData, p_faction: String) -> void:
 	_label.text = data.display_name
 	_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_label.size = Vector2(180, 14)
-	_label.position = Vector2(-90, RADIUS + 3)
+	_label.position = Vector2(-90, RADIUS + 3) if data.label_side == "below" else Vector2(-90, -RADIUS - 17)
 	_label.add_theme_font_size_override("font_size", 9)
 	_label.add_theme_color_override("font_outline_color", Color.BLACK)
 	_label.add_theme_constant_override("outline_size", 3)
