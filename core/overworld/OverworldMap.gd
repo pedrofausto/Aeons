@@ -27,7 +27,6 @@ func _ready() -> void:
 	var era: EraConfig = WorldState.era_config
 	(%Background as ColorRect).color = era.color_background
 	_hud.pause_pressed.connect(toggle_pause)
-	_hud.promote_pressed.connect(_on_promote)
 	_hud.debug_transition_pressed.connect(_on_debug_transition)
 	_director.setup(self)
 	spawner.setup(self)
@@ -142,7 +141,7 @@ func step(delta: float) -> void:
 	for token: SquadToken in tokens.duplicate():
 		if token.squad.is_patrol() and not token.is_moving():
 			token.set_path(PatrolAI.next_leg(token.squad, _graph()))
-		token.advance(delta, token.march_speed(march_speed), positions)
+		token.advance(delta, token.march_speed(march_speed, _terrain_ahead(token)), positions)
 		if _is_busy():
 			return
 	_check_collisions()
@@ -194,6 +193,11 @@ func capture(node_id: String) -> void:
 	_director.check_victory()
 
 
+func _terrain_ahead(token: SquadToken) -> String:
+	var next_id: String = token.path[0] if token.is_moving() else token.squad.current_node_id
+	return (nodes[next_id] as MapNode).data.terrain if nodes.has(next_id) else "plains"
+
+
 func _graph() -> Dictionary:
 	var graph: Dictionary = {}
 	for node_id: String in nodes:
@@ -229,14 +233,6 @@ func on_encounter_resolved() -> void:
 
 func show_banner(text: String, seconds: float = 0.0) -> void:
 	_hud.show_banner(text, seconds)
-
-
-func _on_promote() -> void:
-	var done: Array[String] = []
-	for squad: SquadData in WorldState.player_squads:
-		done.append_array(squad.promote_eligible())
-	_hud.show_banner("\n".join(done))
-	_hud.refresh()
 
 
 ## Debug (apenas desenvolvimento): "Derrota Falsa" -> arquiva o ato e recarrega o mapa.

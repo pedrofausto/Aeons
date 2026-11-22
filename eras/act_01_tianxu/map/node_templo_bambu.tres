@@ -8,6 +8,7 @@ node_id = "templo_bambu"
 display_name = "Templo do Bambu Cinzento"
 node_type = 0
 faction = "neutral"
+region_id = "nanlu"
 gold_per_tick = 10
 map_position = Vector2(295, 290)
 neighbors = Array[String](["linhai", "aldeia_terracos", "forte_regencia"])

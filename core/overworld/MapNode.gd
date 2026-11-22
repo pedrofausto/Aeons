@@ -48,6 +48,8 @@ func _draw() -> void:
 				draw_rect(Rect2(x, -10, 2, 3), color)
 		MapNodeData.NodeType.RESOURCE:
 			draw_colored_polygon(PackedVector2Array([Vector2(0, -8), Vector2(8, 0), Vector2(0, 8), Vector2(-8, 0)]), color)
+		MapNodeData.NodeType.PASS:
+			draw_colored_polygon(PackedVector2Array([Vector2(-9, 6), Vector2(-2, -8), Vector2(2, -2), Vector2(5, -6), Vector2(10, 6)]), color)
 		MapNodeData.NodeType.SERVER:
 			draw_rect(Rect2(-6, -8, 12, 16), color, false, 2.0)
 		_:

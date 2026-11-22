@@ -9,11 +9,11 @@ extends Resource
 
 
 ## Escolha ponderada e determinística (o RNG chega semeado pelo estado do mundo).
-func pick(rng: RandomNumberGenerator, current_time: String, party_level: float) -> EncounterEntry:
+func pick(rng: RandomNumberGenerator, current_time: String, party_level: float, region: String = "") -> EncounterEntry:
 	var available: Array[EncounterEntry] = []
 	var total: int = 0
 	for entry: EncounterEntry in entries:
-		if entry.is_available(current_time, party_level):
+		if entry.is_available(current_time, party_level, region):
 			available.append(entry)
 			total += entry.weight
 	if total == 0:

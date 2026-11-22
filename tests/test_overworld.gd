@@ -28,11 +28,12 @@ func run(t: Node) -> void:
 	t.get_tree().root.add_child(map)
 	await t.get_tree().process_frame
 
-	t.check("overworld_four_nodes", map.nodes.size() == 4 and map.tokens.size() == 3, "tokens=%d" % map.tokens.size())
+	t.check("overworld_nodes", map.nodes.size() == 6 and map.tokens.size() == 4, "tokens=%d" % map.tokens.size())
 	t.check("overworld_initial_factions", WorldState.get_node_faction("linhai") == "player"
 		and WorldState.get_node_faction("aldeia_terracos") == "neutral"
 		and WorldState.get_node_faction("templo_bambu") == "neutral"
-		and WorldState.get_node_faction("forte_regencia") == "enemy")
+		and WorldState.get_node_faction("forte_regencia") == "enemy"
+		and WorldState.get_node_faction("hanmen_pass") == "neutral" and WorldState.get_node_faction("hanmen_gate") == "enemy")
 	t.check("overworld_starts_paused", WorldState.is_paused)
 
 	var space := InputEventKey.new()
@@ -89,8 +90,10 @@ func run(t: Node) -> void:
 			t.check("battle_returns_to_map_%d" % battles.size(), director.active_battle == null and map.visible)
 	t.check("battle_updates_world_state", battles.size() >= 2 and ally.squad.fatigue >= 0
 		and _total_xp(ally.squad) > xp_before, "batalhas=%d" % battles.size())
+	var remaining: Array = map.tokens.filter(func(k: SquadToken) -> bool: return not k.is_player()).map(
+		func(k: SquadToken) -> String: return k.squad.squad_id)
 	t.check("battle_win_captures_fort", WorldState.get_node_faction("forte_regencia") == "player"
-		and WorldState.has_flag("act_victory") and map.tokens.size() == 1)
+		and WorldState.has_flag("act_victory") and remaining == ["guarda_de_hanmen"], str(remaining))
 	print("INFO|batalhas no mapa -> %s" % str(battles.map(func(r: Dictionary) -> String:
 		return "%s/%s" % [r["winner"], r["victory_type"]])))
 
@@ -162,7 +165,13 @@ func _test_spawner(t: Node) -> void:
 			break
 	t.check("roaming_spawns", spawned.size() == 1 and spawned[0].is_roaming
 		and spawned[0].current_node_id in table.spawn_nodes, str(spawned))
-	t.check("roaming_respects_cap", map.spawner.try_spawn().is_empty() and map.spawner.roaming_count() == 1)
+	for day: int in 40:
+		if map.spawner.roaming_count() >= WorldState.era_config.max_roaming_squads:
+			break
+		WorldState.day_count = 20 + day
+		map.spawner.try_spawn()
+	t.check("roaming_respects_cap", map.spawner.roaming_count() == WorldState.era_config.max_roaming_squads
+		and map.spawner.try_spawn().is_empty(), "errantes=%d" % map.spawner.roaming_count())
 	WorldState.day_count = 99
 	WorldState.time_of_day = "night"
 	var night_roamer := (load("res://eras/act_01_tianxu/encounters/squad_milicia_camponesa.tres") as SquadData).clone()

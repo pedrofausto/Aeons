@@ -9,6 +9,7 @@ node_id = "forte_regencia"
 display_name = "Forte da Regência"
 node_type = 1
 faction = "enemy"
+region_id = "nanlu"
 gold_per_tick = 40
 map_position = Vector2(500, 200)
 neighbors = Array[String](["aldeia_terracos", "templo_bambu"])

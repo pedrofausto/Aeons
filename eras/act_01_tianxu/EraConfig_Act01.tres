@@ -10,6 +10,8 @@
 [ext_resource type="Resource" path="res://eras/act_01_tianxu/map/node_aldeia_terracos.tres" id="5_aldeia_terracos"]
 [ext_resource type="Resource" path="res://eras/act_01_tianxu/map/node_templo_bambu.tres" id="5_templo_bambu"]
 [ext_resource type="Resource" path="res://eras/act_01_tianxu/map/node_forte_regencia.tres" id="5_forte_regencia"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/map/node_hanmen_pass.tres" id="5_hanmen_pass"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/map/node_hanmen_gate.tres" id="5_hanmen_gate"]
 [ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/fubing.tres" id="6_fubing"]
 [ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/ji_halberdier.tres" id="6_ji_halberdier"]
 [ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/nubing_crossbow.tres" id="6_nubing_crossbow"]
@@ -46,11 +48,11 @@ color_enemy = Color(0.72, 0.18, 0.16, 1)
 color_neutral = Color(0.55, 0.58, 0.52, 1)
 color_background = Color(0.07, 0.1, 0.09, 1)
 color_road = Color(0.42, 0.38, 0.28, 1)
-map_nodes = Array[ExtResource("3_nodescript")]([ExtResource("5_linhai"), ExtResource("5_aldeia_terracos"), ExtResource("5_templo_bambu"), ExtResource("5_forte_regencia")])
+map_nodes = Array[ExtResource("3_nodescript")]([ExtResource("5_linhai"), ExtResource("5_aldeia_terracos"), ExtResource("5_templo_bambu"), ExtResource("5_forte_regencia"), ExtResource("5_hanmen_pass"), ExtResource("5_hanmen_gate")])
 unit_classes = Array[ExtResource("3_classscript")]([ExtResource("6_fubing"), ExtResource("6_ji_halberdier"), ExtResource("6_nubing_crossbow"), ExtResource("6_daoshi_healer"), ExtResource("6_youxia"), ExtResource("6_buqu"), ExtResource("6_jiangshi"), ExtResource("6_wu_sombrio"), ExtResource("6_huli_jing"), ExtResource("6_xian"), ExtResource("6_fangshi")])
 starting_squads = Array[ExtResource("3_squadscript")]([ExtResource("4_squad")])
 enemy_patrols = Array[ExtResource("3_squadscript")]([ExtResource("7_patrol")])
 encounter_tables = Array[Resource]([ExtResource("8_encounters"), ExtResource("8_hanmen"), ExtResource("8_pengming")])
-max_roaming_squads = 1
+max_roaming_squads = 2
 victory_text = "O Forte da Regência caiu. Os Vales de Nanlu respiram livres."
 next_era_config = "res://eras/act_02_occitania/EraConfig_Act02.tres"

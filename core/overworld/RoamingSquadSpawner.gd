@@ -22,6 +22,7 @@ func roaming_count() -> int:
 
 
 ## Tenta gerar 1 patrulha por tabela; retorna os esquadrões criados.
+## O nó é sorteado primeiro (só nós da região da tabela); o encontro precisa servir àquela região.
 func try_spawn() -> Array[SquadData]:
 	var spawned: Array[SquadData] = []
 	var era: EraConfig = WorldState.era_config
@@ -35,9 +36,12 @@ func try_spawn() -> Array[SquadData]:
 		rng.seed = hash([WorldState.current_act, WorldState.day_count, WorldState.time_of_day, table.region_id])
 		if rng.randi_range(1, 100) > table.spawn_chance:
 			continue
-		var entry: EncounterEntry = table.pick(rng, WorldState.time_of_day, party_level())
 		var node_id: String = _free_spawn_node(table, rng)
-		if entry == null or node_id.is_empty():
+		if node_id.is_empty():
+			continue
+		var region: String = (map.nodes[node_id] as MapNode).data.region_id
+		var entry: EncounterEntry = table.pick(rng, WorldState.time_of_day, party_level(), region)
+		if entry == null:
 			continue
 		var squad := entry.squad.clone()
 		squad.current_node_id = node_id
@@ -59,7 +63,9 @@ func _free_spawn_node(table: EncounterTable, rng: RandomNumberGenerator) -> Stri
 	var free: Array[String] = []
 	for node_id: String in table.spawn_nodes:
 		var occupied: bool = map.tokens.any(func(t: SquadToken) -> bool: return t.squad.current_node_id == node_id)
-		if map.nodes.has(node_id) and not occupied:
+		var in_region: bool = map.nodes.has(node_id) \
+			and (map.nodes[node_id] as MapNode).data.region_id == table.region_id
+		if in_region and not occupied:
 			free.append(node_id)
 	return "" if free.is_empty() else free[rng.randi_range(0, free.size() - 1)]
 

@@ -9,7 +9,7 @@ func run(t: Node) -> void:
 	WorldState.reset_visible(1)
 	WorldState.load_era(ACT01)
 	t.check("era_act01_loaded", WorldState.era_config != null and WorldState.era_config.act_number == 1
-		and WorldState.era_config.map_nodes.size() == 4)
+		and WorldState.era_config.map_nodes.size() == 6)
 
 	WorldState.apply_effects({"alignment": 80, "popular_support": -90, "doctrine": 250, "resources": -9999})
 	t.check("world_state_clamps", WorldState.alignment == 100 and WorldState.popular_support == 0

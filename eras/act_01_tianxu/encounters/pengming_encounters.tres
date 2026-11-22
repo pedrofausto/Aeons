@@ -12,7 +12,7 @@ until_defeated = true
 
 [resource]
 script = ExtResource("1_table")
-region_id = "arquipelago_pengming"
+region_id = "pengming"
 spawn_nodes = Array[String](["observatorio_nove_ceus"])
 spawn_chance = 100
 entries = Array[ExtResource("2_entry")]([SubResource("entry_0")])

@@ -90,6 +90,11 @@ func march_factor(time_of_day: String) -> float:
 	return float(slowest) / 100.0
 
 
+func all_flying() -> bool:
+	var living := get_living_units()
+	return not living.is_empty() and living.all(func(u: UnitInstance) -> bool: return u.class_data.movement == "flying")
+
+
 ## Primeiro slot livre da grade 3x2 (frente antes de trás); -1 se cheia.
 func first_free_slot() -> int:
 	for slot: int in SLOT_COUNT:

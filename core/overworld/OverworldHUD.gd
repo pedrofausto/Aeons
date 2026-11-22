@@ -17,7 +17,7 @@ signal promote_pressed
 func _ready() -> void:
 	_pause_button.pressed.connect(func() -> void: pause_pressed.emit())
 	_debug_button.pressed.connect(func() -> void: debug_transition_pressed.emit())
-	_promote_button.pressed.connect(func() -> void: promote_pressed.emit())
+	_promote_button.pressed.connect(_on_promote)
 	_debug_button.visible = OS.is_debug_build()
 	EventBus.world_state_changed.connect(refresh)
 	EventBus.pause_toggled.connect(func(_p: bool) -> void: refresh())
@@ -42,6 +42,15 @@ func refresh() -> void:
 
 
 ## `seconds` > 0: o aviso some sozinho (só se não tiver sido trocado por outro).
+func _on_promote() -> void:
+	promote_pressed.emit()
+	var done: Array[String] = []
+	for squad: SquadData in WorldState.player_squads:
+		done.append_array(squad.promote_eligible())
+	show_banner("\n".join(done), 4.0)
+	refresh()
+
+
 func show_banner(text: String, seconds: float = 0.0) -> void:
 	_banner.text = text
 	_banner.visible = not text.is_empty()

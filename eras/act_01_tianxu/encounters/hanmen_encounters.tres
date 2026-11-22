@@ -9,11 +9,12 @@ script = ExtResource("2_entry")
 squad = ExtResource("3_0")
 weight = 5
 time_of_day = "night"
-min_party_level = 2.0
+min_party_level = 1.5
+required_region = "hanmen"
 
 [resource]
 script = ExtResource("1_table")
-region_id = "desfiladeiro_hanmen"
-spawn_nodes = Array[String](["portao_hanmen", "passagem_da_neve"])
+region_id = "hanmen"
+spawn_nodes = Array[String](["hanmen_pass"])
 spawn_chance = 40
 entries = Array[ExtResource("2_entry")]([SubResource("entry_0")])

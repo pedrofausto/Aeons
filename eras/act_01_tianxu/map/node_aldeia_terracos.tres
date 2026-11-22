@@ -8,6 +8,7 @@ node_id = "aldeia_terracos"
 display_name = "Aldeia dos Terraços"
 node_type = 2
 faction = "neutral"
+region_id = "nanlu"
 gold_per_tick = 20
 map_position = Vector2(280, 115)
 neighbors = Array[String](["linhai", "templo_bambu", "forte_regencia"])

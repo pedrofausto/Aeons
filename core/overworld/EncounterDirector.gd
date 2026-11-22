@@ -105,11 +105,17 @@ func _nearest_player_node(from_position: Vector2) -> String:
 	return best
 
 
+## Vitória: nenhum nó obrigatório nas mãos do inimigo e nenhum inimigo fixo fora de objetivos
+## opcionais (errantes e guarnições de nós opcionais, como o Portão de Hanmen, não contam).
 func check_victory() -> void:
-	if WorldState.count_nodes_of("enemy") > 0:
-		return
+	for node_id: String in map.nodes:
+		var data: MapNodeData = (map.nodes[node_id] as MapNode).data
+		if data.required_for_victory and WorldState.get_node_faction(node_id) == "enemy":
+			return
 	for token: SquadToken in map.tokens:
-		if token.squad.faction == "enemy" and not token.squad.is_roaming:
+		var post: MapNode = map.nodes.get(token.squad.current_node_id)
+		var optional_post: bool = not token.squad.is_patrol() and post != null and not post.data.required_for_victory
+		if token.squad.faction == "enemy" and not token.squad.is_roaming and not optional_post:
 			return
 	WorldState.set_flag("act_victory")
 	map.show_banner(WorldState.era_config.victory_text)
