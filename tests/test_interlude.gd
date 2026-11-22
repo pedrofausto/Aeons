@@ -8,7 +8,7 @@ const ACT01 := "res://eras/act_01_tianxu/EraConfig_Act01.tres"
 const FORBIDDEN: Array[String] = ["aeon", "simulação", "simulacao", "simulacro", "mesma alma"]
 const SECRET_SCOPES: Array[String] = ["res://eras/act_01_tianxu", "res://eras/act_02_occitania",
 	"res://eras/act_03_great_wars", "res://eras/act_04_modern", "res://core/overworld",
-	"res://core/combat", "res://core/interlude"]
+	"res://core/combat", "res://core/interlude", "res://docs/Lore_Simulacros"]
 
 
 func run(t: Node) -> void:
@@ -113,7 +113,7 @@ func _scan_dir(path: String, hits: Array[String]) -> void:
 	for sub: String in dir.get_directories():
 		_scan_dir(path.path_join(sub), hits)
 	for file: String in dir.get_files():
-		if file.get_extension() in ["dtl", "tres", "tscn", "gd", "json"]:
+		if file.get_extension() in ["dtl", "tres", "tscn", "gd", "json", "md"]:
 			var text: String = FileAccess.get_file_as_string(path.path_join(file)).to_lower()
 			for word: String in FORBIDDEN:
 				if word in text:
