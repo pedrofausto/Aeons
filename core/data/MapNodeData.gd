@@ -12,6 +12,8 @@ enum NodeType { CITY, FORTRESS, RESOURCE, SERVER, PASS }
 @export_enum("plains", "mountain", "river", "forest", "urban") var terrain: String = "plains"
 @export var required_for_victory: bool = true  # false = objetivo opcional (não bloqueia a vitória)
 @export var water_source_node: String = ""   # Regra de cerco: quem não controla a água sofre sede
+@export var sortie_squad: SquadData          # Surtidas da guarnição durante um cerco (dilemas)
+@export var siege_reinforcements: SquadData  # Reforços que entram na guarnição (dilemas)
 @export var gold_per_tick: int = 10          # Renda por dia (tick) enquanto aliado
 @export var map_position: Vector2 = Vector2.ZERO
 @export var neighbors: Array[String] = []

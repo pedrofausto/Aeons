@@ -64,8 +64,11 @@ func run(t: Node) -> void:
 		print("ACT2_CARCASSONNE_PASS")
 
 
-## Campanha jogada: Burgo -> Pontes (corta a água) -> espera a sede -> Cité.
-func _campaign(t: Node) -> void:
+const WATER := "res://eras/act_02_occitania/dialogues/a_agua_de_carcassonne.dtl"
+
+
+## Abre uma campanha nova do Ato II e marcha até as Pontes, escolhendo `choice` no dilema.
+func _to_the_bridges(t: Node, choice: int, battles: Array[String]) -> OverworldMap:
 	EssenceState.reset_all()
 	WorldState.reset_visible(2)
 	WorldState.load_era("res://eras/act_02_occitania/EraConfig_Act02.tres")
@@ -75,28 +78,84 @@ func _campaign(t: Node) -> void:
 	t.get_tree().root.add_child(map)
 	await t.get_tree().process_frame
 	var ally: SquadToken = map.selected_token
-	var battles: Array[String] = []
 	for leg: String in ["burgo_sao_vicente", "pontes_aude"]:
 		for attempt: int in 4:
-			await _march(t, map, ally, leg, battles)
+			await _march(t, map, ally, leg, battles, choice)
 			if WorldState.get_node_faction(leg) == "player":
 				break
-			await _idle(t, map, 4, battles)
-	t.check("act2_water_taken", WorldState.get_node_faction("pontes_aude") == "player", str(battles))
+			await _idle(t, map, 4, battles, choice)
+	return map
+
+
+## Dilema 1 — A Água de Carcassonne: os três ramos jogados pelo fluxo normal.
+func _campaign(t: Node) -> void:
+	# Ramo implacável: corta a água, guarnição cai a 50% e definha de sede; Parfaits recusam.
+	var battles: Array[String] = []
+	var map: OverworldMap = await _to_the_bridges(t, 3, battles)
 	var garrison: SquadData = _squad_on(map, "guarnicao_de_montclair")
-	var fresh: float = garrison.vitality_ratio() if garrison else 0.0
-	await _idle(t, map, 6, battles)  # O cerco faz efeito enquanto a Companhia guarda as Pontes.
-	t.check("act2_siege_wears_down_cite", garrison != null and garrison.vitality_ratio() < fresh)
-	for attempt: int in 6:
-		await _march(t, map, ally, "cite_carcassonne", battles)
-		if WorldState.has_flag("act_victory"):
-			break
-		await _idle(t, map, 4, battles)
+	t.check("water_dilemma_opens_on_bridges", WorldState.get_node_faction("pontes_aude") == "player"
+		and WATER in WorldState.completed_interludes, str(battles))
+	t.check("water_poison_halves_garrison", garrison != null and WorldState.has_flag("act2_aude_poisoned")
+		and garrison.units.all(func(u: UnitInstance) -> bool: return u.hp <= u.get_max_hp() / 2 + 1)
+		and WorldState.alignment == 25 and WorldState.doctrine == 15)
+	var fresh: float = garrison.vitality_ratio()
+	await _idle(t, map, 4, battles, 3)
+	t.check("act2_siege_wears_down_cite", garrison.vitality_ratio() < fresh)
+	await _storm(t, map, battles)
 	t.check("act2_carcassonne_retaken", WorldState.get_node_faction("cite_carcassonne") == "player"
 		and WorldState.has_flag("act_victory"), str(battles))
-	print("INFO|Ato II batalhas -> %s" % str(battles))
+	print("INFO|Ato II (cortar a água) -> %s" % str(battles))
 	map.queue_free()
 	await t.get_tree().process_frame
+
+	# Ramo pacifista: sem sede; pregação; 2 surtidas; rendição intacta e +30% de ouro.
+	battles = []
+	map = await _to_the_bridges(t, 1, battles)
+	garrison = _squad_on(map, "guarnicao_de_montclair")
+	var hp_before: Array = garrison.units.map(func(u: UnitInstance) -> int: return u.hp)
+	await _idle(t, map, 1, battles, 1)
+	t.check("water_spared_no_thirst", garrison.units.map(func(u: UnitInstance) -> int: return u.hp) == hp_before
+		and garrison.units.any(func(u: UnitInstance) -> bool: return u.morale < u.get_max_morale())
+		and WorldState.alignment >= 65 and WorldState.popular_support >= 70 and WorldState.doctrine == -20
+		and WorldState.get_siege("cite_carcassonne", "mode", "") == "preaching" and WorldState.has_flag("act2_cisterns_spared"),
+		"al=%d ap=%d dt=%d" % [WorldState.alignment, WorldState.popular_support, WorldState.doctrine])
+	for i: int in 8:
+		if WorldState.get_node_faction("cite_carcassonne") == "player":
+			break
+		await _idle(t, map, 3, battles, 1)
+	var sorties: int = battles.filter(func(b: String) -> bool: return b.begins_with("surtida_cruzada")).size()
+	var stormed: bool = battles.any(func(b: String) -> bool: return b.begins_with("guarnicao_de_montclair"))
+	t.check("water_spared_two_sorties_then_surrender", sorties == 2 and not stormed
+		and WorldState.get_node_faction("cite_carcassonne") == "player" and WorldState.has_flag("act_victory")
+		and WorldState.income_pct("cite_carcassonne") == 130, str(battles))
+	print("INFO|Ato II (poupar as cisternas) -> %s" % str(battles))
+	map.queue_free()
+	await t.get_tree().process_frame
+
+	# Ramo revolucionário honrado: água corre, cavalaria pesada reforça a Cité, +Carisma.
+	battles = []
+	map = await _to_the_bridges(t, 2, battles)
+	garrison = _squad_on(map, "guarnicao_de_montclair")
+	var bertran: UnitInstance = null
+	for unit: UnitInstance in map.selected_token.squad.units:
+		if unit.unit_name == "Bertran":
+			bertran = unit
+	var vitality: float = garrison.vitality_ratio()
+	await _idle(t, map, 3, battles, 2)
+	t.check("water_assault_reinforced_no_thirst", garrison.units.size() == 6
+		and garrison.units.any(func(u: UnitInstance) -> bool: return u.class_data.class_id == "chevalier_languedoc")
+		and is_equal_approx(garrison.vitality_ratio(), vitality) and bertran != null and bertran.charisma == 75
+		and WorldState.doctrine == 20 and WorldState.has_flag("act2_night_assault"))
+	map.queue_free()
+	await t.get_tree().process_frame
+
+
+func _storm(t: Node, map: OverworldMap, battles: Array[String]) -> void:
+	for attempt: int in 6:
+		await _march(t, map, map.selected_token, "cite_carcassonne", battles, 1)
+		if WorldState.has_flag("act_victory"):
+			return
+		await _idle(t, map, 4, battles, 1)
 
 
 func _quiet() -> void:
@@ -113,12 +172,15 @@ func _squad_on(map: OverworldMap, squad_id: String) -> SquadData:
 
 
 ## Espera `days` dias parado, resolvendo qualquer encontro que chegue (como o jogador faria).
-func _idle(t: Node, map: OverworldMap, days: int, battles: Array[String]) -> void:
+func _idle(t: Node, map: OverworldMap, days: int, battles: Array[String], choice: int = 1) -> void:
 	var director: EncounterDirector = map.get_node("%EncounterDirector")
 	var steps: int = int(days * map.seconds_per_day / 0.05)
 	while steps > 0:
 		if director.active_battle:
 			await _resolve(t, director.active_battle, battles)
+			continue
+		if director.active_interlude:
+			await _drive(t, director.active_interlude, choice)
 			continue
 		WorldState.set_paused(false)
 		map.step(0.05)
@@ -135,16 +197,22 @@ func _resolve(t: Node, arena: BattleArena, battles: Array[String]) -> bool:
 	return won
 
 
-func _march(t: Node, map: OverworldMap, ally: SquadToken, target: String, battles: Array[String]) -> void:
+func _march(t: Node, map: OverworldMap, ally: SquadToken, target: String, battles: Array[String], choice: int = 1) -> void:
 	var director: EncounterDirector = map.get_node("%EncounterDirector")
 	var elapsed: float = 0.0
 	while elapsed < 40.0:
+		if director.active_interlude:
+			await _drive(t, director.active_interlude, choice)
+			continue
 		if director.active_battle:
 			if not await _resolve(t, director.active_battle, battles):
 				return
 			continue
 		if ally.squad.current_node_id == target and not ally.is_moving():
-			return
+			await t.get_tree().process_frame
+			if not director.is_busy():
+				return
+			continue
 		WorldState.set_paused(false)
 		if not ally.is_moving():
 			map.order_move(ally, target)
@@ -262,3 +330,17 @@ func _squad_of(specs: Array) -> SquadData:
 	for i: int in specs.size():
 		squad.units.append(UnitInstance.create(_cls(specs[i][0]), "%s_%d" % [specs[i][0], i], specs[i][1], i, i == 0))
 	return squad
+
+
+func _drive(t: Node, room: Node, choice: int) -> void:
+	var dialogic: Node = t.get_node("/root/Dialogic")
+	for i: int in 300:
+		if not is_instance_valid(room) or not room.is_inside_tree():
+			return
+		var button := dialogic.get("Choices").call("get_choice_button", choice) as Control
+		if button != null and button.is_visible_in_tree():
+			dialogic.get("Choices").call("select_choice", choice)
+		else:
+			dialogic.get("Inputs").call("handle_input")
+		await t.get_tree().create_timer(0.12).timeout
+	await t.get_tree().process_frame

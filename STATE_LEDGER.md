@@ -3,10 +3,10 @@
 > Atualizar após **cada** tarefa do agente. Máximo de 120 linhas. Fonte técnica: `ARCHITECTURE.md` + `ARCHITECTURE_DIFF.md`.
 
 ## Situação
-- **Fase:** Ato I jogável de ponta a ponta (Nanlu + Hanmen) com as 3 correções (`ACT1_FIXES_SMOKE_PASS`); Ato II iniciado: Cidadela de Carcassonne jogável com a regra da água (`ACT2_CARCASSONNE_PASS`).
-- **Próximo passo:** Ato II — dilema "A Água de Carcassonne" + interlúdio nas cisternas; demais regiões (Toulouse, Montagne Noire, Montségur). Sprint 4 (arte/áudio) aguarda assets.
+- **Fase:** Ato I completo (Nanlu + Hanmen). Ato II: Cidadela de Carcassonne com árvore completa de 19 classes e o dilema 1 "A Água de Carcassonne" (3 ramos jogáveis) — `ACT2_CARCASSONNE_PASS`.
+- **Próximo passo:** Ato II — regiões Toulouse, Montagne Noire, Béziers, Tarascon e Montségur com os dilemas 2–6 e as classes míticas (Portador do Consolamentum, Tarasca 2 slots, Eco de Béziers). Adendo tático do Ato I (Cike, Catafractário, Junshi...) ainda não aplicado. Sprint 4 (arte/áudio) aguarda assets.
 - **Engine:** Godot 4.7.2 · GDScript puro · `gl_compatibility` · resolução lógica 640×360 (janela 1280×720, Nearest).
-- **Validação:** `tests/run_tests.sh` → **126 TEST_PASS**, 0 falhas, sem `SCRIPT ERROR`/`ERROR:` (janela real Xvfb + opengl3 e headless).
+- **Validação:** `tests/run_tests.sh` → **140 TEST_PASS**, 0 falhas, sem `SCRIPT ERROR`/`ERROR:` (janela real Xvfb + opengl3 e headless).
 - **CI:** `.github/workflows/godot-ci.yml` (suíte + boot `--quit-after 60`).
 - **Branch de trabalho:** `ccr-9fc24095-lrv5hy` (nunca fazer push em `main` sem autorização).
 
@@ -41,7 +41,8 @@
 - **Nós:** Castelo de Cabaret (base, montagne_noire) · Burgo de São Vicente (ocupado) · Pontes do Rio Aude (água) · Cité de Carcassonne (fortaleza cruzada; água = Pontes).
 - **Regra da água:** quem guarda a fortaleza sem controlar sua água perde 8% HP (sem morrer) e 15 Moral por dia.
 - **Esquadrões:** Companhia de Cabaret (jogador) · Sentinelas do Burgo · Guarnição de Montclair · Escolta da Inquisição (patrulha, moral_escort) · Bando de Routiers · Desertores Famintos.
-- **Classes:** Sergent d'Armes (→ Faydit / Routier) · Lanceiro-Escudeiro · Arbalétrier · Irmão de Caridade (→ Parfait / Inquisidor) · Trovador · Erudito-Boticário.
+- **Classes (19, Specs_Classes_Ato2 + Adendo mesclados; Adendo vence nos nomes/faixas):** Sergent d'Armes → Faydit (DOC ≥ +20, CHA 55) / Cavaleiro Hospitalário (DOC ≤ −10) / Routier · Lanceiro-Escudeiro → Chevalier de Languedoc (cavalaria) / Quebra-Muralhas (SIEGE) · Arbalétrier → Batedor dos Pireneus (mira o mais fraco) / Sicário Inquisitorial · Erudito-Boticário → Alquimista Hermético (LIGHT) / Engenheiro de Fogo · Irmão de Caridade → Parfait Cátaro (não letal, DOC ≤ −20; recusa após `act2_aude_poisoned`) / Inquisidor Dominicano · Trovador Occitano → Menestrel da Resistência (ação extra) / Arauto da Cruzada. Elites exigem Nv 9–12; XP do Ato II: 90/vitória, +20 por nível de diferença.
+- **Dilema 1 — A Água de Carcassonne** (ao tomar as Pontes): poupar cisternas (pregação, 2 surtidas, rendição intacta, +30% ouro) · assalto noturno (água corre, cavalaria pesada reforça a Cité, +10 Carisma) · cortar a água (sede, guarnição a 50% HP, Parfaits recusam). Estado em `WorldState.siege`.
 - **Reservados no atlas:** Barão Guy de Montclair, Abade Arnaut, Irmão Guillaume, Pierre-Roger de Rochefort, Diaconisa Esclarmonde, Capitão Loup-Noir.
 - **Ordens:** Focar Líder · Focar Fraco · Poupar/Render.
 - **Dilema:** Os Celeiros de Linhai (guardiã: velha Qiu) — distribuir (+alinhamento, +apoio, −doutrina, eco `shared_linhai_rice`) ou confiscar (+recursos, −apoio, +doutrina, eco `seized_linhai_granaries`).

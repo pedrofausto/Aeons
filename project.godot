@@ -32,6 +32,7 @@ gdscript/warnings/untyped_declaration=1
 
 directories/dch_directory={}
 directories/dtl_directory={
+"a_agua_de_carcassonne": "res://eras/act_02_occitania/dialogues/a_agua_de_carcassonne.dtl",
 "celeiros_de_linhai": "res://eras/act_01_tianxu/dialogues/celeiros_de_linhai.dtl",
 "o_astronomo_cego": "res://eras/act_01_tianxu/dialogues/o_astronomo_cego.dtl"
 }

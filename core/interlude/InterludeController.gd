@@ -21,6 +21,7 @@ var _time: float = 0.0
 @onready var _lantern: PointLight2D = %Lantern
 @onready var _ui_root: Control = %UIRoot
 @onready var _overlay: ColorRect = %EphemeralOverlay
+@onready var _backdrop: Node2D = %Backdrop
 
 
 func setup(p_timeline_path: String, p_title: String = "", p_node_id: String = "") -> void:
@@ -33,6 +34,8 @@ func _ready() -> void:
 	var era: EraConfig = WorldState.era_config
 	if era:
 		_ui_root.theme = era.ui_theme
+		if era.interlude_backdrop:
+			_backdrop.add_child(era.interlude_backdrop.instantiate())
 	_overlay.material = InterludeManager.overlay_material(era)
 	_overlay.visible = _overlay.material != null
 	_title_label.text = title

@@ -1,6 +1,7 @@
 [gd_resource type="Resource" script_class="EraConfig" format=3]
 
 [ext_resource type="Script" path="res://core/data/EraConfig.gd" id="1_era"]
+[ext_resource type="PackedScene" path="res://eras/act_01_tianxu/art/interlude_backdrop.tscn" id="2_backdrop"]
 [ext_resource type="Theme" path="res://eras/act_01_tianxu/theme_act01.tres" id="2_theme"]
 [ext_resource type="Script" path="res://core/data/MapNodeData.gd" id="3_nodescript"]
 [ext_resource type="Script" path="res://core/data/UnitClassData.gd" id="3_classscript"]
@@ -39,6 +40,7 @@ window_title = "Tianxu — Vales de Nanlu"
 ui_theme = ExtResource("2_theme")
 reality_layer = "PHYSICAL_WAR"
 interlude_style = "camp"
+interlude_backdrop = ExtResource("2_backdrop")
 resource_label = "Ouro"
 hp_label = "HP"
 morale_label = "Moral"

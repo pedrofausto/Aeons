@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" path="res://core/data/MapNodeData.gd" id="1_node"]
 [ext_resource type="Resource" path="res://eras/act_02_occitania/map/squad_guarnicao_de_montclair.tres" id="2_garrison"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/map/squad_surtida_cruzada.tres" id="3_sortie"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/map/squad_cavalaria_de_montclair.tres" id="4_reinforce"]
 
 [resource]
 script = ExtResource("1_node")
@@ -16,3 +18,5 @@ map_position = Vector2(450, 165)
 neighbors = Array[String](["burgo_sao_vicente", "pontes_aude"])
 garrison = ExtResource("2_garrison")
 water_source_node = "pontes_aude"
+sortie_squad = ExtResource("3_sortie")
+siege_reinforcements = ExtResource("4_reinforce")

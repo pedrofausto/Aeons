@@ -31,43 +31,8 @@ color = Color(0.09, 0.11, 0.2, 1)
 [node name="Night" type="CanvasModulate" parent="."]
 color = Color(0.42, 0.42, 0.55, 1)
 
-[node name="FarMountains" type="Parallax2D" parent="."]
-scroll_scale = Vector2(0.2, 1)
-repeat_size = Vector2(640, 0)
-autoscroll = Vector2(-3, 0)
-repeat_times = 2
-
-[node name="Shape" type="Polygon2D" parent="FarMountains"]
-color = Color(0.2, 0.24, 0.3, 1)
-polygon = PackedVector2Array(0, 210, 80, 125, 150, 190, 235, 105, 320, 200, 410, 115, 490, 195, 565, 130, 640, 210, 640, 360, 0, 360)
-
-[node name="Granary" type="Parallax2D" parent="."]
-scroll_scale = Vector2(0.6, 1)
-
-[node name="Roof" type="Polygon2D" parent="Granary"]
-color = Color(0.45, 0.2, 0.15, 1)
-polygon = PackedVector2Array(165, 165, 320, 125, 475, 165, 450, 172.5, 190, 172.5)
-
-[node name="Walls" type="Polygon2D" parent="Granary"]
-color = Color(0.55, 0.45, 0.32, 1)
-polygon = PackedVector2Array(200, 172.5, 440, 172.5, 440, 260, 200, 260)
-
-[node name="Door" type="Polygon2D" parent="Granary"]
-color = Color(0.2, 0.12, 0.08, 1)
-polygon = PackedVector2Array(300, 200, 340, 200, 340, 260, 300, 260)
-
-[node name="Canal" type="Parallax2D" parent="."]
-repeat_size = Vector2(640, 0)
-autoscroll = Vector2(-9, 0)
-repeat_times = 2
-
-[node name="Water" type="Polygon2D" parent="Canal"]
-color = Color(0.12, 0.25, 0.32, 1)
-polygon = PackedVector2Array(0, 260, 640, 260, 640, 360, 0, 360)
-
-[node name="Ripple" type="Polygon2D" parent="Canal"]
-color = Color(0.25, 0.42, 0.5, 1)
-polygon = PackedVector2Array(40, 280, 130, 278, 130, 281, 40, 283, 260, 305, 350, 303, 350, 306, 260, 308)
+[node name="Backdrop" type="Node2D" parent="."]
+unique_name_in_owner = true
 
 [node name="Lantern" type="PointLight2D" parent="."]
 unique_name_in_owner = true

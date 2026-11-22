@@ -37,6 +37,7 @@ var interlude_style: String = "camp"
 @export var color_road: Color = Color(0.45, 0.4, 0.3)
 
 @export_group("Interlúdio (Dialogic, resolução lógica 640x360)")
+@export var interlude_backdrop: PackedScene     # Cenário da era (paralaxe); o core só traz céu e lanterna
 @export var dialogue_font_size: int = 9
 @export var dialogue_box_size: Vector2 = Vector2(520, 70)
 @export var dialogue_box_margin_bottom: int = 8
@@ -70,6 +71,8 @@ var interlude_style: String = "camp"
 @export var promotion_forbidden: String = "recusa a promoção nesta região"
 @export var close_label: String = "Fechar"
 @export var siege_thirst_message: String = "Sede em %s."
+@export var siege_preaching_message: String = "Pregação sob as muralhas de %s."
+@export var siege_surrender_message: String = "%s se rende intacta."
 @export_file("*.tres") var next_era_config: String = ""
 
 
