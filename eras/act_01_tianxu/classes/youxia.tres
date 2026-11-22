@@ -36,6 +36,7 @@ intellect = 9
 agility = 12
 front_action = SubResource("front")
 back_action = SubResource("back")
+preferred_doctrine = "pacifist"
 min_level = 4
 min_alignment = 65
 max_alignment = 100

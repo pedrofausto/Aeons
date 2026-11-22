@@ -5,6 +5,8 @@ var completed_acts: Array[int] = []
 var alignment_history: Dictionary = {}   # act_id -> final_alignment
 var doctrine_history: Dictionary = {}    # act_id -> final_doctrine
 var philosophical_echoes: Array[String] = [] # Ex: ["protected_pengming_charts", "spared_deserters"]
+var aeon_resistance_flags: Array[String] = []   # Rupturas de autonomia (ex.: proteger mapas proibidos)
+var ephemeral_meetings_seen: Array[String] = [] # Encontros únicos do Ato V (nunca se repetem)
 
 
 func archive_act_and_reset_visible(act_id: int) -> void:
@@ -24,8 +26,20 @@ func archive_act_and_reset_visible(act_id: int) -> void:
 
 
 ## Usado por testes e por "Novo Jogo".
+func add_resistance_flag(flag: String) -> void:
+	if flag not in aeon_resistance_flags:
+		aeon_resistance_flags.append(flag)
+
+
+func mark_ephemeral_meeting(meeting_id: String) -> void:
+	if meeting_id not in ephemeral_meetings_seen:
+		ephemeral_meetings_seen.append(meeting_id)
+
+
 func reset_all() -> void:
 	completed_acts.clear()
+	aeon_resistance_flags.clear()
+	ephemeral_meetings_seen.clear()
 	alignment_history.clear()
 	doctrine_history.clear()
 	philosophical_echoes.clear()

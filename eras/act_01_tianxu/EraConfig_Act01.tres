@@ -15,6 +15,7 @@
 [ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/nubing_crossbow.tres" id="6_nubing_crossbow"]
 [ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/daoshi_healer.tres" id="6_daoshi_healer"]
 [ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/youxia.tres" id="6_youxia"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/buqu.tres" id="6_buqu"]
 [ext_resource type="Resource" path="res://eras/act_01_tianxu/map/squad_cobradores_selo_de_ferro.tres" id="7_patrol"]
 
 [resource]
@@ -23,6 +24,8 @@ act_number = 1
 era_title = "Vales de Nanlu"
 window_title = "Tianxu — Vales de Nanlu"
 ui_theme = ExtResource("2_theme")
+reality_layer = "PHYSICAL_WAR"
+interlude_style = "camp"
 resource_label = "Ouro"
 hp_label = "HP"
 morale_label = "Moral"
@@ -36,7 +39,7 @@ color_neutral = Color(0.55, 0.58, 0.52, 1)
 color_background = Color(0.07, 0.1, 0.09, 1)
 color_road = Color(0.42, 0.38, 0.28, 1)
 map_nodes = Array[ExtResource("3_nodescript")]([ExtResource("5_linhai"), ExtResource("5_aldeia_terracos"), ExtResource("5_templo_bambu"), ExtResource("5_forte_regencia")])
-unit_classes = Array[ExtResource("3_classscript")]([ExtResource("6_fubing"), ExtResource("6_ji_halberdier"), ExtResource("6_nubing_crossbow"), ExtResource("6_daoshi_healer"), ExtResource("6_youxia")])
+unit_classes = Array[ExtResource("3_classscript")]([ExtResource("6_fubing"), ExtResource("6_ji_halberdier"), ExtResource("6_nubing_crossbow"), ExtResource("6_daoshi_healer"), ExtResource("6_youxia"), ExtResource("6_buqu")])
 starting_squads = Array[ExtResource("3_squadscript")]([ExtResource("4_squad")])
 enemy_patrols = Array[ExtResource("3_squadscript")]([ExtResource("7_patrol")])
 victory_text = "O Forte da Regência caiu. Os Vales de Nanlu respiram livres."

@@ -120,15 +120,14 @@ func meets_requirements(target: UnitClassData) -> bool:
 
 func get_eligible_promotions() -> Array[UnitClassData]:
 	var result: Array[UnitClassData] = []
-	for entry: Resource in class_data.promotes_to:
-		var target := entry as UnitClassData
-		if target != null and meets_requirements(target):
+	for target: UnitClassData in class_data.get_promotion_targets():
+		if meets_requirements(target):
 			result.append(target)
 	return result
 
 
 func promote(target: UnitClassData) -> bool:
-	if target not in class_data.promotes_to or not meets_requirements(target):
+	if target not in class_data.get_promotion_targets() or not meets_requirements(target):
 		return false
 	var hp_ratio: float = float(hp) / float(get_max_hp())
 	class_data = target

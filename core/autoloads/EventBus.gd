@@ -6,6 +6,7 @@ extends Node
 # --- Camada 1: Mapa Estratégico ---
 signal pause_toggled(is_paused: bool)
 signal tick_advanced(day: int)
+signal time_of_day_changed(time_of_day: String)
 signal node_captured(node_id: String, faction_id: String)
 
 # --- Camada 2: Combate 3x2 ---

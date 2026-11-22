@@ -6,6 +6,11 @@ extends Resource
 @export var era_title: String = ""
 @export var window_title: String = ""
 @export var ui_theme: Theme
+@export var palette_shader: ShaderMaterial                      # Pós-processo de paleta (opcional)
+@export_enum("PHYSICAL_WAR", "RESOURCE_NETWORK", "VIRTUAL_COGNITIVE")
+var reality_layer: String = "PHYSICAL_WAR"
+@export_enum("camp", "clandestine_physical", "ephemeral_metaphysical")
+var interlude_style: String = "camp"
 
 @export_group("Vocabulário da UI")
 @export var resource_label: String = "Ouro"          # "Ouro" | "Capital" | "Dados" | "Sinal"
@@ -15,6 +20,7 @@ extends Resource
 @export var support_label: String = "Apoio Popular"
 @export var doctrine_label: String = "Doutrina"
 @export var day_label: String = "Dia"
+@export var time_of_day_labels: Dictionary = {"day": "☀", "night": "☾"}
 ## Rótulos das ordens táticas, na ordem de TacticalOrder.Order (NONE, FOCUS_LEADER, FOCUS_WEAK, SPARE).
 @export var order_labels: PackedStringArray = ["Sem Ordem", "Focar Líder", "Focar Fraco", "Poupar/Render"]
 ## Rótulos de desfecho do combate (chaves: victory, defeat, annihilation, morale_break, timeout).
@@ -46,6 +52,8 @@ extends Resource
 @export var unit_classes: Array[UnitClassData] = []
 @export var starting_squads: Array[SquadData] = []
 @export var enemy_patrols: Array[SquadData] = []       # Esquadrões com patrol_route
+@export var encounter_tables: Array[Resource] = []     # EncounterTable por província/região
+@export var max_roaming_squads: int = 2
 @export var victory_text: String = ""
 @export_file("*.tres") var next_era_config: String = ""
 

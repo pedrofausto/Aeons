@@ -22,6 +22,8 @@ var day_count: int = 1
 var player_squads: Array[SquadData] = []
 var active_flags: Dictionary = {}            # Flags locais (eventos já disparados etc.)
 var act_echoes: Array[String] = []           # Escolhas marcantes do ato (arquivadas ao fim do ato)
+var time_of_day: String = "day"              # "day" | "night" (afeta patrulhas e encontros)
+var completed_interludes: Array[String] = [] # Timelines de interlúdio já vividas neste ato
 
 
 func _ready() -> void:
@@ -59,6 +61,8 @@ func reset_visible(next_act: int) -> void:
 	player_squads.clear()
 	active_flags.clear()
 	act_echoes.clear()
+	time_of_day = "day"
+	completed_interludes.clear()
 	_notify()
 
 
@@ -71,6 +75,15 @@ func set_paused(value: bool) -> void:
 
 func advance_day() -> void:
 	day_count += 1
+	set_time_of_day("day")
+	_notify()
+
+
+func set_time_of_day(value: String) -> void:
+	if time_of_day == value:
+		return
+	time_of_day = value
+	EventBus.time_of_day_changed.emit(value)
 	_notify()
 
 

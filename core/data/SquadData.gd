@@ -13,6 +13,8 @@ const MAX_FATIGUE: int = 100
 @export var current_node_id: String = ""
 @export_range(0, 100) var fatigue: int = 0   # Reduz ataque em até 30%
 @export var patrol_route: Array[String] = []  # Nós percorridos em laço por patrulhas inimigas
+## Tag de encontro: bandit_loot | moral_escort | low_level_trap | natural_wildlife | mythic_boss
+@export var encounter_tag: String = ""
 
 
 ## Cópia profunda independente (o .tres original nunca é mutado em runtime).
@@ -24,6 +26,7 @@ func clone() -> SquadData:
 	copy.current_node_id = current_node_id
 	copy.fatigue = fatigue
 	copy.patrol_route = patrol_route.duplicate()
+	copy.encounter_tag = encounter_tag
 	for unit: UnitInstance in units:
 		var unit_copy := unit.duplicate() as UnitInstance
 		unit_copy.ensure_vitals()

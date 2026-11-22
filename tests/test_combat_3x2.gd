@@ -30,6 +30,12 @@ func run(t: Node) -> void:
 	var promoted := promo_squad.promote_eligible()
 	t.check("promotion_fubing_to_youxia", promoted.size() == 1 and high.class_data == youxia
 		and high.hp == high.get_max_hp() and low.class_data == fubing, str(promoted))
+	var buqu := load("res://eras/act_01_tianxu/classes/buqu.tres") as UnitClassData
+	var brute := UnitInstance.create(fubing, "Brutal", 4, 3, false, 20)
+	t.check("promotion_fubing_to_buqu_evil", brute.get_eligible_promotions() == [buqu] and brute.promote(buqu)
+		and brute.class_data == buqu)
+	t.check("class_preferred_doctrine", youxia.matches_doctrine(-40) and not youxia.matches_doctrine(30)
+		and buqu.matches_doctrine(30) and fubing.matches_doctrine(99))
 
 	var probe := UnitInstance.create(fubing, "Sonda", 1, 4)
 	t.check("grid_slot_rows", probe.get_row() == 1 and probe.get_column() == 1 and probe.get_action() == fubing.back_action)
