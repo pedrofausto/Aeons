@@ -6,26 +6,15 @@
 
 ## 1. STATE LEDGER (Atualizar no topo a cada sessão)
 
+> O livro-razão detalhado vive em **[`STATE_LEDGER.md`](STATE_LEDGER.md)** (raiz, < 120 linhas), conforme `ARCHITECTURE_DIFF.md` §6.
+> As expansões aprovadas depois deste documento estão em **[`ARCHITECTURE_DIFF.md`](ARCHITECTURE_DIFF.md)**.
+
 ```yaml
 projeto: "Os Cinco Simulacros"
 engine: "Godot 4.7.2 (Standard / GDScript puro — sem C#)"
 renderizador_obrigatorio: "gl_compatibility (--rendering-driver opengl3)"
 alvo_exportacao: ["Desktop (macOS/Win/Linux)", "Web HTML5 (single-threaded)", "Android"]
-fase_atual: "Sprint 3 concluído — Dilema Os Celeiros de Linhai + Interlúdio (Dialogic 2)"
-absorvido_de_arch_v2_e_atlas: ["resolução lógica 640x360 (janela 1280x720, aspect keep, filtro Nearest)", "patrulha Cobradores do Selo de Ferro", "Youxia (promoção honrada do Fubing: Nv4, alinhamento >= 65)", "Templo do Bambu Cinzento"]
-cenas_validadas: ["core/combat/BattleArena.tscn", "core/overworld/OverworldMap.tscn", "core/interlude/InterludeRoom.tscn"]
-testes: "tests/run_tests.sh -> 53 TEST_PASS, 0 falhas, sem ERROR no log (inclui varredura de sigilo)"
-sinais_eventbus: [pause_toggled, tick_advanced, node_captured, battle_requested, battle_ended,
-  interlude_requested, interlude_choice_applied, interlude_finished, world_state_changed,
-  era_loaded, era_transition]
-ci: ".github/workflows/godot-ci.yml — Xvfb + opengl3: suíte completa + boot --quit-after 60"
-lore: "docs/Lore_Simulacros (sem spoilers, Atos I–IV) · docs/Lore_Aeons_Verdade (restrito: EssenceState e Ato V)"
-proximo_passo: "Sprint 4 — sprites Pixelorama + normal maps Laigter + trilha .ogg (transição de era já testada)"
-bloqueios_conhecidos:
-  - "Hardware de dev: Mac mini Mid 2011 (OCLP non-Metal). Nunca usar Forward+ ou Mobile."
-  - "Dialogic 2 (master 2.0-Alpha-21 WIP) vendorizado em addons/; ação dialogic_default_action declarada no project.godot."
-  - "Sons de digitação de exemplo do Dialogic desligados (InterludeController.type_sounds_enabled): vazavam AudioStreamWAV ao fechar no meio de uma fala."
-  - "UnitClassData.promotes_to é Array[Resource]: Array[UnitClassData] auto-referente vaza na saída (Godot 4.7)."
+fase_atual: "Vertical Slice do Ato I jogável (Sprints 1–3 + Diff §1–6). Próximo: Sprint 4 (arte e áudio)."
 regras_de_sigilo_narrativo:
   - "PROIBIDO mencionar 'Aeons', 'simulação', 'simulacro' ou 'mesma alma' em qualquer diálogo, UI ou comentário visível nos Atos I a IV."
   - "Cada ato deve parecer um jogo/crônica independente até a revelação final no Ato V."
