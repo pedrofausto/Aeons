@@ -17,10 +17,13 @@ testes: "tests/run_tests.sh -> 46 TEST_PASS, 0 falhas, sem ERROR no log (inclui 
 sinais_eventbus: [pause_toggled, tick_advanced, node_captured, battle_requested, battle_ended,
   interlude_requested, interlude_choice_applied, interlude_finished, world_state_changed,
   era_loaded, era_transition]
+ci: ".github/workflows/godot-ci.yml — Xvfb + opengl3: suíte completa + boot --quit-after 60"
+lore: "docs/Lore_Simulacros (sem spoilers, Atos I–IV) · docs/Lore_Aeons_Verdade (restrito: EssenceState e Ato V)"
 proximo_passo: "Sprint 4 — sprites Pixelorama + normal maps Laigter + trilha .ogg (transição de era já testada)"
 bloqueios_conhecidos:
   - "Hardware de dev: Mac mini Mid 2011 (OCLP non-Metal). Nunca usar Forward+ ou Mobile."
   - "Dialogic 2 (master 2.0-Alpha-21 WIP) vendorizado em addons/; ação dialogic_default_action declarada no project.godot."
+  - "Sons de digitação de exemplo do Dialogic desligados (InterludeController.type_sounds_enabled): vazavam AudioStreamWAV ao fechar no meio de uma fala."
   - "UnitClassData.promotes_to é Array[Resource]: Array[UnitClassData] auto-referente vaza na saída (Godot 4.7)."
 regras_de_sigilo_narrativo:
   - "PROIBIDO mencionar 'Aeons', 'simulação', 'simulacro' ou 'mesma alma' em qualquer diálogo, UI ou comentário visível nos Atos I a IV."

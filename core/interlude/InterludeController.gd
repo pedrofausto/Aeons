@@ -7,6 +7,10 @@ extends Node2D
 const EFFECT_PREFIX: String = "effect|"
 const INT_KEYS: Array[String] = ["alignment", "popular_support", "doctrine", "resources"]
 
+## Sons de digitação do layout de EXEMPLO do Dialogic: desligados até a trilha própria
+## (Sprint 4). Ligados, vazam AudioStreamWAV quando o jogo fecha no meio de uma fala.
+@export var type_sounds_enabled: bool = false
+
 var timeline_path: String = ""
 var title: String = ""
 var node_id: String = ""
@@ -36,9 +40,20 @@ func _ready() -> void:
 		return
 	dialogic.connect("signal_event", _on_dialogic_signal)
 	dialogic.connect("timeline_ended", _finish)
-	dialogic.call("start", timeline_path)
+	var layout := dialogic.call("start", timeline_path) as Node
+	if layout and not type_sounds_enabled:
+		if not layout.is_node_ready():
+			await layout.ready
+		_disable_type_sounds(layout)
 	if OS.is_debug_build():
 		print("TEST_PASS|interlude_boot|%s" % timeline_path.get_file())
+
+
+func _disable_type_sounds(root: Node) -> void:
+	for child: Node in root.get_children():
+		if child is DialogicNode_TypeSounds:
+			(child as DialogicNode_TypeSounds).enabled = false
+		_disable_type_sounds(child)
 
 
 func _process(delta: float) -> void:
