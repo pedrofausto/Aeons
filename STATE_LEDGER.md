@@ -5,9 +5,10 @@
 
 ## Situação
 - **Fase:** Ato I completo (Nanlu + Hanmen). Ato II com as 6 regiões (Spec_Pendencias §1), dilemas 1–6, 22 classes (inclui míticas Portador do Consolamentum, Tarasca de 2 slots e Eco de Béziers) e skills pendentes (saque, veneno, bônus de terreno) — `ACT2_CARCASSONNE_PASS`.
-- **Próximo passo:** Derrota Falsa de Montségur (transição para o Ato III) e Ato III. **Bloqueado aguardando o usuário:** Spec_Pendencias §4 (adendo tático do Ato I — Cike, Catafractário, Junshi; conflitos Daoshi/Xian). Sprint 4 (arte/áudio) aguarda assets.
+- **Próximo passo:** Derrota Falsa de Montségur (transição para o Ato III) e Ato III. Sprint 4 (arte/áudio) aguarda assets.
+- **Adendo tático do Ato I aplicado** (aprovado pelo usuário): Cike, Catafractário, Conselheiro Yuefu → Junshi; Daoshi é promoção do Fangshi; Xian exige o Elixir de Pengming — `ACT1_ADENDO_PASS`.
 - **Engine:** Godot 4.7.2 · GDScript puro · `gl_compatibility` · resolução lógica 640×360 (janela 1280×720, Nearest).
-- **Validação:** `tests/run_tests.sh` → **157 TEST_PASS**, 0 falhas, sem `SCRIPT ERROR`/`ERROR:` (janela real Xvfb + opengl3 e headless).
+- **Validação:** `tests/run_tests.sh` → **165 TEST_PASS**, 0 falhas, sem `SCRIPT ERROR`/`ERROR:` (janela real Xvfb + opengl3 e headless).
 - **CI:** `.github/workflows/godot-ci.yml` (suíte + boot `--quit-after 60`).
 - **Branch de trabalho:** `ccr-9fc24095-lrv5hy` (nunca fazer push em `main` sem autorização).
 
@@ -33,10 +34,10 @@
 - **Astrônomo Cego (Zhuo):** proteger grava `EssenceState.decisions.act1_blind_astronomer_protected = true` (+10 alinhamento, +8 apoio); entregar grava `false` (+300 ouro, −10 alinhamento).
 - **Facção inimiga:** Regência do Selo de Ferro (Chanceler Gao Shen).
 - **Esquadrões:** Guarda dos Canais (jogador) · Guarnição da Regência (forte) · Cobradores do Selo de Ferro (patrulha fixa, `moral_escort`) · Piratas Fluviais do Delta (`bandit_loot`, dia) · Milícia Camponesa Desesperada (`low_level_trap`).
-- **Classes:** Fubing · Alabardeiro Ji · Besteiro Nubing · Daoshi (talismã PURIFY) · Fangshi (fogo alquímico; promove a Xian/Wu Sombrio consumindo 1 `talisma_cinabrio`) · Youxia (promoção boa: Nv4, alinhamento ≥ 65) · Buqu (promoção sombria: Nv4, alinhamento ≤ 35).
+- **Classes (árvore):** Fubing → Youxia (Nv4, ALI ≥ 65) / Buqu (Nv4, ALI ≤ 35) · Alabardeiro Ji → Catafractário (Nv10, ALI ≥ 60, cavalaria) · Besteiro Nubing → Assassino Cike (Nv9, ALI ≤ 35, veneno no líder) · Fangshi → Daoshi (tier 2, Nv10, ALI ≥ 60) / Xamã Wu Sombrio (consome 1 `talisma_cinabrio`) / Xian (mítica, consome 1 `elixir_pengming`) · Conselheiro Yuefu → Estrategista Junshi (Nv11, ALI ≥ 60, ação extra). Ge Xuan (Guarda dos Canais) já começa como Daoshi.
 - **Míticas:** Jiangshi (undead, imune a moral, recebe 20% físico / 150% SPIRITUAL·PURIFY·FIRE, lento de dia e +50% à noite) · Xamã Wu Sombrio (Sino dos Mortos: +20% ataque a undead) · Huli Jing (CONFUSE em alvo mais lento) · Xian (voa, imune a status e a drenos de moral; Espada de Jade SPIRITUAL; Harmonia em área).
 - **Encontros míticos:** Cortejo de Jiangshi (só região `hanmen` e só à noite; +5 apoio; sem penalidade de nível; 25% Talismã de Cinábrio) · Guardiões do Observatório dos Nove Céus (chefe em arquipelago_pengming, até ser vencido; Moral → `pengming_xian_ally` + classe Xian; Aniquilação → Bússola dos Nove Céus: +20% marcha e revela encontros noturnos).
-- **Itens:** `talisma_cinabrio` (consumido na promoção do Fangshi) · Bússola dos Nove Céus (única).
+- **Itens:** `talisma_cinabrio` (Xamã Wu; drop do Cortejo) · `elixir_pengming` (Xian; **ainda sem fonte no mapa** — Pengming não existe na fatia) · Bússola dos Nove Céus (única).
 
 ## Nomes canônicos — Ato II (Occitânia · Cidadela de Carcassonne)
 - **Nós:** Castelo de Cabaret (base, montagne_noire) · Burgo de São Vicente (ocupado) · Pontes do Rio Aude (água) · Cité de Carcassonne (fortaleza cruzada em (320,165); água = Pontes) · Toulouse · Abadia da Montagne Noire (inimiga; Guarda da Abadia — vitória por Moral dá o Pergaminho do Consolamentum) · Ruínas de Béziers (Ecos de Béziers à noite) · Pântanos de Tarascon (opcional; Tarasca surge após a libertação) · Castrum de Montségur.

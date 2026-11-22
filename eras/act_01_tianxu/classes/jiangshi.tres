@@ -31,6 +31,7 @@ display_name = "Jiangshi"
 era_id = 1
 archetype = 6
 grid_slots = 1
+tier = 3
 traits = PackedStringArray("undead", "morale_immune")
 placeholder_color = Color(0.45, 0.55, 0.5, 1)
 max_hp = 112

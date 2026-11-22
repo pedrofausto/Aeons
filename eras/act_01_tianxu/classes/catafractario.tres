@@ -1,0 +1,44 @@
+[gd_resource type="Resource" script_class="UnitClassData" format=3]
+
+[ext_resource type="Script" path="res://core/data/UnitClassData.gd" id="1_class"]
+[ext_resource type="Script" path="res://core/data/ActionSkillData.gd" id="2_skill"]
+
+[sub_resource type="Resource" id="front"]
+script = ExtResource("2_skill")
+skill_id = "armored_charge"
+display_name = "Carga Blindada"
+effect = 0
+targeting = 0
+power = 45
+hits = 3
+armor_pierce_pct = 20
+
+[sub_resource type="Resource" id="back"]
+script = ExtResource("2_skill")
+skill_id = "guard_the_flank"
+display_name = "Proteger Flanco"
+effect = 4
+targeting = 0
+power = 0
+ally_guard_pct = 20
+
+[resource]
+script = ExtResource("1_class")
+class_id = "catafractario"
+display_name = "Catafractário"
+era_id = 1
+archetype = 1
+grid_slots = 1
+tier = 2
+max_hp = 126
+attack = 18
+defense = 14
+intellect = 9
+agility = 8
+max_morale = 110
+front_action = SubResource("front")
+back_action = SubResource("back")
+movement = "cavalry"
+min_level = 10
+min_alignment = 60
+max_alignment = 100

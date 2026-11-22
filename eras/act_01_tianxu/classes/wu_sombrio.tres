@@ -30,6 +30,7 @@ display_name = "Xamã Wu Sombrio"
 era_id = 1
 archetype = 4
 grid_slots = 1
+tier = 2
 traits = PackedStringArray("evil_shaman")
 placeholder_color = Color(0.4, 0.2, 0.45, 1)
 max_hp = 56

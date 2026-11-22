@@ -31,6 +31,11 @@
 [ext_resource type="Script" path="res://core/data/ItemData.gd" id="9_itemscript"]
 [ext_resource type="Resource" path="res://eras/act_01_tianxu/items/talisma_cinabrio.tres" id="9_talisma"]
 [ext_resource type="Resource" path="res://eras/act_01_tianxu/items/bussola_dos_nove_ceus.tres" id="9_bussola"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/cike.tres" id="6_cike"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/catafractario.tres" id="6_catafractario"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/conselheiro_yuefu.tres" id="6_conselheiro_yuefu"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/junshi.tres" id="6_junshi"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/items/elixir_pengming.tres" id="9_elixir"]
 
 [resource]
 script = ExtResource("1_era")
@@ -54,11 +59,11 @@ color_neutral = Color(0.55, 0.58, 0.52, 1)
 color_background = Color(0.07, 0.1, 0.09, 1)
 color_road = Color(0.42, 0.38, 0.28, 1)
 map_nodes = Array[ExtResource("3_nodescript")]([ExtResource("5_linhai"), ExtResource("5_aldeia_terracos"), ExtResource("5_templo_bambu"), ExtResource("5_forte_regencia"), ExtResource("5_hanmen_pass"), ExtResource("5_hanmen_gate")])
-unit_classes = Array[ExtResource("3_classscript")]([ExtResource("6_fubing"), ExtResource("6_ji_halberdier"), ExtResource("6_nubing_crossbow"), ExtResource("6_daoshi_healer"), ExtResource("6_youxia"), ExtResource("6_buqu"), ExtResource("6_jiangshi"), ExtResource("6_wu_sombrio"), ExtResource("6_huli_jing"), ExtResource("6_xian"), ExtResource("6_fangshi")])
+unit_classes = Array[ExtResource("3_classscript")]([ExtResource("6_fubing"), ExtResource("6_ji_halberdier"), ExtResource("6_nubing_crossbow"), ExtResource("6_daoshi_healer"), ExtResource("6_youxia"), ExtResource("6_buqu"), ExtResource("6_jiangshi"), ExtResource("6_wu_sombrio"), ExtResource("6_huli_jing"), ExtResource("6_xian"), ExtResource("6_fangshi"), ExtResource("6_cike"), ExtResource("6_catafractario"), ExtResource("6_conselheiro_yuefu"), ExtResource("6_junshi")])
 starting_squads = Array[ExtResource("3_squadscript")]([ExtResource("4_squad")])
 enemy_patrols = Array[ExtResource("3_squadscript")]([ExtResource("7_patrol")])
 encounter_tables = Array[Resource]([ExtResource("8_encounters"), ExtResource("8_hanmen"), ExtResource("8_pengming")])
 max_roaming_squads = 2
-item_catalog = Array[ExtResource("9_itemscript")]([ExtResource("9_talisma"), ExtResource("9_bussola")])
+item_catalog = Array[ExtResource("9_itemscript")]([ExtResource("9_talisma"), ExtResource("9_bussola"), ExtResource("9_elixir")])
 victory_text = "O Forte da Regência caiu. Os Vales de Nanlu respiram livres."
 next_era_config = "res://eras/act_02_occitania/EraConfig_Act02.tres"
