@@ -24,6 +24,8 @@ var active_flags: Dictionary = {}            # Flags locais (eventos já dispara
 var act_echoes: Array[String] = []           # Escolhas marcantes do ato (arquivadas ao fim do ato)
 var time_of_day: String = "day"              # "day" | "night" (afeta patrulhas e encontros)
 var completed_interludes: Array[String] = [] # Timelines de interlúdio já vividas neste ato
+var inventory: Array[ItemData] = []          # Itens do ato atual (drops, recompensas de chefes)
+var unlocked_classes: Array[String] = []     # class_id liberados para recrutamento
 
 
 func _ready() -> void:
@@ -63,6 +65,8 @@ func reset_visible(next_act: int) -> void:
 	act_echoes.clear()
 	time_of_day = "day"
 	completed_interludes.clear()
+	inventory.clear()
+	unlocked_classes.clear()
 	_notify()
 
 
@@ -153,6 +157,36 @@ func apply_effects(effects: Dictionary) -> void:
 		set_flag(String(effects["flag"]))
 	if effects.has("echo"):
 		add_echo(String(effects["echo"]))
+
+
+func add_item(item: ItemData) -> bool:
+	if item == null or (item.unique and has_item(item.item_id)):
+		return false
+	inventory.append(item)
+	_notify()
+	return true
+
+
+func has_item(item_id: String) -> bool:
+	return inventory.any(func(item: ItemData) -> bool: return item.item_id == item_id)
+
+
+func unlock_class(class_id: String) -> void:
+	if class_id not in unlocked_classes:
+		unlocked_classes.append(class_id)
+		_notify()
+
+
+## Multiplicador de marcha dos esquadrões do jogador vindo de itens (1.0 = normal).
+func item_march_multiplier() -> float:
+	var bonus: int = 0
+	for item: ItemData in inventory:
+		bonus += item.march_speed_bonus_pct
+	return 1.0 + float(bonus) / 100.0
+
+
+func reveals_night_encounters() -> bool:
+	return inventory.any(func(item: ItemData) -> bool: return item.reveals_night_encounters)
 
 
 func _notify() -> void:

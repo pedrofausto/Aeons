@@ -8,6 +8,19 @@ enum Archetype { VANGUARD, SHOCK, RANGED_STEALTH, ARCANE_TECH, HEALER_MORAL, BAR
 @export var era_id: int = 1
 @export var archetype: Archetype = Archetype.VANGUARD
 @export var grid_slots: int = 1              # 1 = padrão | 2 = unidade colossal (ex.: Tarasque)
+## Subtipo livre (o enum de arquétipos é fixo): undead, celestial, trickster, evil_shaman,
+## morale_immune (moral nunca cai), status_immune (CONFUSE/POISON), flying.
+@export var traits: PackedStringArray = []
+@export var placeholder_color: Color = Color(0, 0, 0, 0)  # Alfa 0 = cor do arquétipo
+
+@export_group("Resistências")
+## % de dano recebido por elemento (100 = normal). Ex.: {"PHYSICAL": 20, "SPIRITUAL": 150}
+@export var damage_taken_pct: Dictionary = {}
+
+@export_group("Movimento no Mapa")
+@export_enum("ground", "flying") var movement: String = "ground"
+@export var march_speed_pct: int = 100
+@export var night_march_bonus_pct: int = 0
 
 @export_group("Stats Base")
 @export var max_hp: int = 100
@@ -38,6 +51,14 @@ func get_promotion_targets() -> Array[UnitClassData]:
 		if target != null and target not in targets:
 			targets.append(target)
 	return targets
+
+
+func has_trait(trait_name: String) -> bool:
+	return trait_name in traits
+
+
+func damage_multiplier_pct(element_name: String) -> int:
+	return int(damage_taken_pct.get(element_name, 100))
 
 
 ## Doutrina (-100..+100) compatível com a preferência da classe.

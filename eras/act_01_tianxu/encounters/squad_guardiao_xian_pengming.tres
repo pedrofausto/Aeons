@@ -1,0 +1,68 @@
+[gd_resource type="Resource" script_class="SquadData" format=3]
+
+[ext_resource type="Script" path="res://core/data/SquadData.gd" id="1_squad"]
+[ext_resource type="Script" path="res://core/data/UnitInstance.gd" id="1_unit"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/xian.tres" id="2_xian"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/youxia.tres" id="3_youxia"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/fangshi.tres" id="4_fangshi"]
+
+[sub_resource type="Resource" id="unit_0"]
+script = ExtResource("1_unit")
+class_data = ExtResource("2_xian")
+unit_name = "Xian da Montanha Velada"
+level = 5
+alignment = 90
+slot = 0
+is_leader = true
+
+[sub_resource type="Resource" id="unit_1"]
+script = ExtResource("1_unit")
+class_data = ExtResource("2_xian")
+unit_name = "Xian do Orvalho"
+level = 4
+alignment = 85
+slot = 4
+is_leader = false
+
+[sub_resource type="Resource" id="unit_2"]
+script = ExtResource("1_unit")
+class_data = ExtResource("3_youxia")
+unit_name = "Guardião Errante Kong"
+level = 4
+alignment = 80
+slot = 1
+is_leader = false
+
+[sub_resource type="Resource" id="unit_3"]
+script = ExtResource("1_unit")
+class_data = ExtResource("4_fangshi")
+unit_name = "Fangshi Astrônomo"
+level = 4
+alignment = 70
+slot = 3
+is_leader = false
+
+[resource]
+script = ExtResource("1_squad")
+squad_id = "guardiao_xian_pengming"
+display_name = "Guardiões do Observatório dos Nove Céus"
+faction = "enemy"
+units = Array[ExtResource("1_unit")]([SubResource("unit_0"), SubResource("unit_1"), SubResource("unit_2"), SubResource("unit_3")])
+current_node_id = "observatorio_nove_ceus"
+patrol_route = Array[String](["observatorio_nove_ceus"])
+encounter_tag = "mythic_boss"
+supernatural = true
+outcome_rewards = {
+"annihilation": {
+"item": "res://eras/act_01_tianxu/items/bussola_dos_nove_ceus.tres"
+},
+"morale_break": {
+"flag": "pengming_xian_ally",
+"unlock_class": "xian"
+}
+}
+honor_rule = {
+"counts_as": "morale_break",
+"flag": "act1_blind_astronomer_protected",
+"min_alignment": 70
+}

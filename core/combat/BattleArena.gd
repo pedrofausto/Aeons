@@ -68,7 +68,8 @@ func start_battle(order: TacticalOrder.Order) -> void:
 	result = CombatResolver.get_result(battle_log).duplicate()
 	result["order"] = order
 	result["context"] = context
-	result["effects"] = BattleConsequences.compute(result, ally_squad, enemy_squad, get_player_side())
+	result["effects"] = BattleConsequences.compute(result, ally_squad, enemy_squad, get_player_side(),
+		WorldState.active_flags)
 	_show_result()
 
 

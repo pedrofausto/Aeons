@@ -16,6 +16,16 @@ const MAX_FATIGUE: int = 100
 ## Tag de encontro: bandit_loot | moral_escort | low_level_trap | natural_wildlife | mythic_boss
 @export var encounter_tag: String = ""
 
+@export_group("Regras pós-batalha (opcionais)")
+@export var supernatural: bool = false            # Sem penalidade de alinhamento por nível
+@export var victory_effects: Dictionary = {}      # Somados ao vencer (ex.: {"popular_support": 5})
+@export var rare_drop: ItemData
+@export_range(0, 100) var rare_drop_chance: int = 0
+## Por tipo de vitória: {"morale_break": {"flag": "...", "unlock_class": "..."}, "annihilation": {"item": "res://..."}}
+@export var outcome_rewards: Dictionary = {}
+## Rota de honra: {"min_alignment": 70, "flag": "...", "counts_as": "morale_break"}
+@export var honor_rule: Dictionary = {}
+
 var is_roaming: bool = false          # Gerado pelo RoamingSquadSpawner (não bloqueia a vitória)
 var roaming_until_day: bool = false   # Encontro noturno: some ao amanhecer
 
@@ -30,6 +40,12 @@ func clone() -> SquadData:
 	copy.fatigue = fatigue
 	copy.patrol_route = patrol_route.duplicate()
 	copy.encounter_tag = encounter_tag
+	copy.supernatural = supernatural
+	copy.victory_effects = victory_effects
+	copy.rare_drop = rare_drop
+	copy.rare_drop_chance = rare_drop_chance
+	copy.outcome_rewards = outcome_rewards
+	copy.honor_rule = honor_rule
 	copy.is_roaming = is_roaming
 	copy.roaming_until_day = roaming_until_day
 	for unit: UnitInstance in units:
@@ -59,6 +75,19 @@ func has_eligible_promotion() -> bool:
 		if unit.is_alive() and not unit.get_eligible_promotions().is_empty():
 			return true
 	return false
+
+
+## Marcha do esquadrão = a da unidade viva mais lenta (com bônus noturno da classe).
+func march_factor(time_of_day: String) -> float:
+	var slowest: int = 100
+	var first: bool = true
+	for unit: UnitInstance in get_living_units():
+		var pct: int = unit.class_data.march_speed_pct
+		if time_of_day == "night":
+			pct += unit.class_data.night_march_bonus_pct
+		slowest = pct if first else mini(slowest, pct)
+		first = false
+	return float(slowest) / 100.0
 
 
 ## Primeiro slot livre da grade 3x2 (frente antes de trás); -1 se cheia.
@@ -112,6 +141,15 @@ func average_level() -> float:
 	var total: int = 0
 	for unit: UnitInstance in units:
 		total += unit.level
+	return float(total) / float(units.size())
+
+
+func average_alignment() -> float:
+	if units.is_empty():
+		return 50.0
+	var total: int = 0
+	for unit: UnitInstance in units:
+		total += unit.alignment
 	return float(total) / float(units.size())
 
 

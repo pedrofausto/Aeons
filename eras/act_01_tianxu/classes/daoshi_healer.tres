@@ -11,6 +11,7 @@ effect = 2
 targeting = 0
 power = 80
 morale_power = 10
+element = "PURIFY"
 
 [sub_resource type="Resource" id="back"]
 script = ExtResource("2_skill")

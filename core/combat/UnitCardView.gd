@@ -52,6 +52,8 @@ func _draw() -> void:
 		return
 	var rect := Rect2(-SIZE / 2.0, SIZE)
 	var base: Color = ARCHETYPE_COLORS[unit.class_data.archetype]
+	if unit.class_data.placeholder_color.a > 0.0:
+		base = unit.class_data.placeholder_color
 	if _hp <= 0:
 		base = base.darkened(0.7)
 	elif _morale <= 0:

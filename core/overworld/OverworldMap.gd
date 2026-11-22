@@ -142,7 +142,7 @@ func step(delta: float) -> void:
 	for token: SquadToken in tokens.duplicate():
 		if token.squad.is_patrol() and not token.is_moving():
 			token.set_path(PatrolAI.next_leg(token.squad, _graph()))
-		token.advance(delta, march_speed * (PatrolAI.SPEED_FACTOR if token.squad.is_patrol() else 1.0), positions)
+		token.advance(delta, token.march_speed(march_speed), positions)
 		if _is_busy():
 			return
 	_check_collisions()

@@ -8,6 +8,7 @@ const SUITES: Array[String] = [
 	"res://tests/test_world_state.gd",
 	"res://tests/test_overworld.gd",
 	"res://tests/test_interlude.gd",
+	"res://tests/test_mythic.gd",
 ]
 
 var passed: int = 0

@@ -14,6 +14,7 @@ grep -q "TEST_PASS|" "$LOG" || { echo "FALHA: nenhum TEST_PASS emitido"; status=
 grep -q "TEST_FAIL|" "$LOG" && { echo "FALHA: há TEST_FAIL no log"; status=1; }
 grep -E -q "SCRIPT ERROR|ERROR:" "$LOG" && { echo "FALHA: SCRIPT ERROR/ERROR: no log"; status=1; }
 grep -q "TEST_SUMMARY|" "$LOG" || { echo "FALHA: suíte não terminou"; status=1; }
+grep -q "ACT1_MYTHIC_CLASSES_PASS" "$LOG" || { echo "FALHA: ACT1_MYTHIC_CLASSES_PASS ausente"; status=1; }
 rm -f "$LOG"
 [ $status -eq 0 ] && echo "OK: todos os testes passaram sem erros."
 exit $status

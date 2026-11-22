@@ -1,0 +1,46 @@
+[gd_resource type="Resource" script_class="UnitClassData" format=3]
+
+[ext_resource type="Script" path="res://core/data/UnitClassData.gd" id="1_class"]
+[ext_resource type="Script" path="res://core/data/ActionSkillData.gd" id="2_skill"]
+
+[sub_resource type="Resource" id="front"]
+script = ExtResource("2_skill")
+skill_id = "talisman_strike"
+display_name = "Golpe de Talismã"
+effect = 1
+targeting = 0
+power = 40
+element = "SHADOW"
+
+[sub_resource type="Resource" id="back"]
+script = ExtResource("2_skill")
+skill_id = "bell_of_the_dead"
+display_name = "Sino dos Mortos"
+effect = 1
+targeting = 2
+power = 25
+element = "SHADOW"
+ally_buff_trait = "undead"
+ally_buff_attack_pct = 20
+
+[resource]
+script = ExtResource("1_class")
+class_id = "wu_sombrio"
+display_name = "Xamã Wu Sombrio"
+era_id = 1
+archetype = 4
+grid_slots = 1
+traits = PackedStringArray("evil_shaman")
+placeholder_color = Color(0.4, 0.2, 0.45, 1)
+max_hp = 56
+max_morale = 80
+attack = 8
+defense = 5
+intellect = 18
+agility = 8
+front_action = SubResource("front")
+back_action = SubResource("back")
+min_alignment = 0
+max_alignment = 35
+march_speed_pct = 100
+night_march_bonus_pct = 0

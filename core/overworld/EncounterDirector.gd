@@ -38,9 +38,14 @@ func start_battle(ally: SquadToken, foe: SquadToken) -> void:
 
 func _on_battle_closed(result: Dictionary) -> void:
 	var effects: Dictionary = result.get("effects", {})
-	var recruited: String = BattleConsequences.apply(effects, _ally_token.squad, _foe_token.squad)
-	if not recruited.is_empty():
-		map.show_banner(WorldState.era_config.recruit_message % [recruited, _ally_token.squad.display_name], 4.0)
+	var report: Dictionary = BattleConsequences.apply(effects, _ally_token.squad, _foe_token.squad)
+	var notes: Array[String] = []
+	if not String(report["recruited"]).is_empty():
+		notes.append(WorldState.era_config.recruit_message % [report["recruited"], _ally_token.squad.display_name])
+	for item_name: String in report["items"]:
+		notes.append(WorldState.era_config.item_message % item_name)
+	if not notes.is_empty():
+		map.show_banner("\n".join(notes), 4.0)
 	if bool(effects.get("player_won", false)):
 		var node_id: String = _foe_token.squad.current_node_id
 		var was_patrol: bool = _foe_token.squad.is_patrol()

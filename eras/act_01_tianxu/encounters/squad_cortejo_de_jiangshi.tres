@@ -1,0 +1,69 @@
+[gd_resource type="Resource" script_class="SquadData" format=3]
+
+[ext_resource type="Script" path="res://core/data/SquadData.gd" id="1_squad"]
+[ext_resource type="Script" path="res://core/data/UnitInstance.gd" id="1_unit"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/jiangshi.tres" id="2_jiangshi"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/wu_sombrio.tres" id="3_wu_sombrio"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/huli_jing.tres" id="4_huli_jing"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/items/talisma_de_cinabrio.tres" id="9_talisma"]
+
+[sub_resource type="Resource" id="unit_0"]
+script = ExtResource("1_unit")
+class_data = ExtResource("2_jiangshi")
+unit_name = "Jiangshi"
+level = 2
+alignment = 10
+slot = 0
+is_leader = false
+
+[sub_resource type="Resource" id="unit_1"]
+script = ExtResource("1_unit")
+class_data = ExtResource("2_jiangshi")
+unit_name = "Jiangshi"
+level = 2
+alignment = 10
+slot = 1
+is_leader = false
+
+[sub_resource type="Resource" id="unit_2"]
+script = ExtResource("1_unit")
+class_data = ExtResource("2_jiangshi")
+unit_name = "Jiangshi"
+level = 2
+alignment = 10
+slot = 2
+is_leader = false
+
+[sub_resource type="Resource" id="unit_3"]
+script = ExtResource("1_unit")
+class_data = ExtResource("3_wu_sombrio")
+unit_name = "Xamã do Sino"
+level = 3
+alignment = 15
+slot = 4
+is_leader = true
+
+[sub_resource type="Resource" id="unit_4"]
+script = ExtResource("1_unit")
+class_data = ExtResource("4_huli_jing")
+unit_name = "Huli Jing"
+level = 3
+alignment = 35
+slot = 5
+is_leader = false
+
+[resource]
+script = ExtResource("1_squad")
+squad_id = "cortejo_de_jiangshi"
+display_name = "Cortejo de Jiangshi"
+faction = "enemy"
+units = Array[ExtResource("1_unit")]([SubResource("unit_0"), SubResource("unit_1"), SubResource("unit_2"), SubResource("unit_3"), SubResource("unit_4")])
+current_node_id = "templo_bambu"
+patrol_route = Array[String](["templo_bambu", "aldeia_terracos"])
+encounter_tag = "night_encounter"
+supernatural = true
+victory_effects = {
+"popular_support": 5
+}
+rare_drop = ExtResource("9_talisma")
+rare_drop_chance = 25

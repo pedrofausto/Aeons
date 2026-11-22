@@ -16,8 +16,15 @@
 [ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/daoshi_healer.tres" id="6_daoshi_healer"]
 [ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/youxia.tres" id="6_youxia"]
 [ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/buqu.tres" id="6_buqu"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/jiangshi.tres" id="6_jiangshi"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/wu_sombrio.tres" id="6_wu_sombrio"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/huli_jing.tres" id="6_huli_jing"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/xian.tres" id="6_xian"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/fangshi.tres" id="6_fangshi"]
 [ext_resource type="Resource" path="res://eras/act_01_tianxu/map/squad_cobradores_selo_de_ferro.tres" id="7_patrol"]
 [ext_resource type="Resource" path="res://eras/act_01_tianxu/encounters/nanlu_encounters.tres" id="8_encounters"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/encounters/hanmen_encounters.tres" id="8_hanmen"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/encounters/pengming_encounters.tres" id="8_pengming"]
 
 [resource]
 script = ExtResource("1_era")
@@ -40,10 +47,10 @@ color_neutral = Color(0.55, 0.58, 0.52, 1)
 color_background = Color(0.07, 0.1, 0.09, 1)
 color_road = Color(0.42, 0.38, 0.28, 1)
 map_nodes = Array[ExtResource("3_nodescript")]([ExtResource("5_linhai"), ExtResource("5_aldeia_terracos"), ExtResource("5_templo_bambu"), ExtResource("5_forte_regencia")])
-unit_classes = Array[ExtResource("3_classscript")]([ExtResource("6_fubing"), ExtResource("6_ji_halberdier"), ExtResource("6_nubing_crossbow"), ExtResource("6_daoshi_healer"), ExtResource("6_youxia"), ExtResource("6_buqu")])
+unit_classes = Array[ExtResource("3_classscript")]([ExtResource("6_fubing"), ExtResource("6_ji_halberdier"), ExtResource("6_nubing_crossbow"), ExtResource("6_daoshi_healer"), ExtResource("6_youxia"), ExtResource("6_buqu"), ExtResource("6_jiangshi"), ExtResource("6_wu_sombrio"), ExtResource("6_huli_jing"), ExtResource("6_xian"), ExtResource("6_fangshi")])
 starting_squads = Array[ExtResource("3_squadscript")]([ExtResource("4_squad")])
 enemy_patrols = Array[ExtResource("3_squadscript")]([ExtResource("7_patrol")])
-encounter_tables = Array[Resource]([ExtResource("8_encounters")])
+encounter_tables = Array[Resource]([ExtResource("8_encounters"), ExtResource("8_hanmen"), ExtResource("8_pengming")])
 max_roaming_squads = 1
 victory_text = "O Forte da Regência caiu. Os Vales de Nanlu respiram livres."
 next_era_config = "res://eras/act_02_occitania/EraConfig_Act02.tres"

@@ -43,6 +43,21 @@ func set_path(new_path: Array[String]) -> void:
 
 
 ## Avança na direção do próximo nó. `positions` = { node_id: Vector2 }.
+## Velocidade efetiva: base x patrulha x classes (noite) x itens do jogador.
+func march_speed(base: float) -> float:
+	var speed: float = base * squad.march_factor(WorldState.time_of_day)
+	if squad.is_patrol():
+		speed *= PatrolAI.SPEED_FACTOR
+	if is_player():
+		speed *= WorldState.item_march_multiplier()
+	return speed
+
+
+## Encontros noturnos ficam ocultos (emboscada) sem item que os revele.
+func _process(_delta: float) -> void:
+	visible = not (squad != null and squad.roaming_until_day and not WorldState.reveals_night_encounters())
+
+
 func advance(delta: float, speed: float, positions: Dictionary) -> void:
 	if path.is_empty():
 		return
