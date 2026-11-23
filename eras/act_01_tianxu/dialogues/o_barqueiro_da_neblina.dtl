@@ -1,0 +1,11 @@
+A névoa do Cais da Neblina é tão espessa que os faróis parecem flutuar sobre o mar. A doca de madeira range sob as botas da Guarda.
+Um barqueiro de chapéu de palha amarra o barco sem levantar os olhos.
+Barqueiro: "Gente do continente, não é? Então ouçam: a Regência mandou homens à ilha. Estão na Ponte da Maré, e não vieram rezar."
+Barqueiro: "Conheço uma passagem pelas rochas que a maré baixa revela por uma hora. Leva direto ao flanco da ponte. Por oitenta moedas, ela é vossa."
+- Pagar pela passagem secreta
+	[signal arg="effect|resources=-80|flag=pengming_tide_route|garrison_hp_pct=ponte_mare:70"]
+	Na maré baixa, a Guarda escala as rochas e cai sobre o acampamento da Regência antes do amanhecer. Os agentes recuam feridos para a ponte.
+- Recusar e seguir pela trilha
+	[signal arg="effect|flag=pengming_tide_refused"]
+	O barqueiro dá de ombros. "A maré não espera ninguém, comandante. Nem a Regência."
+[end_timeline]

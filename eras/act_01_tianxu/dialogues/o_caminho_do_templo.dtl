@@ -1,0 +1,23 @@
+O incenso do Templo do Bambu Cinzento ainda queima quando a Guarda atravessa o portão. O vento faz os bambus estalarem como lanças encostadas umas nas outras.
+Um velho monge varre o pátio sem pressa. Seus olhos, porém, acompanham cada passo do comandante.
+Zhuo: "Sou Zhuo, abade deste templo. Os viajantes trazem notícias de tudo o que fazes nos vales. Dizem muito sobre o teu caminho — mais do que talvez saibas."
+if {WorldState.doctrine} >= 15:
+	Zhuo: "Andas com a espada à frente do corpo. Incendeias os celeiros dos tiranos e chamas a isso de Mandato. Talvez o Céu precise mesmo de um trovão para acordar."
+	Zhuo: "Mas lembra-te: o bambu que se ergue contra a tempestade ou verga, ou parte. Escolhe bem por quem estás disposto a partir."
+	Ele amarra uma fita vermelha no cabo da espada do comandante. Os jovens monges que assistem baixam a cabeça em silêncio.
+	[signal arg="effect|doctrine=+5|popular_support=+5|flag=act1_temple_red_ribbon|echo=temple_path_revolution"]
+elif {WorldState.doctrine} <= -15:
+	Zhuo: "Andas com as mãos abertas. Poupaste quem podia ter morrido e repartiste o que podia ter sido tomado. O povo dos vales fala de ti em voz baixa, como se fala de chuva depois da seca."
+	Zhuo: "O Dao não discute com ninguém, e por isso ninguém discute com ele. Mas a água mansa também precisa saber para onde corre — senão vira pântano."
+	Ele oferece ao comandante uma tigela de chá quente. Os feridos da Guarda são recebidos nas celas dos monges sem que ninguém peça.
+	[signal arg="effect|alignment=+5|popular_support=+5|flag=act1_temple_tea|echo=temple_path_peace"]
+else:
+	Zhuo: "Ainda não escolheste o teu caminho, não é? Ainda olhas para a espada e para a mão aberta como quem mede duas estradas no nevoeiro."
+	Zhuo: "Diz-me, comandante: quando os vales estiverem livres, como queres que se lembrem de ti?"
+	- Como a tempestade que derrubou a Regência.
+		[signal arg="effect|doctrine=+10|flag=act1_temple_red_ribbon|echo=temple_path_revolution"]
+		Zhuo assente devagar e amarra uma fita vermelha no cabo da espada. "Então que a tempestade saiba quem está protegendo."
+	- Como a mão que devolveu o arroz a quem o plantou.
+		[signal arg="effect|doctrine=-10|flag=act1_temple_tea|echo=temple_path_peace"]
+		Zhuo serve duas tigelas de chá e senta-se ao lado do comandante. "Então bebe. Quem caminha devagar chega longe."
+[end_timeline]

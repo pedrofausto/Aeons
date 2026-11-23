@@ -22,5 +22,6 @@ signal interlude_finished(timeline_path: String)
 signal world_state_changed()
 signal era_loaded(config: EraConfig)
 signal era_transition(from_act: int, to_act: int)
+signal player_squad_formed(squad: SquadData)   # Recruta sem vaga na grade forma um esquadrão próprio
 
 @warning_ignore_restore("unused_signal")

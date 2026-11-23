@@ -120,6 +120,10 @@ func apply_signal_argument(argument: String) -> void:
 	if effects.has("essence_echo"):  # "essence_echo=chave:valor" (ex.: act2_philosophy:awaken_within)
 		var echo: PackedStringArray = String(effects["essence_echo"]).split(":", true, 1)
 		EssenceState.record_echo(echo[0], echo[1] if echo.size() > 1 else "")
+	if effects.has("item") and ResourceLoader.exists(String(effects["item"])):  # "item=res://...tres"
+		WorldState.add_item(load(String(effects["item"])) as ItemData)
+	if effects.has("recruit"):  # "recruit=class_id:Nome" entra no 1º esquadrão do jogador
+		_recruit(String(effects["recruit"]))
 	if effects.has("resistance"):
 		EssenceState.add_resistance_flag(String(effects["resistance"]))
 	WorldState.apply_effects(effects)
@@ -140,3 +144,29 @@ func _finish() -> void:
 	InterludeManager.mark_played(timeline_path, WorldState.era_config)
 	EventBus.interlude_finished.emit(timeline_path)
 	queue_free()
+
+
+func _recruit(spec: String) -> void:
+	var parts: PackedStringArray = spec.split(":", true, 1)
+	var era: EraConfig = WorldState.era_config
+	if WorldState.player_squads.is_empty() or era == null:
+		return
+	var first: SquadData = WorldState.player_squads[0]
+	for cls: UnitClassData in era.unit_classes:
+		if cls.class_id != parts[0]:
+			continue
+		var unit_label: String = parts[1] if parts.size() > 1 else cls.display_name
+		var level: int = maxi(1, roundi(first.average_level()))
+		for squad: SquadData in WorldState.player_squads:  # 1ª grade com vaga
+			if squad.first_free_slot() >= 0:
+				squad.units.append(UnitInstance.create(cls, unit_label, level, squad.first_free_slot()))
+				return
+		# Grades cheias: o recruta forma um esquadrão próprio no nó do interlúdio.
+		var squad := SquadData.new()
+		squad.squad_id = "recruta_%s" % cls.class_id
+		squad.display_name = unit_label
+		squad.current_node_id = node_id if not node_id.is_empty() else first.current_node_id
+		squad.units = [UnitInstance.create(cls, unit_label, level, 4, true)]
+		WorldState.player_squads.append(squad)
+		EventBus.player_squad_formed.emit(squad)
+		return

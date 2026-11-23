@@ -26,3 +26,17 @@ static func find_path(graph: Dictionary, from_id: String, to_id: String) -> Arra
 		route.push_front(cursor)
 		cursor = previous[cursor]
 	return route
+
+
+## Desenha as estradas do grafo; trechos que tocam um nó SEA viram rota marítima tracejada.
+static func draw_roads(canvas: CanvasItem, nodes: Dictionary, era: EraConfig) -> void:
+	for node_id: String in nodes:
+		var from: MapNode = nodes[node_id]
+		for next_id: String in from.data.neighbors:
+			if not nodes.has(next_id) or node_id >= next_id:
+				continue
+			var to: MapNode = nodes[next_id]
+			if MapNodeData.NodeType.SEA in [from.data.node_type, to.data.node_type]:
+				canvas.draw_dashed_line(from.position, to.position, era.color_sea_lane, 2.0, 6.0)
+			else:
+				canvas.draw_line(from.position, to.position, era.color_road, 3.0)

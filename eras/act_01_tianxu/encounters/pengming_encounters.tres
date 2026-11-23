@@ -9,6 +9,7 @@ script = ExtResource("2_entry")
 squad = ExtResource("3_0")
 weight = 1
 until_defeated = true
+required_flag = "liberated_observatorio_nove_ceus"
 
 [resource]
 script = ExtResource("1_table")

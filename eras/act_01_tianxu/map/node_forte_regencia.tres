@@ -11,6 +11,6 @@ node_type = 1
 faction = "enemy"
 region_id = "nanlu"
 gold_per_tick = 40
-map_position = Vector2(500, 200)
+map_position = Vector2(510, 165)
 neighbors = Array[String](["aldeia_terracos", "templo_bambu"])
 garrison = ExtResource("2_garrison")

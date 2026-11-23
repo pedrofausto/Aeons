@@ -1,15 +1,21 @@
-O incenso do Templo do Bambu Cinzento ainda queima quando a Guarda atravessa o portão.
-Entre os monges, um ancião de olhos velados aperta contra o peito um feixe de rolos de seda.
-"Chamam-me Zhuo. Medi o céu de Pengming por quarenta anos, até que a vista me deixou."
-"Estes mapas mostram o que nenhum decreto ousa admitir: as estrelas sobre Tianxu nunca se deslocam. Nem uma, em trezentos anos de registros."
-Um mensageiro da Regência chegou antes de vós. Oferece prata e pólvora alquímica em troca dos pergaminhos — e do silêncio do velho.
-"Os agentes do Selo de Ferro voltarão ao anoitecer, comandante. O que farás com um céu que não se move?"
-- Proteger o Astrônomo
-	[signal arg="effect|decision=act1_blind_astronomer_protected:true|alignment=10|popular_support=8|flag=act1_astronomer_sheltered|echo=protected_star_charts|resistance=protected_star_charts"]
-	A Guarda esconde Zhuo e os rolos sob o altar de bambu. Os monges passam a noite em vigília, e a notícia corre pelos terraços: alguém enfrentou o Selo de Ferro por um velho e seus mapas.
-	Zhuo toca o rosto do comandante como quem lê uma constelação. "Lembrarei de ti, mesmo que o céu esqueça."
-- Entregar os Pergaminhos
-	[signal arg="effect|decision=act1_blind_astronomer_protected:false|resources=300|alignment=-10|flag=act1_star_charts_surrendered|echo=surrendered_star_charts"]
-	O mensageiro conta a prata em silêncio e leva os rolos. Os carros de pólvora seguem para o acampamento.
-	Zhuo permanece sentado diante do altar vazio, voltado para um céu que já não pode ver.
+O vento do cume sopra frio no terraço do Observatório dos Nove Céus. No centro, a grande esfera armilar de bronze gira devagar sob as lanternas.
+Entre mesas cobertas de rolos de seda, um ancião de vestes índigo ergue o rosto para o céu que já não enxerga.
+Xu: "Chamam-me Xu, arquivista deste observatório. Perdi a vista depois de décadas fitando os astros por lentes de cristal — mas decorei cada estrela destes pergaminhos."
+Xu: "Três séculos de registros em seda provam o impossível: o vento muda, os rios secam, as dinastias caem — mas as estrelas além de Pengming nunca avançaram um único fio de cabelo. Alguém pregou o céu no teto do mundo."
+Xu: "A esfera também sabe. O mecanismo de água quebrou há três anos, e mesmo assim as argolas giram no compasso exato de um relógio que não vem da água nem do vento."
+Sobre a mesa, um rolo dobrado mostra nove círculos traçados um dentro do outro, com uma precisão que nenhum pincel comum alcançaria.
+Os agentes da Regência que vigiavam a Ponte da Maré trouxeram uma oferta: armas de fogo alquímico capazes de derrubar o Portão de Hanmen — em troca dos arquivos proibidos.
+Xu: "Os pergaminhos contradizem o Mandato do Céu que o Chanceler Gao Shen proclama. O que farás com um céu que não se move, comandante?"
+- Preservar os pergaminhos em silêncio
+	[signal arg="effect|decision=act1_blind_astronomer_protected:true|alignment=+10|popular_support=+8|doctrine=-10|flag=act1_astronomer_sheltered|echo=protected_star_charts|resistance=pengming_fixed_stars|essence_echo=act1_sky_grid:observation|item=res://eras/act_01_tianxu/items/carta_celeste.tres|recruit=fangshi:Fangshi Lan"]
+	A Guarda esconde a biblioteca nas grutas sob o observatório, sem tocar no cais nem nos barqueiros. Ao amanhecer, os rolos dormem em silêncio sob a rocha.
+	Xu entrega ao comandante um mapa de seda dobrado. "A Carta dos Nove Céus. Lê-a quando a noite ficar escura demais." Uma discípula Fangshi, Lan, pede para seguir com a Guarda.
+- Usar os mapas como arma política
+	[signal arg="effect|decision=act1_blind_astronomer_protected:true|popular_support=+20|doctrine=+15|flag=act1_charts_published|echo=published_star_charts|resistance=pengming_fixed_stars|essence_echo=act1_sky_grid:rupture"]
+	Copistas trabalham a noite inteira. Em poucos dias, cartazes nas praças de Nanlu proclamam que o céu de Tiandu é falso, e as províncias rebeldes se inflamam.
+	Xu ouve os sinos de longe e suspira. "Agora todos olham para cima. Cuida-te, comandante: a Regência mandará as lâminas da Lua Negra atrás de quem acendeu esta chama."
+- Entregar os pergaminhos por fogo alquímico
+	[signal arg="effect|decision=act1_blind_astronomer_protected:false|resources=+300|alignment=-10|flag=act1_star_charts_surrendered|echo=surrendered_star_charts|essence_echo=act1_sky_grid:betrayed_truth|trust=fac_youxia:-15|garrison_hp_pct=hanmen_gate:50"]
+	Os agentes contam os rolos e partem pela Ponte da Maré. Em Hanmen, os barris de fogo alquímico já racham as muralhas do portão.
+	Xu permanece sentado diante da mesa vazia, voltado para um céu que já não pode ver. Os monges dos Santuários fecham os portões quando a Guarda passa.
 [end_timeline]

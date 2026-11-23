@@ -29,15 +29,17 @@
 - `tests/` — TestRunner.tscn, test_combat_3x2, test_world_state, test_overworld, test_interlude, test_mythic, test_act1_fixes, test_act2, run_tests.sh (exige os 3 marcadores).
 
 ## Nomes canônicos — Ato I (Império de Tianxu · Vales de Nanlu)
-- **Nós (região nanlu):** Linhai dos Canais (base aliada) · Aldeia dos Terraços (neutra, celeiro) · Templo do Bambu Cinzento (neutro; dilema O Astrônomo Cego) · Forte da Regência (inimigo).
+- **Nós (região nanlu):** Linhai dos Canais (base aliada) · Aldeia dos Terraços (neutra, celeiro) · Templo do Bambu Cinzento (neutro; interlúdio O Caminho do Templo, Abade Zhuo) · Forte da Regência (inimigo, (510,165)) · Estreito de Linhai (nó SEA; única rota para Pengming).
+- **Arquipélago de Pengming (região pengming, opcional):** Cais da Neblina (O Barqueiro da Neblina: 80 ouro → `pengming_tide_route`, guarnição da Ponte a 70%) · Gruta dos Elixires de Jade (Corsários da Maré Cinzenta; vitória → `elixir_pengming`) · Santuários do Bambu · Ponte da Maré (Expedição da Regência: Inquisidor Legalista Mo + Cike + Besteiros) · Observatório dos Nove Céus (dilema do Arquivista Xu). Espíritos da Névoa (Huli Jing) à noite após o Cais; Guardiões do Observatório só depois do encontro com Xu.
+- **Templo (Abade Zhuo):** fala conforme a Doutrina — ≥ +15 fita vermelha (+5 DOC, +5 apoio) · ≤ −15 chá (+5 ALI, +5 apoio) · entre elas o jogador escolhe (±10 DOC). Ecos `temple_path_revolution`/`temple_path_peace`.
 - **Nós (região hanmen, montanha):** Passagem de Hanmen · Portão de Hanmen (fortaleza opcional; General Wei Bo, Feudo dos Três Rios; rota de honra → `hanmen_pact_of_honor`).
-- **Astrônomo Cego (Zhuo):** proteger grava `EssenceState.decisions.act1_blind_astronomer_protected = true` (+10 alinhamento, +8 apoio); entregar grava `false` (+300 ouro, −10 alinhamento).
+- **Astrônomo Cego (Arquivista Xu, Observatório):** preservar em silêncio (`decisions.act1_blind_astronomer_protected = true`, +10 ALI, +8 apoio, −10 DOC, Carta Celeste dos Nove Céus, Fangshi Lan, eco `act1_sky_grid = observation`) · arma política (`true`, +20 apoio, +15 DOC, flag `act1_charts_published` → Caçadores Cike rondam Nanlu, eco `rupture`) · fogo alquímico (`false`, +300 ouro, −10 ALI, guarnição de Hanmen a 50%, `fac_youxia` −15, eco `betrayed_truth`). As duas primeiras gravam a anomalia `pengming_fixed_stars`.
 - **Facção inimiga:** Regência do Selo de Ferro (Chanceler Gao Shen).
 - **Esquadrões:** Guarda dos Canais (jogador) · Guarnição da Regência (forte) · Cobradores do Selo de Ferro (patrulha fixa, `moral_escort`) · Piratas Fluviais do Delta (`bandit_loot`, dia) · Milícia Camponesa Desesperada (`low_level_trap`).
 - **Classes (árvore alinhada ao ledger de lore v2):** Fubing → Youxia / Buqu · Alabardeiro Ji → Catafractário / Saqueador das Estepes · Besteiro Nubing → Arqueiro Montado / Assassino Cike · Fangshi → Daoshi / Alquimista Sombrio (consome 1 `talisma_cinabrio`) + Xian (mítica, consome 1 `elixir_pengming`) · Médico Imperial → Monge Taoísta / Xamã Wu Sombrio (Nv9, ALI ≤ 40) · Conselheiro Yuefu → Estrategista Junshi / Intrigante Legalista. Míticas: Xian, Jiangshi, Huli Jing. Ge Xuan (Guarda dos Canais) já começa como Daoshi.
 - **Míticas:** Jiangshi (undead, imune a moral, recebe 20% físico / 150% SPIRITUAL·PURIFY·FIRE, lento de dia e +50% à noite) · Xamã Wu Sombrio (Sino dos Mortos: +20% ataque a undead) · Huli Jing (CONFUSE em alvo mais lento) · Xian (voa, imune a status e a drenos de moral; Espada de Jade SPIRITUAL; Harmonia em área).
-- **Encontros míticos:** Cortejo de Jiangshi (só região `hanmen` e só à noite; +5 apoio; sem penalidade de nível; 25% Talismã de Cinábrio) · Guardiões do Observatório dos Nove Céus (chefe em arquipelago_pengming, até ser vencido; Moral → `pengming_xian_ally` + classe Xian; Aniquilação → Bússola dos Nove Céus: +20% marcha e revela encontros noturnos).
-- **Itens:** `talisma_cinabrio` (Alquimista Sombrio; drop 25% do Cortejo em Hanmen à noite) · `elixir_pengming` (Xian; **sem fonte jogável** até Pengming existir — a Gruta dos Elixires de Jade é a fonte natural) · Bússola dos Nove Céus (única; chefe de Pengming).
+- **Encontros míticos:** Cortejo de Jiangshi (só região `hanmen` e só à noite; +5 apoio; sem penalidade de nível; 25% Talismã de Cinábrio) · Guardiões do Observatório dos Nove Céus (chefe no Observatório, surge após o encontro com Xu e até ser vencido; Moral → `pengming_xian_ally` + classe Xian; Aniquilação → Bússola dos Nove Céus: +20% marcha e revela encontros noturnos).
+- **Itens:** `talisma_cinabrio` (Alquimista Sombrio; drop 25% do Cortejo em Hanmen à noite) · `elixir_pengming` (Xian; vitória sobre os Corsários na Gruta dos Elixires de Jade) · `carta_celeste` (única; revela encontros noturnos) · Bússola dos Nove Céus (única; chefe de Pengming).
 
 ## Nomes canônicos — Ato II (Occitânia · Cidadela de Carcassonne)
 - **Protagonista:** Aimeric de Val-Clair (líder da Companhia de Cabaret; registrado em `act_records[2]`). Trovador da Companhia: Guillem. Pierre-Roger de Rochefort (Faydit) e Diaconisa Esclarmonde falam nas cenas.
@@ -65,7 +67,7 @@
 
 ## Roteiro Mestre (linhas gerais, NÃO definitivo — `docs/Lore_Aeons_Verdade/Roteiro_Mestre_5_Atos.md`)
 - **Protagonistas (nomes reservados):** I Shen Yue · II Aimeric de Val-Clair (o roteiro antigo dizia Guilhem de Razès; substituído pelo doc completo do Ato II) · III Tenente Arthur Vance · IV Lucas Vermeer · V Sujeito-0.
-- **Conflitos em aberto (decidir antes de escrever cenas):** Ato I cena 1 tem Mestre Shen em Linhai (no jogo: velha Qiu) · Astrônomo Cego = Arquivista Xu em Pengming (no jogo: Zhuo no Templo do Bambu) · antagonista do Ato IV "Nexus Aeterna" (roteiro) × "Consórcio Meridian" (atlas).
+- **Conflitos em aberto (decidir antes de escrever cenas):** Ato I cena 1 tem Mestre Shen em Linhai (no jogo: velha Qiu) · Astrônomo Cego resolvido: Arquivista Xu no Observatório; Zhuo passa a ser o abade do Templo · antagonista do Ato IV "Nexus Aeterna" (roteiro) × "Consórcio Meridian" (atlas).
 
 ## Ato IV — Nova Vespera · Tecnocracia Nascente (catálogo canônico; AINDA NÃO IMPLEMENTADO)
 - **Slug:** `eras/act_04_modern/` · `reality_layer = "RESOURCE_NETWORK"` · `interlude_style = "clandestine_physical"` (batalhas por sinal/recursos; interlúdios físicos reais: lanchonete sob chuva, esconderijo, metrô de madrugada).
@@ -92,5 +94,4 @@
 - Sons de digitação de exemplo do Dialogic desligados (vazavam AudioStreamWAV ao fechar no meio de uma fala).
 - Ação `dialogic_default_action` declarada à mão no `project.godot`; o editor reescreve o autoload do Dialogic como `uid://`.
 - Spec mítica × schema: arquétipos MYTHIC_* viram `MYTHIC`/`HEALER_MORAL` + `traits`; "80% de resistência física" = recebe 20%; CONFUSE é determinístico (alvo mais lento); Xian usa `morale_drain_immune` (não `morale_immune`) para a vitória por Moral contra o chefe ser possível; Fangshi foi criado (não existia).
-- Região pengming tem tabela registrada (chefe Xian), mas seus nós ainda não existem no mapa.
 - Pendentes do atlas: "confiscar dobra a marcha", "distribuir atrai Youxia", áudio "reduzido a cordas" no Ato V; dilemas do Ato II.

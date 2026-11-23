@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="MapNodeData" format=3]
+
+[ext_resource type="Script" path="res://core/data/MapNodeData.gd" id="1_node"]
+
+[resource]
+script = ExtResource("1_node")
+node_id = "estreito_linhai"
+display_name = "Estreito de Linhai"
+node_type = 5
+faction = "neutral"
+region_id = "nanlu"
+terrain = "river"
+required_for_victory = false
+gold_per_tick = 0
+map_position = Vector2(190, 338)
+neighbors = Array[String](["linhai", "cais_neblina"])
+label_side = "above"

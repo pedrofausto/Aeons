@@ -70,6 +70,7 @@ func apply_immediate(effects: Dictionary) -> void:
 		var parts: PackedStringArray = String(effects["garrison_hp_pct"]).split(":")
 		for squad: SquadData in defenders(parts[0]):
 			for unit: UnitInstance in squad.get_living_units():
+				unit.ensure_vitals()  # hp -1 = cheio: converte antes de aplicar a porcentagem
 				unit.hp = maxi(1, unit.hp * int(parts[1]) / 100)
 	if effects.has("reinforce") and map.nodes.has(String(effects["reinforce"])):
 		var node_id: String = effects["reinforce"]

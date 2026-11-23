@@ -18,6 +18,9 @@ var _foe_token: SquadToken
 func setup(p_map: OverworldMap) -> void:
 	map = p_map
 	EventBus.interlude_requested.connect(open_interlude)
+	EventBus.player_squad_formed.connect(func(squad: SquadData) -> void:
+		if map.nodes.has(squad.current_node_id):
+			map.spawn_token(squad))
 
 
 func is_busy() -> bool:

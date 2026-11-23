@@ -102,18 +102,25 @@ func _test_astronomer(t: Node) -> void:
 	var map: OverworldMap = await _open_map(t)
 	var ally: SquadToken = map.selected_token
 	var director: EncounterDirector = map.get_node("%EncounterDirector")
-	var opened: String = await _march(t, map, ally, "templo_bambu", {ASTRONOMER: 1}, 40.0)
-	t.check("astronomer_event_on_first_visit", opened == ASTRONOMER and WorldState.get_node_faction("templo_bambu") == "player")
+	var opened: String = await _to_observatory(t, map, {ASTRONOMER: 1})
+	t.check("astronomer_event_on_first_visit", opened == ASTRONOMER and WorldState.get_node_faction("observatorio_nove_ceus") == "player")
 	t.check("astronomer_protect_records_flag", EssenceState.decisions.get(HONOR_FLAG) == true
-		and WorldState.alignment == 60 and WorldState.popular_support == 58
-		and "protected_star_charts" in EssenceState.aeon_resistance_flags, "al=%d ap=%d" % [WorldState.alignment, WorldState.popular_support])
+		and WorldState.alignment == 60 and WorldState.popular_support == 58 and WorldState.doctrine == -10
+		and "pengming_fixed_stars" in EssenceState.aeon_resistance_flags, "al=%d ap=%d" % [WorldState.alignment, WorldState.popular_support])
+	var recruited: bool = false  # Grade cheia: Lan forma um esquadrão próprio no Observatório.
+	for token: SquadToken in map.tokens:
+		if token.is_player() and token.squad.squad_id == "recruta_fangshi" and token.squad.current_node_id == "observatorio_nove_ceus":
+			recruited = token.squad.get_leader().unit_name == "Fangshi Lan"
+	t.check("astronomer_protect_gives_chart_and_fangshi", recruited and WorldState.has_item("carta_celeste")
+		and WorldState.reveals_night_encounters() and EssenceState.get_echo("act1_sky_grid") == "observation")
 	# Só uma vez: nem o registro direto nem um novo sinal da timeline alteram a decisão.
 	t.check("astronomer_flag_set_once", not EssenceState.record_decision(HONOR_FLAG, false)
 		and not InterludeManager.is_eligible(ASTRONOMER, WorldState.era_config))
+	var gold: int = WorldState.resources
 	var room := (load("res://core/interlude/InterludeRoom.tscn") as PackedScene).instantiate()
 	room.call("apply_signal_argument", "effect|decision=%s:false|resources=300|alignment=-10" % HONOR_FLAG)
 	room.free()
-	t.check("astronomer_replay_ignored", EssenceState.decisions[HONOR_FLAG] == true and WorldState.resources == 500
+	t.check("astronomer_replay_ignored", EssenceState.decisions[HONOR_FLAG] == true and WorldState.resources == gold
 		and WorldState.alignment == 60)
 	map.queue_free()
 	await t.get_tree().process_frame
@@ -122,10 +129,17 @@ func _test_astronomer(t: Node) -> void:
 	_reset()
 	_quiet()
 	map = await _open_map(t)
-	await _march(t, map, map.selected_token, "templo_bambu", {ASTRONOMER: 2}, 40.0)
+	var gate_guard: SquadData = null
+	for token: SquadToken in map.tokens:
+		if token.squad.squad_id == "guarda_de_hanmen":
+			gate_guard = token.squad
+	await _to_observatory(t, map, {ASTRONOMER: 3})
 	t.check("astronomer_surrender_records_false", EssenceState.decisions.has(HONOR_FLAG)
 		and EssenceState.decisions[HONOR_FLAG] == false and WorldState.resources >= 800 and WorldState.alignment == 40,
 		"ouro=%d al=%d" % [WorldState.resources, WorldState.alignment])
+	t.check("astronomer_fire_cracks_hanmen", gate_guard != null
+		and gate_guard.units.all(func(u: UnitInstance) -> bool: return u.hp > 1 and u.hp <= u.get_max_hp() / 2 + 1)
+		and int(WorldState.faction_trust.get("fac_youxia", 0)) == -15 and EssenceState.get_echo("act1_sky_grid") == "betrayed_truth")
 	map.queue_free()
 	await t.get_tree().process_frame
 
@@ -136,7 +150,7 @@ func _test_astronomer(t: Node) -> void:
 	_quiet()
 	map = await _open_map(t)
 	ally = map.selected_token
-	await _march(t, map, ally, "templo_bambu", {RICE: 1, ASTRONOMER: 1}, 40.0)
+	await _to_observatory(t, map, {RICE: 1, ASTRONOMER: 1})
 	var honor_alignment: float = ally.squad.average_alignment()
 	var won: bool = false
 	for attempt: int in 6:
@@ -149,6 +163,17 @@ func _test_astronomer(t: Node) -> void:
 		and WorldState.has_flag("hanmen_pact_of_honor"), "alinhamento=%.1f venceu=%s" % [honor_alignment, won])
 	map.queue_free()
 	await t.get_tree().process_frame
+
+
+## Pengming por mar: Linhai -> Estreito -> Cais -> Santuários -> Ponte -> Observatório.
+## As guarnições da ilha saem do caminho; o Barqueiro é recusado (opção 2).
+func _to_observatory(t: Node, map: OverworldMap, choices: Dictionary) -> String:
+	for token: SquadToken in map.tokens.duplicate():
+		if token.squad.squad_id in ["corsarios_mare_cinzenta", "expedicao_regencia"]:
+			map.remove_token(token)
+	var all_choices: Dictionary = {"res://eras/act_01_tianxu/dialogues/o_barqueiro_da_neblina.dtl": 2}
+	all_choices.merge(choices, true)
+	return await _march(t, map, map.selected_token, "observatorio_nove_ceus", all_choices, 160.0)
 
 
 func _quiet() -> void:

@@ -42,7 +42,9 @@ directories/dtl_directory={
 "dilema_04_beziers": "res://eras/act_02_occitania/dialogues/dilema_04_beziers.dtl",
 "dilema_05_tarascon": "res://eras/act_02_occitania/dialogues/dilema_05_tarascon.dtl",
 "dilema_06_montsegur": "res://eras/act_02_occitania/dialogues/dilema_06_montsegur.dtl",
-"o_astronomo_cego": "res://eras/act_01_tianxu/dialogues/o_astronomo_cego.dtl"
+"o_astronomo_cego": "res://eras/act_01_tianxu/dialogues/o_astronomo_cego.dtl",
+"o_barqueiro_da_neblina": "res://eras/act_01_tianxu/dialogues/o_barqueiro_da_neblina.dtl",
+"o_caminho_do_templo": "res://eras/act_01_tianxu/dialogues/o_caminho_do_templo.dtl"
 }
 layout/style_directory={}
 

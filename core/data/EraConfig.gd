@@ -35,6 +35,7 @@ var interlude_style: String = "camp"
 @export var color_neutral: Color = Color(0.55, 0.55, 0.55)
 @export var color_background: Color = Color(0.08, 0.09, 0.08)
 @export var color_road: Color = Color(0.45, 0.4, 0.3)
+@export var color_sea_lane: Color = Color(0.35, 0.55, 0.65)  # Rotas marítimas (nós SEA)
 
 @export_group("Interlúdio (Dialogic, resolução lógica 640x360)")
 @export var interlude_backdrop: PackedScene     # Cenário da era (paralaxe); o core só traz céu e lanterna

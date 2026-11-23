@@ -215,12 +215,7 @@ func _is_busy() -> bool:
 
 
 func _draw_roads() -> void:
-	var color: Color = WorldState.era_config.color_road
-	for node_id: String in nodes:
-		var from: MapNode = nodes[node_id]
-		for next_id: String in from.data.neighbors:
-			if nodes.has(next_id) and node_id < next_id:
-				_roads.draw_line(from.position, (nodes[next_id] as MapNode).position, color, 3.0)
+	MapGraph.draw_roads(_roads, nodes, WorldState.era_config)
 
 
 func remove_token(token: SquadToken) -> void:

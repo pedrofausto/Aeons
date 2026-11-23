@@ -2,7 +2,7 @@ class_name MapNodeData
 extends Resource
 ## ID, tipo, facção inicial, ouro/tick, vizinhos e gatilho de evento de um nó do mapa.
 
-enum NodeType { CITY, FORTRESS, RESOURCE, SERVER, PASS }
+enum NodeType { CITY, FORTRESS, RESOURCE, SERVER, PASS, SEA }  # SEA: rota marítima (estrada tracejada)
 
 @export var node_id: String = ""
 @export var display_name: String = ""
@@ -21,4 +21,4 @@ enum NodeType { CITY, FORTRESS, RESOURCE, SERVER, PASS }
 @export_file("*.dtl") var liberation_timeline: String = ""  # Interlúdio na 1ª vez sob controle aliado
 @export var liberation_title: String = ""    # Título exibido na sala do interlúdio
 @export_file("*.dtl") var visit_timeline: String = ""  # Interlúdio na 1ª chegada de um esquadrão aliado
-@export_enum("below", "above") var label_side: String = "below"  # Evita sobrepor rótulos vizinhos
+@export_enum("below", "above", "left", "right") var label_side: String = "below"  # Evita sobrepor rótulos vizinhos

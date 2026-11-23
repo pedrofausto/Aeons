@@ -110,9 +110,11 @@ func run(t: Node) -> void:
 		and BattleConsequences.compute(timeout_win, honorable, boss, "attacker", {})["rewards"].is_empty())
 	var pengming := load(ENC % "pengming_encounters") as EncounterTable
 	var rng := RandomNumberGenerator.new()
+	var hidden_before_observatory: bool = pengming.pick(rng, "night", 5.0) == null
+	WorldState.set_flag("liberated_observatorio_nove_ceus")  # O guardião só desperta depois do encontro com Xu.
 	var before := pengming.pick(rng, "night", 5.0)
 	WorldState.set_flag("defeated_guardiao_xian_pengming")
-	t.check("boss_reactivable_until_defeated", before != null and pengming.pick(rng, "day", 5.0) == null)
+	t.check("boss_reactivable_until_defeated", hidden_before_observatory and before != null and pengming.pick(rng, "day", 5.0) == null)
 
 	# 7. Mapa: Jiangshi lento de dia e rápido à noite; Xian voa; emboscada noturna oculta.
 	t.check("jiangshi_night_march", is_equal_approx(_squad([[cls["jiangshi"], 1, 0, true]]).march_factor("day"), 0.6)

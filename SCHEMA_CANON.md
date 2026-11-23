@@ -62,7 +62,7 @@ res://
 `pause_toggled(is_paused)` · `tick_advanced(day)` · `time_of_day_changed(time_of_day)` · `node_captured(node_id, faction_id)` ·
 `battle_requested(ally_squad, enemy_squad, context)` · `battle_ended(result)` · `interlude_requested(timeline_path, node_id)` ·
 `interlude_choice_applied(effects)` · `interlude_finished(timeline_path)` · `world_state_changed()` · `era_loaded(config)` ·
-`era_transition(from_act, to_act)`.
+`era_transition(from_act, to_act)` · `player_squad_formed(squad)` (recruta sem vaga forma esquadrão próprio; o `EncounterDirector` cria o token).
 
 ### 3.2 `WorldState` — estado visível do ato (reiniciado na Derrota Falsa)
 | Campo | Tipo | Faixa / valores |
@@ -157,11 +157,11 @@ Moral" se modela com `honor_rule` (ex.: o rito de paz da Tarasca). Em runtime (n
 **Sempre `clone()` antes de usar um `.tres` em jogo**; o recurso original nunca é mutado.
 
 ### 4.5 `MapNodeData`
-`node_id` · `display_name` · `node_type: NodeType` (CITY, FORTRESS, RESOURCE, SERVER, PASS) · `faction` (inicial) ·
+`node_id` · `display_name` · `node_type: NodeType` (CITY, FORTRESS, RESOURCE, SERVER, PASS, SEA — SEA = rota marítima; estradas que tocam um nó SEA são tracejadas na cor `EraConfig.color_sea_lane`) · `faction` (inicial) ·
 `region_id` · `terrain` (§6.1) · `required_for_victory = true` · `gold_per_tick` · `map_position` (pixels lógicos
 640×360) · `neighbors: Array[String]` (grafo; sem NavigationRegion2D) · `garrison: SquadData` · `liberation_timeline`
 (`.dtl`, dispara na 1ª vez sob controle aliado) · `liberation_title` · cerco: `water_source_node` · `sortie_squad` ·
-`siege_reinforcements` · `label_side: String = "below"` (`"above"` quando o rótulo colidiria com o de um vizinho) ·
+`siege_reinforcements` · `label_side: String = "below"` (`"above"`/`"left"`/`"right"` quando o rótulo colidiria com vizinhos ou com o rótulo de uma guarnição) ·
 `visit_timeline` (`.dtl`, dispara na 1ª chegada de um esquadrão do jogador; flag `visited_<nó>`).
 Interlúdios nunca se sobrepõem: pedidos durante outro interlúdio/batalha entram na fila do `EncounterDirector`.
 
@@ -200,6 +200,8 @@ As timelines aplicam efeitos com `[signal arg="effect|chave=valor|chave=valor"]`
 | `reinforce` | `node_id` | adiciona `siege_reinforcements` à guarnição |
 | `trust` | `fac_id:int` | soma em `WorldState.faction_trust[fac_id]` (uma facção por sinal) |
 | `essence_echo` | `chave:valor` | `EssenceState.record_echo` (primeiro valor vale) |
+| `item` | `res://…/item.tres` | `WorldState.add_item` |
+| `recruit` | `class_id:Nome` | unidade no 1º esquadrão do jogador com vaga (nível = média); sem vaga, forma esquadrão próprio no nó |
 
 Recompensa de batalha (`SquadData.outcome_rewards[tipo]`) aceita `interlude` (`.dtl` aberto ao fim da batalha), além
 de `flag`, `item`, `requires_flag`, `requires_class`.

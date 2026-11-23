@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="MapNodeData" format=3]
+
+[ext_resource type="Script" path="res://core/data/MapNodeData.gd" id="1_node"]
+
+[resource]
+script = ExtResource("1_node")
+node_id = "observatorio_nove_ceus"
+display_name = "Observatório dos Nove Céus"
+node_type = 0
+faction = "neutral"
+region_id = "pengming"
+terrain = "mountain"
+required_for_victory = false
+gold_per_tick = 10
+map_position = Vector2(600, 215)
+neighbors = Array[String](["ponte_mare"])
+liberation_timeline = "res://eras/act_01_tianxu/dialogues/o_astronomo_cego.dtl"
+liberation_title = "O Astrônomo Cego"
+label_side = "left"

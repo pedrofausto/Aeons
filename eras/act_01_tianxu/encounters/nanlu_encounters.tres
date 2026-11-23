@@ -4,6 +4,7 @@
 [ext_resource type="Script" path="res://core/overworld/EncounterEntry.gd" id="2_entry"]
 [ext_resource type="Resource" path="res://eras/act_01_tianxu/encounters/squad_piratas_fluviais.tres" id="3_0"]
 [ext_resource type="Resource" path="res://eras/act_01_tianxu/encounters/squad_milicia_camponesa.tres" id="3_1"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/encounters/squad_cacadores_cike.tres" id="3_2"]
 
 [sub_resource type="Resource" id="entry_0"]
 script = ExtResource("2_entry")
@@ -17,9 +18,15 @@ squad = ExtResource("3_1")
 weight = 4
 min_party_level = 1.0
 
+[sub_resource type="Resource" id="entry_2"]
+script = ExtResource("2_entry")
+squad = ExtResource("3_2")
+weight = 12
+required_flag = "act1_charts_published"
+
 [resource]
 script = ExtResource("1_table")
 region_id = "nanlu"
 spawn_nodes = Array[String](["templo_bambu", "aldeia_terracos"])
 spawn_chance = 45
-entries = Array[ExtResource("2_entry")]([SubResource("entry_0"), SubResource("entry_1")])
+entries = Array[ExtResource("2_entry")]([SubResource("entry_0"), SubResource("entry_1"), SubResource("entry_2")])

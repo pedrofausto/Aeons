@@ -28,7 +28,7 @@ func run(t: Node) -> void:
 	t.get_tree().root.add_child(map)
 	await t.get_tree().process_frame
 
-	t.check("overworld_nodes", map.nodes.size() == 6 and map.tokens.size() == 4, "tokens=%d" % map.tokens.size())
+	t.check("overworld_nodes", map.nodes.size() == 12 and map.tokens.size() == 6, "tokens=%d" % map.tokens.size())
 	t.check("overworld_initial_factions", WorldState.get_node_faction("linhai") == "player"
 		and WorldState.get_node_faction("aldeia_terracos") == "neutral"
 		and WorldState.get_node_faction("templo_bambu") == "neutral"
@@ -93,7 +93,7 @@ func run(t: Node) -> void:
 	var remaining: Array = map.tokens.filter(func(k: SquadToken) -> bool: return not k.is_player()).map(
 		func(k: SquadToken) -> String: return k.squad.squad_id)
 	t.check("battle_win_captures_fort", WorldState.get_node_faction("forte_regencia") == "player"
-		and WorldState.has_flag("act_victory") and remaining == ["guarda_de_hanmen"], str(remaining))
+		and WorldState.has_flag("act_victory") and remaining == ["guarda_de_hanmen", "corsarios_mare_cinzenta", "expedicao_regencia"], str(remaining))
 	print("INFO|batalhas no mapa -> %s" % str(battles.map(func(r: Dictionary) -> String:
 		return "%s/%s" % [r["winner"], r["victory_type"]])))
 

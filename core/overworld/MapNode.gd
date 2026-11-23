@@ -14,13 +14,21 @@ func setup(p_data: MapNodeData, p_faction: String) -> void:
 	position = data.map_position
 	_label = Label.new()
 	_label.text = data.display_name
-	_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_label.size = Vector2(180, 14)
-	_label.position = Vector2(-90, RADIUS + 3) if data.label_side == "below" else Vector2(-90, -RADIUS - 17)
 	_label.add_theme_font_size_override("font_size", 9)
 	_label.add_theme_color_override("font_outline_color", Color.BLACK)
 	_label.add_theme_constant_override("outline_size", 3)
-	add_child(_label)
+	add_child(_label)  # Na árvore antes de medir: fora dela a largura usa a fonte padrão
+	_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_label.size = Vector2(180, 14)
+	match data.label_side:
+		"above": _label.position = Vector2(-90, -RADIUS - 17)
+		"left":
+			_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+			_label.position = Vector2(-RADIUS - 183, -7)
+		"right":
+			_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+			_label.position = Vector2(RADIUS + 3, -7)
+		_: _label.position = Vector2(-90, RADIUS + 3)
 	set_faction(p_faction)
 
 
@@ -50,6 +58,9 @@ func _draw() -> void:
 			draw_colored_polygon(PackedVector2Array([Vector2(0, -8), Vector2(8, 0), Vector2(0, 8), Vector2(-8, 0)]), color)
 		MapNodeData.NodeType.PASS:
 			draw_colored_polygon(PackedVector2Array([Vector2(-9, 6), Vector2(-2, -8), Vector2(2, -2), Vector2(5, -6), Vector2(10, 6)]), color)
+		MapNodeData.NodeType.SEA:  # Ondas
+			for y: float in [-4.0, 3.0]:
+				draw_polyline(PackedVector2Array([Vector2(-9, y), Vector2(-4, y - 3), Vector2(0, y), Vector2(4, y - 3), Vector2(9, y)]), color, 2.0)
 		MapNodeData.NodeType.SERVER:
 			draw_rect(Rect2(-6, -8, 12, 16), color, false, 2.0)
 		_:
