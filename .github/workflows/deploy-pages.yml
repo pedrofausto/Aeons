@@ -1,0 +1,89 @@
+name: Build Godot 4 Web & Deploy GitHub Pages
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+env:
+  GODOT_VERSION: "4.7.2"
+  GODOT_RELEASE: "4.7.2-stable"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Cache Godot binary and export templates
+        id: cache-godot
+        uses: actions/cache@v4
+        with:
+          path: |
+            /tmp/godot-bin
+            ~/.local/share/godot/export_templates/${{ env.GODOT_VERSION }}.stable
+          key: godot-${{ env.GODOT_RELEASE }}-linux-x86_64
+
+      - name: Install Godot ${{ env.GODOT_RELEASE }} and Export Templates
+        if: steps.cache-godot.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p /tmp/godot-bin
+          mkdir -p ~/.local/share/godot/export_templates/${{ env.GODOT_VERSION }}.stable
+
+          curl -sSL -o /tmp/godot.zip \
+            "https://github.com/godotengine/godot-builds/releases/download/${{ env.GODOT_RELEASE }}/Godot_v${{ env.GODOT_RELEASE }}_linux.x86_64.zip"
+          unzip -q /tmp/godot.zip -d /tmp/godot-bin
+          chmod +x /tmp/godot-bin/Godot_v${{ env.GODOT_RELEASE }}_linux.x86_64
+
+          curl -sSL -o /tmp/templates.tpz \
+            "https://github.com/godotengine/godot-builds/releases/download/${{ env.GODOT_RELEASE }}/Godot_v${{ env.GODOT_RELEASE }}_export_templates.tpz"
+          unzip -q /tmp/templates.tpz -d /tmp/templates-unzipped
+          mv /tmp/templates-unzipped/templates/* ~/.local/share/godot/export_templates/${{ env.GODOT_VERSION }}.stable/
+
+      - name: Import resources and export Web build
+        run: |
+          GODOT_BIN="/tmp/godot-bin/Godot_v${{ env.GODOT_RELEASE }}_linux.x86_64"
+          mkdir -p build/web
+
+          # Importa recursos antes de exportar (evita referências vazias em clone limpo)
+          "$GODOT_BIN" --headless --path . --import || true
+
+          # Exporta o preset "Web" para build/web/index.html
+          "$GODOT_BIN" --headless --path . --export-release "Web" build/web/index.html
+
+          # Valida artefatos obrigatórios
+          test -f build/web/index.html
+          test -f build/web/index.wasm
+          test -f build/web/index.pck
+
+          # Impede interferência do Jekyll no GitHub Pages
+          touch build/web/.nojekyll
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: build/web
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
