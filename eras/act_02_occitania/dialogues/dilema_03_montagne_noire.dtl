@@ -1,0 +1,11 @@
+A abadia fortificada da Montagne Noire caiu. Entre as celas, os batedores encontram um frade inquisidor agarrado a um baú.
+Dentro dele: listas. Nomes de quem delatou vizinhos, de quem abrigou Bons Homens, de quem apenas teve medo.
+Lá fora, a multidão das aldeias exige o frade na forca e as listas lidas em voz alta.
+Uma Bonne Femme toca vosso braço: "Queimai os papéis. Se começarmos a contar culpados, não terminaremos nunca."
+- Queimar as listas e poupar o inquisidor
+	[signal arg="effect|alignment=+10|popular_support=+8|doctrine=-14|flag=inquisitor_spared|echo=act2_mercy_at_abbey|decision=act2_abbey_mercy:true"]
+	As listas viram cinza no pátio do claustro. O frade é escoltado para fora da montanha, vivo e sem olhar para trás.
+- Usar as listas para caçar traidores e executar o inquisidor
+	[signal arg="effect|alignment=-12|popular_support=-4|doctrine=+14|resources=+90|flag=informants_purged|echo=act2_blood_ledger|decision=act2_abbey_mercy:false"]
+	Ao amanhecer, os nomes da lista são chamados um a um. A prata dos delatores enche os cofres da campanha.
+[end_timeline]

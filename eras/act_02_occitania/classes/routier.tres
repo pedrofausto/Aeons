@@ -1,0 +1,48 @@
+[gd_resource type="Resource" script_class="UnitClassData" format=3]
+
+[ext_resource type="Script" path="res://core/data/UnitClassData.gd" id="1_class"]
+[ext_resource type="Script" path="res://core/data/ActionSkillData.gd" id="2_skill"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/classes/eco_beziers.tres" id="3_x0"]
+
+[sub_resource type="Resource" id="front"]
+script = ExtResource("2_skill")
+skill_id = "brutal_blow"
+display_name = "Golpe Brutal"
+effect = 0
+targeting = 0
+power = 50
+hits = 3
+morale_power = 6
+
+[sub_resource type="Resource" id="back"]
+script = ExtResource("2_skill")
+skill_id = "saque_de_estrada"
+display_name = "Saque de Estrada"
+effect = 0
+targeting = 0
+power = 70
+element = "FIRE"
+resources_on_hit = 12
+
+[resource]
+script = ExtResource("1_class")
+class_id = "routier"
+display_name = "Routier"
+era_id = 2
+archetype = 0
+grid_slots = 1
+tier = 2
+liberation_reputation_bonus = -8
+max_hp = 150
+max_morale = 95
+attack = 35
+defense = 22
+intellect = 10
+agility = 16
+front_action = SubResource("front")
+back_action = SubResource("back")
+promotes_to = Array[Resource]([ExtResource("3_x0")])
+preferred_doctrine = "revolutionary"
+min_level = 9
+min_alignment = 0
+max_alignment = 38

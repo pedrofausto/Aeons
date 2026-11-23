@@ -1,0 +1,14 @@
+Uma sala de pedra nua em Montségur. Apenas uma lamparina e uma janela estreita para o céu estrelado dos Pireneus. Só o vento nas fendas da rocha.
+Esclarmonde: "Entra, Aimeric. Não há ouro aqui, nem estandartes. Apenas pedra, pão e a noite. Dizem nas estradas que o teu nome já pesa nos conselhos de Montclair."
+Aimeric: "Eles cercam nossas cidades, queimam nossas colheitas e nos chamam de hereges porque não nos ajoelhamos. Dize-me a verdade, Diaconisa: por que os teus irmãos recusam até mesmo erguer uma espada para defender a própria vida?"
+Esclarmonde: "Porque já vimos este cerco antes, Aimeric — não apenas nesta montanha, mas em cada império que jamais se ergueu sobre a terra. Olha para o modo como o mundo funciona: um senhor cai, outro sobe em seu lugar; uma lei se quebra, outra mais pesada é escrita com o sangue da anterior."
+Esclarmonde: "Os sábios do norte dizem que esta prisão de pedra e ferro foi feita por um Deus bom. Nós sabemos que não. O mundo visível é uma muralha construída por um Arconte ciumento para manter a centelha humana girando em círculos — ora como escravo, ora como conquistador, sempre preso ao mesmo tabuleiro."
+Aimeric: "...'Girando em círculos'? Por um instante... tive a impressão de já ter olhado para um céu que não se movia. Como se as estrelas fossem pregos numa abóbada fechada."
+Esclarmonde: "Raros são os que sentem as grades antes de morrer, filho. Escuta-me bem: se lutares apenas para trocar quem segura o chicote, o Arconte vencerá mesmo que venças todas as batalhas. A única derrota que o carcereiro não suporta é quando o prisioneiro deixa de acreditar que a cela é tudo o que existe."
+- Se este mundo é uma cela, então não basta recusá-la — é preciso derrubar suas muralhas.
+	[signal arg="effect|doctrine=+10|essence_echo=act2_philosophy:shatter_walls|decision=act2_philosophy_awaken:false"]
+	Esclarmonde: "Tua chama é indomável, Aimeric. Temo apenas que, ao derrubar uma muralha, descubras que outra maior te espera do lado de fora."
+- Então a verdadeira vitória não é tomar o castelo deles... é libertar quem ainda dorme lá dentro.
+	[signal arg="effect|doctrine=-10|alignment=+10|essence_echo=act2_philosophy:awaken_within|decision=act2_philosophy_awaken:true"]
+	Esclarmonde: "Guarda essa lucidez quando a fumaça subir sobre Montségur. Nenhum fogo pode queimar aquilo que finalmente acordou."
+[end_timeline]

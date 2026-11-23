@@ -1,0 +1,10 @@
+Béziers ainda cheira a fumaça. Na nave queimada da igreja de Madalena, os sobreviventes enterram os mortos com as próprias mãos.
+Uma mulher de mãos queimadas pede madeira, prata e tempo: um abrigo para o inverno e covas dignas para os que ficaram.
+O mestre de cerco aponta para as pedras e o relicário derretido: "Com isso, armamos trabucos para a próxima muralha."
+- Financiar o abrigo e o luto de Béziers
+	[signal arg="effect|alignment=+10|popular_support=+12|doctrine=-8|resources=-80|flag=beziers_sanctuary|echo=act2_beziers_healed|decision=act2_beziers_rebuilt:true"]
+	As primeiras paredes do abrigo sobem ao lado da igreja. À noite, alguém volta a acender velas em Madalena.
+- Confiscar a prata e armar trabucos
+	[signal arg="effect|alignment=-10|popular_support=-8|doctrine=+12|resources=+140|flag=beziers_plundered|echo=act2_beziers_ash|decision=act2_beziers_rebuilt:false"]
+	As pedras da igreja partem em carroças rumo ao acampamento. Os sobreviventes observam calados, com as pás ainda na mão.
+[end_timeline]

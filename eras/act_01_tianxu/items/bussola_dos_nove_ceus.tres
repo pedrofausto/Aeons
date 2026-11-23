@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://core/data/ItemData.gd" id="1_item"]
+
+[resource]
+script = ExtResource("1_item")
+item_id = "bussola_dos_nove_ceus"
+display_name = "Bússola dos Nove Céus"
+description = "Agulha de jade que aponta para estrelas que não se movem. Encurta as marchas e revela o que caminha à noite."
+unique = true
+march_speed_bonus_pct = 20
+reveals_night_encounters = true

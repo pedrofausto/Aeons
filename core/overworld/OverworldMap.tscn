@@ -1,0 +1,171 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://core/overworld/OverworldMap.gd" id="1_map"]
+[ext_resource type="Script" path="res://core/overworld/OverworldHUD.gd" id="2_hud"]
+[ext_resource type="Script" path="res://core/overworld/EncounterDirector.gd" id="3_director"]
+[ext_resource type="Script" path="res://core/overworld/RoamingSquadSpawner.gd" id="4_spawner"]
+[ext_resource type="Script" path="res://core/overworld/DayNightTint.gd" id="5_tint"]
+[ext_resource type="Script" path="res://core/overworld/PromotionPanel.gd" id="6_promo"]
+[ext_resource type="Script" path="res://core/overworld/SiegeWaterRule.gd" id="7_siege"]
+
+[node name="OverworldMap" type="Node2D"]
+script = ExtResource("1_map")
+
+[node name="BackgroundLayer" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+layer = -1
+
+[node name="Background" type="ColorRect" parent="BackgroundLayer"]
+unique_name_in_owner = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.07, 0.1, 0.09, 1)
+
+[node name="Roads" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="Nodes" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="Tokens" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="EncounterDirector" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("3_director")
+
+[node name="RoamingSquadSpawner" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("4_spawner")
+
+[node name="SiegeWaterRule" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("7_siege")
+
+[node name="DayNightTint" type="CanvasModulate" parent="."]
+script = ExtResource("5_tint")
+
+[node name="HUDLayer" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+
+[node name="HUD" type="Control" parent="HUDLayer"]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("2_hud")
+
+[node name="TopBar" type="PanelContainer" parent="HUDLayer/HUD"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 6
+offset_top = 5
+offset_right = -6
+offset_bottom = 29
+grow_horizontal = 2
+mouse_filter = 2
+
+[node name="Stats" type="Label" parent="HUDLayer/HUD/TopBar"]
+unique_name_in_owner = true
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="PauseLabel" type="Label" parent="HUDLayer/HUD"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 35
+offset_bottom = 52
+grow_horizontal = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 11
+text = "❚❚ PAUSA TÁTICA — Espaço para retomar · clique no esquadrão e depois no destino"
+horizontal_alignment = 1
+
+[node name="Banner" type="Label" parent="HUDLayer/HUD"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -210
+offset_top = -30
+offset_right = 210
+offset_bottom = 30
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 15
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="PauseButton" type="Button" parent="HUDLayer/HUD"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(36, 32)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -46
+offset_top = -42
+offset_right = -10
+offset_bottom = -10
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 13
+text = "▶"
+
+[node name="DebugTransitionButton" type="Button" parent="HUDLayer/HUD"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 10
+offset_top = -38
+offset_right = 165
+offset_bottom = -10
+grow_vertical = 0
+theme_override_font_sizes/font_size = 7
+text = "[DEBUG] Derrota Falsa → próximo ato"
+
+[node name="PromoteButton" type="Button" parent="HUDLayer/HUD"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -150
+offset_top = -42
+offset_right = -54
+offset_bottom = -10
+grow_horizontal = 0
+grow_vertical = 0
+text = "★ Promover"
+
+[node name="PromotionPanel" type="PanelContainer" parent="HUDLayer/HUD"]
+unique_name_in_owner = true
+layout_mode = 1
+script = ExtResource("6_promo")

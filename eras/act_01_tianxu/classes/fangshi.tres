@@ -1,0 +1,49 @@
+[gd_resource type="Resource" script_class="UnitClassData" format=3]
+
+[ext_resource type="Script" path="res://core/data/UnitClassData.gd" id="1_class"]
+[ext_resource type="Script" path="res://core/data/ActionSkillData.gd" id="2_skill"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/xian.tres" id="3_xian"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/daoshi_healer.tres" id="5_daoshi"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/alquimista_sombrio.tres" id="4_alq"]
+
+[sub_resource type="Resource" id="front"]
+script = ExtResource("2_skill")
+skill_id = "alchemist_staff"
+display_name = "Bastão do Alquimista"
+effect = 0
+targeting = 0
+power = 60
+
+[sub_resource type="Resource" id="back"]
+script = ExtResource("2_skill")
+skill_id = "alchemical_fire"
+display_name = "Fogo Alquímico"
+effect = 1
+targeting = 2
+power = 45
+element = "FIRE"
+
+[resource]
+script = ExtResource("1_class")
+class_id = "fangshi"
+display_name = "Fangshi"
+era_id = 1
+archetype = 3
+grid_slots = 1
+traits = PackedStringArray()
+placeholder_color = Color(0, 0, 0, 0)
+max_hp = 65
+max_morale = 90
+attack = 6
+defense = 6
+intellect = 19
+agility = 9
+front_action = SubResource("front")
+back_action = SubResource("back")
+promotion_good = ExtResource("5_daoshi")
+promotes_to = Array[Resource]([ExtResource("3_xian")])
+promotion_evil = ExtResource("4_alq")
+min_alignment = 0
+max_alignment = 100
+march_speed_pct = 100
+night_march_bonus_pct = 0

@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="MapNodeData" format=3]
+
+[ext_resource type="Script" path="res://core/data/MapNodeData.gd" id="1_node"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/map/squad_corsarios_mare_cinzenta.tres" id="2_garrison"]
+
+[resource]
+script = ExtResource("1_node")
+node_id = "gruta_jade"
+display_name = "Gruta dos Elixires de Jade"
+node_type = 2
+faction = "enemy"
+region_id = "pengming"
+terrain = "river"
+required_for_victory = false
+gold_per_tick = 15
+map_position = Vector2(450, 272)
+neighbors = Array[String](["cais_neblina", "santuarios_bambu"])
+garrison = ExtResource("2_garrison")

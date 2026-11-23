@@ -1,0 +1,44 @@
+[gd_resource type="Resource" script_class="UnitClassData" format=3]
+
+[ext_resource type="Script" path="res://core/data/UnitClassData.gd" id="1_class"]
+[ext_resource type="Script" path="res://core/data/ActionSkillData.gd" id="2_skill"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/monge_taoista.tres" id="3_good"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/wu_sombrio.tres" id="3_evil"]
+
+[sub_resource type="Resource" id="front"]
+script = ExtResource("2_skill")
+skill_id = "herbal_staff"
+display_name = "Bastão de Ervas"
+effect = 0
+targeting = 0
+power = 50
+
+[sub_resource type="Resource" id="back"]
+script = ExtResource("2_skill")
+skill_id = "acupuncture"
+display_name = "Acupuntura"
+effect = 3
+targeting = 4
+power = 55
+hits = 2
+morale_power = 5
+
+[resource]
+script = ExtResource("1_class")
+class_id = "medico_imperial"
+display_name = "Médico Imperial"
+era_id = 1
+archetype = 4
+grid_slots = 1
+tier = 1
+max_hp = 56
+attack = 5
+defense = 6
+intellect = 11
+agility = 8
+max_morale = 100
+front_action = SubResource("front")
+back_action = SubResource("back")
+promotion_good = ExtResource("3_good")
+promotion_evil = ExtResource("3_evil")
+preferred_doctrine = "pacifist"

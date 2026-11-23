@@ -1,0 +1,45 @@
+[gd_resource type="Resource" script_class="UnitClassData" format=3]
+
+[ext_resource type="Script" path="res://core/data/UnitClassData.gd" id="1_class"]
+[ext_resource type="Script" path="res://core/data/ActionSkillData.gd" id="2_skill"]
+
+[sub_resource type="Resource" id="front"]
+script = ExtResource("2_skill")
+skill_id = "hidden_blade"
+display_name = "Lâmina Oculta"
+effect = 0
+targeting = 0
+power = 45
+hits = 3
+
+[sub_resource type="Resource" id="back"]
+script = ExtResource("2_skill")
+skill_id = "poisoned_bolt"
+display_name = "Virote Envenenado"
+effect = 0
+targeting = 3
+power = 65
+hits = 2
+element = "PIERCE"
+inflicts_status = "POISON"
+
+[resource]
+script = ExtResource("1_class")
+class_id = "sicario_inquisitorial"
+display_name = "Sicário Inquisitorial"
+era_id = 2
+archetype = 2
+grid_slots = 1
+tier = 2
+max_hp = 105
+max_morale = 90
+attack = 31
+defense = 14
+intellect = 16
+agility = 32
+front_action = SubResource("front")
+back_action = SubResource("back")
+preferred_doctrine = "revolutionary"
+min_level = 10
+min_alignment = 0
+max_alignment = 35

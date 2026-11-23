@@ -1,0 +1,54 @@
+[gd_resource type="Resource" script_class="UnitClassData" format=3]
+
+[ext_resource type="Script" path="res://core/data/UnitClassData.gd" id="1_class"]
+[ext_resource type="Script" path="res://core/data/ActionSkillData.gd" id="2_skill"]
+
+[sub_resource type="Resource" id="front"]
+script = ExtResource("2_skill")
+skill_id = "vital_drain"
+display_name = "Dreno Vital"
+effect = 0
+targeting = 0
+power = 60
+element = "SHADOW"
+hits = 2
+lifesteal_pct = 30
+
+[sub_resource type="Resource" id="back"]
+script = ExtResource("2_skill")
+skill_id = "miasma_breath"
+display_name = "Sopro de Miasma"
+effect = 0
+targeting = 0
+power = 30
+element = "SHADOW"
+morale_power = 12
+
+[resource]
+script = ExtResource("1_class")
+class_id = "jiangshi"
+display_name = "Jiangshi"
+era_id = 1
+archetype = 6
+grid_slots = 1
+tier = 3
+traits = PackedStringArray("undead", "morale_immune")
+placeholder_color = Color(0.45, 0.55, 0.5, 1)
+max_hp = 112
+max_morale = 100
+attack = 16
+defense = 14
+intellect = 4
+agility = 5
+front_action = SubResource("front")
+back_action = SubResource("back")
+min_alignment = 0
+max_alignment = 35
+damage_taken_pct = {
+"PHYSICAL": 20,
+"SPIRITUAL": 150,
+"PURIFY": 150,
+"FIRE": 150
+}
+march_speed_pct = 60
+night_march_bonus_pct = 50

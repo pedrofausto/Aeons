@@ -1,0 +1,47 @@
+[gd_resource type="Resource" script_class="UnitClassData" format=3]
+
+[ext_resource type="Script" path="res://core/data/UnitClassData.gd" id="1_class"]
+[ext_resource type="Script" path="res://core/data/ActionSkillData.gd" id="2_skill"]
+
+[sub_resource type="Resource" id="front"]
+script = ExtResource("2_skill")
+skill_id = "spectral_claw"
+display_name = "Garra Espectral"
+effect = 1
+targeting = 0
+power = 55
+hits = 2
+armor_pierce_pct = 50
+
+[sub_resource type="Resource" id="back"]
+script = ExtResource("2_skill")
+skill_id = "mist_charm"
+display_name = "Encanto da Névoa"
+effect = 1
+targeting = 0
+power = 60
+morale_power = 20
+inflicts_status = "CONFUSE"
+
+[resource]
+script = ExtResource("1_class")
+class_id = "huli_jing"
+display_name = "Huli Jing"
+era_id = 1
+archetype = 6
+grid_slots = 1
+tier = 3
+traits = PackedStringArray("trickster")
+placeholder_color = Color(0.9, 0.5, 0.2, 1)
+max_hp = 56
+max_morale = 90
+attack = 13
+defense = 5
+intellect = 18
+agility = 14
+front_action = SubResource("front")
+back_action = SubResource("back")
+min_alignment = 15
+max_alignment = 55
+march_speed_pct = 100
+night_march_bonus_pct = 0

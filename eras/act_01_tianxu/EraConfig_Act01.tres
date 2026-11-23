@@ -1,0 +1,83 @@
+[gd_resource type="Resource" script_class="EraConfig" format=3]
+
+[ext_resource type="Script" path="res://core/data/EraConfig.gd" id="1_era"]
+[ext_resource type="PackedScene" path="res://eras/act_01_tianxu/art/interlude_backdrop.tscn" id="2_backdrop"]
+[ext_resource type="Theme" path="res://eras/act_01_tianxu/theme_act01.tres" id="2_theme"]
+[ext_resource type="Script" path="res://core/data/MapNodeData.gd" id="3_nodescript"]
+[ext_resource type="Script" path="res://core/data/UnitClassData.gd" id="3_classscript"]
+[ext_resource type="Script" path="res://core/data/SquadData.gd" id="3_squadscript"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/map/squad_guarda_dos_canais.tres" id="4_squad"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/map/node_linhai.tres" id="5_linhai"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/map/node_aldeia_terracos.tres" id="5_aldeia_terracos"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/map/node_templo_bambu.tres" id="5_templo_bambu"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/map/node_forte_regencia.tres" id="5_forte_regencia"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/map/node_hanmen_pass.tres" id="5_hanmen_pass"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/map/node_hanmen_gate.tres" id="5_hanmen_gate"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/map/node_estreito_linhai.tres" id="5_estreito_linhai"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/map/node_cais_neblina.tres" id="5_cais_neblina"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/map/node_gruta_jade.tres" id="5_gruta_jade"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/map/node_santuarios_bambu.tres" id="5_santuarios_bambu"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/map/node_ponte_mare.tres" id="5_ponte_mare"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/map/node_observatorio_nove_ceus.tres" id="5_observatorio_nove_ceus"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/fubing.tres" id="6_fubing"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/ji_halberdier.tres" id="6_ji_halberdier"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/nubing_crossbow.tres" id="6_nubing_crossbow"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/daoshi_healer.tres" id="6_daoshi_healer"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/youxia.tres" id="6_youxia"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/buqu.tres" id="6_buqu"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/jiangshi.tres" id="6_jiangshi"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/wu_sombrio.tres" id="6_wu_sombrio"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/huli_jing.tres" id="6_huli_jing"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/xian.tres" id="6_xian"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/fangshi.tres" id="6_fangshi"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/map/squad_cobradores_selo_de_ferro.tres" id="7_patrol"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/encounters/nanlu_encounters.tres" id="8_encounters"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/encounters/hanmen_encounters.tres" id="8_hanmen"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/encounters/pengming_encounters.tres" id="8_pengming"]
+[ext_resource type="Script" path="res://core/data/ItemData.gd" id="9_itemscript"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/items/talisma_cinabrio.tres" id="9_talisma"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/items/bussola_dos_nove_ceus.tres" id="9_bussola"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/cike.tres" id="6_cike"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/catafractario.tres" id="6_catafractario"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/conselheiro_yuefu.tres" id="6_conselheiro_yuefu"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/junshi.tres" id="6_junshi"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/items/elixir_pengming.tres" id="9_elixir"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/items/carta_celeste.tres" id="9_carta"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/encounters/pengming_costa_encounters.tres" id="8_pengming_costa"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/saqueador_estepes.tres" id="6_saqueador_estepes"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/arqueiro_montado.tres" id="6_arqueiro_montado"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/alquimista_sombrio.tres" id="6_alquimista_sombrio"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/medico_imperial.tres" id="6_medico_imperial"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/monge_taoista.tres" id="6_monge_taoista"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/intrigante_legalista.tres" id="6_intrigante_legalista"]
+
+[resource]
+script = ExtResource("1_era")
+act_number = 1
+era_title = "Vales de Nanlu"
+window_title = "Tianxu — Vales de Nanlu"
+ui_theme = ExtResource("2_theme")
+reality_layer = "PHYSICAL_WAR"
+interlude_style = "camp"
+interlude_backdrop = ExtResource("2_backdrop")
+resource_label = "Ouro"
+hp_label = "HP"
+morale_label = "Moral"
+alignment_label = "Alinhamento"
+support_label = "Mandato do Céu"
+doctrine_label = "Doutrina"
+day_label = "Dia"
+color_player = Color(0.86, 0.7, 0.36, 1)
+color_enemy = Color(0.72, 0.18, 0.16, 1)
+color_neutral = Color(0.55, 0.58, 0.52, 1)
+color_background = Color(0.07, 0.1, 0.09, 1)
+color_road = Color(0.42, 0.38, 0.28, 1)
+map_nodes = Array[ExtResource("3_nodescript")]([ExtResource("5_linhai"), ExtResource("5_aldeia_terracos"), ExtResource("5_templo_bambu"), ExtResource("5_forte_regencia"), ExtResource("5_hanmen_pass"), ExtResource("5_hanmen_gate"), ExtResource("5_estreito_linhai"), ExtResource("5_cais_neblina"), ExtResource("5_gruta_jade"), ExtResource("5_santuarios_bambu"), ExtResource("5_ponte_mare"), ExtResource("5_observatorio_nove_ceus")])
+unit_classes = Array[ExtResource("3_classscript")]([ExtResource("6_fubing"), ExtResource("6_ji_halberdier"), ExtResource("6_nubing_crossbow"), ExtResource("6_daoshi_healer"), ExtResource("6_youxia"), ExtResource("6_buqu"), ExtResource("6_jiangshi"), ExtResource("6_wu_sombrio"), ExtResource("6_huli_jing"), ExtResource("6_xian"), ExtResource("6_fangshi"), ExtResource("6_cike"), ExtResource("6_catafractario"), ExtResource("6_conselheiro_yuefu"), ExtResource("6_junshi"), ExtResource("6_saqueador_estepes"), ExtResource("6_arqueiro_montado"), ExtResource("6_alquimista_sombrio"), ExtResource("6_medico_imperial"), ExtResource("6_monge_taoista"), ExtResource("6_intrigante_legalista")])
+starting_squads = Array[ExtResource("3_squadscript")]([ExtResource("4_squad")])
+enemy_patrols = Array[ExtResource("3_squadscript")]([ExtResource("7_patrol")])
+encounter_tables = Array[Resource]([ExtResource("8_encounters"), ExtResource("8_hanmen"), ExtResource("8_pengming"), ExtResource("8_pengming_costa")])
+max_roaming_squads = 2
+item_catalog = Array[ExtResource("9_itemscript")]([ExtResource("9_talisma"), ExtResource("9_bussola"), ExtResource("9_elixir"), ExtResource("9_carta")])
+victory_text = "O Forte da Regência caiu. Os Vales de Nanlu respiram livres."
+next_era_config = "res://eras/act_02_occitania/EraConfig_Act02.tres"

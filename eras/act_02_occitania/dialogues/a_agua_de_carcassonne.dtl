@@ -1,0 +1,19 @@
+As Pontes do Aude são vossas. Do alto da margem, a Cité de Carcassonne parece inteira — muralha dupla, torres, estandartes do norte.
+Ademar, engenheiro dos Faydits, volta da lama com as mãos negras: "Achei o duto. Toda a água das cisternas da Cité passa por aqui."
+Lá dentro não há só soldados de Montclair. Há tecelões, oleiros, famílias do Burgo que não conseguiram fugir.
+Nas cisternas sob a ponte, uma velha tecelã enche o cântaro devagar e não levanta os olhos.
+"Dizem que vieste nos libertar. Mas quem usa a mesma arma do invasor não acaba construindo a mesma muralha?"
+Pierre-Roger espera a vossa ordem. Os mercenários do norte juraram quarenta dias de serviço. Quantos ainda lhes restam?
+- Poupar as Cisternas e Negociar Salvo-Conduto
+	[signal arg="effect|alignment=15|popular_support=20|doctrine=-20|siege_mode=cite_carcassonne:preaching|sorties=cite_carcassonne:2|income_bonus=cite_carcassonne:30|flag=act2_cisterns_spared|echo=spared_carcassonne_cisterns"]
+	A água continua correndo para dentro da Cité. Ao entardecer, Guillem canta sob as muralhas e os Bons Homens pregam aos mercenários cansados.
+	"Ninguém aqui vai morrer de sede por nossa causa", diz Pierre-Roger. "Mas eles ainda vão tentar romper o cerco. Preparai-vos."
+- Assalto Noturno às Portas do Burgo
+	[signal arg="effect|alignment=10|popular_support=10|doctrine=20|siege_mode=cite_carcassonne:assault|reinforce=cite_carcassonne|charisma=10|flag=act2_night_assault|echo=night_assault_carcassonne"]
+	Os civis não pagarão pela sede. A Companhia atravessará a ponte e tomará as portas pela força, antes do amanhecer.
+	Entre os Faydits, o vosso nome passa de fogueira em fogueira. Mas os vigias já viram a cavalaria pesada de Montclair entrar na Cité.
+- Cortar a Água do Aude
+	[signal arg="effect|alignment=-25|popular_support=-20|doctrine=15|siege_mode=cite_carcassonne:poisoned|garrison_hp_pct=cite_carcassonne:50|flag=act2_aude_poisoned|echo=poisoned_the_aude"]
+	O canal é desviado e o poço de fora recebe cal. Em três dias, a guarnição bebe lama.
+	A velha tecelã derrama o cântaro na terra e vai embora sem olhar para trás. Os Bons Homens não entrarão nas vossas fileiras.
+[end_timeline]

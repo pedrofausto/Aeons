@@ -1,0 +1,42 @@
+[gd_resource type="Resource" script_class="UnitClassData" format=3]
+
+[ext_resource type="Script" path="res://core/data/UnitClassData.gd" id="1_class"]
+[ext_resource type="Script" path="res://core/data/ActionSkillData.gd" id="2_skill"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/classes/alquimista_hermetico.tres" id="3_good"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/classes/ocultista.tres" id="3_evil"]
+
+[sub_resource type="Resource" id="front"]
+script = ExtResource("2_skill")
+skill_id = "staff"
+display_name = "Cajado"
+effect = 0
+targeting = 0
+power = 50
+
+[sub_resource type="Resource" id="back"]
+script = ExtResource("2_skill")
+skill_id = "alchemical_flask"
+display_name = "Frasco Alquímico"
+effect = 1
+targeting = 0
+power = 90
+element = "FIRE"
+
+[resource]
+script = ExtResource("1_class")
+class_id = "erudito_boticario"
+display_name = "Erudito-Boticário"
+era_id = 2
+archetype = 3
+grid_slots = 1
+tier = 1
+max_hp = 70
+max_morale = 85
+attack = 9
+defense = 10
+intellect = 22
+agility = 13
+front_action = SubResource("front")
+back_action = SubResource("back")
+promotion_good = ExtResource("3_good")
+promotion_evil = ExtResource("3_evil")

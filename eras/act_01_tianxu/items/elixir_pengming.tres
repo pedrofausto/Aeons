@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://core/data/ItemData.gd" id="1_item"]
+
+[resource]
+script = ExtResource("1_item")
+item_id = "elixir_pengming"
+display_name = "Elixir de Pengming"
+description = "Frasco de jade das ilhas enevoadas. Dizem que quem o bebe deixa de pesar sobre a terra."
+promotion_seal = true

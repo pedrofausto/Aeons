@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="MapNodeData" format=3]
+
+[ext_resource type="Script" path="res://core/data/MapNodeData.gd" id="1_node"]
+
+[resource]
+script = ExtResource("1_node")
+node_id = "tarascon"
+display_name = "Pântanos de Tarascon"
+node_type = 2
+faction = "neutral"
+region_id = "act2_tarascon"
+terrain = "river"
+required_for_victory = false
+gold_per_tick = 25
+map_position = Vector2(548, 178)
+neighbors = Array[String](["beziers"])
+liberation_timeline = "res://eras/act_02_occitania/dialogues/dilema_05_tarascon.dtl"
+liberation_title = "O Manuscrito do Rhône e a Fera"

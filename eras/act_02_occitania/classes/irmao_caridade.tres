@@ -1,0 +1,44 @@
+[gd_resource type="Resource" script_class="UnitClassData" format=3]
+
+[ext_resource type="Script" path="res://core/data/UnitClassData.gd" id="1_class"]
+[ext_resource type="Script" path="res://core/data/ActionSkillData.gd" id="2_skill"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/classes/parfait.tres" id="3_good"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/classes/inquisidor.tres" id="3_evil"]
+
+[sub_resource type="Resource" id="front"]
+script = ExtResource("2_skill")
+skill_id = "travel_staff"
+display_name = "Cajado de Viagem"
+effect = 0
+targeting = 0
+power = 45
+
+[sub_resource type="Resource" id="back"]
+script = ExtResource("2_skill")
+skill_id = "field_dressing"
+display_name = "Curativo"
+effect = 3
+targeting = 4
+power = 60
+hits = 2
+morale_power = 5
+
+[resource]
+script = ExtResource("1_class")
+class_id = "irmao_caridade"
+display_name = "Irmão de Caridade"
+era_id = 2
+archetype = 4
+grid_slots = 1
+tier = 1
+max_hp = 75
+max_morale = 105
+attack = 8
+defense = 12
+intellect = 20
+agility = 12
+front_action = SubResource("front")
+back_action = SubResource("back")
+promotion_good = ExtResource("3_good")
+promotion_evil = ExtResource("3_evil")
+preferred_doctrine = "pacifist"

@@ -1,0 +1,13 @@
+Os canais de Linhai voltam a correr livres. As comportas da Regência foram abertas ao amanhecer.
+Diante dos celeiros lacrados, as famílias dos barqueiros e os soldados da Guarda esperam em silêncio.
+A velha Qiu, guardiã dos selos, ergue a lanterna: "O arroz alimentaria o vale até a colheita... ou a vossa marcha até o Forte."
+"A decisão é vossa, comandante. O vale inteiro há de lembrar."
+- Distribuir o arroz entre as famílias dos canais
+	[signal arg="effect|alignment=10|popular_support=15|doctrine=-15|flag=act1_granaries_distributed|echo=shared_linhai_rice"]
+	Os sacos passam de mão em mão até o último barco. Pela primeira vez em anos, há fumaça em todas as cozinhas de Linhai.
+	Nos terraços, já se conta a história da Guarda que abriu os celeiros.
+- Confiscar os estoques para a campanha
+	[signal arg="effect|resources=250|popular_support=-10|doctrine=15|flag=act1_granaries_confiscated|echo=seized_linhai_granaries"]
+	Os carros de arroz partem rumo ao acampamento sob olhares calados. A marcha até o Forte não passará fome.
+	A velha Qiu apaga a lanterna sem dizer palavra.
+[end_timeline]

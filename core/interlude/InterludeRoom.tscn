@@ -1,0 +1,81 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://core/interlude/InterludeController.gd" id="1_ctrl"]
+
+[sub_resource type="Gradient" id="lantern_gradient"]
+colors = PackedColorArray(1, 0.82, 0.5, 1, 1, 0.6, 0.3, 0)
+
+[sub_resource type="GradientTexture2D" id="lantern_texture"]
+gradient = SubResource("lantern_gradient")
+width = 512
+height = 512
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[node name="InterludeRoom" type="Node2D"]
+script = ExtResource("1_ctrl")
+
+[node name="Sky" type="CanvasLayer" parent="."]
+layer = -2
+
+[node name="SkyColor" type="ColorRect" parent="Sky"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.09, 0.11, 0.2, 1)
+
+[node name="Night" type="CanvasModulate" parent="."]
+color = Color(0.42, 0.42, 0.55, 1)
+
+[node name="Backdrop" type="Node2D" parent="."]
+unique_name_in_owner = true
+
+[node name="Lantern" type="PointLight2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(260, 235)
+color = Color(1, 0.8, 0.5, 1)
+energy = 1.2
+texture = SubResource("lantern_texture")
+texture_scale = 0.8
+
+[node name="LanternBody" type="Polygon2D" parent="Lantern"]
+color = Color(1, 0.75, 0.35, 1)
+polygon = PackedVector2Array(-4, -7, 4, -7, 5, 5, -5, 5)
+
+[node name="EphemeralLayer" type="CanvasLayer" parent="."]
+
+[node name="EphemeralOverlay" type="ColorRect" parent="EphemeralLayer"]
+unique_name_in_owner = true
+visible = false
+offset_right = 640.0
+offset_bottom = 360.0
+mouse_filter = 2
+
+[node name="TitleLayer" type="CanvasLayer" parent="."]
+
+[node name="UIRoot" type="Control" parent="TitleLayer"]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Title" type="Label" parent="TitleLayer/UIRoot"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 14
+offset_bottom = 38
+grow_horizontal = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 16
+horizontal_alignment = 1

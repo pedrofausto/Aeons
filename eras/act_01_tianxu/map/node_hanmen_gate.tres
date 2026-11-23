@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="MapNodeData" format=3]
+
+[ext_resource type="Script" path="res://core/data/MapNodeData.gd" id="1_node"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/map/squad_guarda_de_hanmen.tres" id="2_garrison"]
+
+[resource]
+script = ExtResource("1_node")
+node_id = "hanmen_gate"
+display_name = "Portão de Hanmen"
+node_type = 1
+faction = "enemy"
+region_id = "hanmen"
+terrain = "mountain"
+required_for_victory = false
+gold_per_tick = 35
+map_position = Vector2(70, 100)
+neighbors = Array[String](["hanmen_pass"])
+garrison = ExtResource("2_garrison")

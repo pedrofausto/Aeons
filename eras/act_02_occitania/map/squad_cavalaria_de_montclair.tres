@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="SquadData" format=3]
+
+[ext_resource type="Script" path="res://core/data/SquadData.gd" id="1_squad"]
+[ext_resource type="Script" path="res://core/data/UnitInstance.gd" id="1_unit"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/classes/chevalier_languedoc.tres" id="2_chevalier_languedoc"]
+
+[sub_resource type="Resource" id="unit_0"]
+script = ExtResource("1_unit")
+class_data = ExtResource("2_chevalier_languedoc")
+unit_name = "Cavaleiro Pesado de Montclair"
+level = 4
+alignment = 30
+slot = 4
+is_leader = false
+
+[resource]
+script = ExtResource("1_squad")
+squad_id = "cavalaria_de_montclair"
+display_name = "Cavalaria Pesada de Montclair"
+faction = "enemy"
+units = Array[ExtResource("1_unit")]([SubResource("unit_0")])
+current_node_id = "cite_carcassonne"

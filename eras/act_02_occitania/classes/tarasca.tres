@@ -1,0 +1,51 @@
+[gd_resource type="Resource" script_class="UnitClassData" format=3]
+
+[ext_resource type="Script" path="res://core/data/UnitClassData.gd" id="1_class"]
+[ext_resource type="Script" path="res://core/data/ActionSkillData.gd" id="2_skill"]
+
+[sub_resource type="Resource" id="front"]
+script = ExtResource("2_skill")
+skill_id = "mandibula_do_rhone"
+display_name = "Mandíbula do Rhône"
+effect = 0
+targeting = 0
+power = 60
+element = "PHYSICAL"
+hits = 2
+armor_pierce_pct = 25
+
+[sub_resource type="Resource" id="back"]
+script = ExtResource("2_skill")
+skill_id = "halito_do_pantano"
+display_name = "Hálito do Pântano"
+effect = 1
+targeting = 2
+power = 75
+morale_power = 18
+element = "SHADOW"
+inflicts_status = "POISON"
+
+[resource]
+script = ExtResource("1_class")
+class_id = "tarasca"
+display_name = "Domador da Tarasca"
+era_id = 2
+archetype = 6
+grid_slots = 2
+tier = 3
+traits = PackedStringArray("morale_immune", "status_immune")
+max_hp = 210
+max_morale = 100
+attack = 24
+defense = 22
+intellect = 14
+agility = 8
+front_action = SubResource("front")
+back_action = SubResource("back")
+damage_taken_pct = {
+"PHYSICAL": 65,
+"PIERCE": 70,
+"LIGHT": 135
+}
+movement = "swamp"
+march_speed_pct = 90

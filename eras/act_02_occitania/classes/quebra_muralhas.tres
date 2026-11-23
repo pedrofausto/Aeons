@@ -1,0 +1,49 @@
+[gd_resource type="Resource" script_class="UnitClassData" format=3]
+
+[ext_resource type="Script" path="res://core/data/UnitClassData.gd" id="1_class"]
+[ext_resource type="Script" path="res://core/data/ActionSkillData.gd" id="2_skill"]
+
+[sub_resource type="Resource" id="front"]
+script = ExtResource("2_skill")
+skill_id = "iron_ram"
+display_name = "Ariete de Ferro"
+effect = 0
+targeting = 0
+power = 60
+hits = 2
+element = "SIEGE"
+armor_pierce_pct = 50
+
+[sub_resource type="Resource" id="back"]
+script = ExtResource("2_skill")
+skill_id = "mangonel_shot"
+display_name = "Disparo de Mangonel"
+effect = 0
+targeting = 2
+power = 40
+element = "SIEGE"
+armor_pierce_pct = 50
+
+[resource]
+script = ExtResource("1_class")
+class_id = "quebra_muralhas"
+display_name = "Quebra-Muralhas"
+era_id = 2
+archetype = 1
+grid_slots = 1
+tier = 2
+max_hp = 140
+max_morale = 100
+attack = 36
+defense = 28
+intellect = 16
+agility = 9
+front_action = SubResource("front")
+back_action = SubResource("back")
+march_speed_pct = 80
+preferred_doctrine = "revolutionary"
+min_level = 11
+min_alignment = 0
+max_alignment = 45
+min_doctrine = 30
+max_doctrine = 100

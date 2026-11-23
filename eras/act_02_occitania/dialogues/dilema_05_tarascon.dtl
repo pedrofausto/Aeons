@@ -1,0 +1,11 @@
+A névoa dos pântanos de Tarascon é tão densa que os remos batem em raízes invisíveis.
+Numa cabana sobre estacas, um alquimista protege um códice proibido. As páginas descrevem a matéria do mundo como uma engrenagem fechada, girando sem saída.
+"A fera do rio está acordada", diz ele. "Tenho um preparo de fogo grego que a envenena. Em troca, levai o códice para longe daqui — ou queimai-o, se preferirdes."
+Fabrissa, a Parfaite, observa a água escura: "Não é preciso matá-la. Os Bons Homens conhecem um rito de paz."
+- Proteger o códice e tentar o rito de paz
+	[signal arg="effect|alignment=+8|popular_support=+4|doctrine=-10|flag=tarasque_calm_rite|echo=act2_rhone_codex|resistance=act2_closed_firmament|decision=act2_tarascon_codex:true"]
+	O códice é enrolado em couro encerado. Na margem, Fabrissa ajoelha-se e canta baixo para a névoa. Algo enorme se move sob a água — e escuta.
+- Entregar o códice pelo fogo grego e abater a fera
+	[signal arg="effect|alignment=-8|doctrine=+10|resources=+110|flag=tarasque_hunt_poison|echo=act2_rhone_alchemy|decision=act2_tarascon_codex:false"]
+	O alquimista sorri e entrega os frascos. O códice fica com ele; a caçada começa ao entardecer.
+[end_timeline]

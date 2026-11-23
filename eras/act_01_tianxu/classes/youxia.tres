@@ -1,0 +1,43 @@
+[gd_resource type="Resource" script_class="UnitClassData" format=3]
+
+[ext_resource type="Script" path="res://core/data/UnitClassData.gd" id="1_class"]
+[ext_resource type="Script" path="res://core/data/ActionSkillData.gd" id="2_skill"]
+
+[sub_resource type="Resource" id="front"]
+script = ExtResource("2_skill")
+skill_id = "errant_blade"
+display_name = "Lâmina Errante"
+effect = 0
+targeting = 0
+power = 110
+morale_power = 5
+
+[sub_resource type="Resource" id="back"]
+script = ExtResource("2_skill")
+skill_id = "oath_of_protection"
+display_name = "Juramento de Proteção"
+effect = 3
+targeting = 4
+power = 45
+morale_power = 25
+
+[resource]
+script = ExtResource("1_class")
+class_id = "youxia"
+display_name = "Youxia"
+era_id = 1
+archetype = 0
+grid_slots = 1
+tier = 2
+max_hp = 120
+max_morale = 115
+attack = 20
+defense = 15
+intellect = 9
+agility = 12
+front_action = SubResource("front")
+back_action = SubResource("back")
+preferred_doctrine = "pacifist"
+min_level = 4
+min_alignment = 65
+max_alignment = 100

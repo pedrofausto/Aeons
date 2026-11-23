@@ -1,0 +1,75 @@
+[gd_resource type="Resource" script_class="SquadData" format=3]
+
+[ext_resource type="Script" path="res://core/data/SquadData.gd" id="1_squad"]
+[ext_resource type="Script" path="res://core/data/UnitInstance.gd" id="1_unit"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/ji_halberdier.tres" id="2_ji_halberdier"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/buqu.tres" id="3_buqu"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/nubing_crossbow.tres" id="4_nubing_crossbow"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/fubing.tres" id="5_fubing"]
+
+[sub_resource type="Resource" id="unit_0"]
+script = ExtResource("1_unit")
+class_data = ExtResource("2_ji_halberdier")
+unit_name = "Alabardeiro do Clã Sun"
+level = 3
+alignment = 40
+slot = 0
+is_leader = false
+
+[sub_resource type="Resource" id="unit_1"]
+script = ExtResource("1_unit")
+class_data = ExtResource("3_buqu")
+unit_name = "General Wei Bo"
+level = 4
+alignment = 30
+slot = 1
+is_leader = true
+
+[sub_resource type="Resource" id="unit_2"]
+script = ExtResource("1_unit")
+class_data = ExtResource("2_ji_halberdier")
+unit_name = "Alabardeiro do Clã Yao"
+level = 3
+alignment = 40
+slot = 2
+is_leader = false
+
+[sub_resource type="Resource" id="unit_3"]
+script = ExtResource("1_unit")
+class_data = ExtResource("4_nubing_crossbow")
+unit_name = "Besteiro do Portão"
+level = 3
+alignment = 40
+slot = 3
+is_leader = false
+
+[sub_resource type="Resource" id="unit_4"]
+script = ExtResource("1_unit")
+class_data = ExtResource("5_fubing")
+unit_name = "Sentinela da Neve"
+level = 3
+alignment = 45
+slot = 5
+is_leader = false
+
+[resource]
+script = ExtResource("1_squad")
+squad_id = "guarda_de_hanmen"
+display_name = "Guarda do Portão de Hanmen"
+faction = "enemy"
+units = Array[ExtResource("1_unit")]([SubResource("unit_0"), SubResource("unit_1"), SubResource("unit_2"), SubResource("unit_3"), SubResource("unit_4")])
+current_node_id = "hanmen_gate"
+encounter_tag = "mythic_boss"
+victory_effects = {
+"popular_support": 4
+}
+outcome_rewards = {
+"morale_break": {
+"flag": "hanmen_pact_of_honor"
+}
+}
+honor_rule = {
+"counts_as": "morale_break",
+"flag": "act1_blind_astronomer_protected",
+"min_alignment": 70
+}

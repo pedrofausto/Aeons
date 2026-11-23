@@ -1,0 +1,53 @@
+[gd_scene format=3]
+
+[node name="CisternasDeCarcassonne" type="Node2D"]
+
+[node name="Hills" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.2, 1)
+repeat_size = Vector2(640, 0)
+autoscroll = Vector2(-3, 0)
+repeat_times = 2
+
+[node name="Shape" type="Polygon2D" parent="Hills"]
+color = Color(0.22, 0.24, 0.32, 1)
+polygon = PackedVector2Array(0, 230, 120, 170, 260, 210, 380, 150, 520, 200, 640, 175, 640, 360, 0, 360)
+
+[node name="Cite" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.6, 1)
+
+[node name="OuterWall" type="Polygon2D" parent="Cite"]
+color = Color(0.5, 0.47, 0.42, 1)
+polygon = PackedVector2Array(150, 200, 490, 200, 490, 262, 150, 262)
+
+[node name="TowerLeft" type="Polygon2D" parent="Cite"]
+color = Color(0.56, 0.52, 0.46, 1)
+polygon = PackedVector2Array(160, 150, 200, 150, 200, 262, 160, 262)
+
+[node name="RoofLeft" type="Polygon2D" parent="Cite"]
+color = Color(0.32, 0.34, 0.5, 1)
+polygon = PackedVector2Array(155, 150, 180, 112, 205, 150)
+
+[node name="TowerRight" type="Polygon2D" parent="Cite"]
+color = Color(0.56, 0.52, 0.46, 1)
+polygon = PackedVector2Array(440, 150, 480, 150, 480, 262, 440, 262)
+
+[node name="RoofRight" type="Polygon2D" parent="Cite"]
+color = Color(0.32, 0.34, 0.5, 1)
+polygon = PackedVector2Array(435, 150, 460, 112, 485, 150)
+
+[node name="Gate" type="Polygon2D" parent="Cite"]
+color = Color(0.16, 0.13, 0.12, 1)
+polygon = PackedVector2Array(300, 220, 340, 220, 340, 262, 300, 262)
+
+[node name="Aude" type="Parallax2D" parent="."]
+repeat_size = Vector2(640, 0)
+autoscroll = Vector2(-9, 0)
+repeat_times = 2
+
+[node name="Water" type="Polygon2D" parent="Aude"]
+color = Color(0.14, 0.24, 0.34, 1)
+polygon = PackedVector2Array(0, 262, 640, 262, 640, 360, 0, 360)
+
+[node name="Bridge" type="Polygon2D" parent="Aude"]
+color = Color(0.42, 0.38, 0.33, 1)
+polygon = PackedVector2Array(40, 280, 260, 280, 260, 292, 40, 292)

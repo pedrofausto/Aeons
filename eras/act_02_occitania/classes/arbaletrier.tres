@@ -1,0 +1,44 @@
+[gd_resource type="Resource" script_class="UnitClassData" format=3]
+
+[ext_resource type="Script" path="res://core/data/UnitClassData.gd" id="1_class"]
+[ext_resource type="Script" path="res://core/data/ActionSkillData.gd" id="2_skill"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/classes/batedor_pireneus.tres" id="3_good"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/classes/sicario_inquisitorial.tres" id="3_evil"]
+
+[sub_resource type="Resource" id="front"]
+script = ExtResource("2_skill")
+skill_id = "short_dagger"
+display_name = "Adaga Curta"
+effect = 0
+targeting = 0
+power = 60
+
+[sub_resource type="Resource" id="back"]
+script = ExtResource("2_skill")
+skill_id = "crossbow_bolt"
+display_name = "Virote de Besta"
+effect = 0
+targeting = 1
+power = 60
+hits = 2
+element = "PIERCE"
+armor_pierce_pct = 25
+
+[resource]
+script = ExtResource("1_class")
+class_id = "arbaletrier"
+display_name = "Arbalétrier"
+era_id = 2
+archetype = 2
+grid_slots = 1
+tier = 1
+max_hp = 75
+max_morale = 80
+attack = 19
+defense = 11
+intellect = 10
+agility = 16
+front_action = SubResource("front")
+back_action = SubResource("back")
+promotion_good = ExtResource("3_good")
+promotion_evil = ExtResource("3_evil")

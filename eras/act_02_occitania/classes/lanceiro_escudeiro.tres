@@ -1,0 +1,44 @@
+[gd_resource type="Resource" script_class="UnitClassData" format=3]
+
+[ext_resource type="Script" path="res://core/data/UnitClassData.gd" id="1_class"]
+[ext_resource type="Script" path="res://core/data/ActionSkillData.gd" id="2_skill"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/classes/chevalier_languedoc.tres" id="3_good"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/classes/quebra_muralhas.tres" id="3_evil"]
+
+[sub_resource type="Resource" id="front"]
+script = ExtResource("2_skill")
+skill_id = "long_lance"
+display_name = "Lança Longa"
+effect = 0
+targeting = 0
+power = 55
+hits = 2
+element = "PIERCE"
+
+[sub_resource type="Resource" id="back"]
+script = ExtResource("2_skill")
+skill_id = "dart_throw"
+display_name = "Arremesso de Dardo"
+effect = 0
+targeting = 0
+power = 60
+element = "PIERCE"
+
+[resource]
+script = ExtResource("1_class")
+class_id = "lanceiro_escudeiro"
+display_name = "Lanceiro-Escudeiro"
+era_id = 2
+archetype = 1
+grid_slots = 1
+tier = 1
+max_hp = 90
+max_morale = 85
+attack = 20
+defense = 14
+intellect = 8
+agility = 14
+front_action = SubResource("front")
+back_action = SubResource("back")
+promotion_good = ExtResource("3_good")
+promotion_evil = ExtResource("3_evil")

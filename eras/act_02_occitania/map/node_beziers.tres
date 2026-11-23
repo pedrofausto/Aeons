@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="MapNodeData" format=3]
+
+[ext_resource type="Script" path="res://core/data/MapNodeData.gd" id="1_node"]
+
+[resource]
+script = ExtResource("1_node")
+node_id = "beziers"
+display_name = "Ruínas de Béziers"
+node_type = 0
+faction = "neutral"
+region_id = "act2_beziers"
+terrain = "urban"
+required_for_victory = true
+gold_per_tick = 30
+map_position = Vector2(445, 238)
+neighbors = Array[String](["cite_carcassonne", "pontes_aude", "tarascon"])
+liberation_timeline = "res://eras/act_02_occitania/dialogues/dilema_04_beziers.dtl"
+liberation_title = "As Cinzas de Madalena"

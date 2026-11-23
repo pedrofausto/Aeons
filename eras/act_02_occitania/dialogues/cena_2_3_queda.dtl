@@ -1,0 +1,12 @@
+Madrugada gelada de dezesseis de março. Tochas do exército real cobrem todo o vale; neve fina cai misturada a cinzas.
+Na beira do precipício sul, quatro figuras encapuzadas descem por cordas na neblina, levando um pequeno estojo de couro selado. Acima, os portões da barbacã cedem sob os trabucos.
+Pierre-Roger: "Os quatro já alcançaram a mata do Sabarthès. O que quer que estivesse naqueles pergaminhos saiu da montanha. Agora só restamos nós — e a fogueira lá embaixo."
+Esclarmonde: "Não tenham medo do que se apaga. Quando a porta se fechar, lembrem-se apenas de que não pertencemos às pedras que desabam."
+if {WorldState.doctrine} >= 0:
+	Aimeric: "Então que os senhores do norte paguem por cada palmo desta rocha. Se a história deles vai apagar o nosso nome, que jamais esqueçam o preço da nossa recusa!"
+else:
+	Aimeric: "Nenhuma lâmina a mais esta noite. Podem tomar o rochedo, podem levantar suas fogueiras — mas não levarão a nossa obediência."
+O clarão das chamas e da neblina se expande devagar, até não restar cor alguma. Os sinos do vale soam cada vez mais graves.
+Em dezesseis de março, o último rochedo das Terras d'Oc silenciou. Os cronistas do norte escreveram que a rebelião fora extinta e que o nome de Aimeric de Val-Clair se perdeu entre as cinzas de Montségur.
+[signal arg="effect|flag=act2_montsegur_fallen"]
+[end_timeline]

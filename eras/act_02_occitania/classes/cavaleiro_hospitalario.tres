@@ -1,0 +1,48 @@
+[gd_resource type="Resource" script_class="UnitClassData" format=3]
+
+[ext_resource type="Script" path="res://core/data/UnitClassData.gd" id="1_class"]
+[ext_resource type="Script" path="res://core/data/ActionSkillData.gd" id="2_skill"]
+
+[sub_resource type="Resource" id="front"]
+script = ExtResource("2_skill")
+skill_id = "consecrated_shield"
+display_name = "Escudo Consagrado"
+effect = 0
+targeting = 0
+power = 45
+hits = 2
+ally_guard_pct = 20
+
+[sub_resource type="Resource" id="back"]
+script = ExtResource("2_skill")
+skill_id = "vow_of_protection"
+display_name = "Proteção de Voto"
+effect = 3
+targeting = 4
+power = 70
+ally_guard_pct = 15
+
+[resource]
+script = ExtResource("1_class")
+class_id = "cavaleiro_hospitalario"
+display_name = "Cavaleiro Hospitalário"
+era_id = 2
+archetype = 0
+grid_slots = 1
+tier = 2
+liberation_reputation_bonus = 5
+max_hp = 165
+max_morale = 120
+attack = 22
+defense = 34
+intellect = 18
+agility = 12
+front_action = SubResource("front")
+back_action = SubResource("back")
+preferred_doctrine = "pacifist"
+min_level = 10
+min_alignment = 70
+max_alignment = 100
+min_charisma = 60
+min_doctrine = -100
+max_doctrine = -10

@@ -1,0 +1,14 @@
+Muralha leste de Carcassonne. Lanternas oscilam ao vento quente de agosto. Ao fundo, a coluna de poeira do exército cruzado avança pela estrada romana.
+Guillem: "Cantei ontem na praça que o rio Aude não seca nem sob o sol de julho. Hoje o povo já conta os baldes nas cisternas. Em Béziers não perguntaram quem rezava em latim e quem rezava em silêncio — queimaram a igreja inteira com todos dentro."
+Pierre-Roger: "E é por isso que poemas não seguram portões, Guillem. Montclair traz ferro do norte e a bênção de Roma para repartir nossas terras como despojo. Se esperarmos que os barões se compadeçam, morreremos de sede atrás destas pedras."
+Pierre-Roger: "Aimeric, os homens das vigias ainda escutam a tua voz. Os cavaleiros sem terra se reúnem nas trilhas de Cabaret esta noite. Dize-me: vamos descer ao vale e incendiar os carros de trigo e os trabucos deles antes que cerquem o rio — ou vamos cruzar os braços como os Bons Hommes e chamar a própria ruína de virtude?"
+Guillem: "Cuidado com o que acendes no vale, Pierre. Há camponeses recrutados à força naquele acampamento — homens que nem sabem o nome das nossas cidades. Se respondermos ao fogo com fogo, quem restará para lembrar o que Carcassonne era antes da cinza?"
+- O tirano só entende a linguagem do ferro. Atacaremos os comboios esta noite.
+	[signal arg="effect|doctrine=+15|alignment=-5|trust=fac_faydits:10|flag=act2_walls_iron|decision=act2_walls_doctrine:true"]
+	Pierre-Roger: "Enfim alguém com sangue nas veias. Afia tua lança, Aimeric. Se esta terra tiver de cair, que caia levando metade do norte consigo."
+	Guillem: "Que Deus me perdoe, então — porque amanhã terei de cantar sobre mais viúvas dos dois lados."
+- Não venceremos nos tornando iguais a eles. Protegeremos a água e abriremos passagem aos refugiados.
+	[signal arg="effect|doctrine=-15|alignment=+10|popular_support=+10|trust=fac_cathars:10|flag=act2_walls_water|decision=act2_walls_doctrine:false"]
+	Pierre-Roger: "Nobreza demais para um cerco sem misericórdia, rapaz. Guarda essas palavras para quando a água acabar."
+	Guillem: "Os barões temem uma cidade em armas, Aimeric — mas temem ainda mais um povo que eles não conseguem ensinar a odiar."
+[end_timeline]

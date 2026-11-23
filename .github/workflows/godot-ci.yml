@@ -1,0 +1,36 @@
+name: Godot 4.7.2 — Suíte de Testes
+
+on:
+  push:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      GODOT: /tmp/godot/Godot_v4.7.2-stable_linux.x86_64
+      # Mesmo driver do Mac mini (OpenGL 3.3) em janela real via Xvfb + Mesa.
+      GODOT_ARGS: --rendering-driver opengl3 --audio-driver Dummy
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Dependências de janela virtual (Xvfb + Mesa)
+        run: sudo apt-get update && sudo apt-get install -y xvfb libgl1-mesa-dri
+
+      - name: Instalar Godot 4.7.2 (Linux x86_64)
+        run: |
+          curl -fL "https://github.com/godotengine/godot/releases/download/4.7.2-stable/Godot_v4.7.2-stable_linux.x86_64.zip" -o /tmp/godot.zip
+          unzip -o -q /tmp/godot.zip -d /tmp/godot
+          chmod +x "$GODOT"
+          "$GODOT" --version
+
+      - name: Rodar suíte (TEST_PASS obrigatório, sem SCRIPT ERROR/ERROR)
+        run: xvfb-run -a -s "-screen 0 1280x720x24" tests/run_tests.sh
+
+      - name: Boot do jogo (regra 4 — --quit-after 60 emite TEST_PASS)
+        run: |
+          xvfb-run -a -s "-screen 0 1280x720x24" "$GODOT" $GODOT_ARGS --path . --quit-after 60 2>&1 | tee /tmp/boot.log
+          grep -q "TEST_PASS|overworld_boot" /tmp/boot.log
+          ! grep -E -q "SCRIPT ERROR|ERROR:" /tmp/boot.log

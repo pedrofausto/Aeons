@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="MapNodeData" format=3]
+
+[ext_resource type="Script" path="res://core/data/MapNodeData.gd" id="1_node"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/map/squad_guarnicao_de_montclair.tres" id="2_garrison"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/map/squad_surtida_cruzada.tres" id="3_sortie"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/map/squad_cavalaria_de_montclair.tres" id="4_reinforce"]
+
+[resource]
+script = ExtResource("1_node")
+node_id = "cite_carcassonne"
+display_name = "Cité de Carcassonne"
+node_type = 1
+faction = "enemy"
+region_id = "act2_carcassonne"
+terrain = "urban"
+gold_per_tick = 50
+map_position = Vector2(320, 165)
+neighbors = Array[String](["burgo_sao_vicente", "pontes_aude", "montagne_noire", "beziers"])
+garrison = ExtResource("2_garrison")
+water_source_node = "pontes_aude"
+sortie_squad = ExtResource("3_sortie")
+siege_reinforcements = ExtResource("4_reinforce")

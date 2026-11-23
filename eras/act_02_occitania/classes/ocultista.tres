@@ -1,0 +1,47 @@
+[gd_resource type="Resource" script_class="UnitClassData" format=3]
+
+[ext_resource type="Script" path="res://core/data/UnitClassData.gd" id="1_class"]
+[ext_resource type="Script" path="res://core/data/ActionSkillData.gd" id="2_skill"]
+
+[sub_resource type="Resource" id="front"]
+script = ExtResource("2_skill")
+skill_id = "profane_sigil"
+display_name = "Sigilo Profano"
+effect = 1
+targeting = 0
+power = 70
+element = "SHADOW"
+target_attack_debuff_pct = 10
+
+[sub_resource type="Resource" id="back"]
+script = ExtResource("2_skill")
+skill_id = "greek_fire"
+display_name = "Fogo Grego"
+effect = 1
+targeting = 2
+power = 35
+hits = 2
+element = "FIRE"
+morale_power = 4
+
+[resource]
+script = ExtResource("1_class")
+class_id = "ocultista"
+display_name = "Ocultista"
+era_id = 2
+archetype = 3
+grid_slots = 1
+tier = 2
+liberation_reputation_bonus = -5
+max_hp = 100
+max_morale = 95
+attack = 14
+defense = 14
+intellect = 38
+agility = 17
+front_action = SubResource("front")
+back_action = SubResource("back")
+preferred_doctrine = "revolutionary"
+min_level = 10
+min_alignment = 0
+max_alignment = 40
