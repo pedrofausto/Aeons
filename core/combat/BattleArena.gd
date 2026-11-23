@@ -143,7 +143,8 @@ func _build_cards() -> void:
 
 
 func _build_order_buttons(era: EraConfig) -> void:
-	for order: int in [TacticalOrder.Order.FOCUS_LEADER, TacticalOrder.Order.FOCUS_WEAK, TacticalOrder.Order.SPARE]:
+	for order: int in [TacticalOrder.Order.FOCUS_LEADER, TacticalOrder.Order.FOCUS_WEAK, TacticalOrder.Order.SPARE,
+			TacticalOrder.Order.DEFEND]:
 		var button := Button.new()
 		button.text = era.get_order_label(order) if era else str(order)
 		button.custom_minimum_size = Vector2(90, 26)

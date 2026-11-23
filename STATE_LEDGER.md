@@ -58,11 +58,14 @@
 - **Dilema:** Os Celeiros de Linhai (guardiã: velha Qiu) — distribuir (+alinhamento, +apoio, −doutrina, eco `shared_linhai_rice`) ou confiscar (+recursos, −apoio, +doutrina, eco `seized_linhai_granaries`).
 - **Reservados no atlas (não usar com outro papel):** Mestre Shen (Liga dos Youxia), Mestra Lin (Lótus de Cinza), General Wei Bo, Arquivista Xu.
 
-## Ato III — A Frente de Cinza e Aço (catálogo canônico; AINDA NÃO IMPLEMENTADO)
-- **Slug:** `eras/act_03_ash_and_steel/`. **Regiões (region_id):** `no_mans_land` (Trincheira Setor 7, Ponte do Rio Cinza) · `grey_strait` (Porto de Brevilles) · `maquis_woods` (Planalto de Verneuil) · `eisenwerk_hub` (Entroncamento, Depósito Químico) · `alpine_pass` (Estação X) · `stahlstadt_hq` (Bastião de Aço).
-- **Facções (dados, não motor):** Diretório de Aço · Comissariado & Censura · Maquisards · Corpo Médico & Rádio Livre · Criptógrafos da Estação X · Bruxas da Noite (mítica; exige `act3_chemical_depot_sealed`).
-- **Decisões (EssenceState.decisions):** `act3_winter_truce_honored` · `act3_brevilles_civilians_warned` · `act3_eisenwerk_viaduct_spared` · `act3_chemical_depot_sealed` · `act3_final_radio_truth_aired`.
-- **Anomalias (aeon_resistance_flags):** `pengming_fixed_stars` (I) · `montsegur_archon_codex` (II) · `station_x_balanced_war_cipher` (III). **Derrotas falsas (planejado `EssenceState.false_defeats`):** `act1_tiandu_eclipse` · `act2_montsegur_pyre` · `act3_stahlstadt_classified_armistice`.
+## Ato III — A Frente de Cinza (catálogo canônico pelo atlas v2; AINDA NÃO IMPLEMENTADO)
+- **Slug:** `eras/act_03_ash_and_steel/`. **Regiões (region_id, propostas):** `no_mans_land` (Centro, início: Trincheira Setor 4, Ponte Ferroviária Quebrada, Cratera do Sino) · `eisenbruck_works` (Oeste: Fábricas de Aço, Entroncamento Ferroviário, Ponte Metálica) · `eastern_snowwoods` (Leste: Acampamento Partisan, Passo dos Pinheiros, Estação de Rádio Oculta) · `nordhaven_bay` (Norte, opcional: Porto de Nordhaven, Casamatas Costeiras, Farol de Ferro) · `southern_citadel` (Sul, clímax: Bunker Supremo, Bateria de Holofotes, Sala de Criptografia).
+- **Facções (`fac_*`, dados):** `fac_steel_directorate` (Marechal Von Krell) · `fac_sabotage_network` (Agente "Corvo", Clara) · `fac_truce_radio` (Dr. Julian & Voz da Névoa) · `fac_night_witches` (Comandante Nadya; mítica — proteger vilas civis e Apoio alto no Leste) · `fac_smugglers` (O Comerciante de Nordhaven).
+- **Encontros:** Patrulha de Choque (noite, Terra de Ninguém) · Comboio Ferroviário Blindado (patrulha nos trilhos Eisenbruck → Cidadela; corta o suprimento do chefe) · Recrutas Jovens Perdidos na Névoa (`low_level_trap`) · Equipe de Guerra Química (raro, Eisenbruck) · Espectro da Névoa (secreto, meia-noite, Ponte Quebrada).
+- **Derrota Falsa:** clarão/explosão soterra o posto de comando na Cidadela do Sul; jornal abafa como "acidente de munição".
+- **Pendente de decisão (atlas v1 → v2):** o atlas v2 não traz dilemas; os 5 do v1 (`act3_winter_truce_honored`, `act3_brevilles_civilians_warned`, `act3_eisenwerk_viaduct_spared`, `act3_chemical_depot_sealed`, `act3_final_radio_truth_aired`) citam lugares que sumiram (Brevilles, Estação X, Stahlstadt). Ids `station_x_balanced_war_cipher` e `act3_stahlstadt_classified_armistice` idem. Atlas v1 em `docs/diffs/Atlas_Ato_III_v1_SUPERADO.md`.
+- **Anomalias (aeon_resistance_flags):** `pengming_fixed_stars` (I) · `montsegur_archon_codex` (II) · (III a definir). **Derrotas falsas (`EssenceState.false_defeats`):** `act1_tiandu_eclipse` · `act2_montsegur_pyre` · (III a definir).
+- **Colisão de nomes:** "Clara" (Agente Corvo, III) × Clara Mendes (Rede Cívica Agora, IV).
 - **Motor previsto (nomes reservados em SCHEMA_CANON §8):** `enable_supply_lines`, `enable_fog_of_intel`, `era_meters` (supply/intel/artillery/radio), `SupplyGraphSystem`, `OffmapStrikeManager`, status `SUPPRESSED`.
 
 ## Roteiro Mestre (linhas gerais, NÃO definitivo — `docs/Lore_Aeons_Verdade/Roteiro_Mestre_5_Atos.md`)

@@ -12,6 +12,7 @@ func run(t: Node) -> void:
 		and WorldState.era_config.map_nodes.size() == 12)
 
 	WorldState.apply_effects({"alignment": 80, "popular_support": -90, "doctrine": 250, "resources": -9999})
+	t.check("essence_containment_level", EssenceState.containment_level() == 1)
 	t.check("world_state_clamps", WorldState.alignment == 100 and WorldState.popular_support == 0
 		and WorldState.doctrine == 100 and WorldState.resources == 0)
 

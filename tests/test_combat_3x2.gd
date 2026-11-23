@@ -77,6 +77,19 @@ func run(t: Node) -> void:
 	var hit: Dictionary = _first_of(log3, "action", "attacker")
 	t.check("order_focus_leader", int(hit.get("target_index", -1)) == 2, str(hit))
 
+	# Defender (Architecture_4): o esquadrão que defende recebe menos dano de HP e de Moral.
+	var open_log := CombatResolver.resolve(_squad("player", [[fubing, 3, 0, true]]), _squad("enemy", [[fubing, 3, 0, true]]))
+	var guard_log := CombatResolver.resolve(_squad("player", [[fubing, 3, 0, true]]), _squad("enemy", [[fubing, 3, 0, true]]),
+		TacticalOrder.Order.NONE, TacticalOrder.Order.DEFEND)
+	var open_hit: Dictionary = _first_of(open_log, "action", "attacker")
+	var guard_hit: Dictionary = _first_of(guard_log, "action", "attacker")
+	var guard_back: Dictionary = _first_of(guard_log, "action", "defender")
+	t.check("order_defend_mitigates", int(guard_hit["damage"]) < int(open_hit["damage"]) and int(guard_hit["damage"]) >= 1
+		and int(guard_back["damage"]) < int(_first_of(open_log, "action", "defender")["damage"])
+		and TacticalOrder.mitigate(TacticalOrder.Order.DEFEND, Vector2i(10, 10)) == Vector2i(6, 6)
+		and WorldState.era_config.get_order_label(TacticalOrder.Order.DEFEND) == "Defender",
+		"%s vs %s" % [guard_hit["damage"], open_hit["damage"]])
+
 	# Queda do líder derruba a moral dos aliados
 	t.check("leader_fall_morale", _has_event(log_hp, "leader_fallen"))
 

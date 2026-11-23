@@ -61,6 +61,7 @@ func _on_battle_closed(result: Dictionary) -> void:
 		if was_patrol:  # Patrulha batida na estrada: o esquadrão volta ao último nó visitado.
 			node_id = _ally_token.squad.current_node_id
 		else:
+			WorldState.liberation_methods[node_id] = String(result.get("victory_type", ""))
 			map.capture(node_id, _ally_token.squad)
 		_ally_token.teleport_to(node_id, map.nodes[node_id].position)
 	else:

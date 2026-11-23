@@ -84,6 +84,7 @@ res://
 | `inventory` | Array[ItemData] | uma entrada por unidade de item |
 | `unlocked_classes` | Array[String] | `class_id` liberados |
 | `siege` | Dictionary | `node_id → {mode, sorties, income_bonus, garrison_hp_pct}` |
+| `liberation_methods` | Dictionary | `node_id → "annihilation"/"morale_break"/"timeout"` (como o jogador tomou o nó em batalha) |
 | `faction_trust` | Dictionary | `fac_id → int` (confiança das facções narrativas; ids `fac_*` vêm da era; zera a cada ato) |
 
 **Mutação só pelas funções** (`change_alignment/support/doctrine/resources`, `capture_node`, `set_flag`, `add_echo`,
@@ -102,7 +103,7 @@ fazem *clamp* e emitem `world_state_changed`.
 | `decisions` | Dictionary | `chave → bool`, **gravada uma única vez** (`record_decision`) |
 | `echo_values` | Dictionary | ecos com valor, `chave → String`, **primeiro registro vale** (`record_echo`/`get_echo`) |
 | `act_records` | Dictionary | `act_id → {protagonist, final_alignment, final_popular_support, final_doctrine, flags, faction_trust, false_defeat, + EraConfig.act_record_fields}` (`record_act_completion` mescla) |
-| `false_defeats` | Array[String] | ids das derrotas falsas vividas (`act2_montsegur_pyre`) |
+| `false_defeats` | Array[String] | ids das derrotas falsas vividas (`act2_montsegur_pyre`); `containment_level()` = 1 + tamanho |
 
 Transição de ato: **`EssenceState.archive_act_and_reset_visible(act_id)`** = `record_act(act_id)` + reset do visível +
 próxima era (não existe `EraManager`). Sem próximo ato configurado, a Derrota Falsa chama só `record_act` e mostra
@@ -284,6 +285,16 @@ Nova chave só com suporte em `WorldState.apply_effects`/`InterludeController` +
 | `local_support` (por nó) | não existe; Apoio é global (`WorldState.popular_support`) + `liberation_reputation_bonus` |
 | `archetype` como String, `front_action_id`/`back_action_id` | enum `Archetype`; `front_action`/`back_action: ActionSkillData` |
 | `GodotInk` | não usado; diálogos são Dialogic 2 (`.dtl`) |
+| (Architecture_4) `CombatArena.tscn`, `core/resources/`, `core/autoloads/EraManager.gd` | `BattleArena.tscn`, `core/data/`, `WorldState.load_era` + `EssenceState.archive_act_and_reset_visible` |
+| (Architecture_4) `AudioDirector.gd` (AudioStreamSynchronized) | ainda não existe; entra com a Sprint de áudio como autoload `AudioDirector` |
+| (Architecture_4) `WorldState.treasury` | `WorldState.resources` |
+| (Architecture_4) `WorldState.liberated_nodes: {node_id: {owner, method}}` | `captured_nodes` (dono) + `liberation_methods` (`annihilation`/`morale_break`/`timeout`) |
+| (Architecture_4) `EssenceState.act_echoes: {act: {final_*}}` | `EssenceState.act_records` |
+| (Architecture_4) `EssenceState.philosophical_flags` | `philosophical_echoes` (ecos) / `aeon_resistance_flags` (anomalias) |
+| (Architecture_4) `EssenceState.aeon_containment_level` | `EssenceState.containment_level()` = 1 + `false_defeats.size()` (sem contador próprio) |
+| (Architecture_4) `record_false_defeat(act_id, ws)` | `FalseDefeat.trigger(map)` → `EssenceState.record_act` / `archive_act_and_reset_visible` |
+| (Architecture_4) ordens "Pressão Moral" / "Defender" | `TacticalOrder.Order.SPARE` (Poupar/Render) / `TacticalOrder.Order.DEFEND` |
+| (Architecture_4) "Posto da Regência", `docs/STATE_LEDGER.md`, `docs/lore_public/` | Forte da Regência; `STATE_LEDGER.md` na raiz; `docs/Lore_Simulacros/` |
 
 ---
 

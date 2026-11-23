@@ -128,7 +128,7 @@ func _test_chronicle(t: Node, choice: int, climax_line: String, echo: String) ->
 		and WorldState.has_flag("chronicle_closed") and WorldState.is_paused and 2 in EssenceState.completed_acts
 		and record.get("protagonist") == "Aimeric de Val-Clair" and record.get("philosophy_echo") == echo
 		and record.get("tarasque_spared") == false and int(record.get("final_doctrine", 0)) == WorldState.doctrine
-		and record.has("final_popular_support"), str(record))
+		and record.has("final_popular_support") and EssenceState.containment_level() == 2, str(record))
 	map.queue_free()
 	await t.get_tree().process_frame
 

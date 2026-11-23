@@ -100,3 +100,8 @@ func record_echo(key: String, value: String) -> bool:
 
 func get_echo(key: String) -> String:
 	return String(echo_values.get(key, ""))
+
+
+## Nível de contenção: começa em 1 e sobe a cada Derrota Falsa vivida.
+func containment_level() -> int:
+	return 1 + false_defeats.size()

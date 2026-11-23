@@ -16,6 +16,7 @@ static func resolve(attacker: SquadData, defender: SquadData,
 	var squads: Dictionary = {"attacker": attacker, "defender": defender}
 	var orders: Dictionary = {"attacker": attacker_order, "defender": defender_order}
 	var state: Dictionary = SkillMath.new_state(String(context.get("terrain", "")))
+	state["orders"] = orders
 	var log: Array[Dictionary] = []
 	for squad: SquadData in [attacker, defender]:
 		for unit: UnitInstance in squad.units:
@@ -125,7 +126,8 @@ static func _strike(actor: UnitInstance, actor_ref: Dictionary, skill: ActionSki
 	var side: String = actor_ref["side"]
 	var target: UnitInstance = foes.units[target_index]
 	var raw := SkillMath.hit(actor, target, skill, own.fatigue_attack_pct(), state)
-	var final := TacticalOrder.modify(own_order, raw.x, raw.y)
+	var foe_order: int = int((state.get("orders", {}) as Dictionary).get(_other(side), TacticalOrder.Order.NONE))
+	var final := TacticalOrder.mitigate(foe_order as TacticalOrder.Order, TacticalOrder.modify(own_order, raw.x, raw.y))
 	var was_broken: bool = target.is_broken()
 	var floor_hp: int = 1 if actor.class_data.has_trait("non_lethal") else 0  # Nunca desfere golpe letal
 	target.hp = maxi(target.hp - final.x, mini(floor_hp, target.hp))

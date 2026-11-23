@@ -29,6 +29,7 @@ var unlocked_classes: Array[String] = []     # class_id liberados para recrutame
 ## Cerco por nó: { node_id: { "mode": "thirst"|"preaching"|"assault"|"poisoned",
 ##   "sorties": int, "income_bonus": int, "garrison_hp_pct": int } }
 var siege: Dictionary = {}
+var liberation_methods: Dictionary = {}      # node_id -> "annihilation" | "morale_break" | "timeout" (como foi tomado)
 var faction_trust: Dictionary = {}           # fac_id -> int (confiança de facções narrativas; dados da era)
 
 
@@ -73,6 +74,7 @@ func reset_visible(next_act: int) -> void:
 	unlocked_classes.clear()
 	siege.clear()
 	faction_trust.clear()
+	liberation_methods.clear()
 	_notify()
 
 

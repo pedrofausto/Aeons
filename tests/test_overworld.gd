@@ -93,7 +93,8 @@ func run(t: Node) -> void:
 	var remaining: Array = map.tokens.filter(func(k: SquadToken) -> bool: return not k.is_player()).map(
 		func(k: SquadToken) -> String: return k.squad.squad_id)
 	t.check("battle_win_captures_fort", WorldState.get_node_faction("forte_regencia") == "player"
-		and WorldState.has_flag("act_victory") and remaining == ["guarda_de_hanmen", "corsarios_mare_cinzenta", "expedicao_regencia"], str(remaining))
+		and WorldState.has_flag("act_victory") and remaining == ["guarda_de_hanmen", "corsarios_mare_cinzenta", "expedicao_regencia"]
+		and String(WorldState.liberation_methods.get("forte_regencia", "")) in ["annihilation", "morale_break", "timeout"], str(remaining))
 	print("INFO|batalhas no mapa -> %s" % str(battles.map(func(r: Dictionary) -> String:
 		return "%s/%s" % [r["winner"], r["victory_type"]])))
 

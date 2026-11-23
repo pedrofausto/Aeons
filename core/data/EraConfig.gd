@@ -21,8 +21,8 @@ var interlude_style: String = "camp"
 @export var doctrine_label: String = "Doutrina"
 @export var day_label: String = "Dia"
 @export var time_of_day_labels: Dictionary = {"day": "☀", "night": "☾"}
-## Rótulos das ordens táticas, na ordem de TacticalOrder.Order (NONE, FOCUS_LEADER, FOCUS_WEAK, SPARE).
-@export var order_labels: PackedStringArray = ["Sem Ordem", "Focar Líder", "Focar Fraco", "Poupar/Render"]
+## Rótulos das ordens táticas, na ordem de TacticalOrder.Order (NONE, FOCUS_LEADER, FOCUS_WEAK, SPARE, DEFEND).
+@export var order_labels: PackedStringArray = ["Sem Ordem", "Focar Líder", "Focar Fraco", "Poupar/Render", "Defender"]
 ## Rótulos de desfecho do combate (chaves: victory, defeat, annihilation, morale_break, timeout).
 @export var outcome_labels: Dictionary = {
 	"victory": "Vitória", "defeat": "Derrota",
