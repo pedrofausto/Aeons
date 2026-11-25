@@ -10,7 +10,7 @@
 - **Engine:** Godot 4.7.2 · GDScript puro · `gl_compatibility` · resolução lógica 640×360 (janela 1280×720, Nearest).
 - **Validação:** `tests/run_tests.sh` → **169 TEST_PASS**, 0 falhas, sem `SCRIPT ERROR`/`ERROR:` (janela real Xvfb + opengl3 e headless).
 - **CI:** `.github/workflows/godot-ci.yml` (suíte + boot `--quit-after 60`).
-- **Branch de trabalho:** `ccr-9fc24095-lrv5hy` (nunca fazer push em `main` sem autorização).
+- **Branch de trabalho:** `main` (push direto em `main` permitido).
 
 ## Autoloads e variáveis ativas
 | Autoload | Variáveis | Observação |
