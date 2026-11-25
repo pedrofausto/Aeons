@@ -5,10 +5,12 @@ extends Node
 
 const BATTLE_SCENE: PackedScene = preload("res://core/combat/BattleArena.tscn")
 const INTERLUDE_SCENE_PATH: String = "res://core/interlude/InterludeRoom.tscn"
+const LOCATION_SCENE_PATH: String = "res://core/overworld/LocationRoom.tscn"
 
 var map: OverworldMap
 var active_battle: BattleArena
 var active_interlude: Node
+var active_location: Node
 var _queue: Array[String] = []          # Interlúdios em fila (clímax do ato)
 var _after_queue: Callable
 var _ally_token: SquadToken
@@ -24,7 +26,7 @@ func setup(p_map: OverworldMap) -> void:
 
 
 func is_busy() -> bool:
-	return active_battle != null or active_interlude != null
+	return active_battle != null or active_interlude != null or active_location != null
 
 
 func start_battle(ally: SquadToken, foe: SquadToken) -> void:
@@ -103,6 +105,27 @@ func _on_interlude_closed() -> void:
 	if not _queue.is_empty() or _after_queue.is_valid():
 		_play_queue()
 		return
+	map.on_encounter_resolved()
+
+
+func open_location(node_id: String) -> void:
+	if is_busy() or not map.nodes.has(node_id) or not ResourceLoader.exists(LOCATION_SCENE_PATH):
+		return
+	WorldState.set_paused(true)
+	var data: MapNodeData = (map.nodes[node_id] as MapNode).data
+	var squad: SquadData = map.selected_token.squad if map.selected_token != null else null
+	active_location = (load(LOCATION_SCENE_PATH) as PackedScene).instantiate()
+	active_location.call("setup", data, squad)
+	active_location.connect("closed", _on_location_closed)
+	_set_map_visible(false)
+	map.get_tree().root.add_child(active_location)
+
+
+func _on_location_closed() -> void:
+	if is_instance_valid(active_location):
+		active_location.queue_free()
+	active_location = null
+	_set_map_visible(true)
 	map.on_encounter_resolved()
 
 

@@ -81,7 +81,13 @@ var interlude_style: String = "camp"
 @export var siege_thirst_message: String = "Sede em %s."
 @export var siege_preaching_message: String = "Pregação sob as muralhas de %s."
 @export var siege_surrender_message: String = "%s se rende intacta."
+@export var equipment_title: String = "Equipamentos"
+@export var equipment_button_label: String = "⚔ Equipar"
 @export_file("*.tres") var next_era_config: String = ""
+
+@export_group("Artes de Cenário (opcionais)")
+@export var map_texture: Texture2D
+@export var battle_backdrop: Texture2D
 
 
 func get_item_name(item_id: String) -> String:

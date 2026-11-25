@@ -5,6 +5,9 @@
 [ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/junshi.tres" id="3_good"]
 [ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/intrigante_legalista.tres" id="3_evil"]
 
+[ext_resource type="Texture2D" path="res://eras/act_01_tianxu/art/characters/sprite_a1_mystic.png" id="99_sprite"]
+[ext_resource type="Texture2D" path="res://eras/act_01_tianxu/art/characters/portrait_a1_strategist.png" id="99_portrait"]
+
 [sub_resource type="Resource" id="front"]
 script = ExtResource("2_skill")
 skill_id = "iron_fan"
@@ -41,3 +44,5 @@ front_action = SubResource("front")
 back_action = SubResource("back")
 promotion_good = ExtResource("3_good")
 promotion_evil = ExtResource("3_evil")
+sprite_texture = ExtResource("99_sprite")
+portrait_texture = ExtResource("99_portrait")

@@ -3,6 +3,9 @@
 [ext_resource type="Script" path="res://core/data/UnitClassData.gd" id="1_class"]
 [ext_resource type="Script" path="res://core/data/ActionSkillData.gd" id="2_skill"]
 
+[ext_resource type="Texture2D" path="res://eras/act_01_tianxu/art/characters/sprite_a1_vanguard.png" id="99_sprite"]
+[ext_resource type="Texture2D" path="res://eras/act_01_tianxu/art/characters/portrait_a1_archer.png" id="99_portrait"]
+
 [sub_resource type="Resource" id="front"]
 script = ExtResource("2_skill")
 skill_id = "point_blank_shot"
@@ -42,3 +45,5 @@ movement = "cavalry"
 min_level = 9
 min_alignment = 55
 max_alignment = 100
+sprite_texture = ExtResource("99_sprite")
+portrait_texture = ExtResource("99_portrait")

@@ -3,6 +3,10 @@
 [ext_resource type="Script" path="res://core/data/MapNodeData.gd" id="1_node"]
 [ext_resource type="Resource" path="res://eras/act_01_tianxu/map/squad_corsarios_mare_cinzenta.tres" id="2_garrison"]
 
+[ext_resource type="Texture2D" path="res://eras/act_01_tianxu/art/nodes/node_jade_grotto.png" id="99_icon"]
+[ext_resource type="Texture2D" path="res://eras/act_01_tianxu/art/environments/bg_bamboo_temple.png" id="99_bg"]
+[ext_resource type="Texture2D" path="res://eras/act_01_tianxu/art/characters/sprite_a1_mystic.png" id="99_npc"]
+
 [resource]
 script = ExtResource("1_node")
 node_id = "gruta_jade"
@@ -16,3 +20,6 @@ gold_per_tick = 15
 map_position = Vector2(450, 272)
 neighbors = Array[String](["cais_neblina", "santuarios_bambu"])
 garrison = ExtResource("2_garrison")
+map_icon = ExtResource("99_icon")
+location_backdrop = ExtResource("99_bg")
+location_npc_sprite = ExtResource("99_npc")

@@ -22,3 +22,8 @@ enum NodeType { CITY, FORTRESS, RESOURCE, SERVER, PASS, SEA }  # SEA: rota marí
 @export var liberation_title: String = ""    # Título exibido na sala do interlúdio
 @export_file("*.dtl") var visit_timeline: String = ""  # Interlúdio na 1ª chegada de um esquadrão aliado
 @export_enum("below", "above", "left", "right") var label_side: String = "below"  # Evita sobrepor rótulos vizinhos
+
+@export_group("Artes do Local (opcionais)")
+@export var map_icon: Texture2D
+@export var location_backdrop: Texture2D
+@export var location_npc_sprite: Texture2D

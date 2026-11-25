@@ -2,6 +2,10 @@
 
 [ext_resource type="Script" path="res://core/data/MapNodeData.gd" id="1_node"]
 
+[ext_resource type="Texture2D" path="res://eras/act_02_occitania/art/nodes/node_occitan_city.png" id="99_icon"]
+[ext_resource type="Texture2D" path="res://eras/act_02_occitania/art/environments/bg_carcassonne_walls.png" id="99_bg"]
+[ext_resource type="Texture2D" path="res://eras/act_02_occitania/art/characters/sprite_a2_knight.png" id="99_npc"]
+
 [resource]
 script = ExtResource("1_node")
 node_id = "toulouse"
@@ -16,3 +20,6 @@ map_position = Vector2(135, 190)
 neighbors = Array[String](["castelo_cabaret", "burgo_sao_vicente", "montsegur"])
 liberation_timeline = "res://eras/act_02_occitania/dialogues/dilema_02_toulouse.dtl"
 liberation_title = "O Pacto dos Trovadores e Aragão"
+map_icon = ExtResource("99_icon")
+location_backdrop = ExtResource("99_bg")
+location_npc_sprite = ExtResource("99_npc")

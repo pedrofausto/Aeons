@@ -6,6 +6,9 @@
 [ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/daoshi_healer.tres" id="5_daoshi"]
 [ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/alquimista_sombrio.tres" id="4_alq"]
 
+[ext_resource type="Texture2D" path="res://eras/act_01_tianxu/art/characters/sprite_a1_mystic.png" id="99_sprite"]
+[ext_resource type="Texture2D" path="res://eras/act_01_tianxu/art/characters/portrait_a1_mystic.png" id="99_portrait"]
+
 [sub_resource type="Resource" id="front"]
 script = ExtResource("2_skill")
 skill_id = "alchemist_staff"
@@ -47,3 +50,5 @@ min_alignment = 0
 max_alignment = 100
 march_speed_pct = 100
 night_march_bonus_pct = 0
+sprite_texture = ExtResource("99_sprite")
+portrait_texture = ExtResource("99_portrait")

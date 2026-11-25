@@ -81,3 +81,7 @@ func matches_doctrine(doctrine: int) -> bool:
 @export var forbidden_flag: String = ""       # Promoção recusada enquanto esta flag estiver ativa
 ## Item consumido (1 unidade) ao promover PARA esta classe. Vazio = sem item.
 @export var required_item_id: StringName = &""
+
+@export_group("Visuais (opcionais)")
+@export var sprite_texture: Texture2D
+@export var portrait_texture: Texture2D

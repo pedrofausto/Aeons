@@ -3,6 +3,10 @@
 [ext_resource type="Script" path="res://core/data/MapNodeData.gd" id="1_node"]
 [ext_resource type="Resource" path="res://eras/act_02_occitania/map/squad_sentinelas_do_burgo.tres" id="2_garrison"]
 
+[ext_resource type="Texture2D" path="res://eras/act_02_occitania/art/nodes/node_occitan_city.png" id="99_icon"]
+[ext_resource type="Texture2D" path="res://eras/act_02_occitania/art/environments/bg_carcassonne_walls.png" id="99_bg"]
+[ext_resource type="Texture2D" path="res://eras/act_02_occitania/art/characters/sprite_a2_knight.png" id="99_npc"]
+
 [resource]
 script = ExtResource("1_node")
 node_id = "burgo_sao_vicente"
@@ -17,3 +21,6 @@ neighbors = Array[String](["castelo_cabaret", "pontes_aude", "cite_carcassonne",
 garrison = ExtResource("2_garrison")
 liberation_timeline = "res://eras/act_02_occitania/dialogues/cena_2_1_muralhas.dtl"
 liberation_title = "Nas Muralhas de Carcassonne"
+map_icon = ExtResource("99_icon")
+location_backdrop = ExtResource("99_bg")
+location_npc_sprite = ExtResource("99_npc")

@@ -2,6 +2,10 @@
 
 [ext_resource type="Script" path="res://core/data/MapNodeData.gd" id="1_node"]
 
+[ext_resource type="Texture2D" path="res://eras/act_01_tianxu/art/nodes/node_pagoda_city.png" id="99_icon"]
+[ext_resource type="Texture2D" path="res://eras/act_01_tianxu/art/environments/bg_linhai_canals.png" id="99_bg"]
+[ext_resource type="Texture2D" path="res://eras/act_01_tianxu/art/characters/sprite_a1_vanguard.png" id="99_npc"]
+
 [resource]
 script = ExtResource("1_node")
 node_id = "linhai"
@@ -15,3 +19,6 @@ neighbors = Array[String](["aldeia_terracos", "templo_bambu", "hanmen_pass", "es
 liberation_timeline = "res://eras/act_01_tianxu/dialogues/celeiros_de_linhai.dtl"
 liberation_title = "Os Celeiros de Linhai"
 label_side = "left"
+map_icon = ExtResource("99_icon")
+location_backdrop = ExtResource("99_bg")
+location_npc_sprite = ExtResource("99_npc")

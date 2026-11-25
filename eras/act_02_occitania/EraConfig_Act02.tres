@@ -48,6 +48,14 @@
 [ext_resource type="Script" path="res://core/data/ItemData.gd" id="9_itemscript"]
 [ext_resource type="Resource" path="res://eras/act_02_occitania/items/pergaminho_consolamentum.tres" id="9_pergaminho"]
 [ext_resource type="Resource" path="res://eras/act_02_occitania/items/cinza_de_madalena.tres" id="9_cinza"]
+[ext_resource type="Texture2D" path="res://eras/act_02_occitania/art/maps/act2_world_map_occitania.jpg" id="10_map"]
+[ext_resource type="Texture2D" path="res://eras/act_02_occitania/art/environments/act2_montsegur_siege.jpg" id="10_battle"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/items/obj_a2_occitania_broadsword.tres" id="9_broadsword"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/items/obj_a2_cathar_codex.tres" id="9_cathar_codex"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/items/obj_a2_monastic_codex.tres" id="9_monastic_codex"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/items/obj_a2_crusader_shield.tres" id="9_crusader_shield"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/items/obj_a2_pilgrim_cloak_brown.tres" id="9_pilgrim_cloak"]
+[ext_resource type="Resource" path="res://eras/act_02_occitania/items/obj_a2_faydit_cloak_green.tres" id="9_faydit_cloak"]
 
 [resource]
 script = ExtResource("1_era")
@@ -77,7 +85,9 @@ starting_squads = Array[ExtResource("3_squadscript")]([ExtResource("4_squad")])
 enemy_patrols = Array[ExtResource("3_squadscript")]([ExtResource("7_patrol")])
 encounter_tables = Array[Resource]([ExtResource("8_encounters"), ExtResource("8_beziers"), ExtResource("8_tarascon"), ExtResource("8_montsegur")])
 max_roaming_squads = 2
-item_catalog = Array[ExtResource("9_itemscript")]([ExtResource("9_pergaminho"), ExtResource("9_cinza")])
+item_catalog = Array[ExtResource("9_itemscript")]([ExtResource("9_pergaminho"), ExtResource("9_cinza"), ExtResource("9_broadsword"), ExtResource("9_cathar_codex"), ExtResource("9_monastic_codex"), ExtResource("9_crusader_shield"), ExtResource("9_pilgrim_cloak"), ExtResource("9_faydit_cloak")])
+map_texture = ExtResource("10_map")
+battle_backdrop = ExtResource("10_battle")
 xp_per_victory = 90
 xp_per_defeat = 25
 xp_per_level_gap = 20

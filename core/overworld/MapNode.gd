@@ -1,23 +1,31 @@
 class_name MapNode
 extends Node2D
-## Nó capturável do mapa com indicador visual de facção e gatilho de evento.
+## Nó capturável do mapa com sprite pixel-art arquitetural (ou fallback vetorial) e indicador de facção.
 
 const RADIUS: float = 17.0
+const HIT_RADIUS: float = 22.0
 
 var data: MapNodeData
 var faction: String = "neutral"
 var _label: Label
+var _sprite: Sprite2D
 
 
 func setup(p_data: MapNodeData, p_faction: String) -> void:
 	data = p_data
 	position = data.map_position
+	if data.map_icon != null:
+		_sprite = Sprite2D.new()
+		_sprite.texture = data.map_icon
+		_sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		_sprite.position = Vector2(0.0, -4.0)
+		add_child(_sprite)
 	_label = Label.new()
 	_label.text = data.display_name
 	_label.add_theme_font_size_override("font_size", 9)
 	_label.add_theme_color_override("font_outline_color", Color.BLACK)
 	_label.add_theme_constant_override("outline_size", 3)
-	add_child(_label)  # Na árvore antes de medir: fora dela a largura usa a fonte padrão
+	add_child(_label)
 	_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_label.size = Vector2(180, 14)
 	match data.label_side:
@@ -38,7 +46,7 @@ func set_faction(p_faction: String) -> void:
 
 
 func contains_point(world_point: Vector2) -> bool:
-	return world_point.distance_to(position) <= RADIUS + 4.0
+	return world_point.distance_to(position) <= HIT_RADIUS
 
 
 func _draw() -> void:
@@ -46,6 +54,12 @@ func _draw() -> void:
 		return
 	var era: EraConfig = WorldState.era_config
 	var color: Color = era.color_for_faction(faction) if era else Color.GRAY
+	if _sprite != null:
+		draw_circle(Vector2(0.0, 9.0), 12.0, Color(0, 0, 0, 0.38))
+		draw_arc(Vector2(0.0, 9.0), 12.0, 0.0, TAU, 24, color, 1.5)
+		draw_circle(Vector2(13.0, 8.0), 4.5, color)
+		draw_arc(Vector2(13.0, 8.0), 4.5, 0.0, TAU, 12, Color.BLACK, 1.0)
+		return
 	draw_circle(Vector2.ZERO, RADIUS + 2.0, Color(0, 0, 0, 0.55))
 	draw_circle(Vector2.ZERO, RADIUS, color.darkened(0.45))
 	draw_arc(Vector2.ZERO, RADIUS, 0.0, TAU, 32, color, 2.0)
@@ -58,7 +72,7 @@ func _draw() -> void:
 			draw_colored_polygon(PackedVector2Array([Vector2(0, -8), Vector2(8, 0), Vector2(0, 8), Vector2(-8, 0)]), color)
 		MapNodeData.NodeType.PASS:
 			draw_colored_polygon(PackedVector2Array([Vector2(-9, 6), Vector2(-2, -8), Vector2(2, -2), Vector2(5, -6), Vector2(10, 6)]), color)
-		MapNodeData.NodeType.SEA:  # Ondas
+		MapNodeData.NodeType.SEA:
 			for y: float in [-4.0, 3.0]:
 				draw_polyline(PackedVector2Array([Vector2(-9, y), Vector2(-4, y - 3), Vector2(0, y), Vector2(4, y - 3), Vector2(9, y)]), color, 2.0)
 		MapNodeData.NodeType.SERVER:

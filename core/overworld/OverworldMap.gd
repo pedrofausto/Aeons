@@ -27,6 +27,9 @@ var _day_timer: float = 0.0
 func _ready() -> void:
 	var era: EraConfig = WorldState.era_config
 	(%Background as ColorRect).color = era.color_background
+	var map_art: TextureRect = %MapArt
+	map_art.texture = era.map_texture
+	map_art.visible = era.map_texture != null
 	_hud.pause_pressed.connect(toggle_pause)
 	_hud.debug_transition_pressed.connect(_on_debug_transition)
 	_director.setup(self)
@@ -88,7 +91,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		toggle_pause()
 		get_viewport().set_input_as_handled()
 	elif event is InputEventMouseButton and event.pressed and (event as InputEventMouseButton).button_index == MOUSE_BUTTON_LEFT:
-		_handle_click(get_global_mouse_position())
+		_handle_click(get_canvas_transform().affine_inverse() * (event as InputEventMouseButton).position)
+		get_viewport().set_input_as_handled()
+	elif event is InputEventScreenTouch and (event as InputEventScreenTouch).pressed:
+		_handle_click(get_canvas_transform().affine_inverse() * (event as InputEventScreenTouch).position)
 		get_viewport().set_input_as_handled()
 
 
@@ -104,7 +110,10 @@ func _handle_click(point: Vector2) -> void:
 			return
 	for node_id: String in nodes:
 		if (nodes[node_id] as MapNode).contains_point(point) and selected_token:
-			order_move(selected_token, node_id)
+			if selected_token.squad.current_node_id == node_id and not selected_token.is_moving() and WorldState.get_node_faction(node_id) == "player":
+				_director.open_location(node_id)
+			elif order_move(selected_token, node_id) and WorldState.is_paused:
+				WorldState.set_paused(false)
 			return
 
 
@@ -202,17 +211,14 @@ func _terrain_ahead(token: SquadToken) -> String:
 	var next_id: String = token.path[0] if token.is_moving() else token.squad.current_node_id
 	return (nodes[next_id] as MapNode).data.terrain if nodes.has(next_id) else "plains"
 
-
 func _graph() -> Dictionary:
 	var graph: Dictionary = {}
 	for node_id: String in nodes:
 		graph[node_id] = (nodes[node_id] as MapNode).data.neighbors
 	return graph
 
-
 func _is_busy() -> bool:
 	return _director.is_busy()
-
 
 func _draw_roads() -> void:
 	MapGraph.draw_roads(_roads, nodes, WorldState.era_config)

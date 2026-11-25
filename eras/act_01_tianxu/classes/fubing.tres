@@ -5,6 +5,9 @@
 [ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/youxia.tres" id="3_youxia"]
 [ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/buqu.tres" id="4_buqu"]
 
+[ext_resource type="Texture2D" path="res://eras/act_01_tianxu/art/characters/sprite_a1_vanguard.png" id="99_sprite"]
+[ext_resource type="Texture2D" path="res://eras/act_01_tianxu/art/characters/portrait_a1_vanguard.png" id="99_portrait"]
+
 [sub_resource type="Resource" id="front"]
 script = ExtResource("2_skill")
 skill_id = "dao_strike"
@@ -40,3 +43,5 @@ front_action = SubResource("front")
 back_action = SubResource("back")
 promotion_good = ExtResource("3_youxia")
 promotion_evil = ExtResource("4_buqu")
+sprite_texture = ExtResource("99_sprite")
+portrait_texture = ExtResource("99_portrait")

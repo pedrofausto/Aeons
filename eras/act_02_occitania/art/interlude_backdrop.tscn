@@ -1,6 +1,20 @@
 [gd_scene format=3]
 
+[ext_resource type="Texture2D" path="res://eras/act_02_occitania/art/environments/act2_montsegur_siege.jpg" id="1_bg"]
+
 [node name="CisternasDeCarcassonne" type="Node2D"]
+
+[node name="IllustratedBg" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.1, 1)
+
+[node name="Art" type="TextureRect" parent="IllustratedBg"]
+offset_right = 640.0
+offset_bottom = 360.0
+mouse_filter = 2
+modulate = Color(0.55, 0.55, 0.6, 1)
+texture = ExtResource("1_bg")
+expand_mode = 1
+stretch_mode = 6
 
 [node name="Hills" type="Parallax2D" parent="."]
 scroll_scale = Vector2(0.2, 1)

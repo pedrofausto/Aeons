@@ -2,6 +2,10 @@
 
 [ext_resource type="Script" path="res://core/data/MapNodeData.gd" id="1_node"]
 
+[ext_resource type="Texture2D" path="res://eras/act_02_occitania/art/nodes/node_citadel.png" id="99_icon"]
+[ext_resource type="Texture2D" path="res://eras/act_02_occitania/art/environments/act2_montsegur_siege.jpg" id="99_bg"]
+[ext_resource type="Texture2D" path="res://eras/act_02_occitania/art/characters/sprite_a2_parfait.png" id="99_npc"]
+
 [resource]
 script = ExtResource("1_node")
 node_id = "montsegur"
@@ -18,3 +22,6 @@ liberation_timeline = "res://eras/act_02_occitania/dialogues/dilema_06_montsegur
 liberation_title = "A Vigília Antes do Abismo"
 visit_timeline = "res://eras/act_02_occitania/dialogues/cena_2_2_vigilia.dtl"
 label_side = "above"
+map_icon = ExtResource("99_icon")
+location_backdrop = ExtResource("99_bg")
+location_npc_sprite = ExtResource("99_npc")

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://core/data/ItemData.gd" id="1_item"]
+[ext_resource type="Texture2D" path="res://eras/act_01_tianxu/art/items/obj_a1_bronze_ji.png" id="2_icon"]
+
+[resource]
+script = ExtResource("1_item")
+item_id = "obj_a1_bronze_ji"
+display_name = "Alabarda Ji de Bronze"
+description = "Haste longa com lâmina dupla de bronze fundido nas forjas de Nanlu."
+slot = 1
+category = 1
+icon_texture = ExtResource("2_icon")
+bonus_attack = 8
+bonus_defense = 2
+allowed_archetypes = Array[int]([0, 1])

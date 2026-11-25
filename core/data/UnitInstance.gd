@@ -18,6 +18,10 @@ const STAT_PER_LEVEL: int = 2
 @export var hp: int = -1                     # -1 = cheio ao iniciar
 @export var morale: int = -1
 
+@export_group("Equipamentos")
+@export var equipped_weapon: ItemData
+@export var equipped_armor: ItemData
+
 
 static func create(cls: UnitClassData, p_name: String, p_level: int, p_slot: int,
 		p_leader: bool = false, p_alignment: int = 50, p_charisma: int = 50) -> UnitInstance:
@@ -45,8 +49,24 @@ func reset_vitals() -> void:
 	morale = get_max_morale()
 
 
+func _equip_bonus(stat_prop: StringName) -> int:
+	var total: int = 0
+	for item: ItemData in get_equipped_items():
+		total += int(item.get(stat_prop))
+	return total
+
+
+func get_equipped_items() -> Array[ItemData]:
+	var items: Array[ItemData] = []
+	if equipped_weapon != null:
+		items.append(equipped_weapon)
+	if equipped_armor != null:
+		items.append(equipped_armor)
+	return items
+
+
 func get_max_hp() -> int:
-	return class_data.max_hp + (level - 1) * HP_PER_LEVEL
+	return class_data.max_hp + (level - 1) * HP_PER_LEVEL + _equip_bonus(&"bonus_hp")
 
 
 func get_max_morale() -> int:
@@ -54,19 +74,23 @@ func get_max_morale() -> int:
 
 
 func get_attack() -> int:
-	return class_data.attack + (level - 1) * STAT_PER_LEVEL
+	return class_data.attack + (level - 1) * STAT_PER_LEVEL + _equip_bonus(&"bonus_attack")
 
 
 func get_defense() -> int:
-	return class_data.defense + (level - 1) * STAT_PER_LEVEL
+	return class_data.defense + (level - 1) * STAT_PER_LEVEL + _equip_bonus(&"bonus_defense")
 
 
 func get_intellect() -> int:
-	return class_data.intellect + (level - 1) * STAT_PER_LEVEL
+	return class_data.intellect + (level - 1) * STAT_PER_LEVEL + _equip_bonus(&"bonus_intellect")
 
 
 func get_agility() -> int:
-	return class_data.agility + (level - 1) * STAT_PER_LEVEL
+	return class_data.agility + (level - 1) * STAT_PER_LEVEL + _equip_bonus(&"bonus_agility")
+
+
+func get_charisma() -> int:
+	return clampi(charisma + _equip_bonus(&"bonus_charisma"), 0, 100)
 
 
 func get_row() -> int:
@@ -111,11 +135,40 @@ func change_alignment(delta: int) -> void:
 	alignment = clampi(alignment + delta, 0, 100)
 
 
+func equip_item(item: ItemData) -> bool:
+	if item == null or not item.can_equip_by(class_data):
+		return false
+	if item.slot == ItemData.SlotType.WEAPON_OR_TOOL:
+		equipped_weapon = item
+	elif item.slot == ItemData.SlotType.ARMOR_OR_RELIC:
+		equipped_armor = item
+	else:
+		return false
+	if item.alignment_shift_on_equip != 0:
+		change_alignment(item.alignment_shift_on_equip)
+	if hp > 0:
+		hp = mini(hp + maxi(0, item.bonus_hp), get_max_hp())
+	return true
+
+
+func unequip_slot(slot_type: ItemData.SlotType) -> ItemData:
+	var previous: ItemData = null
+	if slot_type == ItemData.SlotType.WEAPON_OR_TOOL:
+		previous = equipped_weapon
+		equipped_weapon = null
+	elif slot_type == ItemData.SlotType.ARMOR_OR_RELIC:
+		previous = equipped_armor
+		equipped_armor = null
+	if hp > 0:
+		hp = mini(hp, get_max_hp())
+	return previous
+
+
 func meets_requirements(target: UnitClassData) -> bool:
 	return level >= target.min_level \
 		and alignment >= target.min_alignment \
 		and alignment <= target.max_alignment \
-		and charisma >= target.min_charisma
+		and get_charisma() >= target.min_charisma
 
 
 func get_eligible_promotions() -> Array[UnitClassData]:

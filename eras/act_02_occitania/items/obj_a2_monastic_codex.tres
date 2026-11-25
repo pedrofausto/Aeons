@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://core/data/ItemData.gd" id="1_item"]
+[ext_resource type="Texture2D" path="res://eras/act_02_occitania/art/items/obj_a2_monastic_codex.png" id="2_icon"]
+
+[resource]
+script = ExtResource("1_item")
+item_id = "obj_a2_monastic_codex"
+display_name = "Compêndio Inquisitorial"
+description = "Livro de interrogatórios e decretos de censura das abadias do norte."
+promotion_seal = true
+slot = 2
+category = 3
+icon_texture = ExtResource("2_icon")
+bonus_intellect = 8
+alignment_shift_on_equip = -10

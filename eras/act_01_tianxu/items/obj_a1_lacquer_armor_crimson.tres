@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ItemData" format=3]
+
+[ext_resource type="Script" path="res://core/data/ItemData.gd" id="1_item"]
+[ext_resource type="Texture2D" path="res://eras/act_01_tianxu/art/items/obj_a1_lacquer_armor_crimson.png" id="2_icon"]
+
+[resource]
+script = ExtResource("1_item")
+item_id = "obj_a1_lacquer_armor_crimson"
+display_name = "Armadura de Laca Carmesim"
+description = "Placas de couro laqueado em vermelho escuro, resistentes a virotes e estocadas."
+slot = 2
+category = 2
+icon_texture = ExtResource("2_icon")
+bonus_hp = 25
+bonus_defense = 8
+allowed_archetypes = Array[int]([0, 1])

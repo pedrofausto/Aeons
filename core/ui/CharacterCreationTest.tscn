@@ -1,0 +1,94 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://core/ui/CharacterCreationTest.gd" id="1_ui"]
+
+[node name="CharacterCreationTest" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ui")
+
+[node name="Bg" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.08, 0.09, 0.1, 1)
+
+[node name="Columns" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 12.0
+offset_right = -12.0
+offset_bottom = -12.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 12
+
+[node name="LeftPanel" type="VBoxContainer" parent="Columns"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 6
+
+[node name="PreviewRow" type="HBoxContainer" parent="Columns/LeftPanel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="SpritePreview" type="TextureRect" parent="Columns/LeftPanel/PreviewRow"]
+unique_name_in_owner = true
+texture_filter = 1
+custom_minimum_size = Vector2(64, 88)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="PortraitPreview" type="TextureRect" parent="Columns/LeftPanel/PreviewRow"]
+unique_name_in_owner = true
+texture_filter = 1
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+size_flags_vertical = 4
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ClassSelect" type="OptionButton" parent="Columns/LeftPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="RowButton" type="Button" parent="Columns/LeftPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Fileira: Frente (0..2)"
+
+[node name="StatsLabel" type="Label" parent="Columns/LeftPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 3
+
+[node name="ActionsLabel" type="Label" parent="Columns/LeftPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+autowrap_mode = 3
+
+[node name="EquippedBox" type="VBoxContainer" parent="Columns/LeftPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="RightScroll" type="ScrollContainer" parent="Columns"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CatalogBox" type="VBoxContainer" parent="Columns/RightScroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4

@@ -50,6 +50,14 @@
 [ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/medico_imperial.tres" id="6_medico_imperial"]
 [ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/monge_taoista.tres" id="6_monge_taoista"]
 [ext_resource type="Resource" path="res://eras/act_01_tianxu/classes/intrigante_legalista.tres" id="6_intrigante_legalista"]
+[ext_resource type="Texture2D" path="res://eras/act_01_tianxu/art/maps/act1_world_map_tianxu.jpg" id="10_map"]
+[ext_resource type="Texture2D" path="res://eras/act_01_tianxu/art/characters/act1_combat_bridge.jpg" id="10_battle"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/items/obj_a1_bronze_ji.tres" id="9_bronze_ji"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/items/obj_a1_jade_seal.tres" id="9_jade_seal"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/items/obj_a1_bamboo_scroll.tres" id="9_bamboo_scroll"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/items/obj_a1_lacquer_armor_crimson.tres" id="9_lacquer_crimson"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/items/obj_a1_lacquer_armor_iron.tres" id="9_lacquer_iron"]
+[ext_resource type="Resource" path="res://eras/act_01_tianxu/items/obj_a1_reserve_armor.tres" id="9_reserve_armor"]
 
 [resource]
 script = ExtResource("1_era")
@@ -78,6 +86,8 @@ starting_squads = Array[ExtResource("3_squadscript")]([ExtResource("4_squad")])
 enemy_patrols = Array[ExtResource("3_squadscript")]([ExtResource("7_patrol")])
 encounter_tables = Array[Resource]([ExtResource("8_encounters"), ExtResource("8_hanmen"), ExtResource("8_pengming"), ExtResource("8_pengming_costa")])
 max_roaming_squads = 2
-item_catalog = Array[ExtResource("9_itemscript")]([ExtResource("9_talisma"), ExtResource("9_bussola"), ExtResource("9_elixir"), ExtResource("9_carta")])
+item_catalog = Array[ExtResource("9_itemscript")]([ExtResource("9_talisma"), ExtResource("9_bussola"), ExtResource("9_elixir"), ExtResource("9_carta"), ExtResource("9_bronze_ji"), ExtResource("9_jade_seal"), ExtResource("9_bamboo_scroll"), ExtResource("9_lacquer_crimson"), ExtResource("9_lacquer_iron"), ExtResource("9_reserve_armor")])
+map_texture = ExtResource("10_map")
+battle_backdrop = ExtResource("10_battle")
 victory_text = "O Forte da Regência caiu. Os Vales de Nanlu respiram livres."
 next_era_config = "res://eras/act_02_occitania/EraConfig_Act02.tres"

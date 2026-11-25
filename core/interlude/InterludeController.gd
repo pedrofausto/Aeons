@@ -32,9 +32,12 @@ func setup(p_timeline_path: String, p_title: String = "", p_node_id: String = ""
 
 func _ready() -> void:
 	var era: EraConfig = WorldState.era_config
+	var node_data: MapNodeData = _find_node_data(era, node_id)
 	if era:
 		_ui_root.theme = era.ui_theme
-		if era.interlude_backdrop:
+		if node_data != null and node_data.location_backdrop != null:
+			_setup_location_backdrop(node_data)
+		elif era.interlude_backdrop:
 			_backdrop.add_child(era.interlude_backdrop.instantiate())
 	_overlay.material = InterludeManager.overlay_material(era)
 	_overlay.visible = _overlay.material != null
@@ -170,3 +173,40 @@ func _recruit(spec: String) -> void:
 		WorldState.player_squads.append(squad)
 		EventBus.player_squad_formed.emit(squad)
 		return
+
+
+func _find_node_data(era: EraConfig, target_id: String) -> MapNodeData:
+	if era == null or target_id.is_empty():
+		return null
+	for entry: MapNodeData in era.map_nodes:
+		if entry.node_id == target_id:
+			return entry
+	return null
+
+
+func _setup_location_backdrop(data: MapNodeData) -> void:
+	var bg := TextureRect.new()
+	bg.texture = data.location_backdrop
+	bg.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	bg.size = Vector2(640.0, 360.0)
+	bg.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	bg.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	bg.modulate = Color(0.85, 0.85, 0.9, 1.0)
+	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_backdrop.add_child(bg)
+	var leader: UnitInstance = WorldState.player_squads[0].get_leader() if not WorldState.player_squads.is_empty() else null
+	if leader != null and leader.class_data != null and leader.class_data.sprite_texture != null:
+		_add_scene_sprite(leader.class_data.sprite_texture, Vector2(150.0, 215.0), false)
+	if data.location_npc_sprite != null:
+		_add_scene_sprite(data.location_npc_sprite, Vector2(490.0, 215.0), true)
+
+
+func _add_scene_sprite(tex: Texture2D, pos: Vector2, flip_h: bool) -> void:
+	var spr := Sprite2D.new()
+	spr.texture = tex
+	spr.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	spr.flip_h = flip_h
+	var sc: float = 92.0 / maxf(tex.get_size().y, 1.0)
+	spr.scale = Vector2(sc, sc)
+	spr.position = pos
+	_backdrop.add_child(spr)

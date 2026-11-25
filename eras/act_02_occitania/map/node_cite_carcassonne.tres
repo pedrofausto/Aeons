@@ -5,6 +5,10 @@
 [ext_resource type="Resource" path="res://eras/act_02_occitania/map/squad_surtida_cruzada.tres" id="3_sortie"]
 [ext_resource type="Resource" path="res://eras/act_02_occitania/map/squad_cavalaria_de_montclair.tres" id="4_reinforce"]
 
+[ext_resource type="Texture2D" path="res://eras/act_02_occitania/art/nodes/node_citadel.png" id="99_icon"]
+[ext_resource type="Texture2D" path="res://eras/act_02_occitania/art/environments/bg_carcassonne_walls.png" id="99_bg"]
+[ext_resource type="Texture2D" path="res://eras/act_02_occitania/art/characters/sprite_a2_parfait.png" id="99_npc"]
+
 [resource]
 script = ExtResource("1_node")
 node_id = "cite_carcassonne"
@@ -20,3 +24,6 @@ garrison = ExtResource("2_garrison")
 water_source_node = "pontes_aude"
 sortie_squad = ExtResource("3_sortie")
 siege_reinforcements = ExtResource("4_reinforce")
+map_icon = ExtResource("99_icon")
+location_backdrop = ExtResource("99_bg")
+location_npc_sprite = ExtResource("99_npc")

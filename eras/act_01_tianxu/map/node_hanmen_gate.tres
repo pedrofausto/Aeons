@@ -3,6 +3,10 @@
 [ext_resource type="Script" path="res://core/data/MapNodeData.gd" id="1_node"]
 [ext_resource type="Resource" path="res://eras/act_01_tianxu/map/squad_guarda_de_hanmen.tres" id="2_garrison"]
 
+[ext_resource type="Texture2D" path="res://eras/act_01_tianxu/art/nodes/node_iron_fortress.png" id="99_icon"]
+[ext_resource type="Texture2D" path="res://eras/act_01_tianxu/art/environments/act1_hanmen_pass.jpg" id="99_bg"]
+[ext_resource type="Texture2D" path="res://eras/act_01_tianxu/art/characters/sprite_a1_vanguard.png" id="99_npc"]
+
 [resource]
 script = ExtResource("1_node")
 node_id = "hanmen_gate"
@@ -16,3 +20,6 @@ gold_per_tick = 35
 map_position = Vector2(70, 100)
 neighbors = Array[String](["hanmen_pass"])
 garrison = ExtResource("2_garrison")
+map_icon = ExtResource("99_icon")
+location_backdrop = ExtResource("99_bg")
+location_npc_sprite = ExtResource("99_npc")

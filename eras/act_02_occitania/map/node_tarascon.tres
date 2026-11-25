@@ -2,6 +2,10 @@
 
 [ext_resource type="Script" path="res://core/data/MapNodeData.gd" id="1_node"]
 
+[ext_resource type="Texture2D" path="res://eras/act_02_occitania/art/nodes/node_marsh.png" id="99_icon"]
+[ext_resource type="Texture2D" path="res://eras/act_02_occitania/art/environments/bg_tarascon_marshes.png" id="99_bg"]
+[ext_resource type="Texture2D" path="res://eras/act_02_occitania/art/characters/sprite_a2_knight.png" id="99_npc"]
+
 [resource]
 script = ExtResource("1_node")
 node_id = "tarascon"
@@ -16,3 +20,6 @@ map_position = Vector2(548, 178)
 neighbors = Array[String](["beziers"])
 liberation_timeline = "res://eras/act_02_occitania/dialogues/dilema_05_tarascon.dtl"
 liberation_title = "O Manuscrito do Rhône e a Fera"
+map_icon = ExtResource("99_icon")
+location_backdrop = ExtResource("99_bg")
+location_npc_sprite = ExtResource("99_npc")

@@ -3,6 +3,10 @@
 [ext_resource type="Script" path="res://core/data/MapNodeData.gd" id="1_node"]
 [ext_resource type="Resource" path="res://eras/act_02_occitania/map/squad_guarda_da_abadia.tres" id="2_garrison"]
 
+[ext_resource type="Texture2D" path="res://eras/act_02_occitania/art/nodes/node_abbey.png" id="99_icon"]
+[ext_resource type="Texture2D" path="res://eras/act_02_occitania/art/environments/bg_montagne_noire_abbey.png" id="99_bg"]
+[ext_resource type="Texture2D" path="res://eras/act_02_occitania/art/characters/sprite_a2_parfait.png" id="99_npc"]
+
 [resource]
 script = ExtResource("1_node")
 node_id = "montagne_noire"
@@ -18,3 +22,6 @@ neighbors = Array[String](["castelo_cabaret", "cite_carcassonne"])
 garrison = ExtResource("2_garrison")
 liberation_timeline = "res://eras/act_02_occitania/dialogues/dilema_03_montagne_noire.dtl"
 liberation_title = "O Tribunal da Abadia"
+map_icon = ExtResource("99_icon")
+location_backdrop = ExtResource("99_bg")
+location_npc_sprite = ExtResource("99_npc")

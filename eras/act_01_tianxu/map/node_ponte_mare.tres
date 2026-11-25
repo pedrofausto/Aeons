@@ -3,6 +3,10 @@
 [ext_resource type="Script" path="res://core/data/MapNodeData.gd" id="1_node"]
 [ext_resource type="Resource" path="res://eras/act_01_tianxu/map/squad_expedicao_regencia.tres" id="2_garrison"]
 
+[ext_resource type="Texture2D" path="res://eras/act_01_tianxu/art/nodes/node_mountain_pass.png" id="99_icon"]
+[ext_resource type="Texture2D" path="res://eras/act_01_tianxu/art/characters/act1_combat_bridge.jpg" id="99_bg"]
+[ext_resource type="Texture2D" path="res://eras/act_01_tianxu/art/characters/sprite_a1_vanguard.png" id="99_npc"]
+
 [resource]
 script = ExtResource("1_node")
 node_id = "ponte_mare"
@@ -17,3 +21,6 @@ map_position = Vector2(566, 282)
 neighbors = Array[String](["santuarios_bambu", "observatorio_nove_ceus"])
 garrison = ExtResource("2_garrison")
 label_side = "left"
+map_icon = ExtResource("99_icon")
+location_backdrop = ExtResource("99_bg")
+location_npc_sprite = ExtResource("99_npc")

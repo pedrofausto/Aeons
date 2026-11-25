@@ -40,8 +40,8 @@ res://
 │   │                MapNodeData · ActionSkillData · ItemData · PromotionRules
 │   ├── overworld/   OverworldMap.tscn · MapNode · SquadToken · MapGraph · PatrolAI · EncounterDirector
 │   │                RoamingSquadSpawner · EncounterTable · EncounterEntry · SiegeWaterRule
-│   │                DayNightTint · OverworldHUD · PromotionPanel
-│   ├── combat/      BattleArena.tscn · CombatResolver · SkillMath · CombatTargeting · TacticalOrder
+│   │                DayNightTint · OverworldHUD · PromotionPanel · EquipmentPanel · LocationRoom.tscn
+│   ├── combat/      BattleArena.tscn · CombatResolver · TurnBattleSession · SkillMath · CombatTargeting · TacticalOrder
 │   │                BattleConsequences · UnitCardView
 │   └── interlude/   InterludeRoom.tscn · InterludeController · InterludeManager · shaders/
 ├── eras/act_0N_<slug>/
@@ -129,6 +129,7 @@ energia/banda…) entram como **`WorldState.era_meters: Dictionary`** (`meter_id
 | Ações | `front_action: ActionSkillData` · `back_action: ActionSkillData` |
 | Promoção | `promotion_good: Resource` · `promotion_evil: Resource` · `promotes_to: Array[Resource]` · `preferred_doctrine: String = "any"` (any/pacifist/revolutionary — informativo) |
 | Requisitos **para entrar nesta classe** | `min_level` · `min_alignment` · `max_alignment` · `min_charisma` · `min_doctrine = -100` · `max_doctrine = 100` · `forbidden_flag: String` · `required_item_id: StringName` (consome 1) |
+| Visuais (opcionais) | `sprite_texture: Texture2D` · `portrait_texture: Texture2D` |
 
 ### 4.2 `ActionSkillData`
 `skill_id` · `display_name` · `effect: Effect` (PHYSICAL, MAGIC, MORALE_ONLY, HEAL, BUFF) · `targeting: Targeting`
@@ -145,7 +146,8 @@ atributo, **por golpe**) · `morale_power: int = 0` · `element: String = ""` (�
 
 ### 4.3 `UnitInstance`
 `class_data` · `unit_name` · `level` · `experience` (100 por nível) · `alignment` · `charisma` · `slot: int`
-(**0..2 frente, 3..5 trás**) · `is_leader` · `hp = -1` / `morale = -1` (−1 = cheio ao iniciar).
+(**0..2 frente, 3..5 trás**) · `is_leader` · `hp = -1` / `morale = -1` (−1 = cheio ao iniciar) ·
+`equipped_weapon: ItemData` · `equipped_armor: ItemData` (`get_charisma()` e getters de atributos somam bônus).
 
 ### 4.4 `SquadData`
 `squad_id` · `display_name` · `faction` · `units: Array[UnitInstance]` · `current_node_id` · `fatigue (0..100)` ·
@@ -163,7 +165,8 @@ Moral" se modela com `honor_rule` (ex.: o rito de paz da Tarasca). Em runtime (n
 640×360) · `neighbors: Array[String]` (grafo; sem NavigationRegion2D) · `garrison: SquadData` · `liberation_timeline`
 (`.dtl`, dispara na 1ª vez sob controle aliado) · `liberation_title` · cerco: `water_source_node` · `sortie_squad` ·
 `siege_reinforcements` · `label_side: String = "below"` (`"above"`/`"left"`/`"right"` quando o rótulo colidiria com vizinhos ou com o rótulo de uma guarnição) ·
-`visit_timeline` (`.dtl`, dispara na 1ª chegada de um esquadrão do jogador; flag `visited_<nó>`).
+`visit_timeline` (`.dtl`, dispara na 1ª chegada de um esquadrão do jogador; flag `visited_<nó>`) ·
+`map_icon: Texture2D` · `location_backdrop: Texture2D` · `location_npc_sprite: Texture2D`.
 Interlúdios nunca se sobrepõem: pedidos durante outro interlúdio/batalha entram na fila do `EncounterDirector`.
 
 ### 4.6 `EraConfig`
@@ -179,7 +182,8 @@ ordem ao vencer o ato, seguidas da Derrota Falsa —, `false_defeat_id`, `chroni
 **Todo texto visível ao jogador vem do EraConfig ou de `.dtl`, nunca de `.gd`.**
 
 ### 4.7 `ItemData` · `EncounterTable` · `EncounterEntry`
-- `ItemData`: `item_id` · `display_name` · `description` · `unique` · `march_speed_bonus_pct` · `reveals_night_encounters` · `promotion_seal`.
+- `ItemData`: `item_id` · `display_name` · `description` · `unique` · `march_speed_bonus_pct` · `reveals_night_encounters` · `promotion_seal` · `slot: SlotType` (`NONE`, `WEAPON_OR_TOOL`, `ARMOR_OR_RELIC`) · `category: Category` (`CAMPAIGN`, `WEAPON`, `ARMOR`, `RELIC_PROMOTION`, `SUPPORT_GEAR`, `ARTIFACT`) · `icon_texture: Texture2D` · `bonus_hp`/`bonus_attack`/`bonus_defense`/`bonus_intellect`/`bonus_agility`/`bonus_charisma` · `alignment_shift_on_equip` · `allowed_archetypes: Array[UnitClassData.Archetype]` · `unlocks_class_id`.
+- `EraConfig` (visuais/equipamento): `map_texture: Texture2D` · `battle_backdrop: Texture2D` · `equipment_title` · `equipment_button_label`.
 - `EncounterTable`: `region_id` · `spawn_nodes` · `spawn_chance` · `entries: Array[EncounterEntry]`.
 - `EncounterEntry`: `squad` · `weight` · `time_of_day` (any/day/night) · `min_party_level` · `max_party_level` · `until_defeated` · `required_region` · `required_flag` (só surge com a flag ativa, ex.: `liberated_<nó>`).
 
@@ -295,6 +299,7 @@ Nova chave só com suporte em `WorldState.apply_effects`/`InterludeController` +
 | (Architecture_4) `record_false_defeat(act_id, ws)` | `FalseDefeat.trigger(map)` → `EssenceState.record_act` / `archive_act_and_reset_visible` |
 | (Architecture_4) ordens "Pressão Moral" / "Defender" | `TacticalOrder.Order.SPARE` (Poupar/Render) / `TacticalOrder.Order.DEFEND` |
 | (Architecture_4) "Posto da Regência", `docs/STATE_LEDGER.md`, `docs/lore_public/` | Forte da Regência; `STATE_LEDGER.md` na raiz; `docs/Lore_Simulacros/` |
+| (Character Kit) `ItemObjectData`, `CharacterInstance`, `atk`/`def`/`int_tech`/`agi` | `ItemData`, `UnitInstance`, `bonus_attack`/`bonus_defense`/`bonus_intellect`/`bonus_agility` |
 
 ---
 

@@ -7,8 +7,10 @@
 - **Fase:** Ato I completo (Nanlu + Hanmen). Ato II com as 6 regiões (Spec_Pendencias §1), dilemas 1–6, 22 classes (inclui míticas Portador do Consolamentum, Tarasca de 2 slots e Eco de Béziers) e skills pendentes (saque, veneno, bônus de terreno) — `ACT2_CARCASSONNE_PASS`.
 - **Próximo passo:** Derrota Falsa de Montségur (transição para o Ato III) e Ato III. Sprint 4 (arte/áudio) aguarda assets.
 - **Adendo tático do Ato I aplicado** (aprovado pelo usuário): Cike, Catafractário, Conselheiro Yuefu → Junshi; Daoshi é promoção do Fangshi; Xian exige o Elixir de Pengming — `ACT1_ADENDO_PASS`.
-- **Engine:** Godot 4.7.2 · GDScript puro · `gl_compatibility` · resolução lógica 640×360 (janela 1280×720, Nearest).
-- **Validação:** `tests/run_tests.sh` → **169 TEST_PASS**, 0 falhas, sem `SCRIPT ERROR`/`ERROR:` (janela real Xvfb + opengl3 e headless).
+- **Engine:** Godot 4.7.2 · GDScript puro · `gl_compatibility` · resolução lógica 640×360 (janela 1280×720, Nearest) · projeto `Aeon`.
+- **Kit de Personagens/Objetos:** `antigravity-character-kit/` ignorado por `.gdignore`; 24 ícones copiados para `eras/act_01..05/art/items/`, 10 sprites + 13 retratos recortados (`slice_characters.py`) e ligados às 45 classes dos Atos I–II, `UnitCardView`, `SquadToken`, `EquipmentPanel` e `CharacterCreationTest.tscn` (`EQUIPMENT_KIT_PASS`).
+- **Navegação, Cidades & Combate por Turnos:** clique/toque no mapa, 14 ícones pixel-art de cidades/nós, fundos próprios por local (`LocationRoom.tscn` + `InterludeController` + `BattleArena`), e `TurnBattleSession` com escolha de golpe e alvo por personagem (`GAMEPLAY_UPGRADES_PASS`).
+- **Validação:** `tests/run_tests.sh` → suíte completa + `test_equipment` (`TEST_PASS`, 0 falhas, sem `SCRIPT ERROR`/`ERROR:`).
 - **CI:** `.github/workflows/godot-ci.yml` (suíte + boot `--quit-after 60`).
 - **Branch de trabalho:** `main` (push direto em `main` permitido).
 

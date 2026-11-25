@@ -18,6 +18,19 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.08, 0.09, 0.08, 1)
 
+[node name="BackdropArt" type="TextureRect" parent="BackgroundLayer"]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 6
+modulate = Color(0.42, 0.42, 0.46, 1)
+
 [node name="Units" type="Node2D" parent="."]
 unique_name_in_owner = true
 

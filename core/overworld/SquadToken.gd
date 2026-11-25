@@ -4,7 +4,7 @@ extends Node2D
 
 signal arrived(token: SquadToken, node_id: String)
 
-const HIT_RADIUS: float = 13.0
+const HIT_RADIUS: float = 16.0
 const MOUNTAIN_FACTOR: float = 0.7  # Infantaria em montanha (SquadData.TERRAIN_FACTORS)
 
 var squad: SquadData
@@ -14,11 +14,24 @@ var selected: bool = false:
 		selected = value
 		queue_redraw()
 var _label: Label
+var _sprite: Sprite2D
+var _walk_phase: float = 0.0
 
 
 func setup(p_squad: SquadData, start_position: Vector2) -> void:
 	squad = p_squad
 	position = start_position + _offset()
+	var leader: UnitInstance = squad.get_leader() if squad != null else null
+	if leader != null and leader.class_data != null and leader.class_data.sprite_texture != null:
+		_sprite = Sprite2D.new()
+		_sprite.texture = leader.class_data.sprite_texture
+		_sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		var tex_h: float = maxf(_sprite.texture.get_size().y, 1.0)
+		var sc: float = 26.0 / tex_h
+		_sprite.scale = Vector2(sc, sc)
+		_sprite.position = Vector2(0.0, -7.0)
+		_sprite.flip_h = not is_player()
+		add_child(_sprite)
 	_label = Label.new()
 	_label.text = squad.display_name
 	_label.size = Vector2(160, 11)
@@ -55,8 +68,17 @@ func march_speed(base: float, terrain: String = "plains") -> float:
 
 
 ## Encontros noturnos ficam ocultos (emboscada) sem item que os revele.
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	visible = not (squad != null and squad.roaming_until_day and not WorldState.reveals_night_encounters())
+	if _sprite != null:
+		if is_moving() and not WorldState.is_paused:
+			_walk_phase += delta * 14.0
+			_sprite.position.y = -7.0 - absf(sin(_walk_phase)) * 2.5
+			_sprite.rotation = sin(_walk_phase) * 0.07
+		else:
+			_walk_phase = 0.0
+			_sprite.position.y = -7.0
+			_sprite.rotation = 0.0
 
 
 func advance(delta: float, speed: float, positions: Dictionary) -> void:
@@ -71,6 +93,8 @@ func advance(delta: float, speed: float, positions: Dictionary) -> void:
 		squad.current_node_id = reached
 		arrived.emit(self, reached)
 	else:
+		if _sprite != null and absf(to_target.x) > 0.5:
+			_sprite.flip_h = to_target.x < 0.0
 		position += to_target.normalized() * step
 
 
@@ -101,6 +125,10 @@ func _draw() -> void:
 	var color: Color = era.color_for_faction(squad.faction) if era else Color.WHITE
 	if selected:
 		draw_arc(Vector2.ZERO, HIT_RADIUS, 0.0, TAU, 24, Color.WHITE, 1.5)
+	if _sprite != null:
+		draw_circle(Vector2(0, 6), 7.0, Color(0, 0, 0, 0.45))
+		draw_arc(Vector2(0, 6), 7.0, 0.0, TAU, 16, color, 1.5)
+		return
 	draw_line(Vector2(-5, 9), Vector2(-5, -15), Color(0.15, 0.1, 0.05), 2.0)
 	draw_colored_polygon(PackedVector2Array([Vector2(-4, -15), Vector2(9, -11), Vector2(-4, -6)]), color)
 	draw_circle(Vector2(0, 5), 6.0, color.darkened(0.3))
