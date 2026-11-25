@@ -180,3 +180,21 @@ func _set_finished(events: Array[Dictionary], ending: Dictionary) -> void:
 	ending["rounds"] = mini(round_index, MAX_MANUAL_ROUNDS)
 	events.append(ending)
 	result = ending
+
+
+static func describe_action(event: Dictionary, actor: UnitInstance, target: UnitInstance, era: EraConfig) -> String:
+	var hp_lbl: String = era.hp_label if era else "HP"
+	if int(event["heal"]) > 0:
+		return "%s usa %s em %s (+%d %s)" % [actor.unit_name, event["skill"], target.unit_name, event["heal"], hp_lbl]
+	return "%s usa %s em %s (-%d %s, -%d %s)" % [actor.unit_name, event["skill"], target.unit_name,
+		event["damage"], hp_lbl, event["morale_damage"], era.morale_label if era else "Moral"]
+
+
+static func resolve_location_backdrop(era: EraConfig, context: Dictionary) -> Texture2D:
+	var nid: String = String(context.get("node_id", ""))
+	if era == null or nid.is_empty():
+		return null
+	for data: MapNodeData in era.map_nodes:
+		if data.node_id == nid:
+			return data.location_backdrop
+	return null

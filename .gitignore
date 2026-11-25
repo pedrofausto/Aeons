@@ -5,3 +5,4 @@ export_presets.cfg.bak
 .DS_Store
 build/
 *.import~
+tests/

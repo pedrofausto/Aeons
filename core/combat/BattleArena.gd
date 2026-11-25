@@ -29,13 +29,10 @@ var _turn_busy: bool = false
 @onready var _continue_button: Button = %ContinueButton
 @onready var _units_root: Node2D = %Units
 
-
 func setup(p_ally: SquadData, p_enemy: SquadData, p_context: Dictionary = {}) -> void:
 	ally_squad = p_ally
 	enemy_squad = p_enemy
 	context = p_context
-
-
 func _ready() -> void:
 	if ally_squad == null:
 		_load_demo_squads()
@@ -46,7 +43,7 @@ func _ready() -> void:
 		(%UIRoot as Control).theme = era.ui_theme
 	%Background.color = era.color_background if era else Color(0.08, 0.08, 0.08)
 	var backdrop_art: TextureRect = %BackdropArt
-	var loc_tex: Texture2D = _resolve_location_backdrop(era)
+	var loc_tex: Texture2D = TurnBattleSession.resolve_location_backdrop(era, context)
 	backdrop_art.texture = loc_tex if loc_tex != null else (era.battle_backdrop if era else null)
 	backdrop_art.visible = backdrop_art.texture != null
 	_header.text = "%s  ×  %s" % [ally_squad.display_name, enemy_squad.display_name]
@@ -59,28 +56,13 @@ func _ready() -> void:
 	if OS.is_debug_build():
 		print("TEST_PASS|battle_arena_boot")
 
-
 func get_player_side() -> String:
 	return String(context.get("player_side", "attacker"))
-
-
-func _resolve_location_backdrop(era: EraConfig) -> Texture2D:
-	var nid: String = String(context.get("node_id", ""))
-	if era == null or nid.is_empty():
-		return null
-	for data: MapNodeData in era.map_nodes:
-		if data.node_id == nid:
-			return data.location_backdrop
-	return null
-
-
 func _begin_turn_mode() -> void:
 	turn_session = TurnBattleSession.new()
 	var attacker: SquadData = ally_squad if get_player_side() == "attacker" else enemy_squad
-	var defender: SquadData = enemy_squad if attacker == ally_squad else ally_squad
-	turn_session.setup(attacker, defender, get_player_side(), context)
+	turn_session.setup(attacker, enemy_squad if attacker == ally_squad else ally_squad, get_player_side(), context)
 	await _advance_turn_loop()
-
 
 func _advance_turn_loop() -> void:
 	_turn_busy = true
@@ -101,7 +83,6 @@ func _advance_turn_loop() -> void:
 	_status.text = "Turno de %s (%s) — escolha uma ação" % [actor.unit_name, actor.class_data.display_name]
 	_populate_turn_buttons(actor)
 
-
 func _populate_turn_buttons(actor: UnitInstance) -> void:
 	var actions := turn_session.get_available_actions(actor)
 	for i: int in actions.size():
@@ -117,7 +98,6 @@ func _populate_turn_buttons(actor: UnitInstance) -> void:
 	auto_btn.pressed.connect(func() -> void: start_battle(TacticalOrder.Order.NONE))
 	_orders_box.add_child(auto_btn)
 
-
 func _on_action_pressed(action_idx: int, act: Dictionary) -> void:
 	if _turn_busy or turn_session == null or turn_session.is_finished():
 		return
@@ -127,7 +107,6 @@ func _on_action_pressed(action_idx: int, act: Dictionary) -> void:
 		_status.text = "Clique em um inimigo para usar %s (ou clique de novo)" % String(act["label"])
 		return
 	await _run_player_action(action_idx, -1)
-
 
 func _run_player_action(action_idx: int, target_idx: int) -> void:
 	_turn_busy = true
@@ -140,7 +119,6 @@ func _run_player_action(action_idx: int, target_idx: int) -> void:
 		_turn_busy = false
 		return
 	await _advance_turn_loop()
-
 
 func _unhandled_input(event: InputEvent) -> void:
 	if _turn_busy or turn_session == null or turn_session.is_finished() or turn_session.get_current_actor() == null:
@@ -161,7 +139,6 @@ func _unhandled_input(event: InputEvent) -> void:
 			_run_player_action(_selected_action_idx if _selected_action_idx >= 0 else 0, i)
 			return
 
-
 func start_battle(order: TacticalOrder.Order) -> void:
 	_turn_busy = true
 	_set_highlights(false, false)
@@ -175,7 +152,6 @@ func start_battle(order: TacticalOrder.Order) -> void:
 	_finish_with_result(CombatResolver.get_result(battle_log), order)
 	_turn_busy = false
 
-
 func _finish_with_result(raw_result: Dictionary, order: TacticalOrder.Order) -> void:
 	result = raw_result.duplicate()
 	result["order"] = order
@@ -184,13 +160,12 @@ func _finish_with_result(raw_result: Dictionary, order: TacticalOrder.Order) -> 
 		WorldState.active_flags.merged(EssenceState.decisions))
 	var era: EraConfig = WorldState.era_config
 	var won: bool = bool((result["effects"] as Dictionary)["player_won"])
-	var title: String = era.get_outcome_label("victory" if won else "defeat") if era else ("Vitória" if won else "Derrota")
-	var kind: String = era.get_outcome_label(String(result["victory_type"])) if era else String(result["victory_type"])
-	_result_label.text = "%s — %s" % [title, kind]
+	_result_label.text = "%s — %s" % [
+		era.get_outcome_label("victory" if won else "defeat") if era else ("Vitória" if won else "Derrota"),
+		era.get_outcome_label(String(result["victory_type"])) if era else String(result["victory_type"])]
 	_result_panel.show()
 	print("BATTLE_RESULT|%s|%s|rounds=%d" % [result["winner"], result["victory_type"], result["rounds"]])
 	EventBus.battle_ended.emit(result)
-
 
 func _play_events(events: Array[Dictionary]) -> void:
 	for event: Dictionary in events:
@@ -200,27 +175,16 @@ func _play_events(events: Array[Dictionary]) -> void:
 				var card := _cards.get("%s:%d" % [event["target_side"], event["target_index"]]) as UnitCardView
 				if card:
 					card.show_values(int(event["target_hp"]), int(event["target_morale"]))
-				_status.text = _describe_action(event)
+				_status.text = TurnBattleSession.describe_action(event,
+					_squad_for(String(event["actor_side"])).units[int(event["actor_index"])],
+					_squad_for(String(event["target_side"])).units[int(event["target_index"])], WorldState.era_config)
 			"leader_fallen": _status.text = "O líder caiu!"
 			_: continue
 		if step_seconds > 0.0:
 			await get_tree().create_timer(step_seconds).timeout
 
-
-func _describe_action(event: Dictionary) -> String:
-	var actor: UnitInstance = _squad_for(String(event["actor_side"])).units[int(event["actor_index"])]
-	var target: UnitInstance = _squad_for(String(event["target_side"])).units[int(event["target_index"])]
-	var era: EraConfig = WorldState.era_config
-	if int(event["heal"]) > 0:
-		return "%s usa %s em %s (+%d %s)" % [actor.unit_name, event["skill"], target.unit_name, event["heal"], era.hp_label if era else "HP"]
-	return "%s usa %s em %s (-%d %s, -%d %s)" % [actor.unit_name, event["skill"], target.unit_name,
-		event["damage"], era.hp_label if era else "HP", event["morale_damage"], era.morale_label if era else "Moral"]
-
-
 func _squad_for(side: String) -> SquadData:
 	return ally_squad if (side == "attacker") == (get_player_side() == "attacker") else enemy_squad
-
-
 func _build_cards() -> void:
 	var era: EraConfig = WorldState.era_config
 	for side: String in ["attacker", "defender"]:
@@ -238,7 +202,6 @@ func _build_cards() -> void:
 			card.setup(unit, color, not is_ally)
 			_cards["%s:%d" % [side, i]] = card
 
-
 func _sync_all_cards() -> void:
 	for side: String in ["attacker", "defender"]:
 		var squad := _squad_for(side)
@@ -248,7 +211,6 @@ func _sync_all_cards() -> void:
 				card._hp = squad.units[i].hp
 				card._morale = squad.units[i].morale
 				card.queue_redraw()
-
 
 func _set_highlights(keep_active: bool, mark_enemies: bool) -> void:
 	for card: UnitCardView in _cards.values():
@@ -262,13 +224,10 @@ func _set_highlights(keep_active: bool, mark_enemies: bool) -> void:
 			if card != null:
 				card.target_highlighted = enemy_squad.units[i].is_alive()
 
-
 func _clear_action_buttons() -> void:
 	for child: Node in _orders_box.get_children():
 		_orders_box.remove_child(child)
 		child.queue_free()
-
-
 func _build_order_buttons(era: EraConfig) -> void:
 	for order: int in [TacticalOrder.Order.FOCUS_LEADER, TacticalOrder.Order.FOCUS_WEAK,
 			TacticalOrder.Order.SPARE, TacticalOrder.Order.DEFEND]:
@@ -277,7 +236,6 @@ func _build_order_buttons(era: EraConfig) -> void:
 		button.custom_minimum_size = Vector2(90, 26)
 		button.pressed.connect(start_battle.bind(order))
 		_orders_box.add_child(button)
-
 
 func _load_demo_squads() -> void:
 	var era: EraConfig = WorldState.era_config
