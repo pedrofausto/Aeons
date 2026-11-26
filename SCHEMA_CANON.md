@@ -300,6 +300,11 @@ Nova chave só com suporte em `WorldState.apply_effects`/`InterludeController` +
 | (Architecture_4) ordens "Pressão Moral" / "Defender" | `TacticalOrder.Order.SPARE` (Poupar/Render) / `TacticalOrder.Order.DEFEND` |
 | (Architecture_4) "Posto da Regência", `docs/STATE_LEDGER.md`, `docs/lore_public/` | Forte da Regência; `STATE_LEDGER.md` na raiz; `docs/Lore_Simulacros/` |
 | (Character Kit) `ItemObjectData`, `CharacterInstance`, `atk`/`def`/`int_tech`/`agi` | `ItemData`, `UnitInstance`, `bonus_attack`/`bonus_defense`/`bonus_intellect`/`bonus_agility` |
+| (arch diff2) `SaveSystem.gd` | ainda não implementado (entra como autoload `SaveSystem` separando `WorldState` e `EssenceState`) |
+| (arch diff2) `EraConfig.overworld_music / battle_music / interlude_music` | entram com `AudioDirector` (Sprint de áudio) |
+| (arch diff2) `UnitClassData.sprite_frames / normal_map_texture` | campos planejados para animação 4×4 e *normal maps* (Laigter) |
+| (arch diff2) `EssenceState.remembered_captains` | snapshot de aliados/protagonistas dos Atos I–IV para o Ato V |
+| (arch diff2) `BattleResolver` / `ActionData` / `TacticOrders` / `army_doctrine` / `resource_pool` | `CombatResolver` / `ActionSkillData` / `TacticalOrder` / `WorldState.doctrine` / `WorldState.resources` |
 
 ---
 

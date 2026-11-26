@@ -1,0 +1,533 @@
+{
+  "project": "Crônica de Tianxu — Ato 1 (Império de Tianxu)",
+  "engine_target": "Godot 4.7.2",
+  "base_resolution": [
+    640,
+    360
+  ],
+  "texture_filter": "Nearest (default_texture_filter=0)",
+  "palette_theme": "Tianxu (jade, cinabrio, nanquim, bambu, nevoa)",
+  "battle_units": [
+    {
+      "id": "fubing",
+      "file": "eras/act_01_tianxu/art/battle/fubing_battle_48x40.png",
+      "slots": 1,
+      "sheet_size": [
+        192,
+        160
+      ],
+      "frame_size": [
+        48,
+        40
+      ],
+      "grid_columns": 4,
+      "grid_rows": 4,
+      "pivot_suggested": [
+        24,
+        36
+      ],
+      "facing": "right",
+      "animations": {
+        "idle": {
+          "row": 0,
+          "frames": 4,
+          "fps": 5,
+          "loop": true
+        },
+        "attack": {
+          "row": 1,
+          "frames": 4,
+          "fps": 10,
+          "loop": false
+        },
+        "hit": {
+          "row": 2,
+          "frames": 2,
+          "fps": 8,
+          "loop": false
+        },
+        "defeat": {
+          "row": 3,
+          "frames": 2,
+          "fps": 6,
+          "loop": false
+        }
+      }
+    },
+    {
+      "id": "youxia",
+      "file": "eras/act_01_tianxu/art/battle/youxia_battle_48x40.png",
+      "slots": 1,
+      "sheet_size": [
+        192,
+        160
+      ],
+      "frame_size": [
+        48,
+        40
+      ],
+      "grid_columns": 4,
+      "grid_rows": 4,
+      "pivot_suggested": [
+        24,
+        36
+      ],
+      "facing": "right",
+      "animations": {
+        "idle": {
+          "row": 0,
+          "frames": 4,
+          "fps": 5,
+          "loop": true
+        },
+        "attack": {
+          "row": 1,
+          "frames": 4,
+          "fps": 10,
+          "loop": false
+        },
+        "hit": {
+          "row": 2,
+          "frames": 2,
+          "fps": 8,
+          "loop": false
+        },
+        "defeat": {
+          "row": 3,
+          "frames": 2,
+          "fps": 6,
+          "loop": false
+        }
+      }
+    },
+    {
+      "id": "ji_halberdier",
+      "file": "eras/act_01_tianxu/art/battle/ji_halberdier_battle_48x40.png",
+      "slots": 1,
+      "sheet_size": [
+        192,
+        160
+      ],
+      "frame_size": [
+        48,
+        40
+      ],
+      "grid_columns": 4,
+      "grid_rows": 4,
+      "pivot_suggested": [
+        24,
+        36
+      ],
+      "facing": "right",
+      "animations": {
+        "idle": {
+          "row": 0,
+          "frames": 4,
+          "fps": 5,
+          "loop": true
+        },
+        "attack": {
+          "row": 1,
+          "frames": 4,
+          "fps": 10,
+          "loop": false
+        },
+        "hit": {
+          "row": 2,
+          "frames": 2,
+          "fps": 8,
+          "loop": false
+        },
+        "defeat": {
+          "row": 3,
+          "frames": 2,
+          "fps": 6,
+          "loop": false
+        }
+      }
+    },
+    {
+      "id": "nubing_crossbow",
+      "file": "eras/act_01_tianxu/art/battle/nubing_crossbow_battle_48x40.png",
+      "slots": 1,
+      "sheet_size": [
+        192,
+        160
+      ],
+      "frame_size": [
+        48,
+        40
+      ],
+      "grid_columns": 4,
+      "grid_rows": 4,
+      "pivot_suggested": [
+        24,
+        36
+      ],
+      "facing": "right",
+      "animations": {
+        "idle": {
+          "row": 0,
+          "frames": 4,
+          "fps": 5,
+          "loop": true
+        },
+        "attack": {
+          "row": 1,
+          "frames": 4,
+          "fps": 10,
+          "loop": false
+        },
+        "hit": {
+          "row": 2,
+          "frames": 2,
+          "fps": 8,
+          "loop": false
+        },
+        "defeat": {
+          "row": 3,
+          "frames": 2,
+          "fps": 6,
+          "loop": false
+        }
+      }
+    },
+    {
+      "id": "daoshi_healer",
+      "file": "eras/act_01_tianxu/art/battle/daoshi_healer_battle_48x40.png",
+      "slots": 1,
+      "sheet_size": [
+        192,
+        160
+      ],
+      "frame_size": [
+        48,
+        40
+      ],
+      "grid_columns": 4,
+      "grid_rows": 4,
+      "pivot_suggested": [
+        24,
+        36
+      ],
+      "facing": "right",
+      "animations": {
+        "idle": {
+          "row": 0,
+          "frames": 4,
+          "fps": 5,
+          "loop": true
+        },
+        "attack": {
+          "row": 1,
+          "frames": 4,
+          "fps": 10,
+          "loop": false
+        },
+        "hit": {
+          "row": 2,
+          "frames": 2,
+          "fps": 8,
+          "loop": false
+        },
+        "defeat": {
+          "row": 3,
+          "frames": 2,
+          "fps": 6,
+          "loop": false
+        }
+      }
+    },
+    {
+      "id": "jiangshi",
+      "file": "eras/act_01_tianxu/art/battle/jiangshi_battle_48x40.png",
+      "slots": 1,
+      "sheet_size": [
+        192,
+        160
+      ],
+      "frame_size": [
+        48,
+        40
+      ],
+      "grid_columns": 4,
+      "grid_rows": 4,
+      "pivot_suggested": [
+        24,
+        36
+      ],
+      "facing": "right",
+      "animations": {
+        "idle": {
+          "row": 0,
+          "frames": 4,
+          "fps": 5,
+          "loop": true
+        },
+        "attack": {
+          "row": 1,
+          "frames": 4,
+          "fps": 10,
+          "loop": false
+        },
+        "hit": {
+          "row": 2,
+          "frames": 2,
+          "fps": 8,
+          "loop": false
+        },
+        "defeat": {
+          "row": 3,
+          "frames": 2,
+          "fps": 6,
+          "loop": false
+        }
+      }
+    },
+    {
+      "id": "huli_jing",
+      "file": "eras/act_01_tianxu/art/battle/huli_jing_battle_48x40.png",
+      "slots": 1,
+      "sheet_size": [
+        192,
+        160
+      ],
+      "frame_size": [
+        48,
+        40
+      ],
+      "grid_columns": 4,
+      "grid_rows": 4,
+      "pivot_suggested": [
+        24,
+        36
+      ],
+      "facing": "right",
+      "animations": {
+        "idle": {
+          "row": 0,
+          "frames": 4,
+          "fps": 5,
+          "loop": true
+        },
+        "attack": {
+          "row": 1,
+          "frames": 4,
+          "fps": 10,
+          "loop": false
+        },
+        "hit": {
+          "row": 2,
+          "frames": 2,
+          "fps": 8,
+          "loop": false
+        },
+        "defeat": {
+          "row": 3,
+          "frames": 2,
+          "fps": 6,
+          "loop": false
+        }
+      }
+    }
+  ],
+  "map_tokens": [
+    {
+      "id": "fubing",
+      "file": "eras/act_01_tianxu/art/tokens/fubing_token_24x24.png",
+      "size": [
+        24,
+        24
+      ],
+      "pivot_suggested": [
+        12,
+        12
+      ],
+      "faction_rim": "jade_imperial"
+    },
+    {
+      "id": "youxia",
+      "file": "eras/act_01_tianxu/art/tokens/youxia_token_24x24.png",
+      "size": [
+        24,
+        24
+      ],
+      "pivot_suggested": [
+        12,
+        12
+      ],
+      "faction_rim": "jade_imperial"
+    },
+    {
+      "id": "ji_halberdier",
+      "file": "eras/act_01_tianxu/art/tokens/ji_halberdier_token_24x24.png",
+      "size": [
+        24,
+        24
+      ],
+      "pivot_suggested": [
+        12,
+        12
+      ],
+      "faction_rim": "jade_imperial"
+    },
+    {
+      "id": "nubing_crossbow",
+      "file": "eras/act_01_tianxu/art/tokens/nubing_crossbow_token_24x24.png",
+      "size": [
+        24,
+        24
+      ],
+      "pivot_suggested": [
+        12,
+        12
+      ],
+      "faction_rim": "jade_imperial"
+    },
+    {
+      "id": "daoshi_healer",
+      "file": "eras/act_01_tianxu/art/tokens/daoshi_healer_token_24x24.png",
+      "size": [
+        24,
+        24
+      ],
+      "pivot_suggested": [
+        12,
+        12
+      ],
+      "faction_rim": "jade_imperial"
+    },
+    {
+      "id": "jiangshi",
+      "file": "eras/act_01_tianxu/art/tokens/jiangshi_token_24x24.png",
+      "size": [
+        24,
+        24
+      ],
+      "pivot_suggested": [
+        12,
+        12
+      ],
+      "faction_rim": "cinnabar_mythic"
+    },
+    {
+      "id": "huli_jing",
+      "file": "eras/act_01_tianxu/art/tokens/huli_jing_token_24x24.png",
+      "size": [
+        24,
+        24
+      ],
+      "pivot_suggested": [
+        12,
+        12
+      ],
+      "faction_rim": "cinnabar_mythic"
+    }
+  ],
+  "dialogue_portraits": [
+    {
+      "character_id": "protagonista_guarda",
+      "expression": "neutral",
+      "file": "eras/act_01_tianxu/art/portraits/protagonista_guarda_neutral_160x180.png",
+      "size": [
+        160,
+        180
+      ],
+      "pivot_suggested": [
+        80,
+        180
+      ]
+    },
+    {
+      "character_id": "protagonista_guarda",
+      "expression": "determined",
+      "file": "eras/act_01_tianxu/art/portraits/protagonista_guarda_determined_160x180.png",
+      "size": [
+        160,
+        180
+      ],
+      "pivot_suggested": [
+        80,
+        180
+      ]
+    },
+    {
+      "character_id": "protagonista_guarda",
+      "expression": "worried",
+      "file": "eras/act_01_tianxu/art/portraits/protagonista_guarda_worried_160x180.png",
+      "size": [
+        160,
+        180
+      ],
+      "pivot_suggested": [
+        80,
+        180
+      ]
+    },
+    {
+      "character_id": "protagonista_guarda",
+      "expression": "injured",
+      "file": "eras/act_01_tianxu/art/portraits/protagonista_guarda_injured_160x180.png",
+      "size": [
+        160,
+        180
+      ],
+      "pivot_suggested": [
+        80,
+        180
+      ]
+    },
+    {
+      "character_id": "celeiros_de_linhai",
+      "expression": "neutral",
+      "file": "eras/act_01_tianxu/art/portraits/celeiros_de_linhai_neutral_160x180.png",
+      "size": [
+        160,
+        180
+      ],
+      "pivot_suggested": [
+        80,
+        180
+      ]
+    },
+    {
+      "character_id": "o_astronomo_cego",
+      "expression": "neutral",
+      "file": "eras/act_01_tianxu/art/portraits/o_astronomo_cego_neutral_160x180.png",
+      "size": [
+        160,
+        180
+      ],
+      "pivot_suggested": [
+        80,
+        180
+      ]
+    },
+    {
+      "character_id": "o_barqueiro_da_neblina",
+      "expression": "neutral",
+      "file": "eras/act_01_tianxu/art/portraits/o_barqueiro_da_neblina_neutral_160x180.png",
+      "size": [
+        160,
+        180
+      ],
+      "pivot_suggested": [
+        80,
+        180
+      ]
+    },
+    {
+      "character_id": "o_caminho_do_templo",
+      "expression": "neutral",
+      "file": "eras/act_01_tianxu/art/portraits/o_caminho_do_templo_neutral_160x180.png",
+      "size": [
+        160,
+        180
+      ],
+      "pivot_suggested": [
+        80,
+        180
+      ]
+    }
+  ]
+}
