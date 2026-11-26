@@ -1,24 +1,21 @@
-# ARCHITECTURE.md — Projeto "Os Cinco Simulacros" (Godot 4.7.2 / GDScript)
+# ARCHITECTURE.md — Projeto "Aeon" (Godot 4.7.2 / GDScript)
 
-> **Instrução para o Agente de IA Autônomo:** Este arquivo é a fonte única de verdade técnica do projeto. Leia a seção **STATE LEDGER** no início de cada sessão, respeite rigorosamente os limites de arquitetura e atualize o ledger ao concluir cada marco.
+> **Instrução para o Agente de IA Autônomo:** Este arquivo é a fonte única de verdade técnica do projeto. Leia [`STATE_LEDGER.md`](STATE_LEDGER.md) e [`SCHEMA_CANON.md`](SCHEMA_CANON.md) no início de cada sessão, respeite rigorosamente os limites de arquitetura e atualize o ledger ao concluir cada marco.
 
 ---
 
-## 1. STATE LEDGER (Atualizar no topo a cada sessão)
+## 1. STATE LEDGER & Documentos Relacionados
 
-> O livro-razão detalhado vive em **[`STATE_LEDGER.md`](STATE_LEDGER.md)** (raiz, < 120 linhas), conforme `ARCHITECTURE_DIFF.md` §6.
-> **Nomes e tipos de schema:** **[`SCHEMA_CANON.md`](SCHEMA_CANON.md)** é a referência obrigatória; nomes divergentes em documentos de design são traduzidos pela tabela de aliases dele.
-> Architecture_4 (versão-base reenviada) está em `docs/Lore_Aeons_Verdade/ARCHITECTURE_v4_referencia.md`; seus nomes foram mapeados no SCHEMA_CANON §7 e as lacunas (ordem Defender, método de libertação, nível de contenção) foram implementadas.
-> `arch diff2` foi absorvido em `docs/Lore_Aeons_Verdade/ARCHITECTURE_diff2_referencia.md` e mapeado no `SCHEMA_CANON.md` §7 (roadmap futuro: `SaveSystem.gd`, `AudioDirector.gd` + trilhas `overworld_music`/`battle_music`/`interlude_music`, `UnitClassData.sprite_frames`/`normal_map_texture` e `EssenceState.remembered_captains`).
-> Diffs: [`ARCHITECTURE_DIFF.md`](ARCHITECTURE_DIFF.md) · [`ARCHITECTURE_DIFF_ATO3.md`](ARCHITECTURE_DIFF_ATO3.md) (extensões planejadas do Ato III).
-> As expansões aprovadas depois deste documento estão em **[`ARCHITECTURE_DIFF.md`](ARCHITECTURE_DIFF.md)**.
+> - **Livro-razão detalhado:** [`STATE_LEDGER.md`](STATE_LEDGER.md) (raiz, < 120 linhas).
+> - **Nomes e tipos canônicos:** [`SCHEMA_CANON.md`](SCHEMA_CANON.md) é a referência obrigatória; nomes divergentes em documentos de design são traduzidos pela Tabela de Aliases (§7).
+> - **Referências e Diffs:** [`ARCHITECTURE_DIFF.md`](ARCHITECTURE_DIFF.md) · [`ARCHITECTURE_DIFF_ATO3.md`](ARCHITECTURE_DIFF_ATO3.md) (extensões planejadas do Ato III) · [`docs/references/Guia_Arquitetura_Tecnica_Game_Design.md`](docs/references/Guia_Arquitetura_Tecnica_Game_Design.md) · Mockup aprovado: [`docs/references/arena_25d_plana_mockup_v3.jpg`](docs/references/arena_25d_plana_mockup_v3.jpg) · `docs/Lore_Aeons_Verdade/ARCHITECTURE_v4_referencia.md`.
 
 ```yaml
-projeto: "Os Cinco Simulacros"
+projeto: "Aeon"
 engine: "Godot 4.7.2 (Standard / GDScript puro — sem C#)"
 renderizador_obrigatorio: "gl_compatibility (--rendering-driver opengl3)"
-alvo_exportacao: ["Desktop (macOS/Win/Linux)", "Web HTML5 (single-threaded)", "Android"]
-fase_atual: "Vertical Slice do Ato I jogável (Sprints 1–3 + Diff §1–6). Próximo: Sprint 4 (arte e áudio)."
+alvo_exportacao: ["Desktop (macOS/Win/Linux)", "Web HTML5 (single-threaded + OGG Vorbis)", "Android"]
+fase_atual: "Atos I e II jogáveis + sprites 4x4/assets Ato I integrados. Próximo: Sprint 4 (áudio/normal maps/SaveSystem) e Ato III."
 regras_de_sigilo_narrativo:
   - "PROIBIDO mencionar 'Aeons', 'simulação', 'simulacro' ou 'mesma alma' em qualquer diálogo, UI ou comentário visível nos Atos I a IV."
   - "Cada ato deve parecer um jogo/crônica independente até a revelação final no Ato V."
@@ -28,22 +25,28 @@ regras_de_sigilo_narrativo:
 
 ## 2. Regras Invioláveis de Engenharia (Vibecoding Seguro)
 
-1. **Dados separados de código:** Nunca *hardcode* nomes de cidades, atributos de classes, facções ou diálogos em scripts `.gd`. Tudo deve ser carregado de recursos `.tres` ou arquivos `.json` dentro de `res://eras/act_XX/`.
-2. **Scripts curtos e desacoplados:** Máximo recomendado de **250 linhas por arquivo `.gd`**. Comunicação entre sistemas sempre via **Signals** ou Autoloads (`EventBus.gd`, `WorldState.gd`).
-3. **Renderização compatível (SotN 2D Depth em OpenGL 3.3):** Usar exclusivamente `CanvasItem`, `Sprite2D` + `CanvasTexture` (com *normal maps* gerados no Laigter), `Parallax2D` e `PointLight2D` sob o renderizador `gl_compatibility`.
-4. **Verificação real obrigatória:** Todo marco deve rodar em janela real via `~/bin/godot-opengl3 --path . --quit-after 60` e emitir um marcador explícito `TEST_PASS|<nome_do_teste>` sem `SCRIPT ERROR` ou `ERROR:`.
+| Parâmetro | Decisão Obrigatória | Motivo Técnico |
+|---|---|---|
+| **Engine e Linguagem** | Godot 4.7.2 · **GDScript puro** (zero C#) | Cenas (`.tscn`) e dados (`.tres`) em texto puro; exportação nativa Web, Desktop e Mobile. |
+| **Renderizador** | **`gl_compatibility`** (OpenGL 3.3 / WebGL 2.0) | Compatível com GPU *non-Metal* (Mac mini Mid 2011 / OCLP), Web e Mobile, cobrindo o mapa 2D (`CanvasItem`, `Parallax2D`, `PointLight2D`) e a Arena 2.5D Plana (`Node3D`, `Camera3D`, `Sprite3D` *billboard* sobre piso plano). |
+| **Exportação Web** | *Single-threaded* WebAssembly + OGG Vorbis | Evita restrições de `SharedArrayBuffer` (COOP/COEP) no GitHub Pages / itch.io. |
+| **Tamanho de Script** | Máximo de **250 linhas** por arquivo `.gd` | Reduz regressões e mantém separação limpa por responsabilidade. |
+| **Dados vs. Código** | Nunca *hardcode* nomes, atributos ou diálogos em `.gd` | Tudo carregado de `.tres`, `.dtl` ou `.json` em `res://eras/act_XX/`. |
+| **Comunicação** | Signals ou Autoloads (`EventBus.gd`, `WorldState.gd`) | Evita referências circulares entre cenas. |
+| **Sigilo Narrativo** | Separação física `Lore_Simulacros/` vs `Lore_Aeons_Verdade/` | Diálogos dos Atos I–IV leem apenas `Lore_Simulacros/`. |
+| **Execução de Testes** | Regra em [`AGENTS.md`](AGENTS.md): **aguardar autorização explícita** | Só rodar `tests/run_tests.sh` ou `~/bin/godot-opengl3 --path . --quit-after 60` quando autorizado pelo usuário. |
 
 ---
 
-## 3. Arquitetura de 3 Camadas Fixas (Reaproveitada nos 5 Atos)
+## 3. Princípio Central: 3 Camadas Fixas + 5 Perfis de Era + Estado Oculto
 
-O motor nunca é reescrito entre as épocas. Apenas o recurso `EraConfig.tres` ativo troca a pele visual, o vocabulário da UI, as unidades e os modificadores de regra:
+Em vez de programar cinco jogos separados, o projeto implementa **um único motor tático neutro** (`res://core/`) revestido por **cinco perfis modulares de época** (`res://eras/act_0X_*/EraConfig_Act0X.tres`).
 
-| Camada | Cena-Base (`res://core/`) | Atos I–III (Guerra Física) | Ato IV (Recursos / Rede) | Ato V (Virtual / Cognitiva) |
+| Camada | Cena-Base (`res://core/`) | Atos I–III (Guerra Física) | Ato IV (Rede & Recursos) | Ato V (Virtual & Cognitiva) |
 |---|---|---|---|---|
-| **1. Mapa Estratégico** | `OverworldMap.tscn` | Províncias, cidades, fortalezas e estradas | Distritos urbanos, data centers, mídia e energia | Topologia da matriz, cofres de memória e núcleos dos Aeons |
-| **2. Combate 3×2** | `BattleArena.tscn` | Esquadrões físicos (HP = vida, Moral = coragem) | Células operacionais (HP = sigilo, Moral = credibilidade) | Processos/avatares (HP = sinal, Moral = lucidez) |
-| **3. Interlúdio de Presença** | `InterludeRoom.tscn` | Acampamentos, salões de chá, abadias, trincheiras | Cafés chuvosos, bunkers urbanos e encontros clandestinos | Espaços liminares efêmeros com shader de dissolução |
+| **1. Mapa Estratégico** | `OverworldMap.tscn` | Províncias, cidades, fortalezas, estradas e rios | Distritos urbanos, data centers, mídia e energia | Topologia da rede, cofres de memória e núcleos |
+| **2. Esquadrões & Combate 3×2** | `BattleArena.tscn` | Companhias/pelotões físicos (`HP` = vida, `Moral` = coragem) | Células operacionais (`HP` = sigilo, `Moral` = credibilidade) | Processos/avatares (`HP` = sinal, `Moral` = lucidez) |
+| **3. Interlúdio & Locais** | `InterludeRoom.tscn` · `LocationRoom.tscn` | Salões de chá, acampamentos, abadias, trincheiras | Locais físicos clandestinos (lanchonete, metrô, esconderijo) | Brechas efêmeras de uso único (`ephemeral_fade.gdshader`) |
 
 ---
 
@@ -51,111 +54,82 @@ O motor nunca é reescrito entre as épocas. Apenas o recurso `EraConfig.tres` a
 
 ```text
 res://
-├── ARCHITECTURE.md                  # Este documento + State Ledger
+├── ARCHITECTURE.md                  # Este documento
+├── SCHEMA_CANON.md                  # Schemas canônicos e Tabela de Aliases (§7)
+├── STATE_LEDGER.md                  # Livro-razão curto (< 120 linhas)
+├── AGENTS.md                        # Travas operacionais e convenções
 ├── project.godot                    # gl_compatibility, Autoloads registrados
 ├── core/                            # MOTOR FIXO (nunca contém conteúdo específico de uma era)
 │   ├── autoloads/
-│   │   ├── EventBus.gd              # Sinais globais (node_captured, battle_ended, era_transition)
-│   │   ├── WorldState.gd            # Estado visível do ato atual (Alinhamento, Apoio, Doutrina)
-│   │   └── EssenceState.gd          # Memória OCULTA dos Aeons persistida entre os 5 atos
+│   │   ├── EventBus.gd              # Sinais globais desacoplados
+│   │   ├── WorldState.gd            # Estado visível do ato atual
+│   │   ├── EssenceState.gd          # Memória OCULTA persistida entre os 5 atos
+│   │   ├── AudioDirector.gd         # [Planejado] Camadas sincronizadas (.ogg)
+│   │   └── SaveSystem.gd            # [Planejado] Serialização separando WorldState e EssenceState
 │   ├── data/                        # Classes Resource (.gd) usadas por todas as eras
-│   │   ├── EraConfig.gd             # Tema UI, paleta, regras extras, lista de nós/unidades
-│   │   ├── UnitClassData.gd         # 6 arquétipos + Mítico, faixas de alinhamento, ações frente/trás
-│   │   ├── UnitInstance.gd          # Estado individual (HP, Moral, XP, Alinhamento, Classe)
+│   │   ├── EraConfig.gd             # Tema UI, paleta, regras extras, trilhas [Planejado], nós/unidades
+│   │   ├── UnitClassData.gd         # 6 arquétipos + Mítico, ações frente/trás, promoções, sprite_frames [Planejado]
+│   │   ├── UnitInstance.gd          # Estado individual (HP, Moral, XP, Alinhamento, Classe, Equipamentos)
 │   │   ├── SquadData.gd             # Grade 3x2 (slots 0..2 frente, 3..5 trás), líder, fadiga
-│   │   └── MapNodeData.gd           # ID, tipo (City/Fortress/Resource/Server), facção, ouro/tick
-│   ├── overworld/
-│   │   ├── OverworldMap.tscn        # Mapa em tempo real com pausa tática (Space)
-│   │   ├── MapNode.gd               # Nó capturável com indicador visual e gatilho de evento
-│   │   └── SquadToken.gd            # Token que marcha entre nós via caminho/grafo
-│   ├── combat/
-│   │   ├── BattleArena.tscn         # Cena isolada 3x2 recebendo (ally_squad, enemy_squad)
-│   │   ├── CombatResolver.gd        # Lógica pura de turnos automáticos (HP e Moral)
-│   │   └── TacticalOrder.gd         # Ordens rápidas (Focar Líder, Focar Fraco, Poupar/Render)
-│   └── interlude/
-│       ├── InterludeRoom.tscn       # Cena 2D em paralaxe + PointLight2D + gatilho Dialogic 2
-│       └── InterludeController.gd
+│   │   ├── MapNodeData.gd           # ID, tipo, facção, ouro/tick, vizinhos, artes do local
+│   │   ├── ActionSkillData.gd       # Golpe/efeito, alvo, elemento, status
+│   │   ├── ItemData.gd              # Itens de campanha, equipamentos e relíquias de promoção
+│   │   └── PromotionRules.gd        # Requisitos de promoção + consumo de item
+│   ├── overworld/                   # OverworldMap.tscn, MapNode, SquadToken, LocationRoom.tscn, HUD
+│   ├── combat/                      # BattleArena.tscn, CombatResolver, TurnBattleSession, SkillMath
+│   ├── interlude/                   # InterludeRoom.tscn, InterludeController, InterludeManager, shaders/
+│   └── ui/                          # CharacterCreationTest.tscn
 ├── eras/                            # CONTEÚDO ISOLADO POR ÉPOCA
-│   ├── act_01_tianxu/               # China Imperial (Vertical Slice inicial)
-│   │   ├── EraConfig_Act01.tres
-│   │   ├── classes/                 # Fubing, Youxia, Buqu, Ji, Nubing, Cike, Fangshi, Daoshi...
-│   │   ├── map/                     # Vales de Nanlu (Linhai, 2 aldeias, 1 forte da Regência)
-│   │   ├── dialogues/               # Timelines Dialogic 2 (apenas lore público do Ato I)
-│   │   └── assets/                  # Sprites, normal maps (_n.png), trilhas .ogg
-│   ├── act_02_occitania/            # Carcassonne & Cátaros (futuro)
-│   ├── act_03_great_wars/           # I e II Guerras Mundiais (futuro)
-│   ├── act_04_modern/               # Era Moderna / Recursos (futuro)
-│   └── act_05_technocracy/          # Tecnocracia Cibernética (futuro)
-└── tests/
-    ├── test_combat_3x2.gd           # Teste automatizado de combate HP vs. Moral
-    └── test_world_state.gd          # Teste de Alinhamento, Doutrina e EssenceState
+│   ├── act_01_tianxu/               # China Imperial (completo + assets 4x4/battle/portraits/tokens)
+│   ├── act_02_occitania/            # Occitânia & Carcassonne (completo + sheet_faydit_4x4)
+│   ├── act_03_ash_and_steel/        # Grandes Guerras (arte inicial staged; motor Ato III planejado)
+│   ├── act_04_modern/               # Era Moderna / Recursos (arte inicial staged)
+│   └── act_05_technocracy/          # Tecnocracia Cibernética (arte inicial staged)
+└── tests/                           # Suíte local (no .gitignore): TestRunner.tscn + test_*.gd
 ```
 
 ---
 
-## 5. Contrato dos Autoloads Críticos
+## 5. Contrato dos Autoloads e Resources Críticos
 
 ### `WorldState.gd` (Estado Visível do Ato Atual)
-```gdscript
-extends Node
+Reiniciado na "Derrota Falsa" via `reset_visible()`: `current_act`, `alignment` (0..100), `popular_support` (0..100), `doctrine` (-100 Pacifista .. +100 Revolucionária), `resources`, `is_paused`, `captured_nodes`, `liberation_methods`, `faction_trust`, `day_count`, `time_of_day`, `player_squads`, `inventory`, `completed_interludes`.
 
-var current_act: int = 1
-var alignment: int = 50          # 0 (Brutal/Mal) .. 100 (Honrado/Bem)
-var popular_support: int = 50    # 0 .. 100 (Chaos Frame / Mandato do Céu)
-var doctrine: int = 0            # -100 (Pacifista) .. +100 (Revolucionária)
-var resources: int = 500         # Ouro (Atos I-III), Capital/Dados (Ato IV), Energia/Sinal (Ato V)
-var is_paused: bool = true
-var captured_nodes: Dictionary = {} # node_id -> faction_id
-```
+### `EssenceState.gd` (Estado Oculto — Nunca Exibido na UI dos Atos I–IV)
+Persiste nos 5 atos até o clímax do Ato V: `completed_acts`, `alignment_history`, `doctrine_history`, `philosophical_echoes`, `aeon_resistance_flags`, `ephemeral_meetings_seen`, `decisions`, `echo_values`, `act_records`, `false_defeats` e `[Planejado]` `remembered_captains: Array[Dictionary]` (snapshot mínimo de nome/classe/retrato dos protagonistas e aliados marcantes dos Atos I–IV).
 
-### `EssenceState.gd` (Estado Oculto dos Aeons — Nunca Exibido na UI dos Atos I–IV)
-```gdscript
-extends Node
-
-var completed_acts: Array[int] = []
-var alignment_history: Dictionary = {}   # act_id -> final_alignment
-var doctrine_history: Dictionary = {}    # act_id -> final_doctrine
-var philosophical_echoes: Array[String] = [] # Ex: ["protected_pengming_charts", "spared_deserters"]
-
-func archive_act_and_reset_visible(act_id: int) -> void:
-	completed_acts.append(act_id)
-	alignment_history[act_id] = WorldState.alignment
-	doctrine_history[act_id] = WorldState.doctrine
-	# Reseta WorldState para simular um "novo jogo/novo personagem" após a Derrota Falsa
-	WorldState.current_act = act_id + 1
-	WorldState.alignment = 50
-	WorldState.popular_support = 50
-	WorldState.doctrine = 0
-	WorldState.captured_nodes.clear()
-```
+### Extensões Planejadas em `EraConfig` e `UnitClassData`
+- `EraConfig`: `[Planejado]` `overworld_music: AudioStream`, `battle_music: AudioStream`, `interlude_music: AudioStream`.
+- `UnitClassData`: `[Planejado]` `sprite_frames: SpriteFrames` (sheets 4×4 animados), `normal_map_texture: Texture2D` (Laigter).
 
 ---
 
-## 6. Regra Central de Combate (`CombatResolver.gd`)
+## 6. Combate 3×2 (`CombatResolver.gd` e `TurnBattleSession.gd`)
 
-Todo esquadrão usa uma grade **3×2** (3 espaços frontais `0..2`, 3 traseiros `3..5`). Cada classe em `UnitClassData.gd` define:
-- `archetype`: `VANGUARD`, `SHOCK`, `RANGED_STEALTH`, `ARCANE_TECH`, `HEALER_MORAL`, `BARD_INFLUENCE` ou `MYTHIC`.
-- `front_action` e `back_action`: o golpe muda conforme a fileira (ex.: *Youxia* na frente ataca corpo a corpo; atrás protege aliados).
+Todo esquadrão usa uma grade **3×2** (3 espaços frontais `0..2`, 3 traseiros `3..5`). Unidades colossais (`grid_slots = 2`, ex.: *Tarasca*) ocupam a coluna inteira.
+- **Execução por fileira e turnos:** ordem determinada por `agility` (desempate determinístico por slot/lado). `CombatResolver` executa batalhas automáticas determinísticas; `TurnBattleSession` permite controle interativo turno a turno (escolher golpe frontal/traseiro, Poupar, Defender e alvo inimigo por clique/toque).
 - **Duas condições de vitória por batalha:**
-  1. **Aniquilação (HP = 0):** mais rápida, favorecida pela **Linha Revolucionária**.
-  2. **Rendição por Moral (Moral = 0):** favorecida pela **Linha Pacifista** (clérigos/bardos/defesa), reduz baixas e aumenta **Apoio Popular** + inclinação pacifista (`doctrine -= delta`).
+  1. **Aniquilação (HP = 0):** favorecida pela **Linha Revolucionária** (`doctrine > 0`); reduz `alignment` se o inimigo tiver nível muito inferior.
+  2. **Rendição por Moral (Moral = 0):** favorecida pela **Linha Pacifista** (`doctrine < 0`), poupa vidas e eleva `popular_support`.
+
+### Apresentação da Arena (2.5D Plana Rotacionável — Estilo *Ogre Battle* HD-2D)
+- **Piso 3D plano e livre de obstáculos:** a luta ocorre sobre um diorama 3D isométrico rotacionável (`Q / E`), com piso central 100% plano (`y = 0`) — **sem degraus, paredes ou obstáculos internos** para os personagens subirem ou descerem; lanternas e elementos do cenário ficam apenas nas bordas e entorno.
+- **Disposição 3×2 diagonal e animações 2.5D:** os dois esquadrões ficam frente a frente nas âncoras **3×2** sobre o piso plano com sprites 2D realistas (7,5–8 cabeças) em *Cylindrical Billboarding* (`Sprite3D`) e sombras projetadas no chão; avanços diagonais de golpe, arcos de corte, projéteis, recuo, *Hitstop*, *Screen Shake* e *Combat Forecast* determinístico operam em 2.5D.
+- **Referência visual aprovada:** [`docs/references/arena_25d_plana_mockup_v3.jpg`](docs/references/arena_25d_plana_mockup_v3.jpg) e [`docs/references/Guia_Arquitetura_Tecnica_Game_Design.md`](docs/references/Guia_Arquitetura_Tecnica_Game_Design.md).
 
 ---
 
-## 7. Plano de Execução para o Agente (Vertical Slice — Vales de Nanlu, Ato I)
+## 7. Protocolo da "Derrota Falsa" e Transição entre Eras
 
-Execute um sprint por vez. Faça um commit Git limpo ao final de cada sprint validado:
+Gerenciado por `FalseDefeat.gd` + `EssenceState.archive_act_and_reset_visible()` + `WorldState.load_era()`:
+1. Ao vencer o poder central do ato, tocam as `climax_timelines` da era e `EssenceState` registra silenciosamente o ato (`record_act`).
+2. Exibe-se o desfecho trágico/apagamento daquela crônica (`false_defeat_id` / `chronicle_end_text`).
+3. Ao avançar para `next_era_config`, `WorldState.reset_visible(next_act)` limpa os dados visíveis, aplica o novo `Theme`, paleta e vocabulário, iniciando o ato seguinte como uma nova história independente.
 
-1. **Sprint 1 — Núcleo de Dados e Combate 3×2 (Sem Arte Definitiva):**
-   - Criar `EventBus.gd`, `WorldState.gd`, `EssenceState.gd` e os `Resource` em `res://core/data/`.
-   - Criar 4 classes iniciais em `res://eras/act_01_tianxu/classes/`: `fubing.tres`, `ji_halberdier.tres`, `nubing_crossbow.tres`, `daoshi_healer.tres`.
-   - Implementar `BattleArena.tscn` + `CombatResolver.gd` com retângulos coloridos (placeholders) validando vitória por **HP** e vitória por **Moral**.
-2. **Sprint 2 — Mapa de Conquista com Pausa (Vales de Nanlu):**
-   - Implementar `OverworldMap.tscn` com 4 nós conectados: *Linhai dos Canais* (base aliada), *Aldeia dos Terraços* (neutra/celeiro), *Templo do Bambu* (neutra) e *Forte da Regência* (inimiga).
-   - Permitir pausar (`Space`), clicar em um esquadrão, enviar para um nó, disparar `BattleArena.tscn` ao colidir com inimigo e atualizar `WorldState.gd` ao capturar a cidade.
-3. **Sprint 3 — Primeiro Dilema Moral e Interlúdio de Presença:**
-   - Instalar plugin **Dialogic 2** e implementar `InterludeRoom.tscn`.
-   - Implementar o evento **Os Celeiros de Linhai** (distribuir arroz → `+alignment`, `+popular_support`, `-doctrine`; confiscar → `+resources`, `-popular_support`, `+doctrine`).
-4. **Sprint 4 — Camada Visual 32-bit (SotN Depth) e Transição de Era:**
-   - Substituir placeholders por sprites do **Pixelorama** + *normal maps* do **Laigter** + `PointLight2D` + 1 faixa `.ogg` em loop.
-   - Testar `EssenceState.archive_act_and_reset_visible(1)` comprovando que o estado visível reinicia limpo para o Ato II enquanto os ecos ocultos permanecem salvos.
+---
+
+## 8. Pipeline Visual 2D / 2.5D (32-bit), Áudio e Narrativa
+
+- **Pixel Art Realista com Profundidade:** proporções anatômicas realistas (7,5–8 cabeças, sem *chibi*), sprites e tilesets produzidos no **Pixelorama**, processados no **Laigter** para *normal maps* (`*_n.png`) via `CanvasTexture` / `Sprite3D`, iluminados no mapa 2D (`CanvasModulate` + `PointLight2D` + `Parallax2D`) e na Arena 2.5D Plana (`Node3D` + iluminação dinâmica + sombras no solo em `gl_compatibility`).
+- **Áudio Orquestral Adaptativo `[Planejado]`:** composições no **MuseScore Studio + MuseSounds** / **Waveform Free + BBC Symphony Orchestra Discover**, exportadas em `.ogg` (OGG Vorbis) com loop para troca limpa via `AudioStreamInteractive` / `AudioStreamSynchronized` no `AudioDirector.gd`.
+- **Narrativa Offline:** rascunho de lore em `docs/Lore_Simulacros/` e implementação estática determinística no **Dialogic 2** (`.dtl`). Nenhum LLM roda em tempo real dentro do jogo.
