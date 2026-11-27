@@ -16,6 +16,8 @@ signal promote_pressed
 @onready var _equip_button: Button = %EquipButton
 @onready var equipment_panel: EquipmentPanel = %EquipmentPanel
 @onready var _enter_button: Button = %EnterButton
+@onready var _options_panel: OptionsPanel = %OptionsPanel
+@onready var _save_modal: SaveLoadModal = %SaveLoadModal
 
 
 func _ready() -> void:
@@ -24,6 +26,9 @@ func _ready() -> void:
 	_promote_button.pressed.connect(_on_promote)
 	_equip_button.pressed.connect(_on_equip)
 	_enter_button.pressed.connect(_on_enter_location)
+	%SaveButton.pressed.connect(func() -> void: _save_modal.open("save"))
+	%OptionsButton.pressed.connect(func() -> void: _options_panel.open())
+	_save_modal.slot_saved.connect(func(slot: int) -> void: show_banner("Campanha salva no Slot %d" % slot, 2.5))
 	_debug_button.visible = OS.is_debug_build()
 	EventBus.world_state_changed.connect(refresh)
 	promotion_panel.promoted.connect(func(_u: UnitInstance, _c: UnitClassData) -> void: refresh())

@@ -59,6 +59,8 @@ func _ready() -> void:
 		_build_order_buttons(era)
 		start_battle.call_deferred(autoplay_order as TacticalOrder.Order)
 	else:
+		if step_seconds > 0.0:
+			step_seconds = SaveSystem.get_battle_step_seconds()
 		_begin_turn_mode.call_deferred()
 	if OS.is_debug_build():
 		print("TEST_PASS|battle_arena_boot")

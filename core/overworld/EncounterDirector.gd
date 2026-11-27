@@ -77,6 +77,8 @@ func _on_battle_closed(result: Dictionary) -> void:
 	active_battle = null
 	_set_map_visible(true)
 	map.on_encounter_resolved()
+	if map.auto_tick:
+		SaveSystem.save_slot(0)
 	if not reward_interlude.is_empty() and not is_busy():
 		open_interlude(reward_interlude, _ally_token.squad.current_node_id)
 

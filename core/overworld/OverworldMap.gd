@@ -44,8 +44,6 @@ func _ready() -> void:
 	_director.check_liberations.call_deferred()
 	if OS.is_debug_build():
 		print("TEST_PASS|overworld_boot|nodes=%d|tokens=%d" % [nodes.size(), tokens.size()])
-
-
 func _build_map(era: EraConfig) -> void:
 	var fresh_act: bool = WorldState.captured_nodes.is_empty()
 	for data: MapNodeData in era.map_nodes:
@@ -65,6 +63,10 @@ func _build_map(era: EraConfig) -> void:
 		WorldState.player_squads.clear()
 		for template: SquadData in era.starting_squads:
 			WorldState.player_squads.append(template.clone())
+		if WorldState.current_act == 1 and EssenceState.protagonist_profile.has("name") and not WorldState.player_squads.is_empty():
+			var leader: UnitInstance = WorldState.player_squads[0].get_leader()
+			if leader != null:
+				leader.unit_name = String(EssenceState.protagonist_profile["name"])
 	for squad: SquadData in WorldState.player_squads:
 		spawn_token(squad)
 	for token: SquadToken in tokens:

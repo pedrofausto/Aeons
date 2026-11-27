@@ -13,7 +13,7 @@ config_version=5
 config/name="Aeon"
 config/description="RPG estratégico (Vertical Slice: Vales de Nanlu)."
 config/version="0.1.0"
-run/main_scene="res://core/overworld/OverworldMap.tscn"
+run/main_scene="res://core/ui/TitleScreen.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 
@@ -22,6 +22,7 @@ config/icon="res://icon.svg"
 EventBus="*res://core/autoloads/EventBus.gd"
 WorldState="*res://core/autoloads/WorldState.gd"
 EssenceState="*res://core/autoloads/EssenceState.gd"
+SaveSystem="*res://core/autoloads/SaveSystem.gd"
 Dialogic="*uid://ds2q0uclmolvu"
 
 [debug]

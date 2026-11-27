@@ -8,6 +8,8 @@
 [ext_resource type="Script" path="res://core/overworld/PromotionPanel.gd" id="6_promo"]
 [ext_resource type="Script" path="res://core/overworld/SiegeWaterRule.gd" id="7_siege"]
 [ext_resource type="Script" path="res://core/overworld/EquipmentPanel.gd" id="8_equip"]
+[ext_resource type="Script" path="res://core/ui/OptionsPanel.gd" id="9_opts"]
+[ext_resource type="Script" path="res://core/ui/SaveLoadModal.gd" id="10_save"]
 
 [node name="OverworldMap" type="Node2D"]
 script = ExtResource("1_map")
@@ -226,3 +228,63 @@ offset_bottom = -10
 grow_horizontal = 0
 grow_vertical = 0
 text = "🏛 Entrar"
+
+[node name="SaveButton" type="Button" parent="HUDLayer/HUD"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 26)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 172
+offset_top = -38
+offset_right = 212
+offset_bottom = -10
+grow_vertical = 0
+text = "💾"
+
+[node name="OptionsButton" type="Button" parent="HUDLayer/HUD"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 26)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 216
+offset_top = -38
+offset_right = 252
+offset_bottom = -10
+grow_vertical = 0
+text = "⚙"
+
+[node name="OptionsPanel" type="PanelContainer" parent="HUDLayer/HUD"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -155
+offset_top = -105
+offset_right = 155
+offset_bottom = 105
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("9_opts")
+
+[node name="SaveLoadModal" type="PanelContainer" parent="HUDLayer/HUD"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -190
+offset_top = -110
+offset_right = 190
+offset_bottom = 110
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("10_save")

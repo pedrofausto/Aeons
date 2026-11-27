@@ -11,6 +11,7 @@ var act_records: Dictionary = {}                # act_id -> {protagonist, final_
 var false_defeats: Array[String] = []           # Ex.: "act1_tiandu_eclipse", "act2_montsegur_pyre"
 var echo_values: Dictionary = {}                # Ecos com valor: { "act2_philosophy": "awaken_within" }
 var decisions: Dictionary = {}                  # Escolhas definitivas: { "act1_blind_astronomer_protected": true }
+var protagonist_profile: Dictionary = {}        # Perfil escolhido no início (nome, silhueta, olhos, postura)
 
 
 func archive_act_and_reset_visible(act_id: int) -> void:
@@ -81,6 +82,7 @@ func reset_all() -> void:
 	alignment_history.clear()
 	doctrine_history.clear()
 	philosophical_echoes.clear()
+	protagonist_profile.clear()
 
 
 ## Registro final de um ato (protagonista, eixos finais e campos da era). Mescla se já existir.
