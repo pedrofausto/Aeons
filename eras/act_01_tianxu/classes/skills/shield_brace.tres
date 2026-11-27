@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ActionSkillData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://core/data/ActionSkillData.gd" id="1_skill"]
+
+[resource]
+script = ExtResource("1_skill")
+skill_id = "shield_brace"
+display_name = "Formação de Escudos"
+effect = 4
+targeting = 5
+power = 100
+morale_power = 6
+element = ""
+hits = 1
+ally_buff_trait = "*"
+ally_guard_pct = 20

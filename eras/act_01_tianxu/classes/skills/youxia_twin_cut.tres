@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ActionSkillData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://core/data/ActionSkillData.gd" id="1_skill"]
+
+[resource]
+script = ExtResource("1_skill")
+skill_id = "youxia_twin_cut"
+display_name = "Corte Duplo Errante"
+effect = 0
+targeting = 0
+power = 60
+morale_power = 8
+element = "PHYSICAL"
+hits = 2

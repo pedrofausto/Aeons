@@ -1,0 +1,183 @@
+{
+  "schema_version": "SCHEMA_CANON_1.0",
+  "era_id": 1,
+  "era_slug": "act_01_tianxu",
+  "renderer": "gl_compatibility",
+  "logical_resolution": [
+    640,
+    360
+  ],
+  "sprite_frame_size": [
+    160,
+    128
+  ],
+  "normal_map_convention": "X+Y+Z+ (Godot CanvasTexture)",
+  "characters": {
+    "fubing": {
+      "sheet": "res://eras/act_01_tianxu/art/battle_25d/sprites/fubing_sheet.png",
+      "normal_map": "res://eras/act_01_tianxu/art/battle_25d/sprites/fubing_sheet_n.png",
+      "frame_size": [
+        160,
+        128
+      ],
+      "frames": [
+        {
+          "pose": "idle",
+          "index": 0,
+          "file": "res://eras/act_01_tianxu/art/battle_25d/sprites/frames/fubing_idle.png"
+        },
+        {
+          "pose": "ready",
+          "index": 1,
+          "file": "res://eras/act_01_tianxu/art/battle_25d/sprites/frames/fubing_ready.png"
+        },
+        {
+          "pose": "attack",
+          "index": 2,
+          "file": "res://eras/act_01_tianxu/art/battle_25d/sprites/frames/fubing_attack.png"
+        }
+      ]
+    },
+    "youxia": {
+      "sheet": "res://eras/act_01_tianxu/art/battle_25d/sprites/youxia_sheet.png",
+      "normal_map": "res://eras/act_01_tianxu/art/battle_25d/sprites/youxia_sheet_n.png",
+      "frame_size": [
+        160,
+        128
+      ],
+      "frames": [
+        {
+          "pose": "idle",
+          "index": 0,
+          "file": "res://eras/act_01_tianxu/art/battle_25d/sprites/frames/youxia_idle.png"
+        },
+        {
+          "pose": "ready",
+          "index": 1,
+          "file": "res://eras/act_01_tianxu/art/battle_25d/sprites/frames/youxia_ready.png"
+        },
+        {
+          "pose": "attack",
+          "index": 2,
+          "file": "res://eras/act_01_tianxu/art/battle_25d/sprites/frames/youxia_attack.png"
+        }
+      ]
+    },
+    "nubing": {
+      "sheet": "res://eras/act_01_tianxu/art/battle_25d/sprites/nubing_sheet.png",
+      "normal_map": "res://eras/act_01_tianxu/art/battle_25d/sprites/nubing_sheet_n.png",
+      "frame_size": [
+        160,
+        128
+      ],
+      "frames": [
+        {
+          "pose": "idle",
+          "index": 0,
+          "file": "res://eras/act_01_tianxu/art/battle_25d/sprites/frames/nubing_idle.png"
+        },
+        {
+          "pose": "ready",
+          "index": 1,
+          "file": "res://eras/act_01_tianxu/art/battle_25d/sprites/frames/nubing_ready.png"
+        },
+        {
+          "pose": "attack",
+          "index": 2,
+          "file": "res://eras/act_01_tianxu/art/battle_25d/sprites/frames/nubing_attack.png"
+        }
+      ]
+    },
+    "fangshi": {
+      "sheet": "res://eras/act_01_tianxu/art/battle_25d/sprites/fangshi_sheet.png",
+      "normal_map": "res://eras/act_01_tianxu/art/battle_25d/sprites/fangshi_sheet_n.png",
+      "frame_size": [
+        160,
+        128
+      ],
+      "frames": [
+        {
+          "pose": "idle",
+          "index": 0,
+          "file": "res://eras/act_01_tianxu/art/battle_25d/sprites/frames/fangshi_idle.png"
+        },
+        {
+          "pose": "ready",
+          "index": 1,
+          "file": "res://eras/act_01_tianxu/art/battle_25d/sprites/frames/fangshi_ready.png"
+        },
+        {
+          "pose": "attack",
+          "index": 2,
+          "file": "res://eras/act_01_tianxu/art/battle_25d/sprites/frames/fangshi_attack.png"
+        }
+      ]
+    }
+  },
+  "props_and_vfx": {
+    "dragon_pillars": {
+      "diffuse": "res://eras/act_01_tianxu/art/battle_25d/props/dragon_pillars.png",
+      "normal": "res://eras/act_01_tianxu/art/battle_25d/props/dragon_pillars_n.png",
+      "size": [
+        316,
+        193
+      ]
+    },
+    "crimson_beams": {
+      "diffuse": "res://eras/act_01_tianxu/art/battle_25d/props/crimson_beams.png",
+      "normal": "res://eras/act_01_tianxu/art/battle_25d/props/crimson_beams_n.png",
+      "size": [
+        341,
+        204
+      ]
+    },
+    "paper_lanterns": {
+      "diffuse": "res://eras/act_01_tianxu/art/battle_25d/props/paper_lanterns.png",
+      "normal": "res://eras/act_01_tianxu/art/battle_25d/props/paper_lanterns_n.png",
+      "size": [
+        386,
+        208
+      ]
+    },
+    "bronze_braziers_top": {
+      "diffuse": "res://eras/act_01_tianxu/art/battle_25d/props/bronze_braziers_top.png",
+      "normal": "res://eras/act_01_tianxu/art/battle_25d/props/bronze_braziers_top_n.png",
+      "size": [
+        187,
+        195
+      ]
+    },
+    "war_banners": {
+      "diffuse": "res://eras/act_01_tianxu/art/battle_25d/props/war_banners.png",
+      "normal": "res://eras/act_01_tianxu/art/battle_25d/props/war_banners_n.png",
+      "size": [
+        331,
+        184
+      ]
+    },
+    "bamboo_barricades": {
+      "diffuse": "res://eras/act_01_tianxu/art/battle_25d/props/bamboo_barricades.png",
+      "normal": "res://eras/act_01_tianxu/art/battle_25d/props/bamboo_barricades_n.png",
+      "size": [
+        1315,
+        147
+      ]
+    },
+    "stone_floor_tiles": {
+      "diffuse": "res://eras/act_01_tianxu/art/battle_25d/props/stone_floor_tiles.png",
+      "normal": "res://eras/act_01_tianxu/art/battle_25d/props/stone_floor_tiles_n.png",
+      "size": [
+        664,
+        197
+      ]
+    },
+    "vfx_talisman_and_slash": {
+      "diffuse": "res://eras/act_01_tianxu/art/battle_25d/props/vfx_talisman_and_slash.png",
+      "normal": "res://eras/act_01_tianxu/art/battle_25d/props/vfx_talisman_and_slash_n.png",
+      "size": [
+        658,
+        228
+      ]
+    }
+  }
+}

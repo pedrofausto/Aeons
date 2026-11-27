@@ -1,0 +1,49 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://core/combat/UnitActor25D.gd" id="1_actor"]
+[ext_resource type="Shader" path="res://core/combat/shaders/unit_hit_flash.gdshader" id="2_shader"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_flash"]
+resource_local_to_scene = true
+shader = ExtResource("2_shader")
+shader_parameter/flash_amount = 0.0
+shader_parameter/flash_color = Color(1, 0.96, 0.85, 1)
+shader_parameter/morale_dim = 0.0
+
+[node name="UnitActor25D" type="Node2D"]
+script = ExtResource("1_actor")
+
+[node name="Shadow" type="Polygon2D" parent="."]
+color = Color(0.04, 0.05, 0.08, 0.48)
+polygon = PackedVector2Array(-20, 0, -14, -5, 0, -7, 14, -5, 20, 0, 14, 5, 0, 7, -14, 5)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+material = SubResource("ShaderMaterial_flash")
+position = Vector2(0, -54)
+hframes = 3
+
+[node name="Bars" type="Node2D" parent="."]
+position = Vector2(-20, 10)
+
+[node name="HPBg" type="ColorRect" parent="Bars"]
+offset_right = 40.0
+offset_bottom = 3.0
+color = Color(0.1, 0.1, 0.12, 0.85)
+
+[node name="HPFill" type="ColorRect" parent="Bars"]
+offset_right = 40.0
+offset_bottom = 3.0
+color = Color(0.22, 0.78, 0.48, 1)
+
+[node name="MoraleBg" type="ColorRect" parent="Bars"]
+offset_top = 4.0
+offset_right = 40.0
+offset_bottom = 6.0
+color = Color(0.1, 0.1, 0.12, 0.85)
+
+[node name="MoraleFill" type="ColorRect" parent="Bars"]
+offset_top = 4.0
+offset_right = 40.0
+offset_bottom = 6.0
+color = Color(0.92, 0.72, 0.24, 1)

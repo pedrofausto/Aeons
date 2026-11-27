@@ -25,6 +25,11 @@ var _morale: int = 0
 var _flash: float = 0.0
 var _label: Label
 var _sprite: Sprite2D
+var _has_sheet: bool = false
+var _anim_row: int = 0
+var _anim_col: int = 0
+var _anim_timer: float = 0.0
+var _anim_one_shot: bool = false
 
 
 func setup(p_unit: UnitInstance, p_faction_color: Color, p_flip_h: bool = false) -> void:
@@ -34,13 +39,19 @@ func setup(p_unit: UnitInstance, p_faction_color: Color, p_flip_h: bool = false)
 	faction_color = p_faction_color
 	_hp = unit.hp
 	_morale = unit.morale
-	if unit.class_data.sprite_texture != null:
+	var tex: Texture2D = unit.class_data.anim_sheet_4x4 if unit.class_data.anim_sheet_4x4 != null else unit.class_data.sprite_texture
+	if tex != null:
 		_sprite = Sprite2D.new()
-		_sprite.texture = unit.class_data.sprite_texture
+		_sprite.texture = tex
 		_sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 		_sprite.flip_h = p_flip_h
-		var tex_sz: Vector2 = _sprite.texture.get_size()
-		var scale_f: float = minf((size.x - 10.0) / maxf(tex_sz.x, 1.0), (size.y - 16.0) / maxf(tex_sz.y, 1.0))
+		_has_sheet = unit.class_data.anim_sheet_4x4 != null
+		var frame_sz: Vector2 = tex.get_size() / 4.0 if _has_sheet else tex.get_size()
+		if _has_sheet:
+			_sprite.hframes = 4
+			_sprite.vframes = 4
+			_sprite.frame = 0
+		var scale_f: float = minf((size.x - 10.0) / maxf(frame_sz.x, 1.0), (size.y - 16.0) / maxf(frame_sz.y, 1.0))
 		_sprite.scale = Vector2(scale_f, scale_f)
 		_sprite.position = Vector2(0.0, 1.0)
 		add_child(_sprite)
@@ -70,10 +81,32 @@ func show_values(hp: int, morale: int) -> void:
 	queue_redraw()
 
 
+func play_anim(row: int, one_shot: bool = false) -> void:
+	if not _has_sheet or _sprite == null:
+		return
+	_anim_row = clampi(row, 0, 3)
+	_anim_col = 0
+	_anim_timer = 0.0
+	_anim_one_shot = one_shot
+	_sprite.frame = _anim_row * 4
+
+
 func _process(delta: float) -> void:
 	if _flash > 0.0:
 		_flash = maxf(0.0, _flash - delta * 3.0)
 		queue_redraw()
+	if _has_sheet and _sprite != null and _hp > 0:
+		_anim_timer += delta
+		var rate: float = 0.11 if _anim_one_shot else 0.22
+		if _anim_timer >= rate:
+			_anim_timer = 0.0
+			_anim_col += 1
+			if _anim_col >= 4:
+				_anim_col = 0
+				if _anim_one_shot:
+					_anim_one_shot = false
+					_anim_row = 0
+			_sprite.frame = _anim_row * 4 + _anim_col
 
 
 func _draw() -> void:
@@ -115,3 +148,36 @@ func _draw() -> void:
 		if item.icon_texture != null:
 			draw_texture_rect(item.icon_texture, Rect2(Vector2(icon_x, -size.y / 2.0 + 2.0), Vector2(10, 10)), false)
 			icon_x -= 11.0
+
+
+static func build_squad_cards(root: Node2D, ally: SquadData, enemy: SquadData, player_side: String, era: EraConfig) -> Dictionary:
+	var cards: Dictionary = {}
+	var ally_x: Array[float] = [235.0, 160.0]
+	var enemy_x: Array[float] = [405.0, 480.0]
+	var col_y: Array[float] = [115.0, 175.0, 235.0]
+	for side: String in ["attacker", "defender"]:
+		var squad: SquadData = ally if (side == "attacker") == (player_side == "attacker") else enemy
+		var is_ally: bool = squad == ally
+		var rows: Array[float] = ally_x if is_ally else enemy_x
+		var color: Color = era.color_for_faction(squad.faction) if era else Color.WHITE
+		for i: int in squad.units.size():
+			var u: UnitInstance = squad.units[i]
+			u.ensure_vitals()
+			var card := UnitCardView.new()
+			var x: float = (rows[0] + rows[1]) * 0.5 if u.class_data.grid_slots >= 2 else rows[u.get_row()]
+			card.position = Vector2(x, col_y[u.get_column()])
+			root.add_child(card)
+			card.setup(u, color, not is_ally)
+			cards["%s:%d" % [side, i]] = card
+	return cards
+
+
+static func sync_all_cards(cards: Dictionary, ally: SquadData, enemy: SquadData, player_side: String) -> void:
+	for side: String in ["attacker", "defender"]:
+		var squad: SquadData = ally if (side == "attacker") == (player_side == "attacker") else enemy
+		for i: int in squad.units.size():
+			var card := cards.get("%s:%d" % [side, i]) as UnitCardView
+			if card != null:
+				card._hp = squad.units[i].hp
+				card._morale = squad.units[i].morale
+				card.queue_redraw()

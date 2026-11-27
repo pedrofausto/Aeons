@@ -229,3 +229,22 @@ func rest(percent: int) -> void:
 	for unit: UnitInstance in units:
 		var amount: int = maxi(1, unit.get_max_hp() * percent / 100)
 		unit.hp = mini(maxi(unit.hp, 0) + amount, unit.get_max_hp())
+
+
+## Custo diário de manutenção do esquadrão (soma tier * 3 por unidade viva).
+func daily_upkeep() -> int:
+	var cost: int = 0
+	for unit: UnitInstance in get_living_units():
+		cost += unit.class_data.tier * 3
+	return cost
+
+
+## Verdadeiro se todo o esquadrão vivo voa (Flying Layer Override no mapa).
+func is_airborne() -> bool:
+	var living := get_living_units()
+	if living.is_empty():
+		return false
+	for unit: UnitInstance in living:
+		if not (unit.class_data.movement in ["flying", "ethereal"] or unit.class_data.has_trait("flying")):
+			return false
+	return true

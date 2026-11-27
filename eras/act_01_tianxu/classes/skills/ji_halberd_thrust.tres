@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ActionSkillData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://core/data/ActionSkillData.gd" id="1_skill"]
+
+[resource]
+script = ExtResource("1_skill")
+skill_id = "ji_halberd_thrust"
+display_name = "Estocada de Ji"
+effect = 0
+targeting = 0
+power = 55
+morale_power = 4
+element = "PIERCE"
+hits = 2
+armor_pierce_pct = 15

@@ -10,9 +10,9 @@
 - **Engine:** Godot 4.7.2 · GDScript puro · `gl_compatibility` · resolução lógica 640×360 (janela 1280×720, Nearest) · projeto `Aeon`.
 - **Kit de Personagens/Objetos:** `antigravity-character-kit/` ignorado por `.gdignore`; 24 ícones copiados para `eras/act_01..05/art/items/`, 10 sprites + 13 retratos recortados (`slice_characters.py`) e ligados às 45 classes dos Atos I–II, `UnitCardView`, `SquadToken`, `EquipmentPanel` e `CharacterCreationTest.tscn` (`EQUIPMENT_KIT_PASS`).
 - **Navegação, Cidades & Combate por Turnos:** clique/toque no mapa, 14 ícones pixel-art de cidades/nós, fundos próprios por local (`LocationRoom.tscn` + `InterludeController` + `BattleArena`), e `TurnBattleSession` com escolha de golpe e alvo por personagem (`GAMEPLAY_UPGRADES_PASS`).
-- **Novos Assets & `arch diff2`:** 4 sprite sheets 4×4 (`sheet_youxia_4x4`, `sheet_ji_halberdier_4x4`, `sheet_fangshi_4x4`, `sheet_faydit_4x4`) + pacote `act_01_tianxu_godot_assets.zip` (7 battle sheets 48×40, 8 retratos 160×180, 7 tokens 24×24); `arch diff2` incorporado em `ARCHITECTURE.md` e `SCHEMA_CANON.md` §7.
-- **Direção da Arena (aprovada):** Arena **2.5D Plana Rotacionável** estilo *Ogre Battle* HD-2D (piso 3D `y = 0` sem obstáculos/degraus, formação diagonal 3×2, animações de ataque 2.5D e câmera `Q/E`). Referência: `docs/references/arena_25d_plana_mockup_v3.jpg` e `docs/references/Guia_Arquitetura_Tecnica_Game_Design.md`.
-- **Validação:** `tests/run_tests.sh` → suíte completa + `test_equipment` (`TEST_PASS`, 0 falhas, sem `SCRIPT ERROR`/`ERROR:`).
+- **Blocos A, B e C (Arena 2.5D Plana + Macro):** sheets 4×4 ligados em `youxia`/`ji_halberdier`/`fangshi`/`faydit`, `Combat Forecast` determinístico, `Hitstop`/shake, `Y-Sorting` + `Flying Layer Override` + manutenção diária (`daily_upkeep`) no mapa, e palco 3D plano rotacionável `Q/E` (`BattleStage25D`, `BattleUnit3D`, `SquadHudPanel`) em `BattleArena`.
+- **Pacote 2.5D Ato I (`battle_25d`):** extraído seletivamente (`eras/act_01_tianxu/art/battle_25d/`, 6 skills em `classes/skills/`, `unit_hit_flash.gdshader`, `UnitActor25D`/`BattleArena25DLayout`) preservando `.tres` canônicos (`fubing`, `youxia`, `fangshi`, `nubing_crossbow`); piso e sheets 3-quadros integrados em `BattleStage25D`/`BattleUnit3D`.
+- **Validação:** `tests/run_tests.sh` → `TEST_SUMMARY|pass=225|fail=0` (`OK: todos os testes passaram sem erros.`).
 - **CI:** `.github/workflows/godot-ci.yml` (suíte + boot `--quit-after 60`).
 - **Branch de trabalho:** `main` (push direto em `main` permitido).
 

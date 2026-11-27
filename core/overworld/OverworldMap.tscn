@@ -44,9 +44,11 @@ unique_name_in_owner = true
 
 [node name="Nodes" type="Node2D" parent="."]
 unique_name_in_owner = true
+y_sort_enabled = true
 
 [node name="Tokens" type="Node2D" parent="."]
 unique_name_in_owner = true
+y_sort_enabled = true
 
 [node name="EncounterDirector" type="Node" parent="."]
 unique_name_in_owner = true

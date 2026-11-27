@@ -5,6 +5,7 @@
 
 [ext_resource type="Texture2D" path="res://eras/act_01_tianxu/art/characters/sprite_a1_vanguard.png" id="99_sprite"]
 [ext_resource type="Texture2D" path="res://eras/act_01_tianxu/art/characters/portrait_a1_vanguard.png" id="99_portrait"]
+[ext_resource type="Texture2D" path="res://eras/act_01_tianxu/art/characters/sheet_youxia_4x4.png" id="100_sheet"]
 
 [sub_resource type="Resource" id="front"]
 script = ExtResource("2_skill")
@@ -46,3 +47,4 @@ min_alignment = 65
 max_alignment = 100
 sprite_texture = ExtResource("99_sprite")
 portrait_texture = ExtResource("99_portrait")
+anim_sheet_4x4 = ExtResource("100_sheet")

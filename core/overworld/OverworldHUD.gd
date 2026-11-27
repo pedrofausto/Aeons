@@ -37,9 +37,11 @@ func refresh() -> void:
 	if era == null:
 		return
 	theme = era.ui_theme
-	_stats.text = "%s — %s %d %s   |   %s: %d   |   %s: %d   |   %s: %d   |   %s: %+d" % [
+	var map := get_tree().current_scene as OverworldMap
+	var net_str: String = " (%+d/d)" % map.get_daily_net_income() if map != null else ""
+	_stats.text = "%s — %s %d %s   |   %s: %d%s   |   %s: %d   |   %s: %d   |   %s: %+d" % [
 		era.era_title, era.day_label, WorldState.day_count, era.time_of_day_labels.get(WorldState.time_of_day, ""),
-		era.resource_label, WorldState.resources,
+		era.resource_label, WorldState.resources, net_str,
 		era.alignment_label, WorldState.alignment,
 		era.support_label, WorldState.popular_support,
 		era.doctrine_label, WorldState.doctrine]
@@ -53,7 +55,6 @@ func refresh() -> void:
 	var has_eq_unit: bool = WorldState.player_squads.any(func(s: SquadData) -> bool:
 		return s.units.any(func(u: UnitInstance) -> bool: return not u.get_equipped_items().is_empty()))
 	_equip_button.visible = has_eq_inv or has_eq_unit
-	var map := get_tree().current_scene as OverworldMap
 	var tok: SquadToken = map.selected_token if map != null else null
 	_enter_button.visible = tok != null and not tok.is_moving() and WorldState.get_node_faction(tok.squad.current_node_id) == "player"
 

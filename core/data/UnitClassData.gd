@@ -85,3 +85,4 @@ func matches_doctrine(doctrine: int) -> bool:
 @export_group("Visuais (opcionais)")
 @export var sprite_texture: Texture2D
 @export var portrait_texture: Texture2D
+@export var anim_sheet_4x4: Texture2D

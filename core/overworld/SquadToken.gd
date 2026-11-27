@@ -21,6 +21,7 @@ var _walk_phase: float = 0.0
 func setup(p_squad: SquadData, start_position: Vector2) -> void:
 	squad = p_squad
 	position = start_position + _offset()
+	z_index = 20 if squad != null and squad.is_airborne() else 0
 	var leader: UnitInstance = squad.get_leader() if squad != null else null
 	if leader != null and leader.class_data != null and leader.class_data.sprite_texture != null:
 		_sprite = Sprite2D.new()
@@ -29,7 +30,7 @@ func setup(p_squad: SquadData, start_position: Vector2) -> void:
 		var tex_h: float = maxf(_sprite.texture.get_size().y, 1.0)
 		var sc: float = 26.0 / tex_h
 		_sprite.scale = Vector2(sc, sc)
-		_sprite.position = Vector2(0.0, -7.0)
+		_sprite.position = Vector2(0.0, -13.0 if z_index > 0 else -7.0)
 		_sprite.flip_h = not is_player()
 		add_child(_sprite)
 	_label = Label.new()
@@ -71,13 +72,14 @@ func march_speed(base: float, terrain: String = "plains") -> float:
 func _process(delta: float) -> void:
 	visible = not (squad != null and squad.roaming_until_day and not WorldState.reveals_night_encounters())
 	if _sprite != null:
+		var base_y: float = -13.0 if z_index > 0 else -7.0
 		if is_moving() and not WorldState.is_paused:
 			_walk_phase += delta * 14.0
-			_sprite.position.y = -7.0 - absf(sin(_walk_phase)) * 2.5
+			_sprite.position.y = base_y - absf(sin(_walk_phase)) * 2.5
 			_sprite.rotation = sin(_walk_phase) * 0.07
 		else:
 			_walk_phase = 0.0
-			_sprite.position.y = -7.0
+			_sprite.position.y = base_y
 			_sprite.rotation = 0.0
 
 

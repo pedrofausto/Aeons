@@ -5,6 +5,7 @@
 
 [ext_resource type="Texture2D" path="res://eras/act_02_occitania/art/characters/sprite_a2_knight.png" id="99_sprite"]
 [ext_resource type="Texture2D" path="res://eras/act_02_occitania/art/characters/portrait_a2_knight.png" id="99_portrait"]
+[ext_resource type="Texture2D" path="res://eras/act_02_occitania/art/characters/sheet_faydit_4x4.png" id="100_sheet"]
 
 [sub_resource type="Resource" id="front"]
 script = ExtResource("2_skill")
@@ -54,3 +55,4 @@ min_doctrine = 20
 max_doctrine = 100
 sprite_texture = ExtResource("99_sprite")
 portrait_texture = ExtResource("99_portrait")
+anim_sheet_4x4 = ExtResource("100_sheet")

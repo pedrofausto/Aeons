@@ -166,18 +166,21 @@ func step(delta: float) -> void:
 
 func _on_new_day() -> void:
 	WorldState.advance_day()
+	WorldState.change_resources(get_daily_net_income())
+	for token: SquadToken in tokens:
+		if token.is_player() and not token.is_moving() and WorldState.get_node_faction(token.squad.current_node_id) == "player":
+			token.squad.rest(REST_PERCENT_PER_DAY)
+	EventBus.tick_advanced.emit(WorldState.day_count)
+
+func get_daily_net_income() -> int:
 	var income: int = 0
 	for node_id: String in nodes:
 		if WorldState.get_node_faction(node_id) == "player":
 			income += (nodes[node_id] as MapNode).data.gold_per_tick * WorldState.income_pct(node_id) / 100
-	WorldState.change_resources(income)
-	for token: SquadToken in tokens:
-		if token.is_player() and not token.is_moving() \
-				and WorldState.get_node_faction(token.squad.current_node_id) == "player":
-			token.squad.rest(REST_PERCENT_PER_DAY)
-	EventBus.tick_advanced.emit(WorldState.day_count)
-
-
+	var upkeep: int = 0
+	for squad: SquadData in WorldState.player_squads:
+		upkeep += squad.daily_upkeep()
+	return income - upkeep
 func _check_collisions() -> void:
 	for ally: SquadToken in tokens:
 		if not ally.is_player():
@@ -210,20 +213,15 @@ func capture(node_id: String, liberator: SquadData = null) -> void:
 func _terrain_ahead(token: SquadToken) -> String:
 	var next_id: String = token.path[0] if token.is_moving() else token.squad.current_node_id
 	return (nodes[next_id] as MapNode).data.terrain if nodes.has(next_id) else "plains"
-
 func _graph() -> Dictionary:
 	var graph: Dictionary = {}
 	for node_id: String in nodes:
 		graph[node_id] = (nodes[node_id] as MapNode).data.neighbors
 	return graph
-
 func _is_busy() -> bool:
 	return _director.is_busy()
-
 func _draw_roads() -> void:
 	MapGraph.draw_roads(_roads, nodes, WorldState.era_config)
-
-
 func remove_token(token: SquadToken) -> void:
 	tokens.erase(token)
 	if selected_token == token:
