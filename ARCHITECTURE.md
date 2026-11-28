@@ -8,7 +8,7 @@
 
 > - **Livro-razão detalhado:** [`STATE_LEDGER.md`](STATE_LEDGER.md) (raiz, < 120 linhas).
 > - **Nomes e tipos canônicos:** [`SCHEMA_CANON.md`](SCHEMA_CANON.md) é a referência obrigatória; nomes divergentes em documentos de design são traduzidos pela Tabela de Aliases (§7).
-> - **Referências e Diffs:** [`ARCHITECTURE_DIFF.md`](ARCHITECTURE_DIFF.md) · [`ARCHITECTURE_DIFF_ATO3.md`](ARCHITECTURE_DIFF_ATO3.md) (extensões planejadas do Ato III) · [`docs/references/Guia_Arquitetura_Tecnica_Game_Design.md`](docs/references/Guia_Arquitetura_Tecnica_Game_Design.md) · Mockup aprovado: [`docs/references/arena_25d_plana_mockup_v3.jpg`](docs/references/arena_25d_plana_mockup_v3.jpg) · `docs/Lore_Aeons_Verdade/ARCHITECTURE_v4_referencia.md`.
+> - **Referências e Diffs:** [`ARCHITECTURE_DIFF.md`](ARCHITECTURE_DIFF.md) · [`ARCHITECTURE_DIFF_ATO3.md`](ARCHITECTURE_DIFF_ATO3.md) (extensões planejadas do Ato III) · [`docs/references/Guia_Arquitetura_Tecnica_Game_Design.md`](docs/references/Guia_Arquitetura_Tecnica_Game_Design.md) · [`docs/references/Spec_Ciclo_Animacao_Tela_Inicial.md`](docs/references/Spec_Ciclo_Animacao_Tela_Inicial.md) · Mockup aprovado: [`docs/references/arena_25d_plana_mockup_v3.jpg`](docs/references/arena_25d_plana_mockup_v3.jpg) · `docs/Lore_Aeons_Verdade/ARCHITECTURE_v4_referencia.md`.
 
 ```yaml
 projeto: "Aeon"
