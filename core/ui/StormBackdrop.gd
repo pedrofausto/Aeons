@@ -35,6 +35,7 @@ var _silhouette_showing: bool = false
 var _flash_tween: Tween
 var _celestial_tween: Tween
 var _sky_rect: ColorRect
+var _starfield: StarfieldLayer
 var _clouds: TextureRect
 var _figure_rect: TextureRect
 var _flash_rect: ColorRect
@@ -63,10 +64,14 @@ func _build_layers() -> void:
 	_sky_rect.color = Color(0.03, 0.04, 0.08, 1.0)
 	add_child(_sky_rect)
 
+	_starfield = StarfieldLayer.new()
+	add_child(_starfield)
+
 	_clouds = TextureRect.new()
-	_clouds.set_anchors_preset(Control.PRESET_FULL_RECT)
 	_clouds.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_clouds.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	_clouds.stretch_mode = TextureRect.STRETCH_TILE
+	_clouds.size = Vector2(maxf(size.x, 640.0) + 128.0, maxf(size.y, 360.0))
 	_clouds.texture = _make_cloud_texture()
 	_clouds.modulate = Color(0.55, 0.62, 0.78, 0.38)
 	add_child(_clouds)
@@ -117,7 +122,9 @@ func _make_cloud_texture() -> Texture2D:
 	var img := Image.create(128, 64, false, Image.FORMAT_RGBA8)
 	for y: int in 64:
 		for x: int in 128:
-			var n := sin(float(x) * 0.14) * cos(float(y) * 0.22) + sin(float(x + y) * 0.08) * 0.5
+			var ax := TAU * float(x) / 128.0
+			var ay := TAU * float(y) / 64.0
+			var n := sin(ax * 2.0) * cos(ay) + sin(ax + ay) * 0.5
 			var v := clampf((n + 1.2) * 0.35, 0.05, 0.85)
 			img.set_pixel(x, y, Color(v * 0.35, v * 0.42, v * 0.60, v * 0.7))
 	return ImageTexture.create_from_image(img)
@@ -142,7 +149,8 @@ func _init_rain() -> void:
 func _process(delta: float) -> void:
 	_elapsed_sec += delta
 	_cloud_offset += delta * 6.0  # ~42s por ciclo
-	_clouds.position.x = -fmod(_cloud_offset, 252.0)
+	_clouds.size = Vector2(maxf(size.x, 640.0) + 128.0, maxf(size.y, 360.0))
+	_clouds.position.x = -fmod(_cloud_offset, 128.0)
 	_next_flash_timer -= delta
 	if _next_flash_timer <= 0.0:
 		_trigger_lightning_cycle()

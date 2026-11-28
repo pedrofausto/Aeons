@@ -17,14 +17,12 @@ var _state: State = State.BOOT_SILENCE
 var _idle_timer: float = 0.0
 var _epigraph_idx: int = 0
 var _phase_tween: Tween
-var _logo_float_tween: Tween
 var _press_pulse_tween: Tween
 var _attract_tween: Tween
 
 @onready var _storm: StormBackdrop = %StormBackdrop
 @onready var _curtain: ColorRect = %BlackCurtain
 @onready var _title: Label = %TitleLabel
-@onready var _subtitle: Label = %SubtitleLabel
 @onready var _press_label: Label = %PressStartLabel
 @onready var _attract_overlay: Control = %AttractOverlay
 @onready var _attract_label: Label = %AttractLabel
@@ -64,14 +62,12 @@ func _start_boot_sequence() -> void:
 	_curtain.modulate.a = 1.0
 	_title.modulate.a = 0.0
 	_title.offset_top = TITLE_BASE_Y
-	_subtitle.modulate.a = 0.0
 	_press_label.modulate.a = 0.0
 	_menu_box.visible = false
 	_kill_tween(_phase_tween)
 	_phase_tween = create_tween().set_parallel(true)
 	_phase_tween.tween_property(_curtain, "modulate:a", 0.0, 1.4).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	_phase_tween.tween_property(_title, "modulate:a", 1.0, 3.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-	_phase_tween.tween_property(_subtitle, "modulate:a", 0.85, 1.2).set_delay(2.0).set_trans(Tween.TRANS_SINE)
 	_phase_tween.chain().tween_callback(_enter_idle_press_start)
 
 
@@ -81,18 +77,12 @@ func _enter_idle_press_start() -> void:
 	_curtain.modulate.a = 0.0
 	_title.modulate.a = 1.0
 	_title.offset_top = TITLE_BASE_Y
-	_subtitle.modulate.a = 0.85
 	_attract_overlay.modulate.a = 0.0
 	_storm.set_intro_dim(1.0, 0.6)
 	_start_idle_loops()
 
 
 func _start_idle_loops() -> void:
-	_kill_tween(_logo_float_tween)
-	_logo_float_tween = create_tween().set_loops()
-	_logo_float_tween.tween_property(_title, "offset_top", TITLE_BASE_Y - 2.0, 3.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	_logo_float_tween.tween_property(_title, "offset_top", TITLE_BASE_Y + 2.0, 3.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-
 	_kill_tween(_press_pulse_tween)
 	_press_label.modulate.a = 0.35
 	_press_pulse_tween = create_tween().set_loops()
@@ -117,7 +107,6 @@ func _enter_attract_mode() -> void:
 	_attract_tween = create_tween()
 	var fade_out := _attract_tween.set_parallel(true)
 	fade_out.tween_property(_title, "modulate:a", 0.0, 1.5)
-	fade_out.tween_property(_subtitle, "modulate:a", 0.0, 1.5)
 	fade_out.tween_property(_press_label, "modulate:a", 0.0, 1.5)
 	_attract_tween.chain().tween_property(_attract_overlay, "modulate:a", 1.0, 1.2).set_trans(Tween.TRANS_SINE)
 	_attract_tween.tween_interval(5.6)
