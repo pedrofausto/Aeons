@@ -135,10 +135,16 @@ func _enter_attract_mode() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	var is_press := (event is InputEventKey and event.pressed and not event.echo) \
-		or (event is InputEventMouseButton and event.pressed) \
-		or (event is InputEventJoypadButton and event.pressed) \
-		or (event is InputEventScreenTouch and (event as InputEventScreenTouch).pressed)
+	var is_press: bool = false
+	if event is InputEventKey:
+		var k := event as InputEventKey
+		is_press = k.pressed and not k.echo
+	elif event is InputEventMouseButton:
+		is_press = (event as InputEventMouseButton).pressed
+	elif event is InputEventJoypadButton:
+		is_press = (event as InputEventJoypadButton).pressed
+	elif event is InputEventScreenTouch:
+		is_press = (event as InputEventScreenTouch).pressed
 	if not is_press:
 		return
 	match _state:
