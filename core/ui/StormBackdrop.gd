@@ -6,6 +6,15 @@ extends Control
 signal flash_changed(intensity: float)
 
 const SILHOUETTES_DIR := "res://core/ui/art/title_silhouettes"
+const SILHOUETTE_PATHS: Array[String] = [
+	"res://core/ui/art/title_silhouettes/01_athoth.jpg",
+	"res://core/ui/art/title_silhouettes/02_eloaiou.jpg",
+	"res://core/ui/art/title_silhouettes/03_astaphaios.jpg",
+	"res://core/ui/art/title_silhouettes/04_yao.jpg",
+	"res://core/ui/art/title_silhouettes/05_sabaoth.jpg",
+	"res://core/ui/art/title_silhouettes/06_adonin.jpg",
+	"res://core/ui/art/title_silhouettes/07_sabbede.jpg",
+]
 const SILHOUETTE_SHADER := preload("res://core/ui/shaders/storm_silhouette.gdshader")
 const FIGURE_COUNT := 7
 
@@ -74,12 +83,20 @@ func _build_layers() -> void:
 
 func _load_custom_silhouettes() -> Array[Texture2D]:
 	var found: Array[Texture2D] = []
+	for path: String in SILHOUETTE_PATHS:
+		if ResourceLoader.exists(path):
+			var tex := load(path) as Texture2D
+			if tex != null:
+				found.append(tex)
+	if not found.is_empty():
+		return found
 	var dir := DirAccess.open(SILHOUETTES_DIR)
 	if dir == null:
 		return found
 	var files: Array[String] = []
-	for fname: String in dir.get_files():
-		if fname.get_extension().to_lower() in ["png", "jpg", "jpeg", "webp"]:
+	for raw_name: String in dir.get_files():
+		var fname := raw_name.trim_suffix(".import").trim_suffix(".remap")
+		if fname.get_extension().to_lower() in ["png", "jpg", "jpeg", "webp"] and fname not in files:
 			files.append(fname)
 	files.sort()
 	for fname: String in files:
