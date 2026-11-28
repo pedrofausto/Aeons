@@ -104,6 +104,7 @@ static func serialize_essence() -> Dictionary:
 		"act_records": EssenceState.act_records, "false_defeats": EssenceState.false_defeats,
 		"echo_values": EssenceState.echo_values, "decisions": EssenceState.decisions,
 		"protagonist_profile": EssenceState.protagonist_profile,
+		"essence_lucidity": EssenceState.essence_lucidity,
 	}
 
 
@@ -121,3 +122,4 @@ static func restore_essence(e: Dictionary) -> void:
 	EssenceState.echo_values = (e.get("echo_values", {}) as Dictionary).duplicate(true)
 	EssenceState.decisions = (e.get("decisions", {}) as Dictionary).duplicate(true)
 	EssenceState.protagonist_profile = (e.get("protagonist_profile", {}) as Dictionary).duplicate(true)
+	EssenceState.essence_lucidity = int(e.get("essence_lucidity", 50))

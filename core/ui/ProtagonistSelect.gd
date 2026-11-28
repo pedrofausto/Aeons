@@ -99,14 +99,14 @@ func _on_start_pressed() -> void:
 	var chosen_name := _name_input.text.strip_edges()
 	if chosen_name.is_empty():
 		chosen_name = "Shen Yue"
-	EssenceState.reset_all()
 	EssenceState.protagonist_profile = {
 		"name": chosen_name,
 		"silhouette_id": _selected_silhouette,
 		"eye_color": String(EYE_COLORS[_selected_eye_idx]["name"]),
 		"victory_pose": VICTORY_POSES[_pose_select.selected],
 	}
-	WorldState.reset_visible(1)
-	var start_era: String = ProjectSettings.get_setting(WorldState.START_ERA_SETTING, "res://eras/act_01_tianxu/EraConfig_Act01.tres")
-	WorldState.load_era(start_era)
+	if WorldState.era_config == null:
+		WorldState.reset_visible(1)
+		var start_era: String = ProjectSettings.get_setting(WorldState.START_ERA_SETTING, "res://eras/act_01_tianxu/EraConfig_Act01.tres")
+		WorldState.load_era(start_era)
 	get_tree().change_scene_to_file("res://core/overworld/OverworldMap.tscn")

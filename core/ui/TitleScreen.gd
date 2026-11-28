@@ -37,7 +37,7 @@ var _attract_tween: Tween
 func _ready() -> void:
 	_storm.flash_changed.connect(_on_storm_flash)
 	_continue_btn.pressed.connect(_on_continue_pressed)
-	%NewGameButton.pressed.connect(func() -> void: _transition_to("res://core/ui/ProtagonistSelect.tscn"))
+	%NewGameButton.pressed.connect(func() -> void: _transition_to("res://core/ui/ArchonTrialScreen.tscn"))
 	_load_btn.pressed.connect(func() -> void:
 		_menu_box.visible = false
 		_save_load_modal.open("load"))

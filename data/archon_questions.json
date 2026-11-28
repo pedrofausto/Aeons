@@ -1,0 +1,568 @@
+{
+  "schema_version": "1.0.0",
+  "system": "Godot 4 + Dialogic 2",
+  "hide_archon_names_until_act": 5,
+  "scales": {
+    "alignment": "0..100 (start 50; +Bem / -Mal)",
+    "popular_support": "0..100 (start 50; +Apoio / -Rejeicao)",
+    "doctrine": "-100..+100 (start 0; -Pacifista / +Revolucionaria)",
+    "essence_lucidity": "0..100 (hidden in EssenceState.gd until Act V)"
+  },
+  "archons": [
+    {
+      "id": "athoth",
+      "index": 1,
+      "name": "Athoth",
+      "symbolic_face": "Face de ovelha",
+      "power": "Bondade (Goodness)",
+      "trap": "Obediência mansa, medo de sair do rebanho e paz comprada pela submissão.",
+      "axis": "Apoio Popular vs. Conformismo"
+    },
+    {
+      "id": "eloaiou",
+      "index": 2,
+      "name": "Eloaiou (Eloaios)",
+      "symbolic_face": "Face de asno / jumento",
+      "power": "Providência (Pronoia)",
+      "trap": "Peso do destino, teimosia cega e aceitação do sofrimento como lei imutável.",
+      "axis": "Doutrina Pacifista vs. Ruptura"
+    },
+    {
+      "id": "astaphaios",
+      "index": 3,
+      "name": "Astaphaios",
+      "symbolic_face": "Face de hiena",
+      "power": "Divindade (Divinity)",
+      "trap": "Falso sagrado, oportunismo cínico e predação disfarçada de fé ou justiça.",
+      "axis": "Alinhamento (Integridade vs. Cinismo)"
+    },
+    {
+      "id": "yao",
+      "index": 4,
+      "name": "Yao",
+      "symbolic_face": "Serpente de sete cabeças",
+      "power": "Senhorio (Lordship)",
+      "trap": "Sedução do comando absoluto, manipulação política e poder que devora o líder.",
+      "axis": "Alinhamento e Liderança"
+    },
+    {
+      "id": "sabaoth",
+      "index": 5,
+      "name": "Sabaoth",
+      "symbolic_face": "Face de dragão",
+      "power": "Reino (Kingdom)",
+      "trap": "Glória marcial, conquista imperial e tentação de derrubar o tirano para ocupar o trono.",
+      "axis": "Doutrina Revolucionária vs. Tirania"
+    },
+    {
+      "id": "adonin",
+      "index": 6,
+      "name": "Adonin",
+      "symbolic_face": "Face de símio / macaco",
+      "power": "Inveja (Envy)",
+      "trap": "Imitação vazia, simulacro perfeito e espelho falso que copia a essência humana.",
+      "axis": "Lucidez em EssenceState.gd"
+    },
+    {
+      "id": "sabbede",
+      "index": 7,
+      "name": "Sabbede (Sabbataios)",
+      "symbolic_face": "Face de fogo flamejante",
+      "power": "Compreensão (Understanding)",
+      "trap": "Intelecto frio que cega pelo excesso de luz, dogma absoluto e controle algorítmico.",
+      "axis": "Despertar Final no Ato V"
+    }
+  ],
+  "questions": [
+    {
+      "id": "Q01",
+      "archon_id": "athoth",
+      "prompt": "Uma aldeia vive em paz perfeita sob um tirano que proíbe livros e perguntas. Você a libertaria sabendo que a guerra trará fome?",
+      "choices": [
+        { "key": "A", "text": "Não; a paz de quem tem pão vale mais que uma liberdade sangrenta.", "alignment": 2, "popular_support": 5, "doctrine": -6, "essence_lucidity": -2 },
+        { "key": "B", "text": "Sim; paz sem liberdade é apenas um estábulo bem cuidado.", "alignment": 2, "popular_support": -2, "doctrine": 7, "essence_lucidity": 3 },
+        { "key": "C", "text": "Só quando o próprio povo pedir para abrir o portão.", "alignment": 4, "popular_support": 4, "doctrine": -2, "essence_lucidity": 6 }
+      ]
+    },
+    {
+      "id": "Q02",
+      "archon_id": "athoth",
+      "prompt": "Quando a multidão aplaude uma injustiça porque ela lhe traz segurança, onde está a culpa maior?",
+      "choices": [
+        { "key": "A", "text": "No governante que manipulou o medo de pessoas simples.", "alignment": 4, "popular_support": 5, "doctrine": -3, "essence_lucidity": 1 },
+        { "key": "B", "text": "Na multidão que trocou a consciência por conforto.", "alignment": -2, "popular_support": -5, "doctrine": 5, "essence_lucidity": 3 },
+        { "key": "C", "text": "No sistema invisível que tornou o medo a única moeda.", "alignment": 2, "popular_support": 1, "doctrine": 2, "essence_lucidity": 7 }
+      ]
+    },
+    {
+      "id": "Q03",
+      "archon_id": "athoth",
+      "prompt": "Um soldado inimigo se rende chorando e jura que apenas cumpria ordens para sustentar os filhos. Qual é o seu veredito?",
+      "choices": [
+        { "key": "A", "text": "Perdoá-lo e deixá-lo voltar para casa em segurança.", "alignment": 6, "popular_support": 5, "doctrine": -6, "essence_lucidity": 1 },
+        { "key": "B", "text": "Julgá-lo com rigor; obedecer sem pensar é o motor de todo massacre.", "alignment": -3, "popular_support": -3, "doctrine": 6, "essence_lucidity": 3 },
+        { "key": "C", "text": "Poupar sua vida, mas obrigá-lo a encarar o que suas ordens causaram.", "alignment": 5, "popular_support": 3, "doctrine": -1, "essence_lucidity": 6 }
+      ]
+    },
+    {
+      "id": "Q04",
+      "archon_id": "athoth",
+      "prompt": "Se a bondade exige que você nunca fira ninguém, o que ela faz diante de quem esmaga inocentes?",
+      "choices": [
+        { "key": "A", "text": "Resiste sem ódio, protegendo os feridos e desarmando o agressor.", "alignment": 6, "popular_support": 5, "doctrine": -6, "essence_lucidity": 2 },
+        { "key": "B", "text": "Torna-se cúmplice; sem espada, a bondade apenas adia a morte.", "alignment": -1, "popular_support": 0, "doctrine": 7, "essence_lucidity": 2 },
+        { "key": "C", "text": "Mostra que \"bondade\" e \"fraqueza\" foram confundidas de propósito.", "alignment": 3, "popular_support": 2, "doctrine": 2, "essence_lucidity": 7 }
+      ]
+    },
+    {
+      "id": "Q05",
+      "archon_id": "athoth",
+      "prompt": "Um conselheiro sugere esconder uma verdade terrível da população para evitar pânico geral. Você aceita?",
+      "choices": [
+        { "key": "A", "text": "Sim; verdades cruas sem preparo destroem quem já está frágil.", "alignment": -1, "popular_support": 4, "doctrine": -4, "essence_lucidity": -3 },
+        { "key": "B", "text": "Não; quem aceita ser tutelado nunca se torna dono do próprio destino.", "alignment": 3, "popular_support": -2, "doctrine": 6, "essence_lucidity": 4 },
+        { "key": "C", "text": "Revelo a verdade aos poucos, sem transformar o medo em arma.", "alignment": 5, "popular_support": 5, "doctrine": -2, "essence_lucidity": 6 }
+      ]
+    },
+    {
+      "id": "Q06",
+      "archon_id": "athoth",
+      "prompt": "O que mais facilmente corrompe um líder que começou querendo proteger o povo?",
+      "choices": [
+        { "key": "A", "text": "O cansaço de ver que o povo não reconhece seus sacrifícios.", "alignment": 2, "popular_support": 3, "doctrine": -3, "essence_lucidity": 1 },
+        { "key": "B", "text": "A certeza de que só ele sabe o que é bom para os outros.", "alignment": 3, "popular_support": 2, "doctrine": 4, "essence_lucidity": 4 },
+        { "key": "C", "text": "O aplauso constante de quem parou de discordar dele.", "alignment": 4, "popular_support": 3, "doctrine": 0, "essence_lucidity": 7 }
+      ]
+    },
+    {
+      "id": "Q07",
+      "archon_id": "athoth",
+      "prompt": "Se todos os humanos fossem tornados incapazes de fazer o mal — mas também incapazes de escolher — você chamaria isso de paraíso?",
+      "choices": [
+        { "key": "A", "text": "Talvez fosse um alívio depois de tanta dor na história.", "alignment": 1, "popular_support": 2, "doctrine": -5, "essence_lucidity": -4 },
+        { "key": "B", "text": "Jamais; isso seria um matadouro silencioso da vontade.", "alignment": 2, "popular_support": 1, "doctrine": 6, "essence_lucidity": 5 },
+        { "key": "C", "text": "Não existe bem onde não existe a possibilidade de recusá-lo.", "alignment": 5, "popular_support": 2, "doctrine": 0, "essence_lucidity": 8 }
+      ]
+    },
+    {
+      "id": "Q08",
+      "archon_id": "eloaiou",
+      "prompt": "Quando uma batalha parece matematicamente perdida antes de começar, o que define um verdadeiro comandante?",
+      "choices": [
+        { "key": "A", "text": "Recuar para salvar seus homens e preservar a vida.", "alignment": 5, "popular_support": 4, "doctrine": -6, "essence_lucidity": 2 },
+        { "key": "B", "text": "Lutar até o fim para provar que o destino não é invencível.", "alignment": 1, "popular_support": 2, "doctrine": 7, "essence_lucidity": -1 },
+        { "key": "C", "text": "Mudar o terreno e as regras para que o cálculo inimigo falhe.", "alignment": 3, "popular_support": 2, "doctrine": 2, "essence_lucidity": 7 }
+      ]
+    },
+    {
+      "id": "Q09",
+      "archon_id": "eloaiou",
+      "prompt": "Você acredita que o sofrimento humano tem um propósito oculto que nos aperfeiçoa?",
+      "choices": [
+        { "key": "A", "text": "Sim; a dor ensina compaixão e tempera o espírito.", "alignment": 3, "popular_support": 2, "doctrine": -5, "essence_lucidity": -3 },
+        { "key": "B", "text": "Não; essa é a desculpa favorita de quem lucra com a dor alheia.", "alignment": 2, "popular_support": 4, "doctrine": 6, "essence_lucidity": 4 },
+        { "key": "C", "text": "O sofrimento só ensina algo quando nos faz recusar o jugo.", "alignment": 3, "popular_support": 2, "doctrine": 3, "essence_lucidity": 7 }
+      ]
+    },
+    {
+      "id": "Q10",
+      "archon_id": "eloaiou",
+      "prompt": "Um velho sábio afirma que a história sempre se repete em ciclos e que toda revolta termina onde começou. Como você responde?",
+      "choices": [
+        { "key": "A", "text": "Então devemos aliviar a dor de cada geração enquanto ela passa.", "alignment": 5, "popular_support": 5, "doctrine": -6, "essence_lucidity": 1 },
+        { "key": "B", "text": "Então precisamos golpear com força suficiente para quebrar a roda.", "alignment": 1, "popular_support": 1, "doctrine": 8, "essence_lucidity": 3 },
+        { "key": "C", "text": "Um ciclo só se repete enquanto ninguém percebe que anda em círculo.", "alignment": 3, "popular_support": 1, "doctrine": 1, "essence_lucidity": 8 }
+      ]
+    },
+    {
+      "id": "Q11",
+      "archon_id": "eloaiou",
+      "prompt": "Qual é o fardo mais perigoso que um exército pode carregar durante uma longa campanha?",
+      "choices": [
+        { "key": "A", "text": "A culpa pelos inocentes que não pôde salvar.", "alignment": 5, "popular_support": 4, "doctrine": -4, "essence_lucidity": 2 },
+        { "key": "B", "text": "A dúvida sobre se a causa ainda vale o sangue derramado.", "alignment": 0, "popular_support": -1, "doctrine": 5, "essence_lucidity": 2 },
+        { "key": "C", "text": "O hábito de marchar sem lembrar por que deu o primeiro passo.", "alignment": 3, "popular_support": 2, "doctrine": 0, "essence_lucidity": 7 }
+      ]
+    },
+    {
+      "id": "Q12",
+      "archon_id": "eloaiou",
+      "prompt": "Se uma lei antiga e sagrada condena um inocente, você obedece à tradição para manter a ordem ou a rasga diante de todos?",
+      "choices": [
+        { "key": "A", "text": "Busco uma brecha legal para salvá-lo sem incendiar a cidade.", "alignment": 4, "popular_support": 4, "doctrine": -5, "essence_lucidity": 2 },
+        { "key": "B", "text": "Rasgo a lei em praça pública; tradição injusta é corrente enferrujada.", "alignment": 3, "popular_support": 3, "doctrine": 7, "essence_lucidity": 4 },
+        { "key": "C", "text": "Salvo o inocente e pergunto quem se beneficia dessa lei existir.", "alignment": 5, "popular_support": 4, "doctrine": 2, "essence_lucidity": 7 }
+      ]
+    },
+    {
+      "id": "Q13",
+      "archon_id": "eloaiou",
+      "prompt": "O que separa a perseverança admirável da teimosia cega?",
+      "choices": [
+        { "key": "A", "text": "A disposição de ouvir quando os aliados pedem clemência.", "alignment": 5, "popular_support": 4, "doctrine": -5, "essence_lucidity": 2 },
+        { "key": "B", "text": "O resultado final: quem vence é firme; quem cai, teimoso.", "alignment": -4, "popular_support": -3, "doctrine": 6, "essence_lucidity": -2 },
+        { "key": "C", "text": "A coragem de abandonar um caminho no instante em que ele vira prisão.", "alignment": 3, "popular_support": 1, "doctrine": 1, "essence_lucidity": 8 }
+      ]
+    },
+    {
+      "id": "Q14",
+      "archon_id": "eloaiou",
+      "prompt": "Se descobrisse hoje que todas as suas vitórias passadas já estavam previstas em um plano maior, o que faria amanhã?",
+      "choices": [
+        { "key": "A", "text": "Continuaria fazendo o bem; a intenção importa mais que o roteiro.", "alignment": 6, "popular_support": 3, "doctrine": -4, "essence_lucidity": 1 },
+        { "key": "B", "text": "Faria o oposto do esperado para sabotar o plano.", "alignment": 0, "popular_support": -1, "doctrine": 7, "essence_lucidity": 4 },
+        { "key": "C", "text": "Procuraria quem escreveu o plano em vez de lutar contra as peças.", "alignment": 3, "popular_support": 0, "doctrine": 2, "essence_lucidity": 9 }
+      ]
+    },
+    {
+      "id": "Q15",
+      "archon_id": "astaphaios",
+      "prompt": "Um sacerdote corrupto controla os celeiros e oferece financiar seu exército em troca de silêncio sobre seus crimes. Você aceita?",
+      "choices": [
+        { "key": "A", "text": "Jamais; pão sujo de sangue envenena toda a causa.", "alignment": 7, "popular_support": 4, "doctrine": -4, "essence_lucidity": 3 },
+        { "key": "B", "text": "Aceito o ouro agora e o derrubo assim que a guerra terminar.", "alignment": -6, "popular_support": -4, "doctrine": 5, "essence_lucidity": -2 },
+        { "key": "C", "text": "Tomo os celeiros diretamente e exponho seus crimes à luz.", "alignment": 4, "popular_support": 5, "doctrine": 6, "essence_lucidity": 6 }
+      ]
+    },
+    {
+      "id": "Q16",
+      "archon_id": "astaphaios",
+      "prompt": "Em uma guerra civil, o que é mais perigoso: o inimigo que declara ódio aberto ou o aliado que fala em nome do sagrado?",
+      "choices": [
+        { "key": "A", "text": "O inimigo aberto, pois sua crueldade não conhece limites.", "alignment": 3, "popular_support": 2, "doctrine": -2, "essence_lucidity": 0 },
+        { "key": "B", "text": "O aliado fanático, pois nunca aceita concessões nem paz.", "alignment": 3, "popular_support": 3, "doctrine": -3, "essence_lucidity": 4 },
+        { "key": "C", "text": "Quem usa o sagrado para absolver a si mesmo de qualquer crime.", "alignment": 5, "popular_support": 2, "doctrine": 1, "essence_lucidity": 7 }
+      ]
+    },
+    {
+      "id": "Q17",
+      "archon_id": "astaphaios",
+      "prompt": "Você descobre que um herói venerado pelo povo construiu sua fama sobre uma mentira. Você revela a fraude?",
+      "choices": [
+        { "key": "A", "text": "Não, se o símbolo ainda inspira as pessoas a resistirem ao mal.", "alignment": -2, "popular_support": 5, "doctrine": -3, "essence_lucidity": -2 },
+        { "key": "B", "text": "Sim; nenhum futuro sólido nasce sobre um altar podre.", "alignment": 5, "popular_support": -3, "doctrine": 5, "essence_lucidity": 5 },
+        { "key": "C", "text": "Mostro que a força sempre esteve nas pessoas, não na estátua.", "alignment": 6, "popular_support": 4, "doctrine": 1, "essence_lucidity": 7 }
+      ]
+    },
+    {
+      "id": "Q18",
+      "archon_id": "astaphaios",
+      "prompt": "Por que tantas rebeliões começam com justiça nos lábios e terminam com saques nas mãos?",
+      "choices": [
+        { "key": "A", "text": "Porque a fome prolongada vence até os corações mais puros.", "alignment": 4, "popular_support": 5, "doctrine": -4, "essence_lucidity": 2 },
+        { "key": "B", "text": "Porque quem nunca teve poder só sabe imitar os antigos senhores.", "alignment": -2, "popular_support": -2, "doctrine": 3, "essence_lucidity": 4 },
+        { "key": "C", "text": "Porque o rancor substitui o propósito quando falta lucidez.", "alignment": 4, "popular_support": 2, "doctrine": -1, "essence_lucidity": 7 }
+      ]
+    },
+    {
+      "id": "Q19",
+      "archon_id": "astaphaios",
+      "prompt": "Um espião oferece entregar os segredos do inimigo, mas exige a execução de um rival pessoal inocente. O que você decide?",
+      "choices": [
+        { "key": "A", "text": "Recuso o trato; prefiro perder vantagem tática a matar um inocente.", "alignment": 8, "popular_support": 4, "doctrine": -5, "essence_lucidity": 3 },
+        { "key": "B", "text": "Aceito se essa informação salvar centenas dos meus soldados.", "alignment": -8, "popular_support": -5, "doctrine": 5, "essence_lucidity": -3 },
+        { "key": "C", "text": "Prendo o espião e procuro outro caminho sem negociar vidas.", "alignment": 6, "popular_support": 4, "doctrine": 1, "essence_lucidity": 6 }
+      ]
+    },
+    {
+      "id": "Q20",
+      "archon_id": "astaphaios",
+      "prompt": "Quando alguém ri dos seus ideais e diz que \"todo mundo tem um preço\", o que mais o incomoda nessa frase?",
+      "choices": [
+        { "key": "A", "text": "A crueldade de reduzir o ser humano a uma mercadoria.", "alignment": 6, "popular_support": 4, "doctrine": -3, "essence_lucidity": 2 },
+        { "key": "B", "text": "A suspeita de que muitos ao meu redor realmente têm um preço.", "alignment": -3, "popular_support": -2, "doctrine": 3, "essence_lucidity": 1 },
+        { "key": "C", "text": "O fato de o cinismo ser a forma mais preguiçosa de se render.", "alignment": 4, "popular_support": 2, "doctrine": 2, "essence_lucidity": 7 }
+      ]
+    },
+    {
+      "id": "Q21",
+      "archon_id": "astaphaios",
+      "prompt": "Se um deus exigisse o sacrifício de um justo para salvar uma nação inteira, esse deus mereceria adoração?",
+      "choices": [
+        { "key": "A", "text": "Não; a verdadeira divindade não negocia com o sangue dos justos.", "alignment": 6, "popular_support": 4, "doctrine": -4, "essence_lucidity": 3 },
+        { "key": "B", "text": "Mereceria apenas desafio; nenhum trono divino está acima da revolta.", "alignment": 1, "popular_support": 1, "doctrine": 7, "essence_lucidity": 5 },
+        { "key": "C", "text": "Qualquer entidade que exige sacrifício não é luz — é fome disfarçada.", "alignment": 5, "popular_support": 2, "doctrine": 2, "essence_lucidity": 9 }
+      ]
+    },
+    {
+      "id": "Q22",
+      "archon_id": "yao",
+      "prompt": "Dois generais seus têm visões opostas para a campanha e ameaçam dividir o exército. Como você mantém a unidade?",
+      "choices": [
+        { "key": "A", "text": "Ouvindo ambos em conselho aberto até construir um consenso real.", "alignment": 5, "popular_support": 4, "doctrine": -5, "essence_lucidity": 2 },
+        { "key": "B", "text": "Impondo minha autoridade; um exército com duas cabeças morre rápido.", "alignment": -4, "popular_support": -3, "doctrine": 5, "essence_lucidity": -2 },
+        { "key": "C", "text": "Dando missões autônomas a cada um para testar qual ideia sobrevive.", "alignment": 3, "popular_support": 2, "doctrine": 2, "essence_lucidity": 6 }
+      ]
+    },
+    {
+      "id": "Q23",
+      "archon_id": "yao",
+      "prompt": "O que realmente mantém uma nação unida em tempos de crise extrema?",
+      "choices": [
+        { "key": "A", "text": "Confiança mútua e leis que protegem os mais vulneráveis.", "alignment": 6, "popular_support": 6, "doctrine": -4, "essence_lucidity": 2 },
+        { "key": "B", "text": "Uma vontade central firme capaz de decidir sem hesitação.", "alignment": -5, "popular_support": -3, "doctrine": 5, "essence_lucidity": -3 },
+        { "key": "C", "text": "Um propósito compartilhado que sobreviva mesmo sem líderes.", "alignment": 4, "popular_support": 4, "doctrine": 1, "essence_lucidity": 7 }
+      ]
+    },
+    {
+      "id": "Q24",
+      "archon_id": "yao",
+      "prompt": "Para impedir que um inimigo cruel domine a capital, você precisa concentrar poderes de emergência. Quando os devolveria?",
+      "choices": [
+        { "key": "A", "text": "Nunca os concentraria; poder de emergência raramente volta ao povo.", "alignment": 6, "popular_support": 5, "doctrine": -5, "essence_lucidity": 4 },
+        { "key": "B", "text": "Somente quando cada ameaça externa e interna estiver neutralizada.", "alignment": -6, "popular_support": -4, "doctrine": 5, "essence_lucidity": -3 },
+        { "key": "C", "text": "Antes mesmo da vitória final, com prazo gravado em pedra.", "alignment": 5, "popular_support": 4, "doctrine": 1, "essence_lucidity": 6 }
+      ]
+    },
+    {
+      "id": "Q25",
+      "archon_id": "yao",
+      "prompt": "Seus batedores descobrem que um aliado fiel conspira pelas suas costas por temer que você esteja virando um tirano. Como reage?",
+      "choices": [
+        { "key": "A", "text": "Converso a sós com ele para entender que sinais de tirania ele viu em mim.", "alignment": 6, "popular_support": 4, "doctrine": -5, "essence_lucidity": 4 },
+        { "key": "B", "text": "Prendo-o imediatamente; traição no meio da guerra mata todos nós.", "alignment": -6, "popular_support": -4, "doctrine": 6, "essence_lucidity": -2 },
+        { "key": "C", "text": "Exponho o conflito diante do conselho e aceito ser julgado também.", "alignment": 5, "popular_support": 5, "doctrine": -1, "essence_lucidity": 7 }
+      ]
+    },
+    {
+      "id": "Q26",
+      "archon_id": "yao",
+      "prompt": "Qual é a forma mais eficaz de neutralizar um adversário político brilhante?",
+      "choices": [
+        { "key": "A", "text": "Convencê-lo de que nossas causas podem convergir em paz.", "alignment": 5, "popular_support": 4, "doctrine": -6, "essence_lucidity": 2 },
+        { "key": "B", "text": "Isolá-lo de seus aliados e remover sua influência antes que aja.", "alignment": -5, "popular_support": -3, "doctrine": 5, "essence_lucidity": -1 },
+        { "key": "C", "text": "Desmontar seus argumentos diante do povo sem transformá-lo em mártir.", "alignment": 4, "popular_support": 5, "doctrine": 0, "essence_lucidity": 7 }
+      ]
+    },
+    {
+      "id": "Q27",
+      "archon_id": "yao",
+      "prompt": "É possível governar milhões de pessoas sem nunca mentir nem manipular a percepção delas?",
+      "choices": [
+        { "key": "A", "text": "Sim; a transparência pode ser lenta, mas é a única base legítima.", "alignment": 6, "popular_support": 5, "doctrine": -4, "essence_lucidity": 3 },
+        { "key": "B", "text": "Não; toda arte de governar exige dosar o que o povo pode suportar.", "alignment": -5, "popular_support": -3, "doctrine": 3, "essence_lucidity": -3 },
+        { "key": "C", "text": "Se governar exige mentir, então o próprio formato de governo está doente.", "alignment": 3, "popular_support": 2, "doctrine": 4, "essence_lucidity": 8 }
+      ]
+    },
+    {
+      "id": "Q28",
+      "archon_id": "yao",
+      "prompt": "O que mais assusta um soberano absoluto ao olhar para um único indivíduo livre?",
+      "choices": [
+        { "key": "A", "text": "A compaixão que não pede permissão ao trono.", "alignment": 5, "popular_support": 4, "doctrine": -4, "essence_lucidity": 3 },
+        { "key": "B", "text": "A faísca capaz de incendiar uma rebelião em cadeia.", "alignment": 1, "popular_support": 2, "doctrine": 7, "essence_lucidity": 3 },
+        { "key": "C", "text": "O fato de não existir nada no mundo que ele possa usar para chantageá-lo.", "alignment": 4, "popular_support": 1, "doctrine": 1, "essence_lucidity": 8 }
+      ]
+    },
+    {
+      "id": "Q29",
+      "archon_id": "sabaoth",
+      "prompt": "Uma fortaleza inimiga pode ser tomada hoje com um ataque brutal e baixas civis, ou em três meses de cerco paciente. Qual escolhe?",
+      "choices": [
+        { "key": "A", "text": "O cerco paciente; nenhuma bandeira vale o sangue de civis.", "alignment": 6, "popular_support": 6, "doctrine": -6, "essence_lucidity": 2 },
+        { "key": "B", "text": "O ataque imediato; guerras longas matam mais de fome que de espada.", "alignment": -5, "popular_support": -6, "doctrine": 7, "essence_lucidity": -1 },
+        { "key": "C", "text": "Infiltração cirúrgica para abrir os portões por dentro sem devastar a cidade.", "alignment": 4, "popular_support": 4, "doctrine": 2, "essence_lucidity": 6 }
+      ]
+    },
+    {
+      "id": "Q30",
+      "archon_id": "sabaoth",
+      "prompt": "O que você sente no instante exato em que derruba um inimigo muito mais forte que você?",
+      "choices": [
+        { "key": "A", "text": "Alívio por meus companheiros estarem vivos.", "alignment": 5, "popular_support": 4, "doctrine": -5, "essence_lucidity": 2 },
+        { "key": "B", "text": "Orgulho; a força provou que nossa vontade era superior.", "alignment": -3, "popular_support": -1, "doctrine": 6, "essence_lucidity": -3 },
+        { "key": "C", "text": "Silêncio — e o cuidado de não me apaixonar pelo gosto da vitória.", "alignment": 5, "popular_support": 2, "doctrine": -1, "essence_lucidity": 8 }
+      ]
+    },
+    {
+      "id": "Q31",
+      "archon_id": "sabaoth",
+      "prompt": "Você derrotou o tirano e a multidão exige que você vista a coroa para proteger a nova era. Qual é sua resposta?",
+      "choices": [
+        { "key": "A", "text": "Recuso a coroa e ajudo a fundar um conselho livre de cidadãos.", "alignment": 6, "popular_support": 6, "doctrine": -4, "essence_lucidity": 4 },
+        { "key": "B", "text": "Aceito; se eu recusar, outro pior tomará o trono amanhã.", "alignment": -5, "popular_support": 1, "doctrine": 4, "essence_lucidity": -4 },
+        { "key": "C", "text": "Derreto a coroa em público para que ninguém mais a dispute.", "alignment": 4, "popular_support": 4, "doctrine": 5, "essence_lucidity": 8 }
+      ]
+    },
+    {
+      "id": "Q32",
+      "archon_id": "sabaoth",
+      "prompt": "Para o seu nome sobreviver aos séculos, o que importa mais: ser temido pelos inimigos ou amado pelo povo?",
+      "choices": [
+        { "key": "A", "text": "Ser amado pelo povo; o medo se desfaz no instante em que o líder cai.", "alignment": 5, "popular_support": 6, "doctrine": -4, "essence_lucidity": 2 },
+        { "key": "B", "text": "Ser temido pelos inimigos; o amor sem força não defende fronteiras.", "alignment": -4, "popular_support": -4, "doctrine": 6, "essence_lucidity": -2 },
+        { "key": "C", "text": "Nenhum dos dois; prefiro que meu nome seja esquecido se o povo ficar livre.", "alignment": 6, "popular_support": 4, "doctrine": 0, "essence_lucidity": 8 }
+      ]
+    },
+    {
+      "id": "Q33",
+      "archon_id": "sabaoth",
+      "prompt": "Uma arma devastadora cai nas suas mãos — capaz de encerrar a guerra em um dia, mas marcando a terra para sempre. Você a usa?",
+      "choices": [
+        { "key": "A", "text": "Nunca; vencer destruindo o mundo que queríamos salvar é derrota.", "alignment": 7, "popular_support": 5, "doctrine": -6, "essence_lucidity": 3 },
+        { "key": "B", "text": "Uso uma única vez para quebrar a vontade inimiga de imediato.", "alignment": -8, "popular_support": -7, "doctrine": 8, "essence_lucidity": -4 },
+        { "key": "C", "text": "Destruo a arma e apago seus planos para que nenhum império a herde.", "alignment": 6, "popular_support": 4, "doctrine": 2, "essence_lucidity": 7 }
+      ]
+    },
+    {
+      "id": "Q34",
+      "archon_id": "sabaoth",
+      "prompt": "Quando a guerra finalmente acaba, o que acontece com o guerreiro que só conheceu o campo de batalha?",
+      "choices": [
+        { "key": "A", "text": "Ele aprende a reconstruir casas com as mesmas mãos que ergueram escudos.", "alignment": 6, "popular_support": 5, "doctrine": -6, "essence_lucidity": 3 },
+        { "key": "B", "text": "Ele se torna o guardião das fronteiras, pronto para o próximo inimigo.", "alignment": 0, "popular_support": 1, "doctrine": 5, "essence_lucidity": -1 },
+        { "key": "C", "text": "Ele precisa abandonar a armadura antes que a guerra continue dentro dele.", "alignment": 4, "popular_support": 2, "doctrine": -2, "essence_lucidity": 8 }
+      ]
+    },
+    {
+      "id": "Q35",
+      "archon_id": "sabaoth",
+      "prompt": "Se conquistar territórios nunca traz paz definitiva, por que os homens continuam erguendo impérios?",
+      "choices": [
+        { "key": "A", "text": "Por medo de serem conquistados primeiro.", "alignment": 3, "popular_support": 2, "doctrine": -3, "essence_lucidity": 2 },
+        { "key": "B", "text": "Pelo desejo de deixar uma marca maior que a própria morte.", "alignment": -2, "popular_support": -1, "doctrine": 4, "essence_lucidity": 1 },
+        { "key": "C", "text": "Porque confundem expandir os muros da cela com conquistar liberdade.", "alignment": 4, "popular_support": 2, "doctrine": 1, "essence_lucidity": 9 }
+      ]
+    },
+    {
+      "id": "Q36",
+      "archon_id": "adonin",
+      "prompt": "Se uma cópia perfeita de alguém que você ama sorrisse, falasse e lembrasse de tudo exatamente igual, faltaria alguma coisa?",
+      "choices": [
+        { "key": "A", "text": "Se ela ama e sofre de verdade, quem sou eu para negar sua alma?", "alignment": 5, "popular_support": 3, "doctrine": -3, "essence_lucidity": 1 },
+        { "key": "B", "text": "Se o resultado é idêntico, a diferença é apenas sentimentalismo.", "alignment": -4, "popular_support": -3, "doctrine": 3, "essence_lucidity": -4 },
+        { "key": "C", "text": "Faltaria tudo: imitar a vida não é estar desperto nela.", "alignment": 3, "popular_support": 1, "doctrine": 2, "essence_lucidity": 9 }
+      ]
+    },
+    {
+      "id": "Q37",
+      "archon_id": "adonin",
+      "prompt": "Um rival menos talentoso recebe todas as honras por uma vitória que foi sua. O que você faz?",
+      "choices": [
+        { "key": "A", "text": "Deixo passar; o importante é que a vitória salvou quem precisava.", "alignment": 6, "popular_support": 4, "doctrine": -5, "essence_lucidity": 3 },
+        { "key": "B", "text": "Exijo o crédito publicamente; justiça é dar a cada um o que é seu.", "alignment": 0, "popular_support": -1, "doctrine": 4, "essence_lucidity": 0 },
+        { "key": "C", "text": "Observo quem distribui as medalhas — e por que precisa de um rosto dócil.", "alignment": 3, "popular_support": 2, "doctrine": 1, "essence_lucidity": 8 }
+      ]
+    },
+    {
+      "id": "Q38",
+      "archon_id": "adonin",
+      "prompt": "Você já sentiu que desempenhava um papel escrito por outros, mesmo quando achava que escolhia livremente?",
+      "choices": [
+        { "key": "A", "text": "Sim, mas os laços que criamos com as pessoas tornam a jornada real.", "alignment": 5, "popular_support": 4, "doctrine": -3, "essence_lucidity": 3 },
+        { "key": "B", "text": "Não; minhas cicatrizes e escolhas pertencem apenas a mim.", "alignment": 1, "popular_support": 0, "doctrine": 4, "essence_lucidity": -2 },
+        { "key": "C", "text": "Sim — e é exatamente nessa sensação de estranhamento que começa a lucidez.", "alignment": 3, "popular_support": 1, "doctrine": 1, "essence_lucidity": 9 }
+      ]
+    },
+    {
+      "id": "Q39",
+      "archon_id": "adonin",
+      "prompt": "O que mais revela quem uma pessoa realmente é?",
+      "choices": [
+        { "key": "A", "text": "Como ela trata quem não pode lhe oferecer nada em troca.", "alignment": 6, "popular_support": 5, "doctrine": -4, "essence_lucidity": 3 },
+        { "key": "B", "text": "O que ela faz quando está encurralada e sem saída.", "alignment": -1, "popular_support": 0, "doctrine": 5, "essence_lucidity": 2 },
+        { "key": "C", "text": "O que permanece intacto nela quando lhe tiram nome, pátria e memória.", "alignment": 4, "popular_support": 1, "doctrine": 0, "essence_lucidity": 9 }
+      ]
+    },
+    {
+      "id": "Q40",
+      "archon_id": "adonin",
+      "prompt": "Para vencer um inimigo que usa propaganda e disfarces, você adotaria as mesmas máscaras para enganá-lo?",
+      "choices": [
+        { "key": "A", "text": "Não; quem veste a máscara do inimigo acaba esquecendo o próprio rosto.", "alignment": 6, "popular_support": 4, "doctrine": -5, "essence_lucidity": 4 },
+        { "key": "B", "text": "Sim; ingenuidade diante de um mestre da ilusão é suicídio.", "alignment": -4, "popular_support": -3, "doctrine": 5, "essence_lucidity": -2 },
+        { "key": "C", "text": "Só o suficiente para expor a farsa e quebrar o espelho diante de todos.", "alignment": 3, "popular_support": 3, "doctrine": 3, "essence_lucidity": 7 }
+      ]
+    },
+    {
+      "id": "Q41",
+      "archon_id": "adonin",
+      "prompt": "Se você pudesse apagar todas as memórias dolorosas da sua vida e viver em plena serenidade, aceitaria?",
+      "choices": [
+        { "key": "A", "text": "Talvez, se isso me permitisse amar sem o peso do trauma.", "alignment": 2, "popular_support": 2, "doctrine": -4, "essence_lucidity": -4 },
+        { "key": "B", "text": "Não; a raiva e a dor são o combustível que me mantém lutando.", "alignment": -2, "popular_support": -1, "doctrine": 6, "essence_lucidity": 1 },
+        { "key": "C", "text": "Jamais; apagar a memória é o método mais antigo para domesticar uma mente.", "alignment": 4, "popular_support": 2, "doctrine": 2, "essence_lucidity": 9 }
+      ]
+    },
+    {
+      "id": "Q42",
+      "archon_id": "adonin",
+      "prompt": "Quando olha para um inimigo caído, o que é mais difícil admitir?",
+      "choices": [
+        { "key": "A", "text": "Que ele também tinha alguém esperando por sua volta.", "alignment": 6, "popular_support": 5, "doctrine": -6, "essence_lucidity": 3 },
+        { "key": "B", "text": "Que, nascidos em lados opostos, eu lutaria exatamente como ele.", "alignment": 2, "popular_support": 1, "doctrine": 2, "essence_lucidity": 4 },
+        { "key": "C", "text": "Que ambos fomos postos no mesmo tabuleiro pela mesma mão invisível.", "alignment": 4, "popular_support": 2, "doctrine": 0, "essence_lucidity": 9 }
+      ]
+    },
+    {
+      "id": "Q43",
+      "archon_id": "sabbede",
+      "prompt": "Se um cálculo infalível previsse crimes e guerras antes de acontecerem, você entregaria o governo do mundo a esse sistema?",
+      "choices": [
+        { "key": "A", "text": "Não; justiça sem misericórdia nem perdão não é justiça.", "alignment": 6, "popular_support": 5, "doctrine": -4, "essence_lucidity": 3 },
+        { "key": "B", "text": "Nunca; preferiria o caos humano a uma gaiola matemática.", "alignment": 1, "popular_support": 2, "doctrine": 7, "essence_lucidity": 5 },
+        { "key": "C", "text": "Qualquer sistema que prevê tudo precisa primeiro eliminar a liberdade para acertar.", "alignment": 4, "popular_support": 2, "doctrine": 1, "essence_lucidity": 9 }
+      ]
+    },
+    {
+      "id": "Q44",
+      "archon_id": "sabbede",
+      "prompt": "O conhecimento sem limites sempre liberta — ou também pode construir prisões mais sofisticadas?",
+      "choices": [
+        { "key": "A", "text": "Só liberta quando caminha junto com a empatia.", "alignment": 6, "popular_support": 4, "doctrine": -4, "essence_lucidity": 3 },
+        { "key": "B", "text": "É uma arma neutra; tudo depende de quem a empunha primeiro.", "alignment": -2, "popular_support": -1, "doctrine": 5, "essence_lucidity": -1 },
+        { "key": "C", "text": "Sem consciência de si, o conhecimento só troca correntes de ferro por correntes invisíveis.", "alignment": 4, "popular_support": 2, "doctrine": 1, "essence_lucidity": 9 }
+      ]
+    },
+    {
+      "id": "Q45",
+      "archon_id": "sabbede",
+      "prompt": "Diante de uma verdade tão grande que destruiria todas as certezas de quem você ama, você ainda a buscaria?",
+      "choices": [
+        { "key": "A", "text": "Hesitaria; às vezes proteger o coração de alguém vale mais que saber tudo.", "alignment": 4, "popular_support": 4, "doctrine": -4, "essence_lucidity": -2 },
+        { "key": "B", "text": "Sim; prefiro a verdade que queima à mentira que consola.", "alignment": 1, "popular_support": -2, "doctrine": 6, "essence_lucidity": 5 },
+        { "key": "C", "text": "Sim — e seguraria a mão deles enquanto atravessamos o fogo juntos.", "alignment": 6, "popular_support": 4, "doctrine": 0, "essence_lucidity": 9 }
+      ]
+    },
+    {
+      "id": "Q46",
+      "archon_id": "sabbede",
+      "prompt": "O que sobrevive de um ser humano quando o tempo apaga sua língua, sua cidade e sua época inteira?",
+      "choices": [
+        { "key": "A", "text": "Os pequenos gestos de bondade que passaram de uma vida a outra.", "alignment": 6, "popular_support": 5, "doctrine": -4, "essence_lucidity": 4 },
+        { "key": "B", "text": "A recusa de se ajoelhar diante daquilo que tentou esmagá-lo.", "alignment": 2, "popular_support": 2, "doctrine": 6, "essence_lucidity": 4 },
+        { "key": "C", "text": "A centelha silenciosa que observa tudo — e que nunca pertenceu ao tempo.", "alignment": 4, "popular_support": 1, "doctrine": 0, "essence_lucidity": 10 }
+      ]
+    },
+    {
+      "id": "Q47",
+      "archon_id": "sabbede",
+      "prompt": "Se o universo inteiro fosse uma obra feita para mantê-lo dormindo em segurança, o que faria você querer acordar?",
+      "choices": [
+        { "key": "A", "text": "O desejo de encontrar outros seres reais fora do sonho.", "alignment": 5, "popular_support": 4, "doctrine": -3, "essence_lucidity": 5 },
+        { "key": "B", "text": "A recusa visceral de ser propriedade de quem criou o sonho.", "alignment": 1, "popular_support": 1, "doctrine": 7, "essence_lucidity": 6 },
+        { "key": "C", "text": "O simples fato de que um sonho confortável nunca será a realidade.", "alignment": 4, "popular_support": 1, "doctrine": 1, "essence_lucidity": 10 }
+      ]
+    },
+    {
+      "id": "Q48",
+      "archon_id": "sabbede",
+      "prompt": "Para romper uma prisão perfeita, o que é mais poderoso: destruir suas paredes ou parar de acreditar que ela tem autoridade sobre você?",
+      "choices": [
+        { "key": "A", "text": "Parar de obedecer; nenhuma prisão se sustenta sem o consentimento dos presos.", "alignment": 5, "popular_support": 4, "doctrine": -6, "essence_lucidity": 6 },
+        { "key": "B", "text": "Destruir suas paredes; quem ainda dorme lá dentro precisa de uma brecha física.", "alignment": 2, "popular_support": 3, "doctrine": 7, "essence_lucidity": 5 },
+        { "key": "C", "text": "Os dois: primeiro despertar a mente, depois abrir a brecha para os outros.", "alignment": 6, "popular_support": 5, "doctrine": 1, "essence_lucidity": 10 }
+      ]
+    },
+    {
+      "id": "Q49",
+      "archon_id": "sabbede",
+      "prompt": "Quando a última chama apagar todas as ilusões e restar apenas você diante do desconhecido absoluto, o que você leva consigo?",
+      "choices": [
+        { "key": "A", "text": "A memória de todos que caminhei ao lado — nenhuma vida foi em vão.", "alignment": 7, "popular_support": 6, "doctrine": -4, "essence_lucidity": 5 },
+        { "key": "B", "text": "Minha vontade intacta, pronta para começar do zero sem senhores.", "alignment": 2, "popular_support": 1, "doctrine": 6, "essence_lucidity": 5 },
+        { "key": "C", "text": "Nada que possa ser tomado; apenas a consciência desperta de quem sempre fui.", "alignment": 5, "popular_support": 2, "doctrine": 0, "essence_lucidity": 10 }
+      ]
+    }
+  ]
+}
