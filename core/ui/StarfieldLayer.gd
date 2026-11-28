@@ -3,6 +3,7 @@ extends Control
 ## Céu estrelado nítido cobrindo toda a tela: estrelas esparsas + 7 estrelas com pontas aparentes.
 
 const NORMAL_STAR_COUNT := 130
+const LOWER_STAR_COUNT := 65
 const BRIGHT_STAR_COUNT := 7
 
 var _stars: Array[Dictionary] = []
@@ -26,6 +27,15 @@ func _generate_stars() -> void:
 			"speed": rng.randf_range(0.65, 1.55),
 			"tint": Color(0.86, 0.92, 1.0) if i % 3 != 0 else Color(1.0, 0.95, 0.84),
 			"size": 1.5 if i % 6 == 0 else 1.0,
+		})
+	for i: int in LOWER_STAR_COUNT:
+		_stars.append({
+			"uv": Vector2(rng.randf_range(0.015, 0.985), rng.randf_range(0.50, 0.985)),
+			"bright": false,
+			"phase": rng.randf_range(0.0, TAU),
+			"speed": rng.randf_range(0.65, 1.55),
+			"tint": Color(0.86, 0.92, 1.0) if i % 3 != 0 else Color(1.0, 0.95, 0.84),
+			"size": 1.0,
 		})
 	var x_zones: Array[float] = [0.11, 0.24, 0.37, 0.50, 0.63, 0.76, 0.89]
 	var y_zones: Array[float] = [0.18, 0.32, 0.14, 0.22, 0.16, 0.30, 0.20]
