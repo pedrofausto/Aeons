@@ -61,20 +61,20 @@ func _build_layers() -> void:
 	_sky_rect = ColorRect.new()
 	_sky_rect.set_anchors_preset(Control.PRESET_FULL_RECT)
 	_sky_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_sky_rect.color = Color(0.03, 0.04, 0.08, 1.0)
+	_sky_rect.color = Color(0.015, 0.02, 0.05, 1.0)
 	add_child(_sky_rect)
-
-	_starfield = StarfieldLayer.new()
-	add_child(_starfield)
 
 	_clouds = TextureRect.new()
 	_clouds.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_clouds.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	_clouds.stretch_mode = TextureRect.STRETCH_TILE
-	_clouds.size = Vector2(maxf(size.x, 640.0) + 128.0, maxf(size.y, 360.0))
+	_clouds.size = Vector2(maxf(size.x, 640.0) + 320.0, maxf(size.y, 360.0))
 	_clouds.texture = _make_cloud_texture()
-	_clouds.modulate = Color(0.55, 0.62, 0.78, 0.38)
+	_clouds.modulate = Color(0.55, 0.65, 0.85, 0.36)
 	add_child(_clouds)
+
+	_starfield = StarfieldLayer.new()
+	add_child(_starfield)
 
 	_textures = _load_custom_silhouettes()
 	if _textures.is_empty():
@@ -119,14 +119,14 @@ func _load_custom_silhouettes() -> Array[Texture2D]:
 
 
 func _make_cloud_texture() -> Texture2D:
-	var img := Image.create(128, 64, false, Image.FORMAT_RGBA8)
-	for y: int in 64:
-		for x: int in 128:
-			var ax := TAU * float(x) / 128.0
-			var ay := TAU * float(y) / 64.0
-			var n := sin(ax * 2.0) * cos(ay) + sin(ax + ay) * 0.5
-			var v := clampf((n + 1.2) * 0.35, 0.05, 0.85)
-			img.set_pixel(x, y, Color(v * 0.35, v * 0.42, v * 0.60, v * 0.7))
+	var img := Image.create(320, 180, false, Image.FORMAT_RGBA8)
+	for y: int in 180:
+		var ay := TAU * float(y) / 180.0
+		for x: int in 320:
+			var ax := TAU * float(x) / 320.0
+			var n := sin(ax * 2.0 + sin(ay)) * cos(ay * 2.0) + sin(ax * 3.0 - ay * 2.0) * 0.45 + cos(ax * 5.0 + ay) * 0.2
+			var density := clampf((n - 0.15) * 0.65, 0.0, 0.75)
+			img.set_pixel(x, y, Color(0.18, 0.24, 0.38, density))
 	return ImageTexture.create_from_image(img)
 
 
@@ -148,9 +148,9 @@ func _init_rain() -> void:
 
 func _process(delta: float) -> void:
 	_elapsed_sec += delta
-	_cloud_offset += delta * 6.0  # ~42s por ciclo
-	_clouds.size = Vector2(maxf(size.x, 640.0) + 128.0, maxf(size.y, 360.0))
-	_clouds.position.x = -fmod(_cloud_offset, 128.0)
+	_cloud_offset += delta * 10.0
+	_clouds.size = Vector2(maxf(size.x, 640.0) + 320.0, maxf(size.y, 360.0))
+	_clouds.position.x = -fmod(_cloud_offset, 320.0)
 	_next_flash_timer -= delta
 	if _next_flash_timer <= 0.0:
 		_trigger_lightning_cycle()
@@ -230,7 +230,7 @@ func _apply_flash_visuals() -> void:
 	var cap := 0.18 if (calm_mode or bool(SaveSystem.settings.get("reduce_flashes", false))) else 0.32
 	_flash_rect.color.a = _flash * cap
 	var sky_t := clampf(_flash + _celestial_glow * 0.5, 0.0, 1.0)
-	_sky_rect.color = Color(0.03, 0.04, 0.08).lerp(Color(0.16, 0.22, 0.36), sky_t)
+	_sky_rect.color = Color(0.015, 0.02, 0.05).lerp(Color(0.14, 0.20, 0.34), sky_t)
 	if _silhouette_showing and _flash > 0.005:
 		_figure_rect.visible = true
 		var mat := _figure_rect.material as ShaderMaterial
