@@ -110,23 +110,6 @@ func _load_custom_silhouettes() -> Array[Texture2D]:
 			var tex := load(path) as Texture2D
 			if tex != null:
 				found.append(tex)
-	if not found.is_empty():
-		return found
-	var dir := DirAccess.open(SILHOUETTES_DIR)
-	if dir == null:
-		return found
-	var files: Array[String] = []
-	for raw_name: String in dir.get_files():
-		var fname := raw_name.trim_suffix(".import").trim_suffix(".remap")
-		if fname.get_extension().to_lower() in ["png", "jpg", "jpeg", "webp"] and fname not in files:
-			files.append(fname)
-	files.sort()
-	for fname: String in files:
-		var tex := load(SILHOUETTES_DIR.path_join(fname)) as Texture2D
-		if tex != null:
-			found.append(tex)
-		if found.size() >= FIGURE_COUNT:
-			break
 	return found
 
 
