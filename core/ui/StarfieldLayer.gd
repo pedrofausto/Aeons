@@ -38,7 +38,7 @@ func _generate_stars() -> void:
 			"size": 1.0,
 		})
 	var x_zones: Array[float] = [0.11, 0.24, 0.37, 0.50, 0.63, 0.76, 0.89]
-	var y_zones: Array[float] = [0.18, 0.32, 0.14, 0.22, 0.16, 0.30, 0.20]
+	var y_zones: Array[float] = [0.18, 0.32, 0.28, 0.39, 0.29, 0.30, 0.20]
 	for i: int in BRIGHT_STAR_COUNT:
 		_stars.append({
 			"uv": Vector2(x_zones[i] + rng.randf_range(-0.025, 0.025), y_zones[i] + rng.randf_range(-0.04, 0.04)),

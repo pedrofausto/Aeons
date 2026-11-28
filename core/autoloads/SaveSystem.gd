@@ -1,4 +1,6 @@
 extends Node
+
+const SaveSerializerRef := preload("res://core/autoloads/SaveSerializer.gd")
 ## Persistência multi-slot (WorldState + EssenceState) e configurações em user://.
 
 const SAVE_DIR := "user://saves"
@@ -124,8 +126,8 @@ func save_slot(slot: int) -> bool:
 			"leader_name": leader_name,
 			"era_config_path": WorldState.era_config.resource_path if WorldState.era_config else "",
 		},
-		"world": SaveSerializer.serialize_world(),
-		"essence": SaveSerializer.serialize_essence(),
+		"world": SaveSerializerRef.serialize_world(),
+		"essence": SaveSerializerRef.serialize_essence(),
 	}
 	var f := FileAccess.open(_slot_path(slot), FileAccess.WRITE)
 	if f == null:
@@ -146,9 +148,9 @@ func load_slot(slot: int) -> bool:
 	var era_path := String(meta.get("era_config_path", ""))
 	if era_path.is_empty():
 		era_path = ProjectSettings.get_setting(WorldState.START_ERA_SETTING, "")
-	SaveSerializer.restore_essence(data.get("essence", {}))
+	SaveSerializerRef.restore_essence(data.get("essence", {}))
 	WorldState.reset_visible(int(meta.get("act_number", 1)))
 	if not era_path.is_empty():
 		WorldState.load_era(era_path)
-	SaveSerializer.restore_world(data.get("world", {}))
+	SaveSerializerRef.restore_world(data.get("world", {}))
 	return true

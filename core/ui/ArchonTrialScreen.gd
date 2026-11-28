@@ -1,104 +1,189 @@
-class_name ArchonTrialScreen
 extends Control
-## Rodada inicial das 7 perguntas (1 por silhueta 01..07) antes da escolha de protagonista.
+## Tela pré-seleção com prólogo filosófico e 7 perguntas sorteadas (1 por domínio).
 
-const ROMAN: Array[String] = ["I", "II", "III", "IV", "V", "VI", "VII"]
-const SILHOUETTE_PATHS: Array[String] = [
-	"res://core/ui/art/title_silhouettes/01_athoth.jpg",
-	"res://core/ui/art/title_silhouettes/02_eloaiou.jpg",
-	"res://core/ui/art/title_silhouettes/03_astaphaios.jpg",
-	"res://core/ui/art/title_silhouettes/04_yao.jpg",
-	"res://core/ui/art/title_silhouettes/05_sabaoth.jpg",
-	"res://core/ui/art/title_silhouettes/06_adonin.jpg",
-	"res://core/ui/art/title_silhouettes/07_sabbede.jpg",
-]
+const BridgeScript := preload("res://core/narrative/archon_trial_bridge.gd")
+const ITALIC_FONT := preload("res://core/ui/fonts/LiberationSerif-Italic.ttf")
+const DB_TRES_PATH := "res://data/archon_questions_db.tres"
+const DB_JSON_PATH := "res://data/archon_questions.json"
+const TITLE_SCENE_PATH := "res://core/ui/TitleScreen.tscn"
+const PROTAGONIST_SCENE_PATH := "res://core/ui/ProtagonistSelect.tscn"
+const CHARS_PER_SEC := 45.0
+const PROLOGUE_TEXT := (
+	"A jornada do andarilho é tecida de sombras, percalços e escolhas que pesam "
+	+ "sobre o espírito. Antes que o caminho se abra, responde em silêncio: "
+	+ "qual será tua resolução diante das provações que a teia da vida te impõe?"
+)
 
-var _bank: ArchonTrialBridge
-var _trial: Array[Dictionary] = []
-var _index: int = 0
-var _busy: bool = false
-var _flash_tween: Tween
+@onready var _prompt_label: Label = $Panel/Margin/VBox/PromptLabel
+@onready var _continue_btn: Button = $Panel/Margin/VBox/ContinueIntroButton
+@onready var _choices_box: VBoxContainer = $Panel/Margin/VBox/ChoicesBox
+@onready var _back_btn: Button = $Panel/Margin/VBox/BackButton
+@onready var _curtain: ColorRect = $BlackCurtain
 
-@onready var _silhouette: TextureRect = %SilhouetteRect
-@onready var _step_lbl: Label = %StepLabel
-@onready var _prompt_lbl: Label = %PromptLabel
-@onready var _choices_box: VBoxContainer = %ChoicesBox
-@onready var _curtain: ColorRect = %BlackCurtain
+var _bank: Resource
+var _questions: Array = []
+var _current_idx: int = -1
+var _in_prologue: bool = true
+var _is_typing: bool = false
+var _transitioning: bool = false
+var _type_tween: Tween
 
 
 func _ready() -> void:
-	EssenceState.reset_all()
-	WorldState.reset_visible(1)
-	var start_era: String = ProjectSettings.get_setting(WorldState.START_ERA_SETTING, "res://eras/act_01_tianxu/EraConfig_Act01.tres")
-	WorldState.load_era(start_era)
-	_bank = ArchonTrialBridge.load_from_json("res://data/archon_questions.json")
-	_trial = _bank.draw_seven_archon_trial()
-	%BackButton.pressed.connect(_on_back_pressed)
+	randomize()
+	_bank = _load_bank()
+	if _bank != null:
+		_questions = _bank.call("draw_seven_archon_trial")
+	_continue_btn.pressed.connect(_on_continue_intro)
+	_back_btn.pressed.connect(_on_back_pressed)
+	_fade_curtain(0.0, 0.55)
+	_show_prologue()
 
-	_curtain.modulate.a = 1.0
-	var tw := create_tween()
-	tw.tween_property(_curtain, "modulate:a", 0.0, 0.8).set_trans(Tween.TRANS_SINE)
-	if _trial.is_empty():
-		get_tree().change_scene_to_file.call_deferred("res://core/ui/ProtagonistSelect.tscn")
+
+func _unhandled_input(event: InputEvent) -> void:
+	if _transitioning or not _is_typing:
 		return
+	var is_skip := (
+		(event is InputEventMouseButton and event.pressed)
+		or (event is InputEventKey and event.pressed and not event.echo)
+	)
+	if is_skip:
+		_finish_typing_immediately()
+		get_viewport().set_input_as_handled()
+
+
+func _load_bank() -> Resource:
+	if ResourceLoader.exists(DB_TRES_PATH):
+		var loaded := ResourceLoader.load(DB_TRES_PATH)
+		if loaded != null:
+			return loaded
+	return BridgeScript.load_from_json(DB_JSON_PATH)
+
+
+func _show_prologue() -> void:
+	_in_prologue = true
+	_clear_choices()
+	_choices_box.visible = false
+	_continue_btn.visible = false
+	_type_text(PROLOGUE_TEXT, func() -> void:
+		_continue_btn.modulate.a = 0.0
+		_continue_btn.visible = true
+		var tw := create_tween()
+		tw.tween_property(_continue_btn, "modulate:a", 1.0, 0.25)
+	)
+
+
+func _on_continue_intro() -> void:
+	if _transitioning:
+		return
+	_in_prologue = false
+	_continue_btn.visible = false
 	_show_question(0)
 
 
 func _show_question(idx: int) -> void:
-	_index = idx
-	_busy = false
-	var q: Dictionary = _trial[_index]
-	_step_lbl.text = "Vigília %s / VII" % ROMAN[mini(_index, ROMAN.size() - 1)]
-	_prompt_lbl.text = String(q.get("prompt", ""))
-	_load_silhouette(_index)
-	_pulse_silhouette(0.68, 0.30, 1.1)
+	_current_idx = idx
+	if _current_idx >= _questions.size():
+		_go_to_scene(PROTAGONIST_SCENE_PATH)
+		return
+	var q: Dictionary = _questions[_current_idx]
+	_clear_choices()
+	_choices_box.visible = true
+	_choices_box.modulate.a = 0.0
 
-	for child: Node in _choices_box.get_children():
-		_choices_box.remove_child(child)
-		child.queue_free()
-	for ch_var: Variant in q.get("choices", []):
-		var ch := ch_var as Dictionary
-		var btn := Button.new()
-		btn.text = "%s) %s" % [String(ch.get("key", "")), String(ch.get("text", ""))]
-		btn.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		btn.alignment = HORIZONTAL_ALIGNMENT_LEFT
-		btn.custom_minimum_size = Vector2(0, 34)
-		btn.pressed.connect(_on_choice_pressed.bind(String(q["id"]), String(ch["key"])))
+	var choices: Array = (q.get("choices", []) as Array).duplicate()
+	choices.shuffle()
+	var q_id: String = String(q.get("id", ""))
+	for ch in choices:
+		var btn := _create_choice_button(q_id, ch)
 		_choices_box.add_child(btn)
 
-
-func _load_silhouette(idx: int) -> void:
-	var path: String = SILHOUETTE_PATHS[mini(idx, SILHOUETTE_PATHS.size() - 1)]
-	if ResourceLoader.exists(path):
-		_silhouette.texture = load(path) as Texture2D
-
-
-func _pulse_silhouette(peak: float, rest: float, decay_sec: float) -> void:
-	var mat := _silhouette.material as ShaderMaterial
-	if mat == null:
-		return
-	if _flash_tween != null and _flash_tween.is_valid():
-		_flash_tween.kill()
-	_flash_tween = create_tween()
-	_flash_tween.tween_method(func(v: float) -> void: mat.set_shader_parameter("flash_amount", v), 0.12, peak, 0.12)
-	_flash_tween.tween_method(func(v: float) -> void: mat.set_shader_parameter("flash_amount", v), peak, rest, decay_sec).set_trans(Tween.TRANS_SINE)
-
-
-func _on_choice_pressed(question_id: String, choice_key: String) -> void:
-	if _busy:
-		return
-	_busy = true
-	_bank.apply_choice(question_id, choice_key, WorldState, EssenceState)
-	if _index + 1 >= _trial.size():
+	_type_text(String(q.get("prompt", "")), func() -> void:
+		for child in _choices_box.get_children():
+			if child is Button:
+				(child as Button).disabled = false
 		var tw := create_tween()
-		tw.tween_property(_curtain, "modulate:a", 1.0, 0.8).set_trans(Tween.TRANS_SINE)
-		tw.tween_callback(func() -> void: get_tree().change_scene_to_file("res://core/ui/ProtagonistSelect.tscn"))
+		tw.tween_property(_choices_box, "modulate:a", 1.0, 0.22)
+	)
+
+
+func _create_choice_button(q_id: String, ch: Dictionary) -> Button:
+	var btn := Button.new()
+	btn.text = String(ch.get("text", ""))
+	btn.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	btn.alignment = HORIZONTAL_ALIGNMENT_LEFT
+	btn.disabled = true
+	btn.add_theme_font_override("font", ITALIC_FONT)
+	btn.add_theme_font_size_override("font_size", 9)
+	btn.add_theme_color_override("font_color", Color(0.9, 0.87, 0.8, 1.0))
+	var key := String(ch.get("key", ""))
+	btn.pressed.connect(_on_choice_selected.bind(q_id, key))
+	return btn
+
+
+func _type_text(text_content: String, on_done: Callable) -> void:
+	if _type_tween != null and _type_tween.is_valid():
+		_type_tween.kill()
+	_prompt_label.text = text_content
+	_prompt_label.visible_characters = 0
+	var total := text_content.length()
+	if total <= 0:
+		_is_typing = false
+		on_done.call()
+		return
+	_is_typing = true
+	var duration := maxf(0.35, float(total) / CHARS_PER_SEC)
+	_type_tween = create_tween()
+	_type_tween.tween_property(_prompt_label, "visible_characters", total, duration)
+	_type_tween.finished.connect(func() -> void:
+		_is_typing = false
+		on_done.call()
+	)
+
+
+func _finish_typing_immediately() -> void:
+	if _type_tween != null and _type_tween.is_valid():
+		_type_tween.kill()
+	_prompt_label.visible_characters = -1
+	_is_typing = false
+	if _in_prologue:
+		_continue_btn.modulate.a = 1.0
+		_continue_btn.visible = true
 	else:
-		_show_question(_index + 1)
+		for child in _choices_box.get_children():
+			if child is Button:
+				(child as Button).disabled = false
+		_choices_box.modulate.a = 1.0
+
+
+func _clear_choices() -> void:
+	for child in _choices_box.get_children():
+		child.queue_free()
+
+
+func _on_choice_selected(question_id: String, choice_key: String) -> void:
+	if _transitioning or _is_typing:
+		return
+	if _bank != null:
+		_bank.call("apply_choice", question_id, choice_key, WorldState, EssenceState)
+	_show_question(_current_idx + 1)
 
 
 func _on_back_pressed() -> void:
-	if _busy:
+	if _transitioning:
 		return
-	_busy = true
-	get_tree().change_scene_to_file("res://core/ui/TitleScreen.tscn")
+	_go_to_scene(TITLE_SCENE_PATH)
+
+
+func _go_to_scene(path: String) -> void:
+	_transitioning = true
+	var tw := _fade_curtain(1.0, 0.45)
+	tw.finished.connect(func() -> void:
+		get_tree().change_scene_to_file(path)
+	)
+
+
+func _fade_curtain(target_alpha: float, duration: float) -> Tween:
+	var tw := create_tween()
+	tw.tween_property(_curtain, "color:a", target_alpha, duration)
+	return tw

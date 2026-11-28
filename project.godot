@@ -24,6 +24,7 @@ WorldState="*res://core/autoloads/WorldState.gd"
 EssenceState="*res://core/autoloads/EssenceState.gd"
 SaveSystem="*res://core/autoloads/SaveSystem.gd"
 Dialogic="*uid://ds2q0uclmolvu"
+ArchonTrialService="*res://core/narrative/ArchonTrialService.gd"
 
 [debug]
 
@@ -48,6 +49,12 @@ directories/dtl_directory={
 "o_caminho_do_templo": "res://eras/act_01_tianxu/dialogues/o_caminho_do_templo.dtl"
 }
 layout/style_directory={}
+variables={
+"alignment": 50,
+"doctrine": 0,
+"essence_lucidity": 0,
+"popular_support": 50
+}
 
 [display]
 

@@ -12,7 +12,7 @@ const ARCHON_ORDER: Array[String] = ["athoth", "eloaiou", "astaphaios", "yao", "
 
 
 static func load_from_json(json_path: String = "res://data/archon_questions.json") -> ArchonTrialBridge:
-	var bank := ArchonTrialBridge.new()
+	var bank := new()
 	if not FileAccess.file_exists(json_path):
 		return bank
 	var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(json_path))
