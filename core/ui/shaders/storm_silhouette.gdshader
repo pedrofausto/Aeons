@@ -1,8 +1,7 @@
 shader_type canvas_item;
 
 uniform float flash_amount : hint_range(0.0, 1.0) = 0.0;
-uniform float base_alpha : hint_range(0.0, 1.0) = 0.08;
-uniform float flash_alpha : hint_range(0.0, 1.0) = 0.90;
+uniform float flash_alpha : hint_range(0.0, 1.0) = 0.92;
 uniform vec4 rim_color : source_color = vec4(0.76, 0.88, 1.0, 1.0);
 
 void fragment() {
@@ -14,6 +13,6 @@ void fragment() {
 	vec3 shadow_col = tex.rgb * vec3(0.28, 0.34, 0.50);
 	vec3 lit_col = mix(tex.rgb, rim_color.rgb, 0.20 + detail * 0.22);
 	vec3 col = mix(shadow_col, lit_col, flash_amount);
-	float alpha = tex.a * radial * mix(base_alpha, flash_alpha, flash_amount) * (0.35 + 0.65 * detail);
+	float alpha = tex.a * radial * flash_amount * flash_alpha * (0.35 + 0.65 * detail);
 	COLOR = vec4(col, alpha);
 }

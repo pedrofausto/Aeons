@@ -60,27 +60,18 @@ func _ready() -> void:
 
 
 func _start_boot_sequence() -> void:
-	_state = State.BOOT_SILENCE
+	_state = State.INTRO_REVEAL
 	_curtain.modulate.a = 1.0
 	_title.modulate.a = 0.0
-	_title.offset_top = TITLE_BASE_Y + 10.0
+	_title.offset_top = TITLE_BASE_Y
 	_subtitle.modulate.a = 0.0
 	_press_label.modulate.a = 0.0
 	_menu_box.visible = false
-	_phase_tween = create_tween()
-	_phase_tween.tween_interval(1.2)
-	_phase_tween.tween_callback(_start_intro_reveal)
-
-
-func _start_intro_reveal() -> void:
-	_state = State.INTRO_REVEAL
 	_kill_tween(_phase_tween)
 	_phase_tween = create_tween().set_parallel(true)
-	_phase_tween.tween_property(_curtain, "modulate:a", 0.0, 2.6).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-	_phase_tween.tween_property(_title, "modulate:a", 1.0, 1.8).set_delay(3.4).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
-	_phase_tween.tween_property(_title, "offset_top", TITLE_BASE_Y, 1.8).set_delay(3.4).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
-	_phase_tween.tween_property(_subtitle, "modulate:a", 0.85, 1.0).set_delay(4.8).set_trans(Tween.TRANS_SINE)
-	_phase_tween.chain().tween_interval(0.2)
+	_phase_tween.tween_property(_curtain, "modulate:a", 0.0, 1.4).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	_phase_tween.tween_property(_title, "modulate:a", 1.0, 3.0).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	_phase_tween.tween_property(_subtitle, "modulate:a", 0.85, 1.2).set_delay(2.0).set_trans(Tween.TRANS_SINE)
 	_phase_tween.chain().tween_callback(_enter_idle_press_start)
 
 

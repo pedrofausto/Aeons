@@ -2,7 +2,8 @@
 
 > **Reconciliação Canônica (Projeto Aeon):**
 > - **Caminhos reais no repositório:** `res://core/ui/TitleScreen.tscn`, `res://core/ui/TitleScreen.gd`, `res://core/ui/StormBackdrop.gd`, `res://core/ui/ProtagonistSelect.tscn`, `res://core/autoloads/SaveSystem.gd`.
-> - **Tempestade + 7 Silhuetas:** `StormBackdrop.gd` carrega as 7 figuras em `res://core/ui/art/title_silhouettes/` (`01_athoth.jpg`..`07_sabbede.jpg`) com `storm_silhouette.gdshader`, usando cadência realista de relâmpago (`8.5s–15.5s` entre tempestades; pulso duplo `0.06s` → `0.08s` → `0.12s` → `0.95s` decaimento) + respiração celeste subliminar a cada `19.0s`.
+> - **Título e Entrada Imediata:** O título exibido na tela inicial é **"AEONS"**, aparecendo imediatamente no boot com *fade-in* de **`3.0s`**.
+> - **Tempestade + 7 Silhuetas:** Nos primeiros **`49.0s`** na tela inicial, ocorrem apenas relâmpagos, chuva e nuvens. Após **`49.0s`**, cada relâmpago (`8.5s–15.5s` entre tempestades; pulso duplo `0.06s` → `0.08s` → `0.12s` → `0.95s` decaimento) revela as 7 figuras em **ordem numérica estrita (`01` → `07`)** (`01_athoth.jpg`..`07_sabbede.jpg`), reiniciando o ciclo em `01` e **sumindo completamente (`visible = false`, alpha `0.0`)** ao término de cada flash.
 > - **Sigilo narrativo:** os textos visíveis e epígrafes de `AttractOverlay` usam exclusivamente vocabulário da era ativa (sem mencionar termos proibidos de `SCHEMA_CANON.md`).
 
 ---

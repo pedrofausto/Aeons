@@ -1,7 +1,7 @@
 class_name StormBackdrop
 extends Control
 ## Fundo animado de tempestade com 7 silhuetas reveladas por relâmpagos realistas.
-## Loops dessincronizados: nuvens (~42s), brilho celeste (19s) e raios irregulares (8.5s–15.5s).
+## Primeiros 49s: apenas relâmpagos. Após 49s: exibe as 7 figuras em ordem 01->07 e some ao fim de cada flash.
 
 signal flash_changed(intensity: float)
 
@@ -19,10 +19,11 @@ const SILHOUETTE_SHADER := preload("res://core/ui/shaders/storm_silhouette.gdsha
 const FIGURE_COUNT := 7
 
 @export var calm_mode: bool = false
+@export var silhouettes_delay_sec: float = 49.0
 
+var _elapsed_sec: float = 0.0
 var _flash: float = 0.0
 var _celestial_glow: float = 0.0
-var _dim_factor: float = 1.0
 var _next_flash_timer: float = 2.6
 var _celestial_timer: float = 19.0
 var _cloud_offset: float = 0.0
@@ -30,6 +31,7 @@ var _rain_drops: Array[Vector3] = []
 var _bolts: Array[PackedVector2Array] = []
 var _textures: Array[Texture2D] = []
 var _current_idx: int = 0
+var _silhouette_showing: bool = false
 var _flash_tween: Tween
 var _celestial_tween: Tween
 var _sky_rect: ColorRect
@@ -81,9 +83,9 @@ func _build_layers() -> void:
 	_figure_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	_figure_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 	_figure_rect.texture = _textures[0]
+	_figure_rect.visible = false
 	var mat := ShaderMaterial.new()
 	mat.shader = SILHOUETTE_SHADER
-	mat.set_shader_parameter("base_alpha", 0.05 if calm_mode else 0.09)
 	mat.set_shader_parameter("flash_alpha", 0.38 if calm_mode else 0.90)
 	_figure_rect.material = mat
 	add_child(_figure_rect)
@@ -155,6 +157,7 @@ func _init_rain() -> void:
 
 
 func _process(delta: float) -> void:
+	_elapsed_sec += delta
 	_cloud_offset += delta * 6.0  # ~42s por ciclo
 	_clouds.position.x = -fmod(_cloud_offset, 252.0)
 	_next_flash_timer -= delta
@@ -185,9 +188,14 @@ func _trigger_celestial_breath() -> void:
 
 
 func _trigger_lightning_cycle() -> void:
-	if not _textures.is_empty():
-		_current_idx = (_current_idx + 1) % _textures.size()
+	if not calm_mode and _elapsed_sec >= silhouettes_delay_sec and not _textures.is_empty():
 		_figure_rect.texture = _textures[_current_idx]
+		_current_idx = (_current_idx + 1) % _textures.size()
+		_silhouette_showing = true
+		_figure_rect.visible = true
+	else:
+		_silhouette_showing = false
+		_figure_rect.visible = false
 	var reduced := calm_mode or bool(SaveSystem.settings.get("reduce_flashes", false))
 	_next_flash_timer = randf_range(12.0, 20.0) if reduced else randf_range(8.5, 15.5)
 	_bolts.clear()
@@ -205,11 +213,16 @@ func _trigger_lightning_cycle() -> void:
 		_flash_tween.tween_method(_set_flash, 0.0, 0.28, 0.35).set_trans(Tween.TRANS_SINE)
 		_flash_tween.tween_method(_set_flash, 0.28, 0.0, 1.1).set_trans(Tween.TRANS_SINE)
 	else:
-		# Pulso duplo realista de relâmpago: 0.06s clarão -> 0.08s micro-apagão -> 0.12s pico -> 0.95s decaimento
 		_flash_tween.tween_method(_set_flash, 0.0, 0.85, 0.06)
 		_flash_tween.tween_method(_set_flash, 0.85, 0.18, 0.08)
 		_flash_tween.tween_method(_set_flash, 0.18, 1.0, 0.12)
 		_flash_tween.tween_method(_set_flash, 1.0, 0.0, 0.95).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	_flash_tween.tween_callback(_hide_silhouette)
+
+
+func _hide_silhouette() -> void:
+	_silhouette_showing = false
+	_figure_rect.visible = false
 
 
 func _set_flash(v: float) -> void:
@@ -225,10 +238,15 @@ func _set_celestial_glow(v: float) -> void:
 func _apply_flash_visuals() -> void:
 	var cap := 0.18 if (calm_mode or bool(SaveSystem.settings.get("reduce_flashes", false))) else 0.32
 	_flash_rect.color.a = _flash * cap
-	_sky_rect.color = Color(0.03, 0.04, 0.08).lerp(Color(0.16, 0.22, 0.36), _flash)
-	var mat := _figure_rect.material as ShaderMaterial
-	if mat != null:
-		mat.set_shader_parameter("flash_amount", clampf(_flash + _celestial_glow, 0.0, 1.0))
+	var sky_t := clampf(_flash + _celestial_glow * 0.5, 0.0, 1.0)
+	_sky_rect.color = Color(0.03, 0.04, 0.08).lerp(Color(0.16, 0.22, 0.36), sky_t)
+	if _silhouette_showing and _flash > 0.005:
+		_figure_rect.visible = true
+		var mat := _figure_rect.material as ShaderMaterial
+		if mat != null:
+			mat.set_shader_parameter("flash_amount", _flash)
+	else:
+		_figure_rect.visible = false
 	flash_changed.emit(_flash)
 
 
